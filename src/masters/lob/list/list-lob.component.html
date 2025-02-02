@@ -1,0 +1,26 @@
+<h2>LOB List</h2>
+
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="lob_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>LOB Name</th>
+      <td mat-cell *matCellDef="let client">{{ client.lob_name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lob_delivery_manager">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Delivery Manager</th>
+      <td mat-cell *matCellDef="let client">{{ client.lob_delivery_manager }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lob_client_partner">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Client Partner</th>
+      <td mat-cell *matCellDef="let client">{{ client.lob_client_partner }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

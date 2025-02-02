@@ -1,0 +1,11 @@
+.file-input-container {
+    margin-top: 16px;
+  }
+  
+  .file-input-container input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

@@ -1,0 +1,126 @@
+<mat-card>
+    <div class="search-container">
+        <h2>Open Demands List</h2>
+
+        <!-- Search Box -->
+        <mat-form-field appearance="outline" class="search-box">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)"
+                placeholder="Filter data">
+        </mat-form-field>
+    </div>
+
+    <!-- Material Table -->
+    <div class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort
+            class="mat-elevation-z8">
+
+            <!-- Table Columns -->
+            <ng-container matColumnDef="ctool_number">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>CTool</th>
+                <td mat-cell *matCellDef="let element">{{ element.ctool_number
+                    }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="ctool_date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                <td mat-cell *matCellDef="let element">{{ element.ctool_date
+                    }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="client_manager_name">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Client</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.client_manager_name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="client_location">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Location</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.client_location }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="position_location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Position
+                    Location</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.position_location }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="tentative_required_by">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Required
+                    By</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.tentative_required_by }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="skillset">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Skillset</th>
+                <td mat-cell *matCellDef="let element">{{ element.skillset
+                    }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="lob_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>LOB</th>
+                <td mat-cell *matCellDef="let element">{{ element.lob_name
+                    }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="practice_unit_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Practice
+                    Unit</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.practice_unit_name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="job_description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>JD</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.job_description }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="no_of_positions">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Positions</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.no_of_positions }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="rr_numbers">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>RR</th>
+                <td mat-cell *matCellDef="let element">{{ element.rr_numbers
+                    }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="rr_grade">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Grade</th>
+                <td mat-cell *matCellDef="let element">{{ element.rr_grade
+                    }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="gcb_level">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>GCB </th>
+                <td mat-cell *matCellDef="let element">{{ element.gcb_level
+                    }}</td>
+            </ng-container>
+
+            <!-- Header and Row Definitions -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            
+        </table>
+
+      
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons></mat-paginator>
+     
+
+        <!-- Pagination -->
+        <!-- <div>
+           
+        </div> -->
+    </div>
+</mat-card>

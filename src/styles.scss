@@ -1,1 +1,179 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+*,
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  line-height: 1em;
+}
+
+.app-container {
+  height: 100vh;
+  display: flex;
+}
+
+mat-sidenav {
+  // width: 250px !important;
+  // background-color: #FDC30A !important;
+  border-radius: 0 !important;
+}
+
+.sidebar-logo {
+  text-align: center;
+  padding: 16px;
+}
+
+.sidebar-logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.content {
+  padding: 16px;
+}
+
+.mat-drawer-container {
+  background-color: transparent !important;
+
+  .mdc-list-item__primary-text {
+    color: #000 !important;
+  }
+}
+
+.left-sidebar {
+  padding: 0;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled),
+.mdc-text-field--filled:hover {
+  background-color: transparent !important;
+}
+
+// mat-form-field {
+//   padding: 0 10px;
+// }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 17% 63% 20%;
+  /* Left Sidebar 25%, Main Content 50%, Right Sidebar 25% */
+  // grid-gap: 20px; /* Space between columns */
+  grid-template-areas:
+    "left-sidebar main-content right-sidebar";
+  /* Named areas for easy reference */
+}
+
+.left-sidebar {
+  grid-area: left-sidebar;
+  // background-color: #f4f4f4;
+  // padding: 16px;
+  border-right: 1px solid #D9D9D9;
+}
+
+.main-content {
+  grid-area: main-content;
+  background-color: #f9fafc;
+  padding: 16px;
+}
+
+.right-sidebar {
+  grid-area: right-sidebar;
+  background-color: #f4f4f4;
+  padding: 16px;
+  border-left: 1px solid #ccc;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  /* Enables horizontal scrolling if needed */
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  /* Ensures all columns get equal space */
+}
+
+th,
+td {
+  white-space: nowrap;
+  /* Prevents text from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Adds '...' for long text */
+}
+
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  /* Moves search to the right */
+  align-items: center;
+}
+
+.search-box {
+  width: 300px;
+}
+
+.mat-mdc-paginator-outer-container {
+  display: block !important;
+}
+
+
+
+mat-form-field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // height: 56px; /* Ensures all fields are the same height */
+}
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important;
+}
+
+
+
+// css library
+.wrapper-padding {
+  padding: 15px;
+}
+
+.wrapper-m30 {
+  margin-top: 30px;
+}
+
+.submit-container {
+  text-align: right;
+  margin-top: 16px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    /* Single column layout on smaller screens */
+    grid-template-areas:
+      "main-content"
+      "left-sidebar"
+      "right-sidebar";
+    /* Stack the sections on top of each other */
+  }
+}

@@ -1,0 +1,32 @@
+<mat-card class="wrapper-padding">
+    <h2>LOB Master</h2>
+
+    <form [formGroup]="lobForm" (ngSubmit)="onSubmit()">
+        <div fxLayout="row wrap" fxLayoutGap="16px">
+            <mat-form-field appearance="fill" fxFlex="31%">
+                <mat-label>LOB Name</mat-label>
+                <input matInput formControlName="lob_name" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="31%">
+                <mat-label>LOB Delivery Manager</mat-label>
+                <input matInput formControlName="lob_delivery_manager" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="31%">
+                <mat-label>LOB Client Partner</mat-label>
+                <input matInput formControlName="lob_client_partner"
+                    required>
+            </mat-form-field>
+        </div>
+
+        <div class="submit-container">
+            <button mat-raised-button color="primary"
+                type="submit">Submit</button>
+        </div>
+    </form>
+</mat-card>
+
+<mat-card class="wrapper-m30 wrapper-padding">
+    <app-list-lob></app-list-lob>
+</mat-card>

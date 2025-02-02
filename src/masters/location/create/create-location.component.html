@@ -1,0 +1,32 @@
+<mat-card class="wrapper-padding">
+    <h2>Location Master</h2>
+
+    <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+        <div fxLayout="row wrap" fxLayoutGap="16px">
+            <mat-form-field appearance="fill" fxFlex="31%">
+                <mat-label>Location Name</mat-label>
+                <input matInput formControlName="location_name" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="31%">
+                <mat-label>State</mat-label>
+                <input matInput formControlName="state" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="31%">
+                <mat-label>Country</mat-label>
+                <input matInput formControlName="country"
+                    required>
+            </mat-form-field>
+        </div>
+
+        <div class="submit-container">
+            <button mat-raised-button color="primary"
+                type="submit">Submit</button>
+        </div>
+    </form>
+</mat-card>
+
+<mat-card class="wrapper-m30 wrapper-padding">
+    <app-list-location></app-list-location>
+</mat-card>
