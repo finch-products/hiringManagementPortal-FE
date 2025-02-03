@@ -1,15 +1,15 @@
-<div class="open-demands-form">
+<mat-card class="wrapper-padding">
   <h2>Open Demands</h2>
   <form [formGroup]="demandForm" (ngSubmit)="onSubmit()">
 
-    <div>
+    <div fxLayout="row wrap" fxLayoutGap="16px">
       <!-- Row 1 -->
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>CTool Number</mat-label>
         <input matInput formControlName="ctool_number" required>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>CTool Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="ctool_date"
           required>
@@ -17,7 +17,7 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>Client Manager Name</mat-label>
         <mat-select formControlName="client_manager_name">
           <mat-option *ngFor="let manager of clientManagers" [value]="manager">
@@ -27,12 +27,12 @@
       </mat-form-field>
 
       <!-- Row 2 -->
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>Client Location</mat-label>
         <input matInput formControlName="client_location">
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>Position Location</mat-label>
         <mat-select formControlName="position_location">
           <mat-option *ngFor="let location of locations" [value]="location">
@@ -41,7 +41,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>Tentative Required By</mat-label>
         <input matInput [matDatepicker]="datePicker"
           formControlName="tentative_required_by">
@@ -51,13 +51,13 @@
       </mat-form-field>
 
       <!-- Row 3 -->
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>Skillset</mat-label>
         <textarea matInput formControlName="skillset"
           maxlength="500"></textarea>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>LOB Name</mat-label>
         <mat-select formControlName="lob_name">
           <mat-option *ngFor="let lob of lobNames" [value]="lob">
@@ -66,43 +66,39 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>Practice Unit Name</mat-label>
         <input matInput formControlName="practice_unit_name">
       </mat-form-field>
 
-      <!-- <mat-form-field appearance="fill">
-        <mat-label>Job Description</mat-label>
-        <input type="file" (change)="onFileSelected($event)"
-          formControlName="job_description">
-      </mat-form-field> -->
-
-      <mat-form-field appearance="fill">
+      <!-- Row 4 -->
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>No Of Positions</mat-label>
         <input matInput formControlName="no_of_positions">
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>RR Numbers</mat-label>
         <input matInput formControlName="rr_numbers">
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>RR Grade</mat-label>
         <input matInput formControlName="rr_grade">
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <!-- Row 5 -->
+      <mat-form-field appearance="fill" fxFlex="31%">
         <mat-label>GCB Level</mat-label>
         <input matInput formControlName="gcb_level">
       </mat-form-field>
 
-      <div class="file-input-container">
+      <!-- File Upload -->
+      <div class="file-input-container" fxFlex="100%">
         <label for="job_description">Upload Job Description</label>
         <input type="file" id="job_description"
           (change)="onFileSelected($event)">
       </div>
-
     </div>
 
     <!-- Submit Button -->
@@ -111,6 +107,9 @@
     </div>
 
   </form>
-</div>
 
-<app-list-open-demands></app-list-open-demands>
+</mat-card>
+
+<mat-card class="wrapper-m30 wrapper-padding">
+  <app-list-open-demands></app-list-open-demands>
+</mat-card>
