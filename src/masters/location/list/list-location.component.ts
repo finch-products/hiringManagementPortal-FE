@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
+import { LocationService } from '../../../app/services/location.service';
 
 @Component({
   selector: 'app-list-location',
@@ -17,18 +18,21 @@ export class ListLocationComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
   
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private locationService: LocationService) { }
   
     ngOnInit() {
       this.fetchLOB();
+      this.locationService.locations$.subscribe(location => {
+        this.dataSource.data = location;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
     }
   
     fetchLOB() {
       this.http.get<Location[]>('http://127.0.0.1:8000/api/location-master/').subscribe({
         next: (data) => {
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          this.locationService.setInitialData(data); 
         },
         error: (error) => console.error('Error fetching location:', error)
       });

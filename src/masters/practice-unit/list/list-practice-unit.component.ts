@@ -20,7 +20,6 @@ export class ListPracticeUnitComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private http: HttpClient, private practiceUnitService: PracticeUnitService) { }
-  // @Input() newRecord!: any;
 
   ngOnInit() {
     this.fetchPracticeUnits();

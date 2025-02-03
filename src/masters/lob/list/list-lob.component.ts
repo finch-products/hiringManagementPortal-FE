@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { LOB } from '../../../interfaces/lob.interface';
+import { LobService } from '../../../app/services/lob.service';
 
 @Component({
   selector: 'app-list-lob',
@@ -18,18 +19,21 @@ export class ListLOBComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private lobService: LobService) { }
 
   ngOnInit() {
     this.fetchLOB();
+    this.lobService.lobs$.subscribe(lob => {
+      this.dataSource.data = lob;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   fetchLOB() {
     this.http.get<LOB[]>('http://127.0.0.1:8000/api/lob-master/').subscribe({
       next: (data) => {
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.lobService.setInitialData(data); 
       },
       error: (error) => console.error('Error fetching lobs:', error)
     });

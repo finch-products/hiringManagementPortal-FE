@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { Client } from '../../../interfaces/client.interface';
+import { ClientService } from '../../../app/services/client.service';
 
 @Component({
   selector: 'app-list-client',
@@ -19,18 +20,21 @@ export class ListClientComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
   
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private clientService: ClientService) { }
 
     ngOnInit() {
       this.fetchClients();
+      this.clientService.clients$.subscribe(client => {
+        this.dataSource.data = client;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
     }
   
     fetchClients() {
       this.http.get<Client[]>('http://127.0.0.1:8000/api/client-master/').subscribe({
         next: (data) => {
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          this.clientService.setInitialData(data); 
         },
         error: (error) => console.error('Error fetching clients:', error)
       });

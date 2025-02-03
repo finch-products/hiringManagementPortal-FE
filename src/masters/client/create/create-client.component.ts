@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { Client } from '../../../interfaces/client.interface';
+import { ClientService } from '../../../app/services/client.service';
 
 @Component({
   selector: 'app-create-client',
@@ -14,7 +15,7 @@ import { Client } from '../../../interfaces/client.interface';
 export class CreateClientComponent implements OnInit {
   clientForm: FormGroup;
  
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private clientService: ClientService) {
     this.clientForm = this.fb.group({
       client_name: ['', Validators.required],
       client_manager_name: ['', Validators.required],
@@ -35,6 +36,7 @@ export class CreateClientComponent implements OnInit {
       this.http.post('http://127.0.0.1:8000/api/client-master/', this.clientForm.value).subscribe({
         next: (response) => {
           console.log('Client added:', response);
+          this.clientService.addClient(response);
           this.clientForm.reset();
         },
         error: (error) => console.error('Error adding client:', error)

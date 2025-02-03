@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { LobService } from '../../../app/services/lob.service';
 
 @Component({
   selector: 'app-create-lob',
@@ -10,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class CreateLOBComponent implements OnInit {
   lobForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService) {
     this.lobForm = this.fb.group({
       lob_name: ['', Validators.required],
       lob_delivery_manager: ['', Validators.required],
@@ -23,6 +24,7 @@ export class CreateLOBComponent implements OnInit {
       this.http.post('http://127.0.0.1:8000/api/lob-master/', this.lobForm.value).subscribe({
         next: (response) => {
           console.log('Client added:', response);
+          this.lobService.addLob(response);
           this.lobForm.reset();
         },
         error: (error) => console.error('Error adding client:', error)
