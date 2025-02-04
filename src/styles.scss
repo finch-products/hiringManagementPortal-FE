@@ -75,9 +75,9 @@ mat-sidenav {
 
 .left-sidebar {
   grid-area: left-sidebar;
-  // background-color: #f4f4f4;
+  background-color: #F6F5F1 !important; /* Apply the background to the entire container */
   // padding: 16px;
-  border-right: 1px solid #D9D9D9;
+  border-right: 0px solid #D9D9D9;
 }
 
 .main-content {
@@ -128,7 +128,6 @@ td {
 .mat-mdc-paginator-outer-container {
   display: block !important;
 }
-
 
 
 mat-form-field {

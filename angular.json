@@ -89,7 +89,9 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/app/sidebar/left/assets",
+              "src/assets"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/cyan-orange.css",
