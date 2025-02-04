@@ -1,10 +1,9 @@
-/* General Sidebar Styling */
 mat-sidenav-container {
-    background-color: #F6F5F1 !important; /* Apply the background to the entire container */
+    background-color: #F6F5F1 !important; 
 }
 mat-sidenav {
     width: 250px;
-    background-color: #F6F5F1; /* Light beige */
+    background-color: #F6F5F1; 
     color: #333;
     border-right: 1px solid #E0E0E0;
 }
@@ -45,11 +44,10 @@ mat-nav-list a span {
 }
 
 mat-nav-list a:hover {
-    background-color: #F7CB15; /* Mustard yellow */
+    background-color: #F7CB15;
     color: #000;
 }
 
-/* Expansion Panel (Dropdown) */
 mat-expansion-panel {
     border-radius: 5px;
     margin: 5px 0;
@@ -57,7 +55,6 @@ mat-expansion-panel {
     box-shadow: none !important;
 }
 
-/* Keep the header background light */
 mat-expansion-panel-header {
     box-shadow: none !important;
     border: none !important;
@@ -93,7 +90,6 @@ mat-action-list {
     border-radius: 5px;
 }
 
-/* Style dropdown buttons */
 mat-action-list button {
     display: flex;
     align-items: center;
@@ -122,12 +118,10 @@ mat-action-list button span {
     align-items: center;
 }
 
-/* Hover Effect for Dropdown Items */
 mat-action-list button:hover {
-    background-color: #F7CB15 !important; /* Mustard yellow */
+    background-color: #F7CB15 !important;
 }
 
-/* Documents Section */
 .documents-title {
     font-size: 13px;
     font-weight: bold;
@@ -137,6 +131,6 @@ mat-action-list button:hover {
 }
 
 mat-expansion-panel-header:hover {
-    background-color: #F7CB15 !important; /* Mustard yellow */
+    background-color: #F7CB15 !important; 
     transition: background-color 0.3s ease-in-out;
 }
