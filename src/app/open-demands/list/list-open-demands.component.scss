@@ -2,7 +2,7 @@
 .search-box mat-icon {
     position: absolute;
     top: 50%;
-    right: 10px; /* Adjust as needed */
+    right: 10px; 
     transform: translateY(-50%);
     color: gray;
   }
@@ -14,7 +14,7 @@
 }
 
 .table-container table th {
-    background-color: #f8f8f8; /* Light gray for headers */
+    background-color: #f8f8f8; 
     font-weight: bold;
     padding: 10px;
     text-align: left;
@@ -22,33 +22,26 @@
 
 .table-container {
     border-radius: 12px;
-    overflow: hidden; /* Ensures border-radius applies properly */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+    overflow: hidden; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
 table.mat-table {
     border-radius: 12px;
     overflow: hidden; 
-    background: white; /* Ensures background is applied properly */
+    background: white; 
 }
 
-/* Style for alternating row colors */
+/* alternating row colors */
 .table-container table tr:nth-child(even) {
-    background-color: #ffecec; /* Light pink */
+    background-color: #ffecec; 
 }
 
 .table-container table tr:nth-child(odd) {
-    background-color: #ffffff; /* White */
+    background-color: #ffffff; 
 }
 
-/* Add padding and border to cells */
 .table-container table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
-
-::ng-deep .mat-paginator-navigation-next{
-    color: yellow !important;
-  }
-  
-  
