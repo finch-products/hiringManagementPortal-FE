@@ -9,7 +9,7 @@
             <a mat-list-item routerLink="/dashboard" >
                 <mat-icon>dashboard</mat-icon> Dashboard
             </a>
-            <a mat-list-item routerLink="/dashboard">
+            <a mat-list-item routerLink="/open-demands">
                 <mat-icon>list</mat-icon> Demand entry
             </a>
             <a mat-list-item routerLink="/views">
@@ -23,10 +23,10 @@
                     <mat-icon>summarize</mat-icon> Masters
                 </mat-expansion-panel-header>
                 <mat-action-list>
-                    <button mat-list-item>Client Master</button>
-                    <button mat-list-item>LOB Master</button>
-                    <button mat-list-item>Location Master</button>
-                    <button mat-list-item>Practice Unit Master</button>
+                    <button mat-list-item routerLink="/client-master">Client Master</button>
+                    <button mat-list-item routerLink="/lob-master">LOB Master</button>
+                    <button mat-list-item routerLink="/location-master">Location Master</button>
+                    <button mat-list-item routerLink="/practice-unit-master">Practice Unit Master</button>
                 </mat-action-list>
             </mat-expansion-panel>
             <a mat-list-item routerLink="/settings">
