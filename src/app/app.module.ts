@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
+ // Import your component
 
 // Angular Material Modules
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -39,7 +40,6 @@ import { CreateLocationComponent } from '../masters/location/create/create-locat
 import { ListLocationComponent } from '../masters/location/list/list-location.component';
 import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
 import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-practice-unit.component';
-
 
 @NgModule({
   declarations: [
@@ -82,6 +82,7 @@ import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-pr
     MatPaginatorModule,
     MatSortModule,
     FlexLayoutModule,
+    FormsModule,
     RouterModule.forRoot([])
   ],
   exports: [MatSidenavModule, MatExpansionModule],

@@ -1,0 +1,80 @@
+/* Header Styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8e9a1;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 870px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  overflow: hidden;
+  max-width: 500px;
+  margin-right: 30px; /* Space before icons */
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 16px;
+  background: transparent;
+  padding-left: 15px;
+}
+
+/* Search Button */
+.search-btn {
+  background-color: #f4c542;
+  border: none;
+  padding: 10px 15px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #e0b832;
+}
+
+.search-btn mat-icon {
+  color: white;
+  font-size: 20px;
+}
+
+/* Icons */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon {
+  cursor: pointer;
+  color: #555;
+  font-size: 24px;
+  transition: color 0.3s;
+}
+
+.icon:hover {
+  color: #333;
+}
