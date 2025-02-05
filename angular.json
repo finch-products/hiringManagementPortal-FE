@@ -89,7 +89,9 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/app/sidebar/left/assets",
+              "src/assets"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/cyan-orange.css",
@@ -100,5 +102,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "17facf1d-a93f-4368-b0aa-5be53ea2443a"
   }
 }
