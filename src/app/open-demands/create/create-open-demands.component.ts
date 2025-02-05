@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { OpenDemand } from '../../../interfaces/open-demand.interface';
+import { OpenDemandService } from '../../services/open.demand.service';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -14,7 +16,7 @@ export class CreateOpenDemandComponent implements OnInit {
   lobNames = ["Technology Services", "AI & ML", "Cloud Computing"];
   selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService) {
     this.demandForm = this.fb.group({
       ctool_number: [''],
       ctool_date: [''],
@@ -102,6 +104,7 @@ export class CreateOpenDemandComponent implements OnInit {
     this.http.post('http://127.0.0.1:8000/api/open-demands/', formData).subscribe({
       next: (response) => {
         console.log('Success:', response);
+        this.openDemandService.addDemand(response);
       },
       error: (error) => {
         console.error('Error in API call:', error);
