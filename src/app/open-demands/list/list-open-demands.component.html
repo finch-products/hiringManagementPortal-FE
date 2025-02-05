@@ -1,12 +1,12 @@
-<mat-card>
+<mat-card class="wrapper-padding">
     <div class="search-container">
-        <h2>Open Demands List</h2>
-
+        <h2>Client Master List</h2>
         <!-- Search Box -->
         <mat-form-field appearance="outline" class="search-box">
             <mat-label>Search</mat-label>
-            <input matInput (keyup)="applyFilter($event)"
+            <input matInput  (keyup)="applyFilter($event)"
                 placeholder="Filter data">
+                <mat-icon>search</mat-icon>
         </mat-form-field>
     </div>
 
@@ -112,15 +112,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             
         </table>
-
-      
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                showFirstLastButtons></mat-paginator>
      
-
-        <!-- Pagination -->
-        <!-- <div>
-           
-        </div> -->
     </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </mat-card>

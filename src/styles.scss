@@ -96,6 +96,7 @@ mat-sidenav {
 .table-container {
   width: 100%;
   overflow-x: auto;
+  border-color: #000;
   /* Enables horizontal scrolling if needed */
 }
 
@@ -115,10 +116,11 @@ td {
 }
 
 .search-container {
-  display: flex;
-  justify-content: space-between;
-  /* Moves search to the right */
-  align-items: center;
+  display: flex !important;
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 15px;
+  
 }
 
 .search-box {
@@ -128,8 +130,6 @@ td {
 .mat-mdc-paginator-outer-container {
   display: block !important;
 }
-
-
 
 mat-form-field {
   width: 100%;
