@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
+import { OpenDemandService } from '../../services/open.demand.service';
 
 @Component({
   selector: 'app-list-open-demands',
@@ -15,27 +16,30 @@ export class ListOpenDemandsComponent {
   displayedColumns: string[] = [
     'ctool_number', 'ctool_date', 'client_manager_name',
     'client_location', 'position_location', 'tentative_required_by',
-    'skillset', 'lob_name', 'practice_unit_name', 'job_description', 'no_of_positions', 
-     'rr_numbers', 'rr_grade', 'gcb_level'
+    'skillset', 'lob_name', 'practice_unit_name', 'job_description', 'no_of_positions',
+    'rr_numbers', 'rr_grade', 'gcb_level'
   ];
- 
+
   dataSource = new MatTableDataSource<OpenDemand>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private demandService: OpenDemandService) { }
 
   ngOnInit() {
     this.fetchOpenDemands();
+    this.demandService.demands$.subscribe(demand => {
+      this.dataSource.data = demand;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   fetchOpenDemands() {
     this.http.get<OpenDemand[]>('http://127.0.0.1:8000/api/open-demands/').subscribe({
       next: (data) => {
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.demandService.setInitialData(data);
       },
       error: (error) => {
         console.error('Error fetching open demands:', error);
