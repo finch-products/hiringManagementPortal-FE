@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
  // Import your component
 
 // Angular Material Modules
@@ -23,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 // Import all necessary components
 import { CreateOpenDemandComponent } from './open-demands/create/create-open-demands.component';
 import { ListOpenDemandsComponent } from './open-demands/list/list-open-demands.component';
@@ -40,6 +42,7 @@ import { CreateLocationComponent } from '../masters/location/create/create-locat
 import { ListLocationComponent } from '../masters/location/list/list-location.component';
 import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
 import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-practice-unit.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,8 @@ import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-pr
     ListPracticeUnitComponent,
     LeftSiderbarComponent,
     RightSidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -78,11 +82,13 @@ import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-pr
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
+    MatProgressBarModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     FlexLayoutModule,
     FormsModule,
+    NgxChartsModule,
     RouterModule.forRoot([])
   ],
   exports: [MatSidenavModule, MatExpansionModule],

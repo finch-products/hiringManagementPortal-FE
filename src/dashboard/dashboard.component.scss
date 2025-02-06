@@ -1,0 +1,169 @@
+/* Overview Cards */
+.overview {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.charts {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.widgets {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-direction: row;
+}
+
+.announcement,
+.target {
+    width: 50%;
+    display: flex;
+    padding: 30px;
+}
+
+.welcome-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background: #e0c4ff;
+}
+
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card {
+    width: 250px;
+    /* Set a fixed width */
+    padding: 20px;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Left Border Styling */
+.card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 6px;
+    height: 80%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+/* Different border colors for each card */
+.card.yellow::before {
+    background: #F9D976;
+}
+
+.card.purple::before {
+    background: #8C52FF;
+}
+
+.card.blue::before {
+    background: #6CC3FF;
+}
+
+/* Card title */
+.card h5 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Number bubble */
+.number-bubble {
+    padding: 10px 18px;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+
+.position-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    width: 280px;
+    padding: 15px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    font-size: 24px;
+    color: #6C63FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(140, 82, 255, 0.1);
+    margin-right: 15px;
+}
+
+.number {
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.show-more {
+    font-size: 12px;
+    color: #6CC3FF;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.show-more:hover {
+    text-decoration: underline;
+}
+
+button {
+    width: 30%;
+    background-color: #fff;
+    color: black;
+    border: 1px solid blue;
+}

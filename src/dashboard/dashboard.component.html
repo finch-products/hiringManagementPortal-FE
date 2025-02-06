@@ -1,0 +1,69 @@
+<div class="dashboard-cards">
+    <div class="card yellow">
+      <h5>Total Position</h5>
+      <span class="number-bubble">20</span>
+    </div>
+  
+    <div class="card purple">
+      <h5>Open Position</h5>
+      <span class="number-bubble">6</span>
+    </div>
+  
+    <div class="card blue">
+      <h5>Filled Position</h5>
+      <span class="number-bubble">32</span>
+    </div>
+  </div>
+  
+
+  <!-- Graphs and Charts -->
+  <div class="charts">
+    <mat-card>
+      <ngx-charts-pie-chart [results]="pieChartData" [view]="[400,300]" [legend]="true"></ngx-charts-pie-chart>
+    </mat-card>
+    <mat-card>
+      <ngx-charts-bar-vertical [results]="barChartData" [view]="[400,300]" [legend]="true"></ngx-charts-bar-vertical>
+    </mat-card>
+  </div>
+
+  <!-- More Widgets -->
+  <div class="widgets">
+    <mat-card class="announcement">
+      <h3>Watch more seasons of this anime</h3>
+      <p>Watch more seasons of this anime Yoriichi zeroshiki</p>
+      <button mat-raised-button color="primary">Contact me</button>
+    </mat-card>
+    <mat-card class="target">
+      <h5>Target Progress</h5>
+      <div *ngFor="let progress of progressData">
+        <span>{{progress.name}}</span>
+        <mat-progress-bar [value]="progress.value"></mat-progress-bar>
+      </div>
+    </mat-card>
+  </div>
+
+
+  <div class="position-cards">
+  
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="icon">
+        <mat-icon>show_chart</mat-icon>
+      </div>
+      <div class="content">
+        <p class="title">New positions opened last week</p>
+        <a href="#" class="show-more">Show more</a>
+      </div>
+    </div>
+  
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="icon number">21</div>
+      <div class="content">
+        <p class="title">New positions opened last week</p>
+        <a href="#" class="show-more">Show them</a>
+      </div>
+    </div>
+  
+  </div>
+  

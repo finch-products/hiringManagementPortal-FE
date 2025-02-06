@@ -13,11 +13,16 @@ import { OpenDemandService } from '../../services/open.demand.service';
 })
 export class ListOpenDemandsComponent {
 
+  // displayedColumns: string[] = [
+  //   'ctool_number', 'ctool_date', 'client_manager_name',
+  //   'client_location', 'position_location', 'tentative_required_by',
+  //   'skillset', 'lob_name', 'practice_unit_name', 'job_description', 'no_of_positions',
+  //   'rr_numbers', 'rr_grade', 'gcb_level'
+  // ];
+
   displayedColumns: string[] = [
     'ctool_number', 'ctool_date', 'client_manager_name',
-    'client_location', 'position_location', 'tentative_required_by',
-    'skillset', 'lob_name', 'practice_unit_name', 'job_description', 'no_of_positions',
-    'rr_numbers', 'rr_grade', 'gcb_level'
+    'client_location', 'position_location', 'tentative_required_by'
   ];
 
   dataSource = new MatTableDataSource<OpenDemand>([]);
