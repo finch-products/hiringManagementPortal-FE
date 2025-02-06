@@ -6,33 +6,35 @@
         </div>
         <br>
         <mat-nav-list>
-            <a mat-list-item routerLink="/dashboard" >
+            <a mat-list-item routerLink="/dashboard" (click)="setActive($event)">
                 <mat-icon>dashboard</mat-icon> Dashboard
             </a>
-            <a mat-list-item routerLink="/open-demands">
+            <a mat-list-item routerLink="/open-demands" (click)="setActive($event)">
                 <mat-icon>list</mat-icon> Demand entry
             </a>
-            <a mat-list-item routerLink="/views">
+            <a mat-list-item routerLink="/views" (click)="setActive($event)">
                 <mat-icon>visibility</mat-icon> Other Views
             </a>
-            <a mat-list-item routerLink="/reports">
+            <a mat-list-item routerLink="/reports" (click)="setActive($event)">
                 <mat-icon>category</mat-icon> Reports
             </a>
+        
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-icon>summarize</mat-icon> Masters
                 </mat-expansion-panel-header>
                 <mat-action-list>
-                    <button mat-list-item routerLink="/client-master">Client Master</button>
-                    <button mat-list-item routerLink="/lob-master">LOB Master</button>
-                    <button mat-list-item routerLink="/location-master">Location Master</button>
-                    <button mat-list-item routerLink="/practice-unit-master">Practice Unit Master</button>
+                    <button mat-list-item routerLink="/client-master" (click)="setActive($event)">Client Master</button>
+                    <button mat-list-item routerLink="/lob-master" (click)="setActive($event)">LOB Master</button>
+                    <button mat-list-item routerLink="/location-master" (click)="setActive($event)">Location Master</button>
+                    <button mat-list-item routerLink="/practice-unit-master" (click)="setActive($event)">Practice Unit Master</button>
                 </mat-action-list>
             </mat-expansion-panel>
-            <a mat-list-item routerLink="/settings">
+        
+            <a mat-list-item routerLink="/settings" (click)="setActive($event)">
                 <mat-icon>settings</mat-icon> Settings
             </a>
-        </mat-nav-list>
+        </mat-nav-list>        
         <br>
         <hr style="border: none; border-top: 1px solid #ccc; margin: 10px 0;">
         <mat-nav-list>
@@ -40,19 +42,19 @@
                  Documents
             </div>
             <br>
-            <a mat-list-item routerLink="/documents/job-descriptions">
+            <a mat-list-item routerLink="/documents/job-descriptions" (click)="setActive($event)">
                 <mat-icon>arrow_right </mat-icon><mat-icon>description</mat-icon> Job Descriptions
             </a>
-            <a mat-list-item routerLink="/documents/profiles">
+            <a mat-list-item routerLink="/documents/profiles" (click)="setActive($event)">
                 <mat-icon>arrow_right</mat-icon><mat-icon>description</mat-icon> Profiles
             </a>
-            <a mat-list-item routerLink="/documents/sows">
+            <a mat-list-item routerLink="/documents/sows" (click)="setActive($event)">
                 <mat-icon>arrow_right</mat-icon><mat-icon>description</mat-icon> SOWs
             </a>
-            <a mat-list-item routerLink="/documents/rate-cards">
+            <a mat-list-item routerLink="/documents/rate-cards" (click)="setActive($event)">
                 <mat-icon>arrow_right</mat-icon><mat-icon>description</mat-icon> Rate Cards
             </a>
-            <a mat-list-item routerLink="/documents/others">
+            <a mat-list-item routerLink="/documents/others" (click)="setActive($event)">
                 <mat-icon>arrow_right</mat-icon><mat-icon>description</mat-icon> Others
             </a>
         </mat-nav-list>
