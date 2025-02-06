@@ -61,7 +61,6 @@ export class CreateOpenDemandComponent implements OnInit {
   // }
 
   onSubmit() {
-    alert('inside')
     const formData = new FormData();
 
     // Debug: Check if form values exist before appending
@@ -103,10 +102,10 @@ export class CreateOpenDemandComponent implements OnInit {
 
     // Send API request
     this.http.post('http://64.227.145.117/api/open-demands/', formData).subscribe({
-      next: (response) => {
-        alert('inside http')
+    next: (response) => {
         console.log('Success:', response);
         this.openDemandService.addDemand(response);
+        this.demandForm.reset();
       },
       error: (error) => {
         console.error('Error in API call:', error);
