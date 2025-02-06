@@ -2,18 +2,18 @@
     <h2>Location Master</h2>
 
     <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
-        <div fxLayout="row wrap" fxLayoutGap="16px">
-            <mat-form-field appearance="fill" fxFlex="31%">
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Location Name</mat-label>
                 <input matInput formControlName="location_name" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>State</mat-label>
                 <input matInput formControlName="state" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Country</mat-label>
                 <input matInput formControlName="country"
                     required>

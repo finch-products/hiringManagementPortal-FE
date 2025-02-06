@@ -2,24 +2,24 @@
     <h2>Practice Unit Master</h2>
 
     <form [formGroup]="practiceUnitForm" (ngSubmit)="onSubmit()">
-        <div fxLayout="row wrap" fxLayoutGap="16px">
-            <mat-form-field appearance="fill" fxFlex="31%">
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Practice Unit Name</mat-label>
                 <input matInput formControlName="practice_unit_name" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Practice Unit Sales</mat-label>
                 <input matInput formControlName="practice_unit_sales" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Practice Unit Delivery</mat-label>
                 <input matInput formControlName="practice_unit_delivery"
                     required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field field-30">
                 <mat-label>Practice Unit Solution</mat-label>
                 <input matInput formControlName="practice_unit_solution"
                     required>

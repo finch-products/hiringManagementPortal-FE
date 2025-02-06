@@ -2,18 +2,18 @@
     <h2>LOB Master</h2>
 
     <form [formGroup]="lobForm" (ngSubmit)="onSubmit()">
-        <div fxLayout="row wrap" fxLayoutGap="16px">
-            <mat-form-field appearance="fill" fxFlex="31%">
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>LOB Name</mat-label>
                 <input matInput formControlName="lob_name" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>LOB Delivery Manager</mat-label>
                 <input matInput formControlName="lob_delivery_manager" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>LOB Client Partner</mat-label>
                 <input matInput formControlName="lob_client_partner"
                     required>

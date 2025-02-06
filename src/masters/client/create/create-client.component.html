@@ -1,35 +1,35 @@
-<mat-card class="wrapper-padding">
+<mat-card class="form-container">
     <h2>Client Master</h2>
 
     <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
-        <div fxLayout="row wrap" fxLayoutGap="16px">
-            <mat-form-field appearance="fill" fxFlex="31%">
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Name</mat-label>
                 <input matInput formControlName="client_name" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Manager Name</mat-label>
                 <input matInput formControlName="client_manager_name" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Email</mat-label>
                 <input matInput formControlName="client_email" type="email"
                     required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Phone</mat-label>
                 <input matInput formControlName="client_phone" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Location</mat-label>
                 <input matInput formControlName="client_location" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="31%">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Department</mat-label>
                 <input matInput formControlName="client_department" required>
             </mat-form-field>
