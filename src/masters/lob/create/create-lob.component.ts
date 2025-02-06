@@ -14,6 +14,7 @@ export class CreateLOBComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService) {
     this.lobForm = this.fb.group({
       lob_name: ['', Validators.required],
+      lob_description: [''],
       lob_delivery_manager: ['', Validators.required],
       lob_client_partner: ['', Validators.required],
     });

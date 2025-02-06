@@ -4,6 +4,11 @@
     <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Client Id</mat-label>
+                <input matInput formControlName="clm_clientId">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Name</mat-label>
                 <input matInput formControlName="client_name" required>
             </mat-form-field>
@@ -25,11 +30,16 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Client Address</mat-label>
+                <input matInput formControlName="clm_address" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Location</mat-label>
                 <input matInput formControlName="client_location" required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field appearance="fill" class="form-field field-30">
                 <mat-label>Client Department</mat-label>
                 <input matInput formControlName="client_department" required>
             </mat-form-field>

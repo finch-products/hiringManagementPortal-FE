@@ -17,10 +17,12 @@ export class CreateClientComponent implements OnInit {
  
   constructor(private fb: FormBuilder, private http: HttpClient, private clientService: ClientService) {
     this.clientForm = this.fb.group({
+      clm_clientId: [''],
       client_name: ['', Validators.required],
       client_manager_name: ['', Validators.required],
       client_email: ['', [Validators.required, Validators.email]],
       client_phone: ['', Validators.required],
+      clm_address: [''],
       client_location: ['', Validators.required],
       client_department: ['', Validators.required]
     });

@@ -17,7 +17,10 @@ export class CreatePracticeUnitComponent implements OnInit {
       practice_unit_name: ['', Validators.required],
       practice_unit_sales: ['', Validators.required],
       practice_unit_delivery: ['', Validators.required],
-      practice_unit_solution: ['', Validators.required]
+      practice_unit_solution: ['', Validators.required],
+      sum_spoc: [''],
+      pum_sbuId: [''],
+      pum_deliveryManager: ['']
     });
   }
 
