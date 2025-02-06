@@ -31,7 +31,7 @@ export class ListPracticeUnitComponent {
   }
 
   fetchPracticeUnits() {
-    this.http.get<PracticeUnit[]>('http://127.0.0.1:8000/api/practice-unit-master/').subscribe({
+    this.http.get<PracticeUnit[]>('http://64.227.145.117/api/practice-unit-master/').subscribe({
       next: (data) => {
         // this.dataSource.data = data;
         // this.dataSource.paginator = this.paginator;

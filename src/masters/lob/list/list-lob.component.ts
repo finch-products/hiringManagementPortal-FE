@@ -31,7 +31,7 @@ export class ListLOBComponent {
   }
 
   fetchLOB() {
-    this.http.get<LOB[]>('http://127.0.0.1:8000/api/lob-master/').subscribe({
+    this.http.get<LOB[]>('http://64.227.145.117/api/lob-master/').subscribe({
       next: (data) => {
         this.lobService.setInitialData(data); 
       },

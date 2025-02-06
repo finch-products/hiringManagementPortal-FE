@@ -37,7 +37,7 @@ export class ListOpenDemandsComponent {
   }
 
   fetchOpenDemands() {
-    this.http.get<OpenDemand[]>('http://127.0.0.1:8000/api/open-demands/').subscribe({
+    this.http.get<OpenDemand[]>('http://64.227.145.117/api/open-demands/').subscribe({
       next: (data) => {
         this.demandService.setInitialData(data);
       },

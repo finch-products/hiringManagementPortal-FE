@@ -55,7 +55,7 @@ export class CreateOpenDemandComponent implements OnInit {
   //   }
 
   //   console.log(JSON.stringify(formData));
-  //   this.http.post('http://127.0.0.1:8000/api/open-demands/', formData).subscribe(response => {
+  //   this.http.post('http://64.227.145.117/api/open-demands/', formData).subscribe(response => {
   //     console.log('Success:', response);
   //   });
   // }
@@ -101,7 +101,7 @@ export class CreateOpenDemandComponent implements OnInit {
     // }
 
     // Send API request
-    this.http.post('http://127.0.0.1:8000/api/open-demands/', formData).subscribe({
+    this.http.post('http://64.227.145.117/api/open-demands/', formData).subscribe({
       next: (response) => {
         console.log('Success:', response);
         this.openDemandService.addDemand(response);

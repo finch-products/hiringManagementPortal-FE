@@ -20,7 +20,7 @@ constructor(private fb: FormBuilder, private http: HttpClient, private locationS
 
   onSubmit() {
     if (this.locationForm.valid) {
-      this.http.post('http://127.0.0.1:8000/api/location-master/', this.locationForm.value).subscribe({
+      this.http.post('http://64.227.145.117/api/location-master/', this.locationForm.value).subscribe({
         next: (response) => {
           console.log('Location added:', response);
           this.locationService.addLocation(response);

@@ -23,7 +23,7 @@ export class CreatePracticeUnitComponent implements OnInit {
 
   onSubmit() {
     if (this.practiceUnitForm.valid) {
-      this.http.post('http://127.0.0.1:8000/api/practice-unit-master/', this.practiceUnitForm.value).subscribe({
+      this.http.post('http://64.227.145.117/api/practice-unit-master/', this.practiceUnitForm.value).subscribe({
         next: (response) => {
           console.log('Practice Unit added:', response);
           this.practiceUnitService.addPracticeUnit(response); // Send to list component
