@@ -1,1 +1,14 @@
-<p>header works!</p>
+<header class="header">
+  <div class="search-container">
+    <input type="text" placeholder="Search ..." [(ngModel)]="searchQuery" />
+    <button class="search-btn">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <div class="icons">
+    <mat-icon class="icon">notifications</mat-icon>
+    <mat-icon class="icon">settings</mat-icon>
+    <mat-icon class="icon">account_circle</mat-icon>
+  </div>
+</header>

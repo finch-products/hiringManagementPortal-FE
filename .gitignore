@@ -1,7 +1,6 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
 # Compiled output
-/dist
 /tmp
 /out-tsc
 /bazel-out
@@ -36,6 +35,7 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+/package-lock.json
 
 # System files
 .DS_Store
