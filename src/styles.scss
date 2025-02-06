@@ -1,5 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-
 html,
 body {
   height: 100%;
@@ -19,8 +17,6 @@ body {
 }
 
 mat-sidenav {
-  // width: 250px !important;
-  // background-color: #FDC30A !important;
   border-radius: 0 !important;
 }
 
@@ -59,10 +55,6 @@ mat-sidenav {
   background-color: transparent !important;
 }
 
-// mat-form-field {
-//   padding: 0 10px;
-// }
-
 .grid-container {
   display: grid;
   grid-template-columns: 17% 63% 20%;
@@ -73,7 +65,6 @@ mat-sidenav {
 .left-sidebar {
   grid-area: left-sidebar;
   background-color: #F6F5F1 !important;
-  // padding: 16px;
   border-right: 0px solid #D9D9D9;
   position: fixed;
   height: 100vh;
@@ -98,7 +89,6 @@ mat-sidenav {
   width: 100%;
   overflow-x: auto;
   border-color: #000;
-  /* Enables horizontal scrolling if needed */
 }
 
 table {
@@ -109,18 +99,16 @@ table {
 th,
 td {
   white-space: nowrap;
-  /* Prevents text from wrapping */
   overflow: hidden;
   text-overflow: ellipsis;
-  /* Adds '...' for long text */
 }
 
 .search-container {
   display: flex !important;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
-  
+
 }
 
 .search-box {
@@ -136,7 +124,6 @@ mat-form-field {
   display: flex;
   align-items: center;
   justify-content: center;
-  // height: 56px; /* Ensures all fields are the same height */
 }
 
 .form-container {
@@ -151,7 +138,6 @@ mat-form-field {
 
 
 
-/* Wrapper and layout */
 .form-container {
   background: #fff;
   padding: 20px;
@@ -159,7 +145,6 @@ mat-form-field {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Form fields layout */
 .form-row {
   display: flex;
   flex-wrap: wrap;
@@ -172,20 +157,17 @@ mat-form-field {
   min-width: 30% !important;
 }
 
-/* Ensure the file input starts on a new row */
 .full-width {
   flex: 1 1 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Reduce line height for GCB Level */
 .form-field:last-child input {
   padding-bottom: 4px;
   border-bottom: 1px solid #ccc;
 }
 
-/* File Upload Styling */
 .file-input-container {
   display: flex;
   flex-direction: column;
@@ -210,7 +192,6 @@ mat-form-field {
   border-radius: 5px;
 }
 
-/* Submit Button Styling - Now Outside the Form */
 .submit-container {
   display: flex;
   justify-content: flex-end;
@@ -230,7 +211,6 @@ mat-form-field {
   background: #d9534f !important;
 }
 
-/* General Styling */
 .wrapper-padding {
   padding: 20px;
 }
@@ -240,7 +220,7 @@ mat-form-field {
 }
 
 .field-30 {
-  max-width: 100px; /* Adjust width as needed */
+  max-width: 100px;
   width: 100%;
 }
 
@@ -257,7 +237,7 @@ mat-label {
 .search-box mat-icon {
   position: absolute;
   top: 50%;
-  right: 10px; 
+  right: 10px;
   transform: translateY(-50%);
   color: gray;
 }
@@ -269,29 +249,29 @@ mat-label {
 }
 
 .table-container table th {
-  background-color: #f8f8f8; 
+  background-color: #f8f8f8;
   font-weight: bold;
   padding: 10px;
   text-align: left;
 }
 
 .table-container {
-  border-radius: 12px; 
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 table.mat-table {
   border-radius: 12px;
-  overflow: hidden; 
-  background: white; 
+  overflow: hidden;
+  background: white;
 }
 
 .table-container table tr:nth-child(even) {
-  background-color: #ffecec; 
+  background-color: #ffecec;
 }
 
 .table-container table tr:nth-child(odd) {
-  background-color: #ffffff; 
+  background-color: #ffffff;
 }
 
 .table-container table td {
