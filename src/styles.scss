@@ -66,18 +66,19 @@ mat-sidenav {
 .grid-container {
   display: grid;
   grid-template-columns: 17% 63% 20%;
-  /* Left Sidebar 25%, Main Content 50%, Right Sidebar 25% */
-  // grid-gap: 20px; /* Space between columns */
   grid-template-areas:
     "left-sidebar main-content right-sidebar";
-  /* Named areas for easy reference */
 }
 
 .left-sidebar {
   grid-area: left-sidebar;
-  background-color: #F6F5F1 !important; /* Apply the background to the entire container */
+  background-color: #F6F5F1 !important;
   // padding: 16px;
   border-right: 0px solid #D9D9D9;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  width: 17%;
 }
 
 .main-content {
@@ -102,7 +103,6 @@ mat-sidenav {
 table {
   width: 100%;
   table-layout: fixed;
-  /* Ensures all columns get equal space */
 }
 
 th,
@@ -174,5 +174,16 @@ mat-form-field {
       "left-sidebar"
       "right-sidebar";
     /* Stack the sections on top of each other */
+  }
+
+  .left-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+  }
+
+  .main-content {
+    margin-left: 0;
   }
 }

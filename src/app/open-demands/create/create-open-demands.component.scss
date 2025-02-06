@@ -1,11 +1,101 @@
+/* Wrapper and layout */
+.form-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form fields layout */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.form-field {
+  flex: 1;
+  min-width: 30%;
+}
+
+/* Ensure the file input starts on a new row */
+.full-width {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reduce line height for GCB Level */
+.form-field:last-child input {
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* File Upload Styling */
 .file-input-container {
-    margin-top: 16px;
-  }
-  
-  .file-input-container input[type="file"] {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.file-input-container label {
+  font-family: Inter;
+  font-size: 16px;
+  color: #444345;
+  font-weight: 700;
+  line-height: 14.52px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  margin-bottom: 8px;
+}
+
+.file-input-container input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Submit Button Styling - Now Outside the Form */
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.submit-container button {
+  background: #F8A1A1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-container button:hover {
+  background: #d9534f;
+}
+
+/* General Styling */
+.wrapper-padding {
+  padding: 20px;
+}
+
+.wrapper-m30 {
+  margin-top: 30px;
+}
+
+.gcb-level-field {
+  max-width: 100px; /* Adjust width as needed */
+  width: 100%;
+}
+
+mat-label {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  color: #444345;
+  font-weight: 700;
+  line-height: 14.52px;
+  text-align: left;
+}
