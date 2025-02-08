@@ -6,43 +6,72 @@
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Id</mat-label>
                 <input matInput formControlName="clm_clientId">
+                <mat-error>
+                    <app-form-error [errors]="clientForm.controls['clm_clientId'].errors" ></app-form-error>
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Name</mat-label>
                 <input matInput formControlName="client_name" required>
+                <mat-error>
+                    <app-form-error [errors]="clientForm.controls['client_name'].errors" ></app-form-error>
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Manager Name</mat-label>
-                <input matInput formControlName="client_manager_name" required>
+                <input matInput formControlName="client_manager_name">
+                <mat-error>
+                    <app-form-error [errors]="clientForm.controls['client_manager_name'].errors" ></app-form-error>
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Email</mat-label>
                 <input matInput formControlName="client_email" type="email"
                     required>
+                    <mat-error>
+                        <app-form-error [errors]="clientForm.controls['client_email'].errors" ></app-form-error>
+                      </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Phone</mat-label>
-                <input matInput formControlName="client_phone" required>
+                <input matInput formControlName="client_phone">
+                <mat-error>
+                    <app-form-error [errors]="clientForm.controls['client_phone'].errors" ></app-form-error>
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Address</mat-label>
-                <input matInput formControlName="clm_address" required>
+                <input matInput formControlName="clm_address">
+                <mat-error>
+                    <app-form-error [errors]="clientForm.controls['clm_address'].errors" ></app-form-error>
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Location</mat-label>
-                <input matInput formControlName="client_location" required>
+                <input matInput formControlName="client_location">
+                <mat-error>
+                    <app-form-error [errors]="clientForm.controls['client_location'].errors" ></app-form-error>
+                  </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field field-30">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Department</mat-label>
-                <input matInput formControlName="client_department" required>
+                <input matInput formControlName="client_department">
+                <mat-error>
+                    <app-form-error [errors]="clientForm.controls['client_department'].errors" ></app-form-error>
+                  </mat-error>
             </mat-form-field>
+            <mat-radio-group formControlName="activeStatus" appearance="fill" class="form-field">
+                <mat-label>Active?</mat-label>
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
         </div>
 
         <div class="submit-container">
