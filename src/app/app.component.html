@@ -37,8 +37,7 @@
   </div>
 </mat-card> -->
 
-
-<mat-card class="main-layout">
+<div class="main-layout">
   <div class="grid-container">
 
     <!-- Left Sidebar -->
@@ -51,25 +50,24 @@
     <div class="content-area">
 
       <!-- Full-Width Header -->
-      <app-header class="full-width-header"></app-header>
+      <app-header></app-header>
 
       <!-- Main Content & Reports Sidebar -->
       <div class="content-wrapper">
-        
+
         <!-- Main Dashboard Section (80%) -->
         <div class="page-content">
           <router-outlet></router-outlet>
         </div>
 
         <!-- Right Sidebar (20%) -->
-        <div *ngIf="showRightSidebar" class="right-sidebar">
+        <!-- <div *ngIf="showRightSidebar" class="right-sidebar">
           <h4>Reports or Info</h4>
           <p>Here you can display any report, status, or additional info.</p>
-        </div>
+        </div> -->
 
       </div>
-      
+
     </div>
   </div>
-</mat-card>
-
+</div>
