@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'lob-master', component: CreateLOBComponent},
   { path: 'location-master', component: CreateLocationComponent},
   { path: 'practice-unit-master', component: CreatePracticeUnitComponent},
-  { path: 'dashboard', component: DashboardComponent}
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) }
   // { path: 'client-master', component: ClientMasterComponent },
   // { path: 'lob-master', component: LobMasterComponent },
   // { path: 'location-master', component: LocationMasterComponent },
