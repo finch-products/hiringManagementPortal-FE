@@ -18,20 +18,27 @@ export class CreateOpenDemandComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService) {
     this.demandForm = this.fb.group({
-      ctool_number: [''],
-      ctool_date: [''],
-      client_manager_name: [''],
-      client_location: [''],
-      position_location: [''],
-      tentative_required_by: [''],
-      skillset: [''],
-      lob_name: [''],
-      practice_unit_name: [''],
-      job_description: [null],
-      no_of_positions: [''],
-      rr_numbers: [''],
-      rr_grade: [''],
-      gcb_level: ['']
+      dem_ctoolnumber: [''],
+      dem_ctooldate: [''],
+      dem_cmm_id: [''],
+      dem_clm_id: [''],
+      dem_lcm_id: [''],
+      dem_validtill: [''],
+      dem_skillset: [''],
+      dem_lob_id: [''],
+      dem_idm_id: [''],
+      dem_dsm_id: [null],
+      dem_positions: [''],
+      dem_rrnumber: [''],
+      dem_jrnumber: [''],
+      dem_rrgade: [''],
+      dem_gcblevel: [''],
+      dem_jd: [''],
+      dem_comment: [''],
+      dem_isreopened: [''],
+      dem_isactive: [''],
+      dem_insertby: [''],
+      dem_updateby: [''],
     });
   }
 

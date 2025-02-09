@@ -15,8 +15,10 @@ export class CreateLOBComponent implements OnInit {
     this.lobForm = this.fb.group({
       lob_name: ['', Validators.required],
       lob_description: [''],
-      lob_delivery_manager: ['', Validators.required],
-      lob_client_partner: ['', Validators.required],
+      lob_clientpartner: ['', Validators.required],
+      lob_deliverymanager: ['', Validators.required],
+      lob_insertby: [1],
+      lob_updateby: [1]
     });
   }
 

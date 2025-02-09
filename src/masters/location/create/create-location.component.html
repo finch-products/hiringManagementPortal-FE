@@ -1,32 +1,31 @@
-<mat-card class="wrapper-padding">
-    <h2>Location Master</h2>
-
+<h2 class="page-title">Location Master</h2>
+<mat-card class="form-container">
     <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Location Name</mat-label>
-                <input matInput formControlName="location_name" required>
+                <input matInput formControlName="lcm_name" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>State</mat-label>
-                <input matInput formControlName="state" required>
+                <input matInput formControlName="lcm_state" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Country</mat-label>
-                <input matInput formControlName="country"
+                <input matInput formControlName="lcm_country"
                     required>
             </mat-form-field>
         </div>
 
         <div class="submit-container">
             <button mat-raised-button color="primary"
-                type="submit">Submit</button>
+                type="submit" class="cancel">Cancel</button>
+            <button mat-raised-button color="primary"
+                type="submit" class="submit">Submit</button>
         </div>
     </form>
 </mat-card>
 
-<mat-card class="wrapper-m30 wrapper-padding">
-    <app-list-location></app-list-location>
-</mat-card>
+<app-list-location></app-list-location>

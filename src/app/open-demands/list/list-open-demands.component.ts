@@ -21,8 +21,8 @@ export class ListOpenDemandsComponent {
   // ];
 
   displayedColumns: string[] = [
-    'ctool_number', 'ctool_date', 'client_manager_name',
-    'client_location', 'position_location', 'tentative_required_by'
+    'dem_ctoolnumber', 'dem_ctooldate', 'dem_cmm_id',
+    'dem_lcm_id', 'dem_validtill', 'dem_skillset', 'dem_positions', 'dem_rrnumber', 'dem_jrnumber'
   ];
 
   dataSource = new MatTableDataSource<OpenDemand>([]);

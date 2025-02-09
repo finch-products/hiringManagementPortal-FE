@@ -8,12 +8,12 @@ import { CreateClientManagerComponent } from '../masters/client-manager/componen
 import { ListClientManagerComponent } from '../masters/client-manager/components/list/list-client-manager/list-client-manager.component';
 import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
-import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
+import { CreateInternalDepartmentComponent } from '../masters/internal-department/create/create-internal-department.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
-// import { PracticeUnitMasterComponent } from './practice-unit-master/practice-unit-master.component';
+// import { PracticeUnitMasterComponent } from './internal-department-master/internal-department-master.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/open-demands', pathMatch: 'full' },
@@ -22,13 +22,13 @@ const routes: Routes = [
   { path: 'client-manager', component: CreateClientManagerComponent},//added client manager
   { path: 'lob-master', component: CreateLOBComponent},
   { path: 'location-master', component: CreateLocationComponent},
-  { path: 'practice-unit-master', component: CreatePracticeUnitComponent},
+  { path: 'internal-department-master', component: CreateInternalDepartmentComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) }
   // { path: 'client-master', component: ClientMasterComponent },
   // { path: 'lob-master', component: LobMasterComponent },
   // { path: 'location-master', component: LocationMasterComponent },
-  // { path: 'practice-unit-master', component: PracticeUnitMasterComponent }
+  // { path: 'internal-department-master', component: PracticeUnitMasterComponent }
 ];
 
 @NgModule({

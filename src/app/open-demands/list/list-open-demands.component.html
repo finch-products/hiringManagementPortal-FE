@@ -1,60 +1,85 @@
-<mat-card class="wrapper-padding">
+<h2 class="page-title">Open Demands List</h2>
+
+<mat-card>
     <div class="search-container">
-        <h2>Open Demands List</h2>
         <!-- Search Box -->
         <mat-form-field appearance="outline" class="search-box">
             <mat-label>Search</mat-label>
-            <input matInput  (keyup)="applyFilter($event)"
+            <input matInput (keyup)="applyFilter($event)"
                 placeholder="Filter data">
-                <mat-icon>search</mat-icon>
+            <mat-icon>search</mat-icon>
         </mat-form-field>
     </div>
 
     <!-- Material Table -->
-    <div class="table-container">
+    <mat-card class="table-container">
         <table mat-table [dataSource]="dataSource" matSort
             class="mat-elevation-z8">
 
             <!-- Table Columns -->
-            <ng-container matColumnDef="ctool_number">
+            <ng-container matColumnDef="dem_ctoolnumber">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>CTool</th>
-                <td mat-cell *matCellDef="let element">{{ element.ctool_number
+                <td mat-cell *matCellDef="let element">{{ element.dem_ctoolnumber
                     }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="ctool_date">
+            <ng-container matColumnDef="dem_ctooldate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-                <td mat-cell *matCellDef="let element">{{ element.ctool_date
+                <td mat-cell *matCellDef="let element">{{ element.dem_ctooldate
                     }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="client_manager_name">
+            <ng-container matColumnDef="dem_cmm_id">
                 <th mat-header-cell *matHeaderCellDef
-                    mat-sort-header>Client</th>
+                    mat-sort-header>Client Manager</th>
                 <td mat-cell *matCellDef="let element">{{
-                    element.client_manager_name }}</td>
+                    element.dem_cmm_id }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="client_location">
+            <ng-container matColumnDef="dem_lcm_id">
                 <th mat-header-cell *matHeaderCellDef
                     mat-sort-header>Location</th>
                 <td mat-cell *matCellDef="let element">{{
-                    element.client_location }}</td>
+                    element.dem_lcm_id }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="position_location">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Position
-                    Location</th>
-                <td mat-cell *matCellDef="let element">{{
-                    element.position_location }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="tentative_required_by">
+            <ng-container matColumnDef="dem_validtill">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Required
                     By</th>
                 <td mat-cell *matCellDef="let element">{{
-                    element.tentative_required_by }}</td>
+                    element.dem_validtill }}</td>
             </ng-container>
+
+            <ng-container matColumnDef="dem_skillset">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Skills
+                    </th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_skillset }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dem_positions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Positions
+                    </th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_positions }}</td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="dem_rrnumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>RR
+                    </th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_rrnumber }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dem_jrnumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>JR
+                    </th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_jrnumber }}</td>
+            </ng-container>
+
+           
 
             <!-- <ng-container matColumnDef="skillset">
                 <th mat-header-cell *matHeaderCellDef
@@ -111,7 +136,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-     
-    </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </mat-card>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons></mat-paginator>
 </mat-card>

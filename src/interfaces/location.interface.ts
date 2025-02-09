@@ -1,5 +1,8 @@
 export interface Location{
-    location_name: string;
-    state: string;
-    country: string;
+    lcm_id: string;
+    lcm_name: string;
+    lcm_state: string;
+    lcm_country: string;
+    lcm_insertedby: string;
+    lcm_updatedby: string;
 }

@@ -1,59 +1,53 @@
-<mat-card class="wrapper-padding">
-    <h2>Sub Unit Master</h2>
-
+<h2 class="page-title">Sub Unit Master</h2>
+<mat-card class="form-container">
     <form [formGroup]="practiceUnitForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Unit Name</mat-label>
-                <input matInput formControlName="unit_name" required>
+                <input matInput formControlName="idm_unitname" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Unit Sales</mat-label>
-                <input matInput formControlName="unit_sales" required>
+                <input matInput formControlName="idm_unitsales" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Unit Delivery</mat-label>
-                <input matInput formControlName="unit_delivery"
+                <input matInput formControlName="idm_unitdelivery"
                     required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Unit Solution</mat-label>
-                <input matInput formControlName="unit_solution" required>
+                <input matInput formControlName="idm_unitsolution" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>SPOC</mat-label>
-                <input matInput formControlName="sum_spoc">
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>SBU</mat-label>
-                <input matInput formControlName="sum_sbuId">
+                <input matInput formControlName="idm_spoc_id">
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field field-30">
                 <mat-label>Delivery Manager</mat-label>
-                <input matInput formControlName="sum_deliveryManager">
+                <input matInput formControlName="idm_deliverymanager_id">
             </mat-form-field>
-        </div>
-        <div class="radio-container">
-            <label>Active:</label>
-            <mat-radio-group [(ngModel)]="activeStatus">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
+
+            <mat-radio-group formControlName="idm_isactive" appearance="fill"
+                class="form-field">
+                <mat-label>Active?</mat-label>
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
         </div>
 
         <div class="submit-container">
             <button mat-raised-button color="primary"
-                type="submit">Submit</button>
+                type="submit" class="cancel">Cancel</button>
+            <button mat-raised-button color="primary"
+                type="submit" class="submit">Submit</button>
         </div>
     </form>
 </mat-card>
 
-<mat-card class="wrapper-m30 wrapper-padding">
-    <app-list-practice-unit></app-list-practice-unit>
-</mat-card>
+<app-list-internal-department></app-list-internal-department>

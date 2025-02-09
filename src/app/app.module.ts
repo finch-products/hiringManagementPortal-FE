@@ -44,8 +44,8 @@ import { CreateClientManagerComponent } from '../masters/client-manager/componen
 import { ListClientManagerComponent } from '../masters/client-manager/components/list/list-client-manager/list-client-manager.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { ListLocationComponent } from '../masters/location/list/list-location.component';
-import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
-import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-practice-unit.component';
+import { CreateInternalDepartmentComponent } from '../masters/internal-department/create/create-internal-department.component';
+import { ListInternalDepartmentComponent } from '../masters/internal-department/list/list-internal-department.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { FormErrorComponent } from './shared/form-error/form-error.component';
@@ -62,8 +62,8 @@ import { FormErrorComponent } from './shared/form-error/form-error.component';
     ListLOBComponent,
     CreateLocationComponent,
     ListLocationComponent,
-    CreatePracticeUnitComponent,
-    ListPracticeUnitComponent,
+    CreateInternalDepartmentComponent,
+    ListInternalDepartmentComponent,
     LeftSiderbarComponent,
     RightSidebarComponent,
     HeaderComponent,
@@ -99,9 +99,8 @@ import { FormErrorComponent } from './shared/form-error/form-error.component';
     FormsModule,
     NgxChartsModule,
     CreateClientManagerComponent,
-    ListClientManagerComponent ,
+    ListClientManagerComponent,
     RouterModule.forRoot([])
-    MatRadioModule 
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [],
