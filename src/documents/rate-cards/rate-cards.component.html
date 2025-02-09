@@ -1,1 +1,56 @@
-<p>rate-cards works!</p>
+<h2 class="page-title">Rate Cards form</h2>
+<mat-card class="form-container">
+    <form [formGroup]="jdForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName="role" required>
+            </mat-form-field>
+            <div>
+                <div class="file-input-container">
+                    <label for="job_description"></label>
+                    <input type="file" id="jd"
+                        (change)="onFileSelected($event)">
+                </div>
+            </div>
+        </div>
+        <div class="submit-container">
+            <button mat-raised-button color="primary"
+                type="submit" class="cancel">Cancel</button>
+            <button mat-raised-button color="primary"
+                type="submit" class="submit">Submit</button>
+        </div>
+    </form>
+</mat-card>
+
+<h2 class="page-title">Rate Cards List</h2>
+<mat-card class="table-container">
+    <div class="search-container">
+        <mat-form-field class="search-box">
+            <mat-label>Search...</mat-label>
+            <input matInput (keyup)="applyFilter($event)"
+                placeholder="Filter data">
+            <mat-icon>search</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+            <td mat-cell *matCellDef="let job">{{ job.role }}</td>
+        </ng-container>
+        <ng-container matColumnDef="jd">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Job
+                Description</th>
+            <td mat-cell *matCellDef="let job" class="file-cell">
+                <mat-icon class="pdf-icon">picture_as_pdf</mat-icon>
+                <a [href]="job.fileUrl" target="_blank">{{ job.jd }}</a>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+        showFirstLastButtons></mat-paginator>
+</mat-card>
