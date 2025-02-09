@@ -1,9 +1,11 @@
 
 export interface Client {
-    client_name: string;
-    client_manager_name: string;
-    client_email: string;
-    client_phone: string;
-    client_location: string;
-    client_department: string;
-  }
+  clm_clientId: string;
+  clm_name: string;
+  clm_managername: string;
+  clm_clientemail: string;
+  clm_clientphone: string;
+  clm_address: string;
+  clm_location: string;
+  clm_isactive: boolean;
+}

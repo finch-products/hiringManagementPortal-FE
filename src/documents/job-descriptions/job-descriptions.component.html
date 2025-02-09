@@ -1,5 +1,5 @@
-<mat-card class="wrapper-padding">
-    <h3>Job Description Entry</h3>
+<h2 class="page-title">Job Description Entry</h2>
+<mat-card class="form-container">
     <form [formGroup]="jdForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
@@ -23,9 +23,9 @@
     </form>
 </mat-card>
 
-<mat-card class="wrapper-m30 wrapper-padding">
+<h2 class="page-title">Job Description List</h2>
+<mat-card class="table-container">
     <div class="search-container">
-        <h3>Job Description List</h3>
         <mat-form-field appearance="outline" class="search-box">
             <mat-label>Search</mat-label>
             <input matInput (keyup)="applyFilter($event)"

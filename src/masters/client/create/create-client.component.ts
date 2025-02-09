@@ -15,27 +15,27 @@ import { ValidatorsService } from '../../../app/services/validators.service';
 })
 export class CreateClientComponent implements OnInit {
   clientForm: FormGroup;
- 
-  constructor(private fb: FormBuilder, private http: HttpClient, private clientService: ClientService,private validatorsService:ValidatorsService) {
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private clientService: ClientService, private validatorsService: ValidatorsService) {
     this.clientForm = this.fb.group({
-      clm_clientId: [''],
-      client_name: ['',[ Validators.required,Validators.pattern(this.validatorsService.namePattern())]],
-      client_manager_name: ['', [Validators.pattern(this.validatorsService.namePattern())]],
-      client_email: ['', [Validators.required, Validators.email]],
-      client_phone: ['',[ Validators.pattern(this.validatorsService.phonePattern())]],
-      clm_address: ['',[Validators.pattern(this.validatorsService.detailPattern())]],
-      client_location: ['',[ Validators.pattern(this.validatorsService.namePattern())]],
-      client_department: ['',[Validators.pattern(this.validatorsService.generalPattern())]],
-      activeStatus: [true]
+      clm_clientid: [''],
+      clm_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
+      clm_managername: ['', [Validators.pattern(this.validatorsService.namePattern())]],
+      clm_clientemail: ['', [Validators.required, Validators.email]],
+      clm_clientphone: ['', [Validators.pattern(this.validatorsService.phonePattern())]],
+      clm_address: ['', [Validators.pattern(this.validatorsService.detailPattern())]],
+      clm_location: ['', [Validators.pattern(this.validatorsService.namePattern())]],
+      clm_isactive: [true],
+      clm_insertby: [1]
     });
   }
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
-  
-
   onSubmit() {
+    alert(JSON.stringify(this.clientForm.value))
     if (this.clientForm.valid) {
       this.http.post('http://64.227.145.117/api/client-master/', this.clientForm.value).subscribe({
         next: (response) => {
