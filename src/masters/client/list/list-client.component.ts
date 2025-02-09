@@ -14,7 +14,7 @@ import { ClientService } from '../../../app/services/client.service';
 })
 export class ListClientComponent {
 
-   displayedColumns: string[] = ['client_name', 'client_manager_name', 'client_email', 'client_phone', 'client_location', 'client_department'];
+   displayedColumns: string[] = ['clm_clientid', 'clm_name', 'clm_managername', 'clm_clientemail', 'clm_clientphone', 'clm_location', 'clm_isactive'];
     dataSource = new MatTableDataSource<Client>([]);
   
     @ViewChild(MatPaginator) paginator!: MatPaginator;

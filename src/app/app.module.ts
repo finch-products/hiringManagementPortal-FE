@@ -47,7 +47,8 @@ import { ListLocationComponent } from '../masters/location/list/list-location.co
 import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
 import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-practice-unit.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { MatRadioModule } from '@angular/material/radio';
+import {MatRadioModule} from '@angular/material/radio';
+import { FormErrorComponent } from './shared/form-error/form-error.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { MatRadioModule } from '@angular/material/radio';
     LeftSiderbarComponent,
     RightSidebarComponent,
     HeaderComponent,
-    DashboardComponent
+    DashboardComponent,
+    FormErrorComponent
   ],
   imports: [
     MatRadioModule,
@@ -99,6 +101,7 @@ import { MatRadioModule } from '@angular/material/radio';
     CreateClientManagerComponent,
     ListClientManagerComponent ,
     RouterModule.forRoot([])
+    MatRadioModule 
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [],

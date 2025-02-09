@@ -1,41 +1,47 @@
-<h2>Client List</h2>
+<h2 class="page-title">Client List</h2>
 
-<div class="table-container">
+<mat-card class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-    <ng-container matColumnDef="client_name">
+    <ng-container matColumnDef="clm_clientid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Client Id</th>
+      <td mat-cell *matCellDef="let client">{{ client.clm_clientid }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="clm_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Client Name</th>
-      <td mat-cell *matCellDef="let client">{{ client.client_name }}</td>
+      <td mat-cell *matCellDef="let client">{{ client.clm_name }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="client_manager_name">
+    <ng-container matColumnDef="clm_managername">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Client Manager</th>
-      <td mat-cell *matCellDef="let client">{{ client.client_manager_name }}</td>
+      <td mat-cell *matCellDef="let client">{{ client.clm_managername }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="client_email">
+    <ng-container matColumnDef="clm_clientemail">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-      <td mat-cell *matCellDef="let client">{{ client.client_email }}</td>
+      <td mat-cell *matCellDef="let client">{{ client.clm_clientemail }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="client_phone">
+    <ng-container matColumnDef="clm_clientphone">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
-      <td mat-cell *matCellDef="let client">{{ client.client_phone }}</td>
+      <td mat-cell *matCellDef="let client">{{ client.clm_clientphone }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="client_location">
+    <ng-container matColumnDef="clm_location">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
-      <td mat-cell *matCellDef="let client">{{ client.client_location }}</td>
+      <td mat-cell *matCellDef="let client">{{ client.clm_location }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="client_department">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
-      <td mat-cell *matCellDef="let client">{{ client.client_department }}</td>
+    <ng-container matColumnDef="clm_isactive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
+      <td mat-cell *matCellDef="let client">{{ client.clm_isactive }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</div>
+</mat-card>
 
-<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons></mat-paginator>

@@ -1,57 +1,86 @@
+<h2 class="page-title">Client Master Entry</h2>
 <mat-card class="form-container">
-    <h2>Client Master</h2>
-
     <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Id</mat-label>
-                <input matInput formControlName="clm_clientId">
+                <input matInput formControlName="clm_clientid" required>
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="clientForm.controls['clm_clientid'].errors"></app-form-error>
+                </mat-error> -->
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Client Name</mat-label>
-                <input matInput formControlName="client_name" required>
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="clm_name" required>
+                <mat-error>
+                    <app-form-error
+                        [errors]="clientForm.controls['clm_name'].errors"></app-form-error>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Client Manager Name</mat-label>
-                <input matInput formControlName="client_manager_name" required>
+                <mat-label>Manager Name</mat-label>
+                <input matInput formControlName="clm_managername">
+                <mat-error>
+                    <app-form-error
+                        [errors]="clientForm.controls['clm_managername'].errors"></app-form-error>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Client Email</mat-label>
-                <input matInput formControlName="client_email" type="email"
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="clm_clientemail" type="email"
                     required>
+                <mat-error>
+                    <app-form-error
+                        [errors]="clientForm.controls['clm_clientemail'].errors"></app-form-error>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Client Phone</mat-label>
-                <input matInput formControlName="client_phone" required>
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="clm_clientphone">
+                <mat-error>
+                    <app-form-error
+                        [errors]="clientForm.controls['clm_clientphone'].errors"></app-form-error>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Client Address</mat-label>
-                <input matInput formControlName="clm_address" required>
+                <mat-label>Address</mat-label>
+                <input matInput formControlName="clm_address">
+                <mat-error>
+                    <app-form-error
+                        [errors]="clientForm.controls['clm_address'].errors"></app-form-error>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Location</mat-label>
-                <input matInput formControlName="client_location" required>
+                <input matInput formControlName="clm_location">
+                <mat-error>
+                    <app-form-error
+                        [errors]="clientForm.controls['clm_location'].errors"></app-form-error>
+                </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field field-30">
-                <mat-label>Client Department</mat-label>
-                <input matInput formControlName="client_department" required>
-            </mat-form-field>
+            <mat-radio-group formControlName="clm_isactive" appearance="fill"
+                class="form-field">
+                <mat-label>Active?</mat-label>
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
         </div>
 
         <div class="submit-container">
             <button mat-raised-button color="primary"
-                type="submit">Submit</button>
+                type="submit" class="cancel">Cancel</button>
+            <button mat-raised-button color="primary"
+                type="submit" class="submit">Submit</button>
         </div>
     </form>
 </mat-card>
 
-<mat-card class="wrapper-m30 wrapper-padding">
-    <app-list-client></app-list-client>
-</mat-card>
+<app-list-client></app-list-client>
