@@ -8,7 +8,7 @@ import { LobService } from '../../../app/services/lob.service';
   templateUrl: './create-lob.component.html',
   styleUrls: ['./create-lob.component.scss']
 })
-export class CreateLOBComponent implements OnInit {
+export class CreateLOBComponent {
   lobForm: FormGroup;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService) {
@@ -34,6 +34,4 @@ export class CreateLOBComponent implements OnInit {
       });
     }
   }
-
-  ngOnInit() { }
 }
