@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateOpenDemandComponent } from './open-demands/create/create-open-demands.component';
 import { ListOpenDemandsComponent } from './open-demands/list/list-open-demands.component';
 import { CreateClientComponent } from '../masters/client/create/create-client.component';
+//added client manager
+import { CreateClientManagerComponent } from '../masters/client-manager/components/create/create-client-manager/create-client-manager.component';
+import { ListClientManagerComponent } from '../masters/client-manager/components/list/list-client-manager/list-client-manager.component';
 import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
@@ -16,6 +19,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/open-demands', pathMatch: 'full' },
   { path: 'open-demands', component: CreateOpenDemandComponent },
   { path: 'client-master', component: CreateClientComponent},
+  { path: 'client-manager', component: CreateClientManagerComponent},//added client manager
   { path: 'lob-master', component: CreateLOBComponent},
   { path: 'location-master', component: CreateLocationComponent},
   { path: 'practice-unit-master', component: CreatePracticeUnitComponent},

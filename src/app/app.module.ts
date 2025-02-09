@@ -25,6 +25,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 // Import all necessary components
 import { CreateOpenDemandComponent } from './open-demands/create/create-open-demands.component';
 import { ListOpenDemandsComponent } from './open-demands/list/list-open-demands.component';
@@ -38,6 +39,9 @@ import { CreateClientComponent } from '../masters/client/create/create-client.co
 import { ListClientComponent } from '../masters/client/list/list-client.component';
 import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { ListLOBComponent } from '../masters/lob/list/list-lob.component';
+// client manager master component
+import { CreateClientManagerComponent } from '../masters/client-manager/components/create/create-client-manager/create-client-manager.component';
+import { ListClientManagerComponent } from '../masters/client-manager/components/list/list-client-manager/list-client-manager.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { ListLocationComponent } from '../masters/location/list/list-location.component';
 import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
@@ -45,6 +49,7 @@ import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-pr
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { FormErrorComponent } from './shared/form-error/form-error.component';
+
 
 @NgModule({
   declarations: [
@@ -66,6 +71,7 @@ import { FormErrorComponent } from './shared/form-error/form-error.component';
     FormErrorComponent
   ],
   imports: [
+    MatRadioModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -92,7 +98,9 @@ import { FormErrorComponent } from './shared/form-error/form-error.component';
     FlexLayoutModule,
     FormsModule,
     NgxChartsModule,
-    RouterModule.forRoot([]),
+    CreateClientManagerComponent,
+    ListClientManagerComponent ,
+    RouterModule.forRoot([])
     MatRadioModule 
   ],
   exports: [MatSidenavModule, MatExpansionModule],

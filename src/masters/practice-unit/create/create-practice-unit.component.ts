@@ -9,6 +9,7 @@ import { PracticeUnitService } from '../../../app/services/practice-unit.service
   styleUrls: ['./create-practice-unit.component.scss']
 })
 export class CreatePracticeUnitComponent implements OnInit {
+  activeStatus: string = 'yes'; 
   practiceUnitForm: FormGroup;
 
 
