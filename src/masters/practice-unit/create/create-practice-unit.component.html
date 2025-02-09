@@ -1,28 +1,27 @@
 <mat-card class="wrapper-padding">
-    <h2>Practice Unit Master</h2>
+    <h2>Sub Unit Master</h2>
 
     <form [formGroup]="practiceUnitForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Practice Unit Name</mat-label>
-                <input matInput formControlName="practice_unit_name" required>
+                <mat-label>Unit Name</mat-label>
+                <input matInput formControlName="unit_name" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Practice Unit Sales</mat-label>
-                <input matInput formControlName="practice_unit_sales" required>
+                <mat-label>Unit Sales</mat-label>
+                <input matInput formControlName="unit_sales" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Practice Unit Delivery</mat-label>
-                <input matInput formControlName="practice_unit_delivery"
+                <mat-label>Unit Delivery</mat-label>
+                <input matInput formControlName="unit_delivery"
                     required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Practice Unit Solution</mat-label>
-                <input matInput formControlName="practice_unit_solution"
-                    required>
+                <mat-label>Unit Solution</mat-label>
+                <input matInput formControlName="unit_solution" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
@@ -32,13 +31,20 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>SBU</mat-label>
-                <input matInput formControlName="pum_sbuId">
+                <input matInput formControlName="sum_sbuId">
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field field-30">
                 <mat-label>Delivery Manager</mat-label>
-                <input matInput formControlName="pum_deliveryManager">
+                <input matInput formControlName="sum_deliveryManager">
             </mat-form-field>
+        </div>
+        <div class="radio-container">
+            <label>Active:</label>
+            <mat-radio-group [(ngModel)]="activeStatus">
+                <mat-radio-button value="yes">Yes</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
         </div>
 
         <div class="submit-container">

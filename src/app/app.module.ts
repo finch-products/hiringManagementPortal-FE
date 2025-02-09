@@ -25,6 +25,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 // Import all necessary components
 import { CreateOpenDemandComponent } from './open-demands/create/create-open-demands.component';
 import { ListOpenDemandsComponent } from './open-demands/list/list-open-demands.component';
@@ -38,11 +39,16 @@ import { CreateClientComponent } from '../masters/client/create/create-client.co
 import { ListClientComponent } from '../masters/client/list/list-client.component';
 import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { ListLOBComponent } from '../masters/lob/list/list-lob.component';
+// client manager master component
+import { CreateClientManagerComponent } from '../masters/client-manager/components/create/create-client-manager/create-client-manager.component';
+import { ListClientManagerComponent } from '../masters/client-manager/components/list/list-client-manager/list-client-manager.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { ListLocationComponent } from '../masters/location/list/list-location.component';
 import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
 import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-practice-unit.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -63,6 +69,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     DashboardComponent
   ],
   imports: [
+    MatRadioModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -89,6 +96,8 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     FlexLayoutModule,
     FormsModule,
     NgxChartsModule,
+    CreateClientManagerComponent,
+    ListClientManagerComponent ,
     RouterModule.forRoot([])
   ],
   exports: [MatSidenavModule, MatExpansionModule],
