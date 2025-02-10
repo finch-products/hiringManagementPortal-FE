@@ -1,0 +1,48 @@
+<h2 class="page-title">Employee List</h2>
+
+<mat-card class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="emp_uniqueid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Emp Id</th>
+            <td mat-cell *matCellDef="let emp">{{ emp.emp_uniqueid }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="emp_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+            <td mat-cell *matCellDef="let emp">{{ emp.emp_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="emp_email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let emp">{{ emp.emp_email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="emp_phone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+            <td mat-cell *matCellDef="let emp">{{ emp.emp_phone }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="emp_lcm_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
+            <td mat-cell *matCellDef="let emp">{{ emp.emp_lcm_id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="emp_rlm_id">
+            <th mat-header-cell *matHeaderCellDef
+                mat-sort-header>Role</th>
+            <td mat-cell *matCellDef="let emp">{{ emp.emp_rlm_id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="emp_keyword">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Keyword</th>
+            <td mat-cell *matCellDef="let emp">{{ emp.emp_keyword }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-card>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons></mat-paginator>

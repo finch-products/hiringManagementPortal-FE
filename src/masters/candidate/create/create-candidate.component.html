@@ -1,0 +1,102 @@
+
+<h2 class="page-title">Candidate Master Entry</h2>
+<mat-card class="form-container">
+    <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Emp Id</mat-label>
+                <input matInput formControlName="cdm_emp_id" required>
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['clm_clientid'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="cdm_name" required>
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_name'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="cdm_email">
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_email'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="cdm_phone" type="email"
+                    >
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_phone'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Location</mat-label>
+                <mat-select formControlName="cdm_location">
+                  <mat-option *ngFor="let location of locations" [value]="location.lcm_id">
+                    {{ location.lcm_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div class="full-width">
+                <div class="file-input-container">
+                  <label for="job_description">Upload Profile</label>
+                  <input type="profile" id="cdm_profile" (change)="onFileSelected($event)">
+                </div>
+              </div>
+
+              
+
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName="cdm_description">
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_keyword'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Keywords</mat-label>
+                <input matInput formControlName="cdm_keywords">
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_keyword'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-radio-group formControlName="cdm_isinternal" appearance="fill"
+                class="form-field">
+                <mat-label>Internal?</mat-label>
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-radio-group formControlName="cdm_isactive" appearance="fill"
+                class="form-field">
+                <mat-label>Active?</mat-label>
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="submit-container">
+            <button mat-raised-button color="primary"
+                type="submit" class="cancel">Cancel</button>
+            <button mat-raised-button color="primary"
+                type="submit" class="submit">Submit</button>
+        </div>
+    </form>
+</mat-card>
+<app-list-candidate></app-list-candidate>

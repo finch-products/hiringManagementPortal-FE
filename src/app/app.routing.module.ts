@@ -10,6 +10,8 @@ import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { CreateInternalDepartmentComponent } from '../masters/internal-department/create/create-internal-department.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { CreateEmployeeComponent } from '../masters/employee/create/create-employee.component';
+import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
@@ -19,10 +21,11 @@ const routes: Routes = [
   { path: '', redirectTo: '/open-demands', pathMatch: 'full' },
   { path: 'open-demands', component: CreateOpenDemandComponent },
   { path: 'client-master', component: CreateClientComponent},
-  { path: 'client-manager', component: CreateClientManagerComponent},//added client manager
   { path: 'lob-master', component: CreateLOBComponent},
   { path: 'location-master', component: CreateLocationComponent},
   { path: 'internal-department-master', component: CreateInternalDepartmentComponent},
+  { path: 'employee-master', component: CreateEmployeeComponent},
+  { path: 'candidate-master', component: CreateCandidateComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) }
   // { path: 'client-master', component: ClientMasterComponent },
