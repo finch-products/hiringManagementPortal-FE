@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root' // Available globally
 })
 export class HttpService {
-  private baseUrl = 'http://64.227.145.117:8000/api/'; // Update with your backend URL
+  private baseUrl = 'http://64.227.145.117/api/'; // Update with your backend URL
 
   constructor(private http: HttpClient) { }
 
