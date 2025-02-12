@@ -1,10 +1,9 @@
-<mat-card class="wrapper-padding">
-    <h2>LOB Master</h2>
-
+<h2 class="page-title">LOB Master</h2>
+<mat-card class="form-container">
     <form [formGroup]="lobForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>LOB Name</mat-label>
+                <mat-label>Name</mat-label>
                 <input matInput formControlName="lob_name" required>
             </mat-form-field>
 
@@ -14,13 +13,13 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>LOB Delivery Manager</mat-label>
-                <input matInput formControlName="lob_delivery_manager" required>
+                <mat-label>Client Partner </mat-label>
+                <input matInput formControlName="lob_clientpartner" required>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field field-30">
-                <mat-label>LOB Client Partner</mat-label>
-                <input matInput formControlName="lob_client_partner"
+                <mat-label>Delivery Manager </mat-label>
+                <input matInput formControlName="lob_deliverymanager"
                     required>
             </mat-form-field>
         </div>
@@ -34,6 +33,4 @@
     </form>
 </mat-card>
 
-<mat-card class="wrapper-m30 wrapper-padding">
-    <app-list-lob></app-list-lob>
-</mat-card>
+<app-list-lob></app-list-lob>

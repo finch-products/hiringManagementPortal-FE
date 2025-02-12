@@ -8,15 +8,17 @@ import { LobService } from '../../../app/services/lob.service';
   templateUrl: './create-lob.component.html',
   styleUrls: ['./create-lob.component.scss']
 })
-export class CreateLOBComponent implements OnInit {
+export class CreateLOBComponent {
   lobForm: FormGroup;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService) {
     this.lobForm = this.fb.group({
       lob_name: ['', Validators.required],
       lob_description: [''],
-      lob_delivery_manager: ['', Validators.required],
-      lob_client_partner: ['', Validators.required],
+      lob_clientpartner: ['', Validators.required],
+      lob_deliverymanager: ['', Validators.required],
+      lob_insertby: [1],
+      lob_updateby: [1]
     });
   }
 
@@ -32,6 +34,4 @@ export class CreateLOBComponent implements OnInit {
       });
     }
   }
-
-  ngOnInit() { }
 }

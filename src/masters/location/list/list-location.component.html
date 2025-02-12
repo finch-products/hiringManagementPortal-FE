@@ -1,21 +1,21 @@
-<h2>LOB List</h2>
+<h2 class="page-title">LOB List</h2>
 
 <div class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-    <ng-container matColumnDef="location_name">
+    <ng-container matColumnDef="lcm_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Location Name</th>
-      <td mat-cell *matCellDef="let location">{{ location.location_name }}</td>
+      <td mat-cell *matCellDef="let location">{{ location.lcm_name }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="state">
+    <ng-container matColumnDef="lcm_state">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
-      <td mat-cell *matCellDef="let location">{{ location.state }}</td>
+      <td mat-cell *matCellDef="let location">{{ location.lcm_state }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="country">
+    <ng-container matColumnDef="lcm_country">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
-      <td mat-cell *matCellDef="let location">{{ location.country }}</td>
+      <td mat-cell *matCellDef="let location">{{ location.lcm_country }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -23,4 +23,5 @@
   </table>
 </div>
 
-<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons></mat-paginator>

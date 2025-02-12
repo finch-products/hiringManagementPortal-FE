@@ -10,11 +10,11 @@ import { LocationService } from '../../../app/services/location.service';
 })
 export class CreateLocationComponent implements OnInit {
   locationForm: FormGroup;
-constructor(private fb: FormBuilder, private http: HttpClient, private locationService: LocationService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private locationService: LocationService) {
     this.locationForm = this.fb.group({
-      location_name: ['', Validators.required],
-      state: ['', Validators.required],
-      country: ['', Validators.required],
+      lcm_name: ['', Validators.required],
+      lcm_state: ['', Validators.required],
+      lcm_country: ['', Validators.required],
     });
   }
 

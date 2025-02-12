@@ -35,7 +35,6 @@ export class CreateClientComponent implements OnInit {
   }
 
   onSubmit() {
-    alert(JSON.stringify(this.clientForm.value))
     if (this.clientForm.valid) {
       this.http.post('http://64.227.145.117/api/client-master/', this.clientForm.value).subscribe({
         next: (response) => {

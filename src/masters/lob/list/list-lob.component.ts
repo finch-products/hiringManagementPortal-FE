@@ -13,7 +13,7 @@ import { LobService } from '../../../app/services/lob.service';
   styleUrl: './list-lob.component.scss'
 })
 export class ListLOBComponent {
-  displayedColumns: string[] = ['lob_name', 'lob_delivery_manager', 'lob_client_partner'];
+  displayedColumns: string[] = ['lob_name', 'lob_description', 'lob_clientpartner', 'lob_deliverymanager', 'lob_insertby', 'lob_updateby'];
   dataSource = new MatTableDataSource<LOB>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -1,42 +1,41 @@
-import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
-import { OpenDemand } from '../../../interfaces/open-demand.interface';
+import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
-import { PracticeUnit } from '../../../interfaces/practice-unit.interface';
-import { PracticeUnitService } from '../../../app/services/practice-unit.service';
+import { InternalDept } from '../../../interfaces/internal-dept.interface';
+import { InternalDeptService } from '../../../app/services/internal.department.service';
 
 @Component({
-  selector: 'app-list-practice-unit',
-  templateUrl: './list-practice-unit.component.html',
-  styleUrl: './list-practice-unit.component.scss'
+  selector: 'app-list-internal-department',
+  templateUrl: './list-internal-department.component.html',
+  styleUrl: './list-internal-department.component.scss'
 })
-export class ListPracticeUnitComponent {
-  displayedColumns: string[] = ['practice_unit_name', 'practice_unit_sales', 'practice_unit_delivery', 'practice_unit_solution'];
-  dataSource = new MatTableDataSource<PracticeUnit>([]);
+export class ListInternalDepartmentComponent {
+  displayedColumns: string[] = ['idm_id', 'idm_unitname', 'idm_unitsales', 'idm_unitdelivery', 'idm_unitsolution', 'idm_spoc_id', 'idm_deliverymanager_id', 'idm_isactive'];
+  dataSource = new MatTableDataSource<InternalDept>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, private practiceUnitService: PracticeUnitService) { }
+  constructor(private http: HttpClient, private internalDeptService: InternalDeptService) { }
 
   ngOnInit() {
     this.fetchPracticeUnits();
-    this.practiceUnitService.practiceUnits$.subscribe(units => {
-      this.dataSource.data = units;
+    this.internalDeptService.internalDepts$.subscribe(dept => {
+      this.dataSource.data = dept;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
 
   fetchPracticeUnits() {
-    this.http.get<PracticeUnit[]>('http://64.227.145.117/api/practice-unit-master/').subscribe({
+    this.http.get<InternalDept[]>('http://64.227.145.117/api/internal-department-master/').subscribe({
       next: (data) => {
         // this.dataSource.data = data;
         // this.dataSource.paginator = this.paginator;
         // this.dataSource.sort = this.sort;
-        this.practiceUnitService.setInitialData(data); 
+        this.internalDeptService.setInitialData(data); 
       },
       error: (error) => console.error('Error fetching practice units:', error)
     });
@@ -48,7 +47,7 @@ export class ListPracticeUnitComponent {
   //   }
   // }
 
-  // addNewPracticeUnit(newRecord: PracticeUnit) {
+  // addNewPracticeUnit(newRecord: InternalDept) {
   //   this.dataSource.data = [...this.dataSource.data, newRecord]; // Append new record
   // }
 

@@ -12,7 +12,7 @@ import { LocationService } from '../../../app/services/location.service';
   styleUrl: './list-location.component.scss'
 })
 export class ListLocationComponent {
-  displayedColumns: string[] = ['location_name', 'state', 'country'];
+  displayedColumns: string[] = ['lcm_name', 'lcm_state', 'lcm_country'];
     dataSource = new MatTableDataSource<Location>([]);
   
     @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -1,0 +1,86 @@
+
+<h2 class="page-title">Employee Master Entry</h2>
+<mat-card class="form-container">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Emp Id</mat-label>
+                <input matInput formControlName="emp_uniqueid" required>
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['clm_clientid'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="emp_name" required>
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_name'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="emp_email">
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_email'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="emp_phone" type="email"
+                    >
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_phone'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Location</mat-label>
+                <mat-select formControlName="emp_lcm_id">
+                  <mat-option *ngFor="let location of locations" [value]="location.lcm_id">
+                    {{ location.lcm_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="emp_rlm_id">
+                  <mat-option *ngFor="let role of roles" [value]="role.rlm_id">
+                    {{ role.rlm_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Keywords</mat-label>
+                <input matInput formControlName="emp_keyword">
+                <!-- <mat-error>
+                    <app-form-error
+                        [errors]="employeeForm.controls['emp_keyword'].errors"></app-form-error>
+                </mat-error> -->
+            </mat-form-field>
+
+            <mat-radio-group formControlName="emp_isactive" appearance="fill"
+                class="form-field">
+                <mat-label>Active?</mat-label>
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="submit-container">
+            <button mat-raised-button color="primary"
+                type="submit" class="cancel">Cancel</button>
+            <button mat-raised-button color="primary"
+                type="submit" class="submit">Submit</button>
+        </div>
+    </form>
+</mat-card>
+<app-list-employee></app-list-employee>
