@@ -45,6 +45,8 @@ import { ListPracticeUnitComponent } from '../masters/practice-unit/list/list-pr
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { FormErrorComponent } from './shared/form-error/form-error.component';
+import { ReportComponent } from '../report/report.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,8 @@ import { FormErrorComponent } from './shared/form-error/form-error.component';
     RightSidebarComponent,
     HeaderComponent,
     DashboardComponent,
-    FormErrorComponent
+    FormErrorComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +96,8 @@ import { FormErrorComponent } from './shared/form-error/form-error.component';
     FormsModule,
     NgxChartsModule,
     RouterModule.forRoot([]),
-    MatRadioModule 
+    MatRadioModule ,
+    MatAutocompleteModule
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [],

@@ -7,6 +7,7 @@ import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { CreatePracticeUnitComponent } from '../masters/practice-unit/create/create-practice-unit.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { ReportComponent } from '../report/report.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'location-master', component: CreateLocationComponent},
   { path: 'practice-unit-master', component: CreatePracticeUnitComponent},
   { path: 'dashboard', component: DashboardComponent},
+  {path: 'reports' , component:ReportComponent},
   { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) }
   // { path: 'client-master', component: ClientMasterComponent },
   // { path: 'lob-master', component: LobMasterComponent },
