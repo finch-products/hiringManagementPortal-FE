@@ -49,6 +49,8 @@ import { ListInternalDepartmentComponent } from '../masters/internal-department/
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { FormErrorComponent } from './shared/form-error/form-error.component';
+import { ReportComponent } from '../report/report.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { CreateEmployeeComponent } from '../masters/employee/create/create-employee.component';
 import { ListEmployeeComponent } from '../masters/employee/list/list-employee.component';
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
@@ -76,7 +78,8 @@ import { ListCandidateComponent } from '../masters/candidate/list/list-candidate
     ListEmployeeComponent,
     CreateCandidateComponent,
     ListCandidateComponent,
-    FormErrorComponent
+    FormErrorComponent,
+    ReportComponent
   ],
   imports: [
     MatRadioModule,
@@ -106,6 +109,8 @@ import { ListCandidateComponent } from '../masters/candidate/list/list-candidate
     FlexLayoutModule,
     FormsModule,
     NgxChartsModule,
+    MatRadioModule ,
+    MatAutocompleteModule,
     CreateClientManagerComponent,
     ListClientManagerComponent,
     RouterModule.forRoot([])

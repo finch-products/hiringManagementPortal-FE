@@ -10,6 +10,7 @@ import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { CreateInternalDepartmentComponent } from '../masters/internal-department/create/create-internal-department.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { ReportComponent } from '../report/report.component';
 import { CreateEmployeeComponent } from '../masters/employee/create/create-employee.component';
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'employee-master', component: CreateEmployeeComponent},
   { path: 'candidate-master', component: CreateCandidateComponent},
   { path: 'dashboard', component: DashboardComponent},
+  {path: 'reports' , component:ReportComponent},
   { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) }
   // { path: 'client-master', component: ClientMasterComponent },
   // { path: 'lob-master', component: LobMasterComponent },
