@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { OpenDemandService } from '../../services/open.demand.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -11,23 +12,25 @@ import { OpenDemandService } from '../../services/open.demand.service';
 })
 export class CreateOpenDemandComponent implements OnInit {
   demandForm: FormGroup;
-  clientManagers = ["John Doe", "Jane Smith", "Michael Brown"];
-  locations = ["New York", "San Francisco", "Los Angeles"];
-  lobNames = ["Technology Services", "AI & ML", "Cloud Computing"];
+  clients: any[] = [];
+  locations: any[] = [];
+  lobs: any[] = [];
+  depts: any[] = [];
   selectedFile: File | null = null;
+  isInternal = true;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService) {
     this.demandForm = this.fb.group({
+      isInternal: ['yes'],
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
-      dem_cmm_id: [''],
+      dem_cmm_id: [{ value: '', disabled: true }],
       dem_clm_id: [''],
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],
       dem_lob_id: [''],
       dem_idm_id: [''],
-      dem_dsm_id: [null],
       dem_positions: [''],
       dem_rrnumber: [''],
       dem_jrnumber: [''],
@@ -41,6 +44,68 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_updateby: [''],
     });
   }
+
+  ngOnInit() {
+    this.loadClients();
+    this.loadLocations();
+    this.loadLOBs();
+    this.loadInternalDepts();
+    this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
+      this.isInternal = value === 'yes';
+    });
+  }
+
+  loadClients(): void {
+    this.httpService.getClientDetails().subscribe({
+      next: (data) => {
+        this.clients = data;
+        console.log('Clients:', this.clients);
+        this.demandForm.get('dem_clm_id')?.valueChanges.subscribe(selectedClientId => {
+          const selectedClient = this.clients.find(client => client.clm_id === selectedClientId);
+          if (selectedClient) {
+            this.demandForm.patchValue({ dem_cmm_id: selectedClient.clm_managername });
+          } else {
+            this.demandForm.patchValue({ dem_cmm_id: '' });
+          }
+        });
+      },
+      error: (err) => console.error('Error fetching clients', err)
+    });
+  }
+
+
+  loadLocations(): void {
+    this.httpService.getLocationDetails().subscribe({
+      next: (data) => {
+        this.locations = data;
+        console.log('Locations:', this.locations);
+      },
+      error: (err) => console.error('Error fetching locations', err)
+    });
+  }
+
+  loadLOBs(): void {
+    this.httpService.getLOBDetails().subscribe({
+      next: (data) => {
+        this.lobs = data;
+        console.log('LOBs:', this.lobs);
+      },
+      error: (err) => console.error('Error fetching lobs', err)
+    });
+  }
+
+  loadInternalDepts(): void {
+    this.httpService.getInternalDepartmentDetails().subscribe({
+      next: (data) => {
+        this.depts = data;
+        console.log('Departments:', this.depts);
+      },
+      error: (err) => console.error('Error fetching departments', err)
+    });
+  }
+
+  
+  
 
   onFileSelected(event: any) {
     // this.selectedFile = event.target.files[0];
@@ -108,8 +173,8 @@ export class CreateOpenDemandComponent implements OnInit {
     // }
 
     // Send API request
-    this.http.post('http://64.227.145.117/api/open-demands/', formData).subscribe({
-    next: (response) => {
+    this.http.post('http://64.227.145.117/demands/', formData).subscribe({
+      next: (response) => {
         console.log('Success:', response);
         this.openDemandService.addDemand(response);
         this.demandForm.reset();
@@ -126,6 +191,4 @@ export class CreateOpenDemandComponent implements OnInit {
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
     return `${year}-${month}-${day}`;
   }
-
-  ngOnInit() { }
 }

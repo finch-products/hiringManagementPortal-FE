@@ -29,7 +29,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
 
   onSubmit() {
     if (this.practiceUnitForm.valid) {
-      this.http.post('http://64.227.145.117/api/internal-department-master/', this.practiceUnitForm.value).subscribe({
+      this.http.post('http://64.227.145.117/departments/', this.practiceUnitForm.value).subscribe({
         next: (response) => {
           console.log('Internal Dept added:', response);
           this.internalDeptService.addInternalDept(response); // Send to list component

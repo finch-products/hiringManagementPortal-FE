@@ -16,26 +16,27 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Client Manager Name</mat-label>
-        <mat-select formControlName="dem_cmm_id">
-          <mat-option *ngFor="let manager of clientManagers" [value]="manager">
-            {{ manager }}
+        <mat-label>Client Name</mat-label>
+        <mat-select formControlName="dem_clm_id">
+          <mat-option *ngFor="let client of clients" [value]="client.clm_id">
+            {{ client.clm_name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Client Name</mat-label>
-        <mat-select formControlName="dem_clm_id">
-          <mat-option *ngFor="let manager of clientManagers" [value]="manager">
-            {{ manager }}
-          </mat-option>
-        </mat-select>
+        <mat-label>Manager Name</mat-label>
+        <input matInput formControlName="dem_cmm_id">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Client Location</mat-label>
-        <input matInput formControlName="dem_lcm_id">
+        <mat-select formControlName="dem_lcm_id">
+          <mat-option *ngFor="let location of locations"
+            [value]="location.lcm_id">
+            {{ location.lcm_name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -56,22 +57,17 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>LOB</mat-label>
         <mat-select formControlName="dem_lob_id">
-          <mat-option *ngFor="let lob of lobNames" [value]="lob">
-            {{ lob }}
+          <mat-option *ngFor="let lob of lobs" [value]="lob.lob_id">
+            {{ lob.lob_name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Internal Department</mat-label>
-        <input matInput formControlName="dem_idm_id">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Status</mat-label>
-        <mat-select formControlName="dem_dsm_id">
-          <mat-option *ngFor="let lob of lobNames" [value]="lob">
-            {{ lob }}
+        <mat-select formControlName="dem_idm_id">
+          <mat-option *ngFor="let dept of depts" [value]="dept.idm_id">
+            {{ dept.idm_unitname}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -81,12 +77,20 @@
         <input matInput formControlName="dem_positions">
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <!-- Internal or External Selection -->
+      <mat-radio-group formControlName="isInternal">
+        <mat-radio-button value="yes">Internal</mat-radio-button>
+        <mat-radio-button value="no">External</mat-radio-button>
+      </mat-radio-group>
+
+      <!-- RR Number Field (Visible when "Yes" is selected) -->
+      <mat-form-field appearance="fill" class="form-field" *ngIf="isInternal">
         <mat-label>RR Numbers</mat-label>
         <input matInput formControlName="dem_rrnumber">
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <!-- JR Number Field (Visible when "No" is selected) -->
+      <mat-form-field appearance="fill" class="form-field" *ngIf="!isInternal">
         <mat-label>JR Numbers</mat-label>
         <input matInput formControlName="dem_jrnumber">
       </mat-form-field>
@@ -99,18 +103,6 @@
       <mat-form-field appearance="fill" class="form-field field-30">
         <mat-label>GCB Level</mat-label>
         <input matInput formControlName="dem_gcblevel">
-      </mat-form-field>
-
-      <div class="full-width">
-        <div class="file-input-container">
-          <label for="job_description">Upload Job Description</label>
-          <input type="file" id="dem_jd" (change)="onFileSelected($event)">
-        </div>
-      </div>
-
-      <mat-form-field appearance="fill" class="form-field field-30">
-        <mat-label>Comment</mat-label>
-        <input matInput formControlName="dem_comment">
       </mat-form-field>
 
       <mat-radio-group formControlName="dem_isreopened" appearance="fill"
@@ -127,14 +119,23 @@
         <mat-radio-button [value]="false">No</mat-radio-button>
       </mat-radio-group>
 
+      <div class="file-input-container">
+        <label for="job_description">Upload Job Description</label>
+        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
+      </div>
+
+      <mat-form-field appearance="fill" class="form-field field-30">
+        <mat-label>Comment</mat-label>
+        <textarea matInput formControlName="dem_comment" rows="3"></textarea>
+      </mat-form-field>
     </div>
 
     <div class="submit-container">
       <button mat-raised-button color="primary"
-          type="submit" class="cancel">Cancel</button>
+        type="submit" class="cancel">Cancel</button>
       <button mat-raised-button color="primary"
-          type="submit" class="submit">Submit</button>
-  </div>
+        type="submit" class="submit">Submit</button>
+    </div>
   </form>
 </mat-card>
 
