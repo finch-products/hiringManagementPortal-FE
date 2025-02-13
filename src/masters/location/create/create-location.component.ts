@@ -20,7 +20,7 @@ export class CreateLocationComponent implements OnInit {
 
   onSubmit() {
     if (this.locationForm.valid) {
-      this.http.post('http://64.227.145.117/locations/', this.locationForm.value).subscribe({
+      this.http.post('http://64.227.145.117/api/locations/', this.locationForm.value).subscribe({
         next: (response) => {
           console.log('Location added:', response);
           this.locationService.addLocation(response);

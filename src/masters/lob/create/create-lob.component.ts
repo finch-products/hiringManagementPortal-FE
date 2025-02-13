@@ -42,7 +42,7 @@ export class CreateLOBComponent implements OnInit {
 
   onSubmit() {
     if (this.lobForm.valid) {
-      this.http.post('http://64.227.145.117/lobs/', this.lobForm.value).subscribe({
+      this.http.post('http://64.227.145.117/api/lobs/', this.lobForm.value).subscribe({
         next: (response) => {
           console.log('Client added:', response);
           this.lobService.addLob(response);

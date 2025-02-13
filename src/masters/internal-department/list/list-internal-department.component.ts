@@ -30,7 +30,7 @@ export class ListInternalDepartmentComponent {
   }
 
   fetchPracticeUnits() {
-    this.http.get<InternalDept[]>('http://64.227.145.117/departments/').subscribe({
+    this.http.get<InternalDept[]>('http://64.227.145.117/api/departments/').subscribe({
       next: (data) => {
         // this.dataSource.data = data;
         // this.dataSource.paginator = this.paginator;

@@ -32,7 +32,7 @@ export class ListClientComponent {
     }
   
     fetchClients() {
-      this.http.get<Client[]>('http://64.227.145.117/clients/').subscribe({
+      this.http.get<Client[]>('http://64.227.145.117/api/clients/').subscribe({
         next: (data) => {
           this.clientService.setInitialData(data); 
         },

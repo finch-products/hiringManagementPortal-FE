@@ -48,7 +48,7 @@ export class CreateClientComponent implements OnInit {
 
   onSubmit() {
     if (this.clientForm.valid) {
-      this.http.post('http://64.227.145.117/clients/', this.clientForm.value).subscribe({
+      this.http.post('http://64.227.145.117/api/clients/', this.clientForm.value).subscribe({
         next: (response) => {
           console.log('Client added:', response);
           this.clientService.addClient(response);

@@ -173,7 +173,7 @@ export class CreateOpenDemandComponent implements OnInit {
     // }
 
     // Send API request
-    this.http.post('http://64.227.145.117/demands/', formData).subscribe({
+    this.http.post('http://64.227.145.117/api/demands/', formData).subscribe({
       next: (response) => {
         console.log('Success:', response);
         this.openDemandService.addDemand(response);
