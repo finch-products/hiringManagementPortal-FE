@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl = 'http://64.227.145.117/api/';
+  private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +43,7 @@ export class HttpService {
   }
 
   addCandidate(candidateData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}candiadtes/`, candidateData);
+    return this.http.post<any>(`${this.baseUrl}candidates/`, candidateData);
   }
 
   getCandidate(): Observable<any> {
@@ -54,38 +54,38 @@ export class HttpService {
 
 
   getClientDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}clients-details/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}clients/clients-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
 
   getLocationDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}location-details/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}locations/locations-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
   getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status-details/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}demand-status/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
   getInternalDepartmentDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}internal-department-details/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
   getLOBDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}lob-details/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}lobs/lobs-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
   getCPDMDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}cp-dm/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}employees/cp-dm/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }

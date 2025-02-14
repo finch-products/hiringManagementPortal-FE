@@ -29,7 +29,7 @@ export class CreateCandidateComponent implements OnInit {
       cdm_csm_id: [],
       cdm_keywords: [],
       cdm_isinternal: [true],
-      cdm_isactive: [],
+      cdm_isactive: [true],
       cdm_insertby: [1],
       cdm_updateby: [1]
     });
@@ -106,7 +106,7 @@ export class CreateCandidateComponent implements OnInit {
     // }
 
     // Send API request
-    this.httpService.addCandidate(this.candidateForm.value).subscribe({
+    this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
         console.log('Candidate Added Successfully:', response);
         this.candidateForm.reset();

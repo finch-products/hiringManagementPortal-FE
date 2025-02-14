@@ -23,7 +23,7 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="cdm_email">
+                <input matInput formControlName="cdm_email" required>
                 <!-- <mat-error>
                     <app-form-error
                         [errors]="employeeForm.controls['emp_email'].errors"></app-form-error>
@@ -49,14 +49,10 @@
                 </mat-select>
               </mat-form-field>
 
-              <div class="full-width">
-                <div class="file-input-container">
-                  <label for="job_description">Upload Profile</label>
-                  <input type="profile" id="cdm_profile" (change)="onFileSelected($event)">
-                </div>
+              <div class="file-input-container">
+                <label for="cdm_profile">Upload Profile</label>
+                <input type="file" id="cdm_profile" (change)="onFileSelected($event)">
               </div>
-
-              
 
               <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Description</mat-label>

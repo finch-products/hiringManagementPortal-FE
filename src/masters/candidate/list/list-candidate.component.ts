@@ -31,7 +31,7 @@ export class ListCandidateComponent {
   }
 
   fetchCandidates(): void {
-    this.httpService.getEmployee().subscribe({
+    this.httpService.getCandidate().subscribe({
       next: (data) => {
         this.candidates = data;
         this.dataSource.data = data;
