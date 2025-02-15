@@ -13,14 +13,23 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Client Partner </mat-label>
-                <input matInput formControlName="lob_clientpartner" required>
+                <mat-label>Delivery Manager</mat-label>
+                <mat-select formControlName="lob_deliverymanager">
+                    <mat-option *ngFor="let dm of deliveryManagers"
+                        [value]="dm.emp_id">
+                        {{ dm.emp_name}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field field-30">
-                <mat-label>Delivery Manager </mat-label>
-                <input matInput formControlName="lob_deliverymanager"
-                    required>
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Client Partner</mat-label>
+                <mat-select formControlName="lob_clientpartner">
+                    <mat-option *ngFor="let cp of clientPartners"
+                        [value]="cp.emp_id">
+                        {{ cp.emp_name}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
 

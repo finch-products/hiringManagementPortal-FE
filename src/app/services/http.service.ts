@@ -4,10 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root' // Available globally
+  providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl = 'http://64.227.145.117/api/'; // Update with your backend URL
+  private baseUrl = 'http://64.227.145.117/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -21,66 +21,76 @@ export class HttpService {
   }
 
   getLocations(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}location-master/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}locations/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
   getRoles(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}role-master/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}roles/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
   addEmployee(employeeData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}employee-master/`, employeeData);
+    return this.http.post<any>(`${this.baseUrl}employees/`, employeeData);
   }
 
   getEmployee(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}employee-master/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}employees/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
   addCandidate(candidateData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}candiadte-master/`, candidateData);
+    return this.http.post<any>(`${this.baseUrl}candidates/`, candidateData);
   }
 
   getCandidate(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}Candidate-master/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}candidates/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
-  // /** 🔹 GET Request */
-  // get<T>(endpoint: string): Observable<T> {
-  //   return this.http.get<T>(this.baseUrl + endpoint, this.getHeaders()).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
 
-  // /** 🔹 POST Request */
-  // post<T>(endpoint: string, data: any): Observable<T> {
-  //   return this.http.post<T>(this.baseUrl + endpoint, data, this.getHeaders()).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
+  getClientDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}clients/clients-details/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-  // /** 🔹 PUT Request */
-  // put<T>(endpoint: string, data: any): Observable<T> {
-  //   return this.http.put<T>(this.baseUrl + endpoint, data, this.getHeaders()).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
 
-  // /** 🔹 DELETE Request */
-  // delete<T>(endpoint: string): Observable<T> {
-  //   return this.http.delete<T>(this.baseUrl + endpoint, this.getHeaders()).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
+  getLocationDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}locations/locations-details/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-  /** 🔹 Handle API Errors */
+  getDemandStatusDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demand-status/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getInternalDepartmentDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getLOBDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}lobs/lobs-details/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getCPDMDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}employees/cp-dm/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {

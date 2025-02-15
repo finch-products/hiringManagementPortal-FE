@@ -30,7 +30,7 @@ export class ListLocationComponent {
     }
   
     fetchLOB() {
-      this.http.get<Location[]>('http://64.227.145.117/api/location-master/').subscribe({
+      this.http.get<Location[]>('http://64.227.145.117/api/locations/').subscribe({
         next: (data) => {
           this.locationService.setInitialData(data); 
         },

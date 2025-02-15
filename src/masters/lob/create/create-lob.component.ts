@@ -2,16 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LobService } from '../../../app/services/lob.service';
+import { HttpService } from '../../../app/services/http.service';
 
 @Component({
   selector: 'app-create-lob',
   templateUrl: './create-lob.component.html',
   styleUrls: ['./create-lob.component.scss']
 })
-export class CreateLOBComponent {
+export class CreateLOBComponent implements OnInit {
   lobForm: FormGroup;
+  clientPartners: any[] = []; 
+  deliveryManagers: any[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService, private httpService: HttpService) {
     this.lobForm = this.fb.group({
       lob_name: ['', Validators.required],
       lob_description: [''],
@@ -22,9 +25,24 @@ export class CreateLOBComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.loadCPDMDetails();
+  }
+
+  loadCPDMDetails(): void {
+    this.httpService.getCPDMDetails().subscribe({
+      next: (data) => {
+        this.clientPartners = data.client_partners;
+        this.deliveryManagers = data.delivery_managers;
+        console.log('Client Partners & Delivery Managers:' + JSON.stringify(data));
+      },
+      error: (err) => console.error('Error fetching CP DM', err)
+    });
+  }
+
   onSubmit() {
     if (this.lobForm.valid) {
-      this.http.post('http://64.227.145.117/api/lob-master/', this.lobForm.value).subscribe({
+      this.http.post('http://64.227.145.117/api/lobs/', this.lobForm.value).subscribe({
         next: (response) => {
           console.log('Client added:', response);
           this.lobService.addLob(response);

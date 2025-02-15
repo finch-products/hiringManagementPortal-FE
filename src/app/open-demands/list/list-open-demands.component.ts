@@ -42,14 +42,14 @@ export class ListOpenDemandsComponent {
   }
 
   fetchOpenDemands() {
-    this.http.get<OpenDemand[]>('http://64.227.145.117/api/open-demands/').subscribe({
-      next: (data) => {
-        this.demandService.setInitialData(data);
-      },
-      error: (error) => {
-        console.error('Error fetching open demands:', error);
-      }
-    });
+    // this.http.get<OpenDemand[]>('http://64.227.145.117/api/open-demands/').subscribe({
+    //   next: (data) => {
+    //     this.demandService.setInitialData(data);
+    //   },
+    //   error: (error) => {
+    //     console.error('Error fetching open demands:', error);
+    //   }
+    // });
   }
 
   applyFilter(event: Event) {

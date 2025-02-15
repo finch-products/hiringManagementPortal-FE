@@ -14,7 +14,7 @@ import { ClientService } from '../../../app/services/client.service';
 })
 export class ListClientComponent {
 
-   displayedColumns: string[] = ['clm_clientid', 'clm_name', 'clm_managername', 'clm_clientemail', 'clm_clientphone', 'clm_location', 'clm_isactive'];
+   displayedColumns: string[] = ['clm_clientid', 'clm_name', 'clm_managername', 'clm_clientemail', 'clm_clientphone', 'clm_lcm_id', 'clm_isactive'];
     dataSource = new MatTableDataSource<Client>([]);
   
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -32,7 +32,7 @@ export class ListClientComponent {
     }
   
     fetchClients() {
-      this.http.get<Client[]>('http://64.227.145.117/api/client-master/').subscribe({
+      this.http.get<Client[]>('http://64.227.145.117/api/clients/').subscribe({
         next: (data) => {
           this.clientService.setInitialData(data); 
         },
