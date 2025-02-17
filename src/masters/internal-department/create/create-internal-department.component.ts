@@ -11,8 +11,7 @@ import { InternalDeptService } from '../../../app/services/internal.department.s
 export class CreateInternalDepartmentComponent implements OnInit {
   activeStatus: string = 'yes';
   practiceUnitForm: FormGroup;
-
-
+  
   constructor(private fb: FormBuilder, private http: HttpClient, private internalDeptService: InternalDeptService) {
     this.practiceUnitForm = this.fb.group({
       idm_unitname: ['', Validators.required],

@@ -24,7 +24,6 @@ export class CreateOpenDemandComponent implements OnInit {
       isInternal: ['yes'],
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
-      dem_cmm_id: [{ value: '', disabled: true }],
       dem_clm_id: [''],
       dem_lcm_id: [''],
       dem_validtill: [''],
@@ -59,21 +58,11 @@ export class CreateOpenDemandComponent implements OnInit {
     this.httpService.getClientDetails().subscribe({
       next: (data) => {
         this.clients = data;
-        console.log('Clients:', this.clients);
-        this.demandForm.get('dem_clm_id')?.valueChanges.subscribe(selectedClientId => {
-          const selectedClient = this.clients.find(client => client.clm_id === selectedClientId);
-          if (selectedClient) {
-            this.demandForm.patchValue({ dem_cmm_id: selectedClient.clm_managername });
-          } else {
-            this.demandForm.patchValue({ dem_cmm_id: '' });
-          }
-        });
       },
       error: (err) => console.error('Error fetching clients', err)
     });
   }
-
-
+  
   loadLocations(): void {
     this.httpService.getLocationDetails().subscribe({
       next: (data) => {
@@ -95,7 +84,7 @@ export class CreateOpenDemandComponent implements OnInit {
   }
 
   loadInternalDepts(): void {
-    this.httpService.getInternalDepartmentDetails().subscribe({
+    this.httpService.getDeptsDetails().subscribe({
       next: (data) => {
         this.depts = data;
         console.log('Departments:', this.depts);
@@ -104,8 +93,8 @@ export class CreateOpenDemandComponent implements OnInit {
     });
   }
 
-  
-  
+
+
 
   onFileSelected(event: any) {
     // this.selectedFile = event.target.files[0];
@@ -173,14 +162,15 @@ export class CreateOpenDemandComponent implements OnInit {
     // }
 
     // Send API request
-    this.http.post('http://64.227.145.117/api/demands/', formData).subscribe({
+    this.httpService.addDemand(formData).subscribe({
       next: (response) => {
-        console.log('Success:', response);
+        console.log('Demand Added Successfully:', response);
         this.openDemandService.addDemand(response);
         this.demandForm.reset();
       },
       error: (error) => {
-        console.error('Error in API call:', error);
+        console.error('Error adding demands:', error);
+        alert('Failed to add demand. Check console for details.');
       }
     });
   }

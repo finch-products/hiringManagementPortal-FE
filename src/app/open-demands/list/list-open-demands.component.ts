@@ -21,7 +21,7 @@ export class ListOpenDemandsComponent {
   // ];
 
   displayedColumns: string[] = [
-    'dem_ctoolnumber', 'dem_ctooldate', 'dem_cmm_id',
+    'dem_ctoolnumber', 'dem_ctooldate', 'dem_clm_id',
     'dem_lcm_id', 'dem_validtill', 'dem_skillset', 'dem_positions', 'dem_rrnumber', 'dem_jrnumber'
   ];
 
