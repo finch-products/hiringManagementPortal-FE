@@ -15,9 +15,24 @@
                 (click)="setActive($event)">
                 <mat-icon>list</mat-icon> Demand entry
             </a>
-            <a mat-list-item routerLink="/views" (click)="setActive($event)">
+            <!-- <a mat-list-item routerLink="/views" (click)="setActive($event)">
                 <mat-icon>visibility</mat-icon> Other Views
-            </a>
+            </a> -->
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-icon>visibility</mat-icon>Other Views
+                </mat-expansion-panel-header>
+                <mat-action-list>
+                    <button mat-list-item routerLink="/other-view1"
+                        (click)="setActive($event)">OtherView1</button>
+                    <button mat-list-item routerLink="/other-view2"
+                        (click)="setActive($event)">Other View2</button>
+                    <button mat-list-item routerLink="/other-view3"
+                        (click)="setActive($event)">Other View3</button>
+                </mat-action-list>
+            </mat-expansion-panel>
+            
             <a mat-list-item routerLink="/reports" (click)="setActive($event)">
                 <mat-icon>category</mat-icon> Reports
             </a>

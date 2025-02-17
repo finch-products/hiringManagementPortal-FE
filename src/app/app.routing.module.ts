@@ -13,6 +13,9 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ReportComponent } from '../report/report.component';
 import { CreateEmployeeComponent } from '../masters/employee/create/create-employee.component';
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
+import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
+import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
+import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
@@ -29,7 +32,13 @@ const routes: Routes = [
   { path: 'candidate-master', component: CreateCandidateComponent},
   { path: 'dashboard', component: DashboardComponent},
   {path: 'reports' , component:ReportComponent},
-  { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) }
+  { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) },
+  {path: 'other-view1', component:Otherview1Component},
+  {path: 'other-view2', component:Otherview2Component},
+  {path: 'other-view3', component:Otherview3Component}
+
+
+
   // { path: 'client-master', component: ClientMasterComponent },
   // { path: 'lob-master', component: LobMasterComponent },
   // { path: 'location-master', component: LocationMasterComponent },
