@@ -1,0 +1,111 @@
+<div class="search-container">
+  <div>
+    <mat-form-field class="search" >
+      <mat-label>Search</mat-label>
+      <input matInput #searchInput placeholder="Search ..." (keyup)="applyFilter(searchInput.value)"  />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+
+
+  <!-- <div class="search-container">
+    <input type="text" placeholder="Search ..."  />
+    <button class="search-btn">
+      <mat-icon>search</mat-icon>
+    </button> -->
+
+  <div>
+    <mat-form-field class="filter">
+      <mat-label>Filter</mat-label>
+      <mat-icon matPrefix class="outlined-icon">filter_alt</mat-icon>
+      <input matInput #filterInput placeholder="Filter ..." (keyup)="applyFilter(filterInput.value)" />
+    </mat-form-field>
+    <button mat-icon-button>
+      <mat-icon class="outlined-icon">settings</mat-icon> <!-- Settings Icon -->
+    </button>
+    <button mat-icon-button>
+      <mat-icon class="outlined-icon">account_circle</mat-icon> <!-- User/Profile Icon -->
+    </button>
+  </div>
+</div>
+
+<mat-card>
+  <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="demandId">
+      <th mat-header-cell *matHeaderCellDef> Demand Id </th>
+      <td mat-cell *matCellDef="let element"> {{ element.demandId }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef> Client </th>
+      <td mat-cell *matCellDef="let element"> {{ element.client }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="LOB">
+      <th mat-header-cell *matHeaderCellDef> LOB </th>
+      <td mat-cell *matCellDef="let element"> {{ element.LOB }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="BU">
+      <th mat-header-cell *matHeaderCellDef> BU </th>
+      <td mat-cell *matCellDef="let element"> {{ element.BU }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="PU">
+      <th mat-header-cell *matHeaderCellDef> PU </th>
+      <td mat-cell *matCellDef="let element"> {{ element.PU }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="SPOC">
+      <th mat-header-cell *matHeaderCellDef> SPOC</th>
+      <td mat-cell *matCellDef="let element"> {{ element.SPOC }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdDate">
+      <th mat-header-cell *matHeaderCellDef> Created Date</th>
+      <td mat-cell *matCellDef="let element"> {{ element.createdDate }} </td>
+    </ng-container>
+    <ng-container matColumnDef="lastUpdated">
+      <th mat-header-cell *matHeaderCellDef> Last Updated </th>
+      <td mat-cell *matCellDef="let element"> {{ element.lastUpdated }} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>
+
+<h3>Weekly Client Selects</h3>
+<mat-card>
+  <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef> <mat-checkbox></mat-checkbox> </th>
+      <td mat-cell *matCellDef="let element"> <mat-checkbox></mat-checkbox> </td>
+    </ng-container>
+
+    <ng-container *ngFor="let column of displayedColumns2.slice(1)">
+      <ng-container [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
+        <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+      </ng-container>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+  </table>
+</mat-card>
