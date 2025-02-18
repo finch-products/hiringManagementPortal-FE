@@ -66,6 +66,10 @@ export class HttpService {
     );
   }
 
+  postDepartment(deptData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}departments/`, deptData);
+  }
+
   getDeptsDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -105,6 +109,13 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+
+  getEmployees(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}departments/employee-by-role/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {

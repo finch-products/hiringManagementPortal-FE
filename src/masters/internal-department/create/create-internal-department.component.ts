@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InternalDeptService } from '../../../app/services/internal.department.service';
+import { HttpService } from '../../../app/services/http.service';
 
 @Component({
   selector: 'app-create-internal-department',
@@ -10,10 +11,12 @@ import { InternalDeptService } from '../../../app/services/internal.department.s
 })
 export class CreateInternalDepartmentComponent implements OnInit {
   activeStatus: string = 'yes';
-  practiceUnitForm: FormGroup;
-  
-  constructor(private fb: FormBuilder, private http: HttpClient, private internalDeptService: InternalDeptService) {
-    this.practiceUnitForm = this.fb.group({
+  deptForm: FormGroup;
+  deliveryManagers: any[] = [];
+  spocs: any[] = [];
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private internalDeptService: InternalDeptService, private httpService: HttpService) {
+    this.deptForm = this.fb.group({
       idm_unitname: ['', Validators.required],
       idm_unitsales: ['', Validators.required],
       idm_unitdelivery: ['', Validators.required],
@@ -26,19 +29,34 @@ export class CreateInternalDepartmentComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    if (this.practiceUnitForm.valid) {
-      this.http.post('http://64.227.145.117/api/departments/', this.practiceUnitForm.value).subscribe({
-        next: (response) => {
-          console.log('Internal Dept added:', response);
-          this.internalDeptService.addInternalDept(response); // Send to list component
-          this.practiceUnitForm.reset();
-        },
-        error: (error) => console.error('Error adding Internal Dept:', error)
-      });
-    }
+  ngOnInit() {
+    this.loadEmployees();
   }
 
+  loadEmployees(): void {
+    this.httpService.getEmployees().subscribe({
+      next: (data) => {
+        this.deliveryManagers = data["Delivery Manager"];
+        this.spocs = data["SPOC"];
+      },
+      error: (err) => console.error('Error fetching clients', err)
+    });
+  }
 
-  ngOnInit() { }
+  onSubmit() {
+    if (this.deptForm.valid) {
+      this.httpService.postDepartment(this.deptForm.value).subscribe({
+        next: (response) => {
+          console.log('Department Added Successfully:', response);
+          this.httpService.addDemand(response);
+          this.deptForm.reset();
+        },
+        error: (error) => {
+          console.error('Error adding demands:', error);
+          alert('Failed to add department. Check console for details.');
+        }
+      });
+    }
+
+  }
 }

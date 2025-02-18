@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { OpenDemandService } from '../../services/open.demand.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-list-open-demands',
@@ -30,7 +31,7 @@ export class ListOpenDemandsComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, private demandService: OpenDemandService) { }
+  constructor(private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService) { }
 
   ngOnInit() {
     this.fetchOpenDemands();
@@ -42,20 +43,16 @@ export class ListOpenDemandsComponent {
   }
 
   fetchOpenDemands() {
-    // this.http.get<OpenDemand[]>('http://64.227.145.117/api/open-demands/').subscribe({
-    //   next: (data) => {
-    //     this.demandService.setInitialData(data);
-    //   },
-    //   error: (error) => {
-    //     console.error('Error fetching open demands:', error);
-    //   }
-    // });
+    this.httpService.getDemands().subscribe({
+      next: (data) => {
+        this.demandService.setInitialData(data);
+      },
+      error: (err) => console.error('Error fetching demands', err)
+    });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }
-
-
 }
