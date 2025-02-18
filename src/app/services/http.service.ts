@@ -66,6 +66,12 @@ export class HttpService {
     );
   }
 
+  getDeptsDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}departments/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getDemandStatusDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}demand-status/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -86,6 +92,16 @@ export class HttpService {
 
   getCPDMDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}employees/cp-dm/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  addDemand(demandData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}demands/`, demandData);
+  }
+
+  getDemands(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demands/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
