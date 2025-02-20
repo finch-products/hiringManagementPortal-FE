@@ -1,72 +1,21 @@
-.overview {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.card {
-    flex: 1;
-    width: 756px;
-    height: 243px;
-    gap: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.charts {
-    width: 756px;
-    height: 243px;
-    gap: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.target .progress-item {
-    margin-bottom: 12px;
-}
-
-.widgets {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    flex-direction: row;
-}
-
-.announcement,
-.target {
-    width: 50%;
-    display: flex;
-    padding: 30px;
-}
-
-.welcome-box {
-    text-align: center;
-    padding: 20px;
-    border-radius: 10px;
-    background: #e0c4ff;
+* {
+    box-sizing: border-box;
 }
 
 .dashboard-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-    width: 756px;
-    height: auto;
+    gap: 1.32%;
+    justify-content: space-between;
+    margin-top: 3.33%;
+    width: 100%;
     max-width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
+    padding: 1%;
 }
 
 .dashboard-cards .card {
-    width: 181.5px;
-    height: 118px;
-    padding: 12px;
+    width: 23%;
+    padding: 2%;
     border-radius: 15px;
     border-left: 4px solid;
     background: white;
@@ -75,24 +24,32 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    color: black;
+    min-height: 120px;
 }
 
 .card h5 {
     font-family: 'Inter', sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 12px;
-    line-height: 14.5px;
-    margin-bottom: 6px;
+    line-height: 14.52px;
+    letter-spacing: 0;
+    color: #000000;
+    text-align: center;
 }
 
 .number-bubble {
-    width: auto;
-    padding: 10px;
+    padding: 8px 12px;
     border-radius: 10px;
     font-size: 20px;
-    display: inline-block;
-    color: black;
+    margin-top: auto;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: #000000;
+    display: block;
+    text-align: center;
 }
 
 .yellow {
@@ -111,7 +68,7 @@
     border-left-color: #15CAF7 !important;
 }
 
-.number-bubble {
+.yellow .number-bubble {
     background-color: #FAEEBF;
 }
 
@@ -121,44 +78,76 @@
 
 .purple .number-bubble {
     background-color: #D5C3E3;
-    color: white;
 }
 
 .blue .number-bubble {
     background-color: #B0DBE6;
-    color: white;
 }
 
+.charts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    width: 100%;
+}
 
-.dashboard-cards {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14.52px;
-    letter-spacing: 0%;
+.graph {
+    width: 52.13%;
     height: auto;
-    padding: 10px;
-    gap: 10px;
-    margin-bottom: 10px;
+    min-height: 3.95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5%;
+    border-radius: 4.63%;
+    overflow: hidden;
 }
 
+.target-card {
+    flex: 1;
+    min-width: 45%;
+    padding: 20px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.progress-item {
+    margin-bottom: 12px;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.progress-value {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+mat-progress-bar {
+    flex: 1;
+    height: 10px;
+    background-color: #e0e0e0;
+}
 
 .position-cards {
-    width: 756px;
-    height: 74px;
-    gap: 20px;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
     flex-wrap: wrap;
-
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
 }
 
 .position-cards .card {
     display: flex;
     align-items: center;
-    width: 373px;
-    height: 74px;
+    width: 48%;
     padding: 20px;
     border-radius: 20px;
     background: white;
@@ -166,7 +155,6 @@
 }
 
 .icon {
-    // background-color: white;
     font-size: 24px;
     color: #6C63FF;
     display: flex;
@@ -183,6 +171,7 @@
     font-size: 22px;
     color: black;
     background: white;
+    font-weight: normal;
 }
 
 .content {
@@ -191,13 +180,13 @@
 }
 
 .title {
-    font-size: 14px;
+    font-size: 12px;
     margin: 0;
     font-weight: normal;
+
 }
 
 .show-more {
-    font-weight: normal;
     font-size: 12px;
     color: #6CC3FF;
     text-decoration: none;
@@ -208,52 +197,30 @@
     text-decoration: underline;
 }
 
-.chart-card,
-.target-card {
-    flex: 1;
-    min-width: 314.67px;
-    height: 243px;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background: white;
-}
-
-.target-container {
-    display: flex;
-    gap: 20px;
-}
-
-.progress-label {
-    font-size: 14px;
-    margin-bottom: 4px;
-    display: block;
-}
-
-.progress-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-}
-
-.progress-value {
-    font-size: 14px;
-    font-weight: 500;
-    white-space: nowrap;
-    color: black;
-}
-
-
-mat-progress-bar {
-    flex: 1;
-    height: 8px;
-    background-color: #e0e0e0;
+ngx-charts-pie-chart {
+    max-height: 110%;
 }
 
 @media (max-width: 768px) {
+    .dashboard-cards .card {
+        width: 48%;
+    }
+
     .target-card {
         width: 100%;
         min-width: unset;
     }
+
+    .position-cards .card {
+        width: 100%;
+    }
 }
+
+
+
+
+
+
+
+
+

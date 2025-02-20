@@ -112,9 +112,10 @@ mat-sidenav {
 
 
 .page-content {
-  width: 756px; 
+  width: 100%; 
+  max-width: 75%;
   height: auto; 
-  gap: 40px;
+  gap: 5%;
   flex: 0 0 auto; 
 }
 
@@ -169,7 +170,7 @@ td {
 }
 
 .search-box {
-  width: 300px;
+  width: 25%;
 }
 
 .mat-mdc-paginator-outer-container {

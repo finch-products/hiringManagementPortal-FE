@@ -10,7 +10,7 @@
   </div>
 
   <div class="card purple">
-    <h5 class="head">Total India Open Demands</h5>
+    <h5 class="head">Tota Non T&M Demands</h5>
     <span class="number-bubble">6</span>
   </div>
 
@@ -20,12 +20,11 @@
   </div>
 </div>
 
-
 <!-- Graphs and Charts -->
 <div class="charts">
-  <mat-card class="target-card">
-    <ngx-charts-pie-chart [results]="pieChartData" [view]="[250,250]" [legend]="true"></ngx-charts-pie-chart>
-
+  <mat-card class="graph">
+    <ngx-charts-pie-chart [results]="pieChartData" [view]="[300, 300]" [customColors]="customColors">
+    </ngx-charts-pie-chart>
   </mat-card>
 
   <!-- Target Progress Card -->
@@ -36,14 +35,12 @@
         <span class="progress-label">{{ progress.name }}</span>
         <div class="progress-container">
           <mat-progress-bar [value]="progress.value" mode="determinate"
-            style="--mdc-linear-progress-active-indicator-color: #A07CBC">
-          </mat-progress-bar>
+            style="--mdc-linear-progress-active-indicator-color: #A07CBC"></mat-progress-bar>
           <span class="progress-value">{{ progress.value }}%</span>
         </div>
       </div>
     </mat-card-content>
   </mat-card>
-
 </div>
 
 <!-- Position Cards -->
