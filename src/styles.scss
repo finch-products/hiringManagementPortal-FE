@@ -362,13 +362,32 @@ mat-label {
   color: gray;
 }
 .search-box {
-  border-color: black;
   width:300px;
   overflow: hidden;
   background: #fff;
   border-radius: 20px;
 }
 
+ .mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-width: 0px !important;
+ }
+
+/* Optional: Adjust input field padding for better look */
+.mat-mdc-form-field-infix {
+  padding: 10px !important;
+}
+.search-container mat-form-field .mat-mdc-text-field-wrapper { 
+  background-color: #f5f5f5 !important;
+  border-radius: 20px !important;
+box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1) !important;
+height:45px;
+width:300px;
+}
+
+.outlined-icon {
+  font-variation-settings: 'wght' 100; // Makes it thinner
+  color: rgba(0, 0, 0, 0.6); // Lighter black
+}
 .table-container table th {
   background-color: #f8f8f8;
   font-weight: bold;

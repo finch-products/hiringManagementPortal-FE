@@ -1,8 +1,8 @@
 <div class="search-container">
   <div>
-    <mat-form-field class="search" >
+    <mat-form-field class="search-box" >
       <mat-label>Search</mat-label>
-      <input matInput #searchInput placeholder="Search ..." (keyup)="applyFilter(searchInput.value)"  />
+      <input matInput #searchInput placeholder="Search ..." (keyup)="applyFilter($event)"  />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </div>
@@ -16,16 +16,17 @@
     </button> -->
 
   <div>
-    <mat-form-field class="filter">
+    <mat-form-field class="search-box">
       <mat-label>Filter</mat-label>
-      <mat-icon matPrefix class="outlined-icon">filter_alt</mat-icon>
-      <input matInput #filterInput placeholder="Filter ..." (keyup)="applyFilter(filterInput.value)" />
+      <mat-icon matSuffix>filter_alt</mat-icon>
+      <input matInput #filterInput placeholder="Filter ..." (keyup)="applyFilter($event)" />
     </mat-form-field>
+    
     <button mat-icon-button>
-      <mat-icon class="outlined-icon">settings</mat-icon> <!-- Settings Icon -->
-    </button>
+      <mat-icon class="outlined-icon">settings</mat-icon> 
+    </button> 
     <button mat-icon-button>
-      <mat-icon class="outlined-icon">account_circle</mat-icon> <!-- User/Profile Icon -->
+      <mat-icon class="outlined-icon">account_circle</mat-icon>
     </button>
   </div>
 </div>
