@@ -1,6 +1,6 @@
 <h2 class="page-title">Internal Department Master Entry</h2>
 <mat-card class="form-container">
-    <form [formGroup]="practiceUnitForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="deptForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Unit Name</mat-label>
@@ -25,13 +25,21 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>SPOC</mat-label>
-                <input matInput formControlName="idm_spoc_id">
-            </mat-form-field>
+                <mat-select formControlName="idm_spoc_id">
+                  <mat-option *ngFor="let emp of deliveryManagers" [value]="emp.emp_id">
+                    {{ emp.emp_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field field-30">
+            <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Delivery Manager</mat-label>
-                <input matInput formControlName="idm_deliverymanager_id">
-            </mat-form-field>
+                <mat-select formControlName="idm_deliverymanager_id">
+                  <mat-option *ngFor="let emp of spocs" [value]="emp.emp_id">
+                    {{ emp.emp_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
             <mat-radio-group formControlName="idm_isactive" appearance="fill"
                 class="form-field">

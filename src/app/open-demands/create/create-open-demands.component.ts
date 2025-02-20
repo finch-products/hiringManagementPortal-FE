@@ -37,8 +37,8 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_gcblevel: [''],
       dem_jd: [''],
       dem_comment: [''],
-      dem_isreopened: [''],
-      dem_isactive: [''],
+      dem_isreopened: ['no'],
+      dem_isactive: ['yes'],
       dem_insertby: [''],
       dem_updateby: [''],
     });
@@ -162,8 +162,10 @@ export class CreateOpenDemandComponent implements OnInit {
     // }
 
     // Send API request
+    console.log("Form Data Before Submission: ", this.demandForm.value);
     this.httpService.addDemand(formData).subscribe({
       next: (response) => {
+        console.log("Form Data Before Submission: ", this.demandForm.value);
         console.log('Demand Added Successfully:', response);
         this.openDemandService.addDemand(response);
         this.demandForm.reset();
