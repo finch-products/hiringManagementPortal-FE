@@ -1,4 +1,13 @@
-<h2 class="page-title">Candidate List</h2>
+<div class="search-container">
+    <h2 class="page-title">Candidate List</h2>
+    <!-- Search Box -->
+    <mat-form-field appearance="outline" class="search-box">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)"
+            placeholder="Filter data">
+        <mat-icon>search</mat-icon>
+    </mat-form-field>
+  </div>
 
 <mat-card class="table-container">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
