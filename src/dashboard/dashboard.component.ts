@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LegendPosition } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,11 +7,20 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  legendPosition: LegendPosition = LegendPosition.Right;
+
   pieChartData = [
     { name: 'Open Positions', value: 60 },
     { name: 'Profiles Submitted', value: 20 },
     { name: 'Interview Scheduled', value: 16 },
     { name: 'Profiles Not Submitted', value: 4 }
+  ];
+
+  customColors = [
+    { name: 'Open Positions', value: '#F7CB15' },
+    { name: 'Profiles Submitted', value: '#EC3737' },
+    { name: 'Interview Scheduled', value: '#15CAF7' },
+    { name: 'Profiles Not Submitted', value: '#6E3A95' }
   ];
 
   barChartData = [
