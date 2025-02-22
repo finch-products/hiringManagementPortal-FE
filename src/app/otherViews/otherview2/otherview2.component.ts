@@ -32,8 +32,9 @@ demandData = [
 
   ];
 
-  applyFilter(filterValue: string) {
-    this.dataSource1.filter = filterValue.trim().toLowerCase();
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource1.filter = filterValue;
   }
 
 }
