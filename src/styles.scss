@@ -333,13 +333,15 @@ mat-form-field {
   max-width: 100px;
   width: 100%;
 }
-
+.field-50{
+  width:90%;
+}
 mat-label {
   font-family: Inter, sans-serif;
   font-size: 14px;
   color: #444345;
   font-weight: 700;
-  // line-height: 14.52px;
+  //line-height: 14.52px;
   text-align: left;
 }
 .search-container {
@@ -432,4 +434,25 @@ table.mat-table {
   .main-content {
     margin-left: 0;
   }
+}
+
+
+.hover-container {
+  position: relative; /* Needed for absolute positioning */
+}
+
+.edit-btn {
+  position: absolute;
+  right: 5px;  /* Adjust position inside the cell */
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hover-container:hover .edit-btn {
+  opacity: 1; /* Button appears smoothly on hover */
 }

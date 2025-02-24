@@ -30,6 +30,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_skillset: [''],
       dem_lob_id: [''],
       dem_idm_id: [''],
+     dem_position_name:[''],
       dem_positions: [''],
       dem_rrnumber: [''],
       dem_jrnumber: [''],
