@@ -4,11 +4,13 @@ mat-sidenav-container {
         color: #333;
         border-right: 1px solid #E0E0E0;
         width: 100%;
+        border-radius: 20%;
         .sidebar-logo img {
-            width: 140px;
+            margin-left: 3%;
+            width: 50%;
+            text-align: center;
         }
         mat-nav-list {
-            padding: 20px 0;
             a {
                 display: flex;
                 align-items: center;
@@ -34,6 +36,7 @@ mat-sidenav-container {
 
             mat-expansion-panel {
                 box-shadow: none !important;
+
                 mat-expansion-panel-header {
                     background-color: #F6F5F1;
                     padding: 10px 15px;
