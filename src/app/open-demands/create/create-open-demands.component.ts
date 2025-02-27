@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -18,8 +19,10 @@ export class CreateOpenDemandComponent implements OnInit {
   depts: any[] = [];
   selectedFile: File | null = null;
   isInternal = true;
+  isEditMode: boolean = false;
+  demands: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute) {
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
       dem_ctoolnumber: [''],
@@ -30,7 +33,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_skillset: [''],
       dem_lob_id: [''],
       dem_idm_id: [''],
-     dem_position_name:[''],
+      dem_position_name: [''],
       dem_positions: [''],
       dem_rrnumber: [''],
       dem_jrnumber: [''],
@@ -46,13 +49,55 @@ export class CreateOpenDemandComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadClients();
-    this.loadLocations();
-    this.loadLOBs();
-    this.loadInternalDepts();
-    this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
-      this.isInternal = value === 'yes';
-    });
+    this.route.paramMap.subscribe(params => {
+      const demandId = params.get('id');
+      if (demandId) {
+        this.isEditMode = true;
+        console.log("editmode", this.isEditMode)
+        this.loadData(demandId); // Load user details for editing
+      }
+      this.loadClients();
+      this.loadLocations();
+      this.loadLOBs();
+      this.loadInternalDepts();
+      this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
+        this.isInternal = value === 'yes';
+      });
+    })
+  };
+  loadData(demandId: string) {
+    this.httpService.getSingleDemandDetail(demandId).subscribe({
+      next: (data) => {
+        this.demands = data;
+        this.demandForm.patchValue({
+          isInternal: this.demands.isInternal,
+          dem_ctoolnumber: this.demands.dem_ctoolnumber,
+          dem_ctooldate: this.demands.dem_ctooldate,
+          dem_clm_id: this.demands.client_details.clm_id,
+          dem_lcm_id: this.demands.location_details.lcm_id,
+          dem_validtill: this.demands.dem_validtill,
+          dem_skillset: this.demands.dem_skillset,
+          dem_lob_id: this.demands.lob_details.lob_id,
+          dem_idm_id: this.demands.department_details.idm_id,
+          dem_position_name: this.demands.dem_position_name,
+          dem_positions: this.demands.dem_positions,
+          dem_rrnumber: this.demands.dem_rrnumber,
+          dem_jrnumber: this.demands.dem_jrnumber,
+          dem_rrgade: this.demands.dem_rrgade,
+          dem_gcblevel: this.demands.dem_gcblevel,
+          dem_isreopened: this.demands.dem_isreopened,
+          dem_isactive: this.demands.dem_isactive,
+          dem_comment: this.demands.dem_comment
+        });
+
+        console.log("Set dem_clm_id to:", data.client_details.clm_id);
+        //Ensure correct visibility for RR/JR fields
+        this.isInternal = data.isInternal === 'yes';
+        console.log("Clients list after setting value:", this.demands);
+      },
+
+      error: (err) => console.error('Error fetching a sinlge demand', err)
+    })
   }
 
   loadClients(): void {
@@ -63,7 +108,7 @@ export class CreateOpenDemandComponent implements OnInit {
       error: (err) => console.error('Error fetching clients', err)
     });
   }
-  
+
   loadLocations(): void {
     this.httpService.getLocationDetails().subscribe({
       next: (data) => {
@@ -123,9 +168,9 @@ export class CreateOpenDemandComponent implements OnInit {
   // }
 
   onSubmit() {
-    const formData = new FormData();
 
-    // Debug: Check if form values exist before appending
+    const formData = new FormData();
+    console.log("this.demands:", this.demands);
     console.log("Form Values:", this.demandForm.value);
 
     Object.keys(this.demandForm.value).forEach(key => {
@@ -163,19 +208,35 @@ export class CreateOpenDemandComponent implements OnInit {
     // }
 
     // Send API request
-    console.log("Form Data Before Submission: ", this.demandForm.value);
-    this.httpService.addDemand(formData).subscribe({
-      next: (response) => {
-        console.log("Form Data Before Submission: ", this.demandForm.value);
-        console.log('Demand Added Successfully:', response);
-        this.openDemandService.addDemand(response);
-        this.demandForm.reset();
-      },
-      error: (error) => {
-        console.error('Error adding demands:', error);
-        alert('Failed to add demand. Check console for details.');
-      }
-    });
+    console.log(".dem_id", this.demands.dem_id)
+    if (this.isEditMode) {
+      // UPDATE existing demand
+      console.log("this.demands.dem_id", this.demands.dem_id)
+      this.httpService.updateDemand(formData).subscribe({
+        next: (response) => {
+          console.log('Demand Updated Successfully:', response);
+          alert('Demand updated successfully!');
+        },
+        error: (error) => {
+          console.error('Error updating demand:', error);
+          alert('Failed to update demand. Check console for details.');
+        }
+      });
+    } else {
+      console.log("Form Data Before Submission: ", this.demandForm.value);
+      this.httpService.addDemand(formData).subscribe({
+        next: (response) => {
+          console.log("Form Data Before Submission: ", this.demandForm.value);
+          console.log('Demand Added Successfully:', response);
+          this.openDemandService.addDemand(response);
+          this.demandForm.reset();
+        },
+        error: (error) => {
+          console.error('Error adding demands:', error);
+          alert('Failed to add demand. Check console for details.');
+        }
+      });
+    }
   }
 
   formatDate(date: Date): string {

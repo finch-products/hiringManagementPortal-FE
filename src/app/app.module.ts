@@ -59,6 +59,7 @@ import { Otherview1Component } from './otherViews/otherview1/otherview1.componen
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CreateClientManagerComponent,
     ListClientManagerComponent,
     RouterModule.forRoot([]),
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [],

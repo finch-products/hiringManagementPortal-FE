@@ -47,7 +47,7 @@ isEditmode="false";
     this.fetchOpenDemands();
     this.demandService.demands$.subscribe(demand => {
       this.dataSource.data = demand;
-      console.log(demand)
+      // console.log("demand",demand)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.loadStatus();
@@ -56,9 +56,27 @@ isEditmode="false";
 
 
   loadStatus(): void {
+    this.httpService.getDemandStatusDetails().subscribe({
+      next: (data) => {
+        this.stat = data;
+      },
+      error: (err) => console.error('Error fetching clients', err)
+    });
+
   }
 
   onSubmit(){
+
+    if(this.listForm.valid){
+      const formData=this.listForm.value
+      console.log("formdata",formData)
+      this.httpService.updateDemand(formData).subscribe({
+        next:(data)=>{
+          console.log('Form submission successful:', data);
+        },
+        error: (err) => console.error('Form submission error:', err)
+      })
+    }
  
   }
 
@@ -78,7 +96,8 @@ isEditmode="false";
 
   editRow(element: any) {
     console.log("Editing row: ", element);
-    this.element={...element}
+    // this.element={...element}
    this.isEditmode="true";
   }
+
 }

@@ -77,11 +77,12 @@ export class HttpService {
   }
 
   getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
+  
   getInternalDepartmentDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -106,6 +107,16 @@ export class HttpService {
 
   getDemands(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}demands/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getSingleDemandDetail(demandId: any): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demands/${demandId}`, this.getHeaders()).pipe(
+      catchError(this.handleError));
+  }
+
+  updateDemand(form_data: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }

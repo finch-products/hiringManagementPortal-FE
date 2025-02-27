@@ -245,11 +245,11 @@ mat-form-field {
   font-size: 14px;
   color: #444345;
   font-weight: 700;
-  line-height: 14.52px;
+  line-height: 32.52px;
   text-align: left;
-  text-underline-position: from-font;
+   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .file-input-container input[type="file"] {
@@ -312,7 +312,7 @@ mat-label {
   font-size: 14px;
   color: #444345;
   font-weight: 700;
-  //line-height: 14.52px;
+  line-height: 32.52px;
   text-align: left;
 }
 .search-container {
@@ -353,7 +353,6 @@ mat-label {
   background-color: #f5f5f5 !important;
   border-radius: 20px !important;
 box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1) !important;
-height:45px;
 width:300px;
 }
 
