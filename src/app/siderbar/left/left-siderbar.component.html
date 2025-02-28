@@ -11,13 +11,25 @@
                 (click)="setActive($event)">
                 <mat-icon>dashboard</mat-icon> Dashboard
             </a>
-            <a mat-list-item routerLink="/open-demands"
+            <!-- <a mat-list-item routerLink="/open-demands"
                 (click)="setActive($event)">
                 <mat-icon>list</mat-icon> Demand entry
-            </a>
+            </a> -->
             <!-- <a mat-list-item routerLink="/views" (click)="setActive($event)">
                 <mat-icon>visibility</mat-icon> Other Views
             </a> -->
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-icon>list</mat-icon>Open Demands
+                </mat-expansion-panel-header>
+                <mat-action-list>
+                    <button mat-list-item routerLink="/entry"
+                        (click)="setActive($event)">Entry</button>
+                    <button mat-list-item routerLink="/list"
+                        (click)="setActive($event)">List</button>
+                </mat-action-list>
+            </mat-expansion-panel>
 
             <mat-expansion-panel>
                 <mat-expansion-panel-header>

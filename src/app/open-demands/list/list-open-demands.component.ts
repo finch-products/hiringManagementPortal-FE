@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-list-open-demands',
@@ -13,6 +14,8 @@ import { HttpService } from '../../services/http.service';
   styleUrl: './list-open-demands.component.scss'
 })
 export class ListOpenDemandsComponent {
+  listForm:FormGroup;
+  hoveredRow: any = null;
 
   // displayedColumns: string[] = [
   //   'ctool_number', 'ctool_date', 'client_manager_name',
@@ -22,24 +25,59 @@ export class ListOpenDemandsComponent {
   // ];
 
   displayedColumns: string[] = [
-    'dem_ctoolnumber', 'dem_ctooldate', 'dem_clm_id',
-    'dem_lcm_id', 'dem_validtill', 'dem_skillset', 'dem_positions', 'dem_rrnumber', 'dem_jrnumber'
+    'select','dem_ctoolnumber', 'dem_ctooldate' ,'dem_validtill', 'position_name',
+    'dem_lcm_id', 'dem_skillset', 'dem_positions', 'status'
   ];
 
   dataSource = new MatTableDataSource<OpenDemand>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
-  constructor(private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService) { }
+  stat:any
+isEditmode="false";
+  element: any;
+  constructor(private fb: FormBuilder,private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService) { 
+    this.listForm = this.fb.group({
+      status:[''],
+      comment:['']
+    })
+  }
 
   ngOnInit() {
     this.fetchOpenDemands();
     this.demandService.demands$.subscribe(demand => {
       this.dataSource.data = demand;
+      // console.log("demand",demand)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.loadStatus();
     });
+  }
+
+
+  loadStatus(): void {
+    this.httpService.getDemandStatusDetails().subscribe({
+      next: (data) => {
+        this.stat = data;
+      },
+      error: (err) => console.error('Error fetching clients', err)
+    });
+
+  }
+
+  onSubmit(){
+
+    if(this.listForm.valid){
+      const formData=this.listForm.value
+      console.log("formdata",formData)
+      this.httpService.updateDemand(formData).subscribe({
+        next:(data)=>{
+          console.log('Form submission successful:', data);
+        },
+        error: (err) => console.error('Form submission error:', err)
+      })
+    }
+ 
   }
 
   fetchOpenDemands() {
@@ -55,4 +93,11 @@ export class ListOpenDemandsComponent {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }
+
+  editRow(element: any) {
+    console.log("Editing row: ", element);
+    // this.element={...element}
+   this.isEditmode="true";
+  }
+
 }

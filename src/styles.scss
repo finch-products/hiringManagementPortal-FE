@@ -12,8 +12,10 @@ body {
   background-color: #fff;
 
   .left-sidebar {
-    background-color: #F6F5F1;
-    width: 20.5%;
+    background-color: #e0b60c;
+    width: 21.2%;
+    height: 29.03%;
+    border-radius: 2%;
   }
 
 
@@ -238,11 +240,11 @@ mat-form-field {
   font-size: 14px;
   color: #444345;
   font-weight: 700;
-  line-height: 14.52px;
+  line-height: 32.52px;
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .file-input-container input[type="file"] {
@@ -298,12 +300,16 @@ mat-form-field {
   width: 100%;
 }
 
+.field-50 {
+  width: 90%;
+}
+
 mat-label {
   font-family: Inter, sans-serif;
   font-size: 14px;
   color: #444345;
   font-weight: 700;
-  // line-height: 14.52px;
+  line-height: 32.52px;
   text-align: left;
 }
 
@@ -347,7 +353,6 @@ mat-label {
   background-color: #f5f5f5 !important;
   border-radius: 20px !important;
   box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.1) !important;
-  height: 45px;
   width: 300px;
 }
 
@@ -400,4 +405,28 @@ table.mat-table {
   .main-content {
     margin-left: 0;
   }
+}
+
+
+.hover-container {
+  position: relative;
+  /* Needed for absolute positioning */
+}
+
+.edit-btn {
+  position: absolute;
+  right: 5px;
+  /* Adjust position inside the cell */
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hover-container:hover .edit-btn {
+  opacity: 1;
+  /* Button appears smoothly on hover */
 }
