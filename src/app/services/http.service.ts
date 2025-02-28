@@ -8,7 +8,6 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpService {
   private baseUrl = 'http://64.227.145.117/api/';
-  // private baseUrl = 'http://localhost:8000/api/';
 
 
   constructor(private http: HttpClient) { }
@@ -79,12 +78,11 @@ export class HttpService {
   }
 
   getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}demand-status/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
 
-  
   getInternalDepartmentDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -112,6 +110,7 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+
   getSingleDemandDetail(demandId: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}demands/id/${demandId}`, this.getHeaders()).pipe(
       catchError(this.handleError));
