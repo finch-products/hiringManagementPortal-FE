@@ -68,6 +68,11 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Position Name</mat-label>
+        <input matInput formControlName="dem_position_name">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
         <mat-label>No Of Positions</mat-label>
         <input matInput formControlName="dem_positions">
       </mat-form-field>
@@ -129,9 +134,9 @@
       <button mat-raised-button color="primary"
         type="submit" class="cancel">Cancel</button>
       <button mat-raised-button color="primary"
-        type="submit" class="submit">Submit</button>
+        type="submit" class="submit"> {{ isEditMode ? 'Update' : 'Submit' }}</button>
     </div>
   </form>
 </mat-card>
 
-<app-list-open-demands></app-list-open-demands>
+<!-- <app-list-open-demands></app-list-open-demands> -->

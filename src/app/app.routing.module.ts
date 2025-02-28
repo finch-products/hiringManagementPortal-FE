@@ -23,7 +23,9 @@ import { Otherview3Component } from './otherViews/otherview3/otherview3.componen
 
 const routes: Routes = [
   { path: '', redirectTo: '/open-demands', pathMatch: 'full' },
-  { path: 'open-demands', component: CreateOpenDemandComponent },
+  { path: 'entry', component: CreateOpenDemandComponent },
+  { path: 'entry/:id', component: CreateOpenDemandComponent },
+  {path: 'list', component:ListOpenDemandsComponent},
   { path: 'client-master', component: CreateClientComponent},
   { path: 'lob-master', component: CreateLOBComponent},
   { path: 'location-master', component: CreateLocationComponent},
