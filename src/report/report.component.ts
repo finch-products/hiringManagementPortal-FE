@@ -4,6 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, map, startWith } from 'rxjs';
+import { OpenDemand } from '../interfaces/open-demand.interface';
+import { HttpService } from '../app/services/http.service';
+import { OpenDemandService } from '../app/services/open.demand.service';
 
 @Component({
   selector: 'app-report',
@@ -12,6 +15,7 @@ import { Observable, map, startWith } from 'rxjs';
 })
 export class ReportComponent implements OnInit {
 
+  locations: any[] = [];
 
   lobData = [
     { lob: "LOB 1", India: 32, UK: 38, Poland: 37 },
@@ -28,6 +32,9 @@ export class ReportComponent implements OnInit {
     { lob: "LOB 4", Jan: 12, Feb: 11, Mar: 65, Apr: 65, May: 65 },
     { lob: "LOB 5", Jan: 65, Feb: 31, Mar: 33, Apr: 33, May: 33 }
   ];
+
+
+
   employeeData = [
     { name: "John Doe", skills: "Python, AI, ML", location: "New York", manager: "Mark Lee", partner: "Sarah Kim", profiles: 5, ctoolId: 12345, position: "Data Scientist" },
     { name: "Alice Johnson", skills: "AWS, Kubernetes", location: "Chicago", manager: "Tom Brown", partner: "Emma Davis", profiles: 3, ctoolId: 67890, position: "DevOps Engineer" },
@@ -36,11 +43,17 @@ export class ReportComponent implements OnInit {
     { name: "Michael Brown", skills: "SQL, Tableau", location: "Seattle", manager: "Olivia Scott", partner: "Andrew Wilson", profiles: 6, ctoolId: 11223, position: "Business Analyst" }
   ];
 
+  displayedColumns: string[] = [
+    'manager', 'skills', 'location',
+    'delivery_manager', 'client_partner', 'profiles', 'ctool', 'position'
+  ];
+
+  dataSource = new MatTableDataSource<OpenDemand>([]);
 
   @ViewChild(MatPaginator) paginator !: MatPaginator
   @ViewChild(MatSort) sort !: MatSort
-  displayedColumns: string[] = [];
-  locations = ["India", "UK", "Poland"];
+
+  // locations = ["India", "UK", "Poland"];
   hiringManagerControl = new FormControl('');
   skillsControl = new FormControl('');
   locationControl = new FormControl('');
@@ -49,7 +62,7 @@ export class ReportComponent implements OnInit {
 
   filteredManagers!: Observable<string[]>;
   filteredSkills!: Observable<string[]>;
-  filteredLocations!: Observable<string[]>;
+  filteredLocations!: Observable<any[]>;
   filteredDeliveryManagers!: Observable<string[]>;
   filteredClientPartners!: Observable<string[]>;
 
@@ -59,63 +72,73 @@ export class ReportComponent implements OnInit {
   allDeliveryManagers: string[] = [];
   allClientPartners: string[] = [];
 
-  dataSource!: MatTableDataSource<any>;
-
-
-
-  constructor() {
+  constructor(private httpService: HttpService, private demandService: OpenDemandService) {
 
   }
 
-  ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.employeeData);
+  async ngOnInit() {
+    this.fetchOpenDemands();
+    await this.loadLocations();
+    this.allLocations = [...new Set(this.locations.map(location => location.lcm_name))];
+    this.demandService.demands$.subscribe(demand => {
+      this.dataSource.data = demand;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
+    // this.dataSource = new MatTableDataSource(this.employeeData);
 
     // Set displayed columns dynamically
-    this.displayedColumns = ['lob', ...this.locations];
+    // this.displayedColumns = ['lob', ...this.locations];
 
     // Extract unique values for filtering
-    this.allManagers = [...new Set(this.employeeData.map(emp => emp.name))];
-    this.allSkills = [...new Set(this.employeeData.flatMap(emp => emp.skills.split(', ')))];
-    this.allLocations = [...new Set(this.employeeData.map(emp => emp.location))];
-    this.allDeliveryManagers = [...new Set(this.employeeData.map(emp => emp.manager))];
-    this.allClientPartners = [...new Set(this.employeeData.map(emp => emp.partner))];
+    // this.allManagers = [...new Set(this.employeeData.map(emp => emp.name))];
+    // this.allSkills = [...new Set(this.employeeData.flatMap(emp => emp.skills.split(', ')))];
+    // this.allLocations = [...new Set(this.locations.map(location => location.lcm_name))];
+    // this.allDeliveryManagers = [...new Set(this.employeeData.map(emp => emp.manager))];
+    // this.allClientPartners = [...new Set(this.employeeData.map(emp => emp.partner))];
 
-    // Set up filtering for each input field
-    this.filteredManagers = this.hiringManagerControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filterOptions(value || '', this.allManagers))
-    );
-    this.filteredSkills = this.skillsControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filterOptions(value || '', this.allSkills))
-    );
+    // this.filteredManagers = this.hiringManagerControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this.filterOptions(value || '', this.allManagers))
+    // );
+    // this.filteredSkills = this.skillsControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this.filterOptions(value || '', this.allSkills))
+    // );
     this.filteredLocations = this.locationControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value || '', this.allLocations))
     );
-    this.filteredDeliveryManagers = this.deliveryManagerControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filterOptions(value || '', this.allDeliveryManagers))
-    );
-    this.filteredClientPartners = this.clientPartnerControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filterOptions(value || '', this.allClientPartners))
-    );
+   
+    // alert(JSON.stringify(this.filteredLocations))
+    // this.filteredDeliveryManagers = this.deliveryManagerControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this.filterOptions(value || '', this.allDeliveryManagers))
+    // );
+    // this.filteredClientPartners = this.clientPartnerControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this.filterOptions(value || '', this.allClientPartners))
+    // );
 
     // **Custom Filtering Logic for Multiple Fields**
     this.dataSource.filterPredicate = (data, filter) => {
       const searchTerms = JSON.parse(filter); // Convert filter string back to object
 
       return (
-        (!searchTerms.hiringManager || data.name.toLowerCase().includes(searchTerms.hiringManager)) &&
-        (!searchTerms.skills || data.skills.toLowerCase().includes(searchTerms.skills)) &&
-        (!searchTerms.location || data.location.toLowerCase().includes(searchTerms.location)) &&
-        (!searchTerms.deliveryManager || data.manager.toLowerCase().includes(searchTerms.deliveryManager)) &&
-        (!searchTerms.clientPartner || data.partner.toLowerCase().includes(searchTerms.clientPartner))
+        // (!searchTerms.hiringManager || data.name.toLowerCase().includes(searchTerms.hiringManager)) &&
+        // (!searchTerms.skills || data.skills.toLowerCase().includes(searchTerms.skills)) &&
+        (!searchTerms.location || data.location_details.lcm_name.toLowerCase().includes(searchTerms.location))
+        // (!searchTerms.deliveryManager || data.manager.toLowerCase().includes(searchTerms.deliveryManager)) &&
+        // (!searchTerms.clientPartner || data.partner.toLowerCase().includes(searchTerms.clientPartner))
       );
     };
 
     this.setupFilterListeners();
+  }
+
+  async loadLocations() {
+    this.locations = await this.httpService.getLocations().toPromise(); // Convert Observable to Promise
   }
 
   ngAfterViewInit() {
@@ -128,23 +151,49 @@ export class ReportComponent implements OnInit {
     return options.filter(option => option.toLowerCase().includes(filterValue));
   }
   private setupFilterListeners() {
-    this.hiringManagerControl.valueChanges.subscribe(() => this.applyFilters());
-    this.skillsControl.valueChanges.subscribe(() => this.applyFilters());
+    // this.hiringManagerControl.valueChanges.subscribe(() => this.applyFilters());
+    // this.skillsControl.valueChanges.subscribe(() => this.applyFilters());
     this.locationControl.valueChanges.subscribe(() => this.applyFilters());
-    this.deliveryManagerControl.valueChanges.subscribe(() => this.applyFilters());
-    this.clientPartnerControl.valueChanges.subscribe(() => this.applyFilters());
+    // this.deliveryManagerControl.valueChanges.subscribe(() => this.applyFilters());
+    // this.clientPartnerControl.valueChanges.subscribe(() => this.applyFilters());
   }
 
   private applyFilters() {
     const searchTerms = {
-      hiringManager: this.hiringManagerControl.value?.trim().toLowerCase() || '',
-      skills: this.skillsControl.value?.trim().toLowerCase() || '',
-      location: this.locationControl.value?.trim().toLowerCase() || '',
-      deliveryManager: this.deliveryManagerControl.value?.trim().toLowerCase() || '',
-      clientPartner: this.clientPartnerControl.value?.trim().toLowerCase() || ''
+      // hiringManager: this.hiringManagerControl.value?.trim().toLowerCase() || '',
+      // skills: this.skillsControl.value?.trim().toLowerCase() || '',
+      location: this.locationControl.value?.trim().toLowerCase() || ''
+      // deliveryManager: this.deliveryManagerControl.value?.trim().toLowerCase() || '',
+      // clientPartner: this.clientPartnerControl.value?.trim().toLowerCase() || ''
     }
     this.dataSource.filter = JSON.stringify(searchTerms);
   };
+
+  fetchOpenDemands() {
+    this.httpService.getDemands().subscribe({
+      next: (data) => {
+        this.demandService.setInitialData(data);
+        console.log(JSON.stringify(data))
+      },
+      error: (err) => console.error('Error fetching demands', err)
+    });
+  }
+
+  // loadLocations(): void {
+  //   this.httpService.getLocationDetails().subscribe({
+  //     next: (data) => {
+  //       this.locations = data;
+  //       console.log('Locations:', this.locations);
+  //     },
+  //     error: (err) => console.error('Error fetching locations', err)
+  //   });
+  // }
+
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  //   this.dataSource.filter = filterValue;
+  // }
+
 }
 
 

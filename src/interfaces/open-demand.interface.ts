@@ -5,6 +5,7 @@ export interface OpenDemand {
   dem_cmm_id: string;
   dem_clm_id: string;
   dem_lcm_id: string;
+  location_details: any;
   dem_validtill: string;
   dem_skillset: string;
   dem_lob_id: string;

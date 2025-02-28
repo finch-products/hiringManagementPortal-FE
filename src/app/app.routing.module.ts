@@ -16,6 +16,7 @@ import { CreateCandidateComponent } from '../masters/candidate/create/create-can
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
 import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
+import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
@@ -24,18 +25,19 @@ import { Otherview3Component } from './otherViews/otherview3/otherview3.componen
 const routes: Routes = [
   { path: '', redirectTo: '/open-demands', pathMatch: 'full' },
   { path: 'open-demands', component: CreateOpenDemandComponent },
-  { path: 'client-master', component: CreateClientComponent},
-  { path: 'lob-master', component: CreateLOBComponent},
-  { path: 'location-master', component: CreateLocationComponent},
-  { path: 'internal-department-master', component: CreateInternalDepartmentComponent},
-  { path: 'employee-master', component: CreateEmployeeComponent},
-  { path: 'candidate-master', component: CreateCandidateComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  {path: 'reports' , component:ReportComponent},
+  { path: 'client-master', component: CreateClientComponent },
+  { path: 'lob-master', component: CreateLOBComponent },
+  { path: 'location-master', component: CreateLocationComponent },
+  { path: 'internal-department-master', component: CreateInternalDepartmentComponent },
+  { path: 'employee-master', component: CreateEmployeeComponent },
+  { path: 'candidate-master', component: CreateCandidateComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'reports', component: ReportComponent },
   { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) },
-  {path: 'other-view1', component:Otherview1Component},
-  {path: 'other-view2', component:Otherview2Component},
-  {path: 'other-view3', component:Otherview3Component}
+  { path: 'other-view1', component: Otherview1Component },
+  { path: 'other-view2', component: Otherview2Component },
+  { path: 'other-view3', component: Otherview3Component },
+  { path: 'demand-history', component: DemandHistoryComponent }
 
 
 

@@ -59,6 +59,7 @@ import { Otherview1Component } from './otherViews/otherview1/otherview1.componen
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReportComponent,
     Otherview1Component,
     Otherview2Component,
-    Otherview3Component
+    Otherview3Component,
+    DemandHistoryComponent
   ],
   imports: [
     MatRadioModule,

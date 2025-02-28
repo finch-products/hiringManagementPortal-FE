@@ -1,15 +1,16 @@
 <div class="report-container">
-  <h3>Current Open Positions</h3>
+  <h2 class="page-title">Current Open Positions</h2>
   <div class="tables">
     <!-- Location Table -->
-    <div class="table-wrapper">
+    <!-- <mat-card class="table-container">
       <table mat-table [dataSource]="lobData" class="mat-elevation-z8">
         <ng-container matColumnDef="lob">
           <th mat-header-cell *matHeaderCellDef> Location </th>
           <td mat-cell *matCellDef="let item"> {{ item.lob }} </td>
         </ng-container>
 
-        <ng-container *ngFor="let location of locations" [matColumnDef]="location">
+        <ng-container *ngFor="let location of locations"
+          [matColumnDef]="location">
           <th mat-header-cell *matHeaderCellDef> {{ location }} </th>
           <td mat-cell *matCellDef="let item"> {{ item[location] }} </td>
         </ng-container>
@@ -17,135 +18,142 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-    </div>
+    </mat-card> -->
 
-    <!-- AI Prediction Table -->
-    <div class="table-wrapper">
+    <mat-card class="table-container">
       <table mat-table [dataSource]="aiPredictions" class="mat-elevation-z8">
         <ng-container matColumnDef="lob">
           <th mat-header-cell *matHeaderCellDef> AI Prediction </th>
           <td mat-cell *matCellDef="let item"> {{ item.lob }} </td>
         </ng-container>
 
-        <ng-container *ngFor="let month of ['Jan', 'Feb', 'Mar', 'Apr', 'May']" [matColumnDef]="month">
+        <ng-container *ngFor="let month of ['Jan', 'Feb', 'Mar', 'Apr', 'May']"
+          [matColumnDef]="month">
           <th mat-header-cell *matHeaderCellDef> {{ month }} </th>
           <td mat-cell *matCellDef="let item"> {{ item[month] }} </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="['lob', 'Jan', 'Feb', 'Mar', 'Apr', 'May']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['lob', 'Jan', 'Feb', 'Mar', 'Apr', 'May'];"></tr>
+        <tr mat-header-row
+          *matHeaderRowDef="['lob', 'Jan', 'Feb', 'Mar', 'Apr', 'May']"></tr>
+        <tr mat-row
+          *matRowDef="let row; columns: ['lob', 'Jan', 'Feb', 'Mar', 'Apr', 'May'];"></tr>
       </table>
-    </div>
+    </mat-card>
   </div>
 
-
-
   <div class="filters">
-    <mat-form-field class="filter_buttons">
-      <mat-label>Hiring Manager Name</mat-label>
-      <input type="text" matInput [formControl]="hiringManagerControl" [matAutocomplete]="autoHiringManager">
+    <!-- <mat-form-field class="filter-chip" appearance="fill" floatLabel="always">
+      <mat-label>Hiring Manager</mat-label>
+      <input type="text" matInput [formControl]="hiringManagerControl"
+        [matAutocomplete]="autoHiringManager">
       <mat-autocomplete #autoHiringManager="matAutocomplete">
-        <mat-option *ngFor="let manager of filteredManagers | async" [value]="manager">
+        <mat-option *ngFor="let manager of filteredManagers | async"
+          [value]="manager">
           {{ manager }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field>
-    <!-- Skills Filter -->
-    <mat-form-field class="filter_buttons">
+    </mat-form-field> -->
+
+    <!-- <mat-form-field class="filter-chip">
       <mat-label>Skills</mat-label>
-      <input type="text" matInput [formControl]="skillsControl" [matAutocomplete]="autoSkills">
+      <input type="text" matInput [formControl]="skillsControl"
+        [matAutocomplete]="autoSkills">
       <mat-autocomplete #autoSkills="matAutocomplete">
-        <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+        <mat-option *ngFor="let skill of filteredSkills | async"
+          [value]="skill">
           {{ skill }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field>
+    </mat-form-field> -->
 
-    <!-- Location Filter -->
-    <mat-form-field class="filter_buttons">
+    <mat-form-field class="filter-chip">
       <mat-label>Location</mat-label>
-      <input type="text" matInput [formControl]="locationControl" [matAutocomplete]="autoLocation">
+      <input type="text" matInput [formControl]="locationControl"
+        [matAutocomplete]="autoLocation">
       <mat-autocomplete #autoLocation="matAutocomplete">
-        <mat-option *ngFor="let location of filteredLocations | async" [value]="location">
+        <mat-option *ngFor="let location of filteredLocations | async"
+          [value]="location">
           {{ location }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
 
-    <!-- Delivery Manager Filter -->
-    <mat-form-field class="filter_buttons">
+    <!-- <mat-form-field class="filter-chip">
       <mat-label>Delivery Manager</mat-label>
-      <input type="text" matInput [formControl]="deliveryManagerControl" [matAutocomplete]="autoDeliveryManager">
+      <input type="text" matInput [formControl]="deliveryManagerControl"
+        [matAutocomplete]="autoDeliveryManager">
       <mat-autocomplete #autoDeliveryManager="matAutocomplete">
-        <mat-option *ngFor="let manager of filteredDeliveryManagers | async" [value]="manager">
+        <mat-option *ngFor="let manager of filteredDeliveryManagers | async"
+          [value]="manager">
           {{ manager }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field>
+    </mat-form-field> -->
 
-    <!-- Client Partner Filter -->
-    <mat-form-field class="filter_buttons">
+    <!-- <mat-form-field class="filter-chip">
       <mat-label>Client Partner</mat-label>
-      <input type="text" matInput [formControl]="clientPartnerControl" [matAutocomplete]="autoClientPartner">
+      <input type="text" matInput [formControl]="clientPartnerControl"
+        [matAutocomplete]="autoClientPartner">
       <mat-autocomplete #autoClientPartner="matAutocomplete">
-        <mat-option *ngFor="let partner of filteredClientPartners | async" [value]="partner">
+        <mat-option *ngFor="let partner of filteredClientPartners | async"
+          [value]="partner">
           {{ partner }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field>
-
+    </mat-form-field> -->
   </div>
 
-
-  <!-- Employee Data Table -->
-  <div class="employee-table">
-    <table mat-sort mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Hiring Manager Name </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.name }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="skills">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Skills </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.skills }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="location">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.location }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="manager">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Manager </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.manager }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="partner">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Partner </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.partner }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="profiles">
-        <th mat-header-cell *matHeaderCellDef> Profiles Submitted </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.profiles }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="ctoolId">
-        <th mat-header-cell *matHeaderCellDef> Ctool ID </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.ctoolId }} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> Position Name </th>
-        <td mat-cell *matCellDef="let employee"> {{ employee.position }} </td>
-      </ng-container>
-
-      <tr mat-header-row
-        *matHeaderRowDef="['name', 'skills', 'location', 'manager', 'partner', 'profiles', 'ctoolId', 'position']"></tr>
-      <tr mat-row
-        *matRowDef="let row; columns: ['name', 'skills', 'location', 'manager', 'partner', 'profiles', 'ctoolId', 'position'];">
-      </tr>
-    </table>
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5,10, 20, 50]" showFirstLastButtons></mat-paginator>
-  </div>
 </div>
+<mat-card class="table-container">
+  <table mat-sort mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+    matSort>
+    <ng-container matColumnDef="manager">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Hiring Manager</th>
+      <td mat-cell *matCellDef="let demand"> Swathi </td>
+    </ng-container>
+
+    <ng-container matColumnDef="skills">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Skills </th>
+      <td mat-cell *matCellDef="let demand"> {{ demand.dem_skillset }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+      <td mat-cell *matCellDef="let demand"> {{ demand.location_details.lcm_name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delivery_manager">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Manager
+      </th>
+      <td mat-cell *matCellDef="let demand"> {{ demand.delivery_manager }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="client_partner">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Partner
+      </th>
+      <td mat-cell *matCellDef="let demand"> {{ demand.client_partner }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="profiles">
+      <th mat-header-cell *matHeaderCellDef> Profiles Submitted </th>
+      <td mat-cell *matCellDef="let demand"> {{ demand.profiles }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ctool">
+      <th mat-header-cell *matHeaderCellDef>CTool </th>
+      <td mat-cell *matCellDef="let demand"> {{ demand.dem_ctoolnumber }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> Position </th>
+      <td mat-cell *matCellDef="let demand"> {{ demand.dem_positions }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5,10, 20, 50]"
+  showFirstLastButtons></mat-paginator>
