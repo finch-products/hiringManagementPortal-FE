@@ -208,7 +208,6 @@ export class CreateOpenDemandComponent implements OnInit {
     // }
 
     // Send API request
-    console.log(".dem_id", this.demands.dem_id)
     if (this.isEditMode) {
       // UPDATE existing demand
       console.log("this.demands.dem_id", this.demands.dem_id)
@@ -226,7 +225,6 @@ export class CreateOpenDemandComponent implements OnInit {
       console.log("Form Data Before Submission: ", this.demandForm.value);
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
-          console.log("Form Data Before Submission: ", this.demandForm.value);
           console.log('Demand Added Successfully:', response);
           this.openDemandService.addDemand(response);
           this.demandForm.reset();
@@ -237,7 +235,7 @@ export class CreateOpenDemandComponent implements OnInit {
         }
       });
     }
-  }
+ }
 
   formatDate(date: Date): string {
     const year = date.getFullYear();

@@ -111,7 +111,7 @@ export class HttpService {
     );
   }
   getSingleDemandDetail(demandId: any): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demands/${demandId}`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}demands/id/${demandId}`, this.getHeaders()).pipe(
       catchError(this.handleError));
   }
 
