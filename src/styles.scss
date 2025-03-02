@@ -5,15 +5,19 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background: #4C4C4B;
 }
-
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
 .grid-container {
   display: flex;
   padding: 20px;
   background-color: #fff;
 
   .left-sidebar {
-    background-color: #e0b60c;
-    width: 21.2%;
+    //background-color: #e0b60c;
+    width: 25%;
     height: 29.03%;
     border-radius: 2%;
   }
@@ -338,6 +342,8 @@ mat-label {
   overflow: hidden;
   background: #fff;
   border-radius: 20px;
+  margin-top: 15px; 
+  margin-right: 2%;// margin to adjust search button
 }
 
 .mat-mdc-form-field {
@@ -430,3 +436,59 @@ table.mat-table {
   opacity: 1;
   /* Button appears smoothly on hover */
 }
+
+// added from here 
+/* Ensures file input container aligns well */
+.file-input-container {
+  width: 30%;
+  margin: 2.5%;
+  display: flex;
+}
+
+mat-radio-group[formControlName="dem_isreopened"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  margin-left: 10%;
+  min-width: 40px;
+}
+mat-radio-group[formControlName="dem_isactive"]{
+  margin-left: 4%;
+  margin-top: 1.7%;
+  align-items: center;
+}
+
+mat-radio-group[formControlName="isInternal"],mat-radio-group[formControlName="!isInternal"],mat-form-field[formControlName="dem_positions"] mat-radio-button {
+  margin: 7px;
+  display: inline-block;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-radio-button.mat-accent {
+  --mdc-radio-selected-icon-color: #FACC15 !important;  /* Darker yellow inner circle */
+  --mdc-radio-selected-focus-icon-color: #EAB308 !important; /* Even darker yellow outer ring */
+  --mdc-radio-selected-hover-icon-color: #EAB308 !important; /* Dark yellow on hover */
+  --mdc-radio-selected-pressed-icon-color: #EAB308 !important; /* Dark yellow on press */
+  --mat-radio-checked-ripple-color: rgba(234, 179, 8, 0.4) !important; /* Stronger ripple effect */
+}
+
+::ng-deep .mat-radio .mdc-radio__outer-circle {
+  border-color: #EAB308 !important;  /* Even darker yellow outer circle */
+}
+
+::ng-deep .mat-radio .mdc-radio__inner-circle {
+  background-color: #FACC15 !important;  /* Darker yellow inner circle */
+}
+
+//new  ranch
+.form-container {
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
+}
+
