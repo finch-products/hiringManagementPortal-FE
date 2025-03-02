@@ -1,129 +1,89 @@
-mat-sidenav-container {
-    mat-sidenav {
-        background-color: #F6F5F1;
+.sidenav-container {
+    height: 100vh;
+    width:21.2%;
+    background-color: #faf9f6;
+    background-color: #F6F5F1;
         color: #333;
         border-right: 1px solid #E0E0E0;
         width: 100%;
-        border-radius: 20%;
+        //border-radius: 20%;
         .sidebar-logo img {
             margin-left: 3%;
             width: 50%;
             text-align: center;
-        }
-        mat-nav-list {
-            a {
-                display: flex;
-                align-items: center;
-                padding: 10px 10px;
-                font-size: 14px;
-                font-weight: bold;
-                line-height: 1em;
-                text-decoration: none;
-                color: #333;
-                transition: background 0.3s;
-                border-radius: 5px;
-                font-family: "Inter", sans-serif;
-                mat-icon {
-                    color: #666;
-                    font-size: 16px;
-                    display: inline-flex;
-                }
-                &:hover {
-                    background-color: #F7CB15;
-                    color: #000;
-                }
-            }
 
-            mat-expansion-panel {
-                box-shadow: none !important;
-
-                mat-expansion-panel-header {
-                    background-color: #F6F5F1;
-                    padding: 10px 15px;
-                    color: #333 !important;
-                }
-            }
-        }
-    }
-}
-
-mat-expansion-panel-header mat-icon {
-    margin-right: 10px;
-    color: #666;
-    font-size: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-mat-expansion-panel-header span {
-    display: inline-flex;
-    align-items: center;
-}
-
-mat-expansion-panel .mat-expansion-panel-content {
-    padding: 0;
-}
-
-mat-action-list {
-    background-color: #F8EECB !important;
-    padding: 5px 0;
-    border-radius: 5px;
-}
-
-mat-action-list button {
+  }}
+  
+  .sidenav {
+    width: 290px;
+    background-color: #faf9f6;
+    padding-top: 10px;
+  }
+  
+  mat-nav-list {
+    padding: 2px;
+  }
+  mat-nav-list .mat-list-item {
     display: flex;
     align-items: center;
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    line-height: 19.36px !important;
-    background: transparent;
-    border: none;
-    text-align: left;
-    cursor: pointer;
+    font-size: 14px;
     color: #333;
-    transition: background 0.3s;
-    font-family: 'Inter', sans-serif !important;
-}
-
-mat-action-list button mat-icon {
-    margin-right: 10px;
-    color: #666;
-    font-size: 18px;
-    display: inline-flex;
+  }
+  
+  mat-icon {
+    margin-right: 12px;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  a:hover {
+    background-color: #ffdb4d;
+    border-radius: 5px;
+  }
+  
+  
+  mat-expansion-panel-header {
+    display: flex;
     align-items: center;
-    justify-content: center;
-}
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
 
-mat-action-list button span {
-    display: inline-flex;
-    align-items: center;
-}
-
-mat-action-list button:hover {
-    background-color: #F7CB15 !important;
-}
-
-.documents-title {
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    line-height: 19.36px !important;
-    padding: 10px 15px;
-    color: #555;
-    text-transform: uppercase;
-    font-family: 'Inter', sans-serif !important;
-}
-
-mat-expansion-panel-header:hover {
-    background-color: #F7CB15 !important;
-    transition: background-color 0.3s ease-in-out;
-}
-
-/* Active state (when clicked) */
-mat-nav-list a.active,
-mat-action-list button.active {
-    background-color: #F7CB15 !important;
-    color: #000 !important;
-}
+  .master-list {
+    background: #fdf7d6;
+    padding-left: 10px;
+  }
+  
+  .master-list a {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #ffdb4d;
+  }
+  
+  .master-list a.active {
+    //background-color: #ffdb4d;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .master-list a:hover {
+    background-color: rgba(255, 219, 77, 0.7);
+  }
+  
+  .view-action-list {
+    background: #fdf7d6;
+    padding-left: 10px;
+  }
+  
+  .view-action-list a.active {
+    background-color: #ffdb4d;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .view-action-list a:hover {
+    background-color: rgba(255, 219, 77, 0.7);
+  }
+  
