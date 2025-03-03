@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { Client } from '../../../interfaces/client.interface';
 import { ClientService } from '../../../app/services/client.service';
+import { HttpService } from '../../../app/services/http.service';
 
 @Component({
   selector: 'app-list-client',
@@ -14,34 +15,34 @@ import { ClientService } from '../../../app/services/client.service';
 })
 export class ListClientComponent {
 
-   displayedColumns: string[] = ['clm_clientid', 'clm_name', 'clm_managername', 'clm_clientemail', 'clm_clientphone', 'clm_lcm_id', 'clm_isactive'];
-    dataSource = new MatTableDataSource<Client>([]);
-  
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
-  
-    constructor(private http: HttpClient, private clientService: ClientService) { }
+  displayedColumns: string[] = ['clm_clientid', 'clm_name', 'clm_managername', 'clm_clientemail', 'clm_clientphone', 'clm_lcm_id', 'clm_isactive'];
+  dataSource = new MatTableDataSource<Client>([]);
 
-    ngOnInit() {
-      this.fetchClients();
-      this.clientService.clients$.subscribe(client => {
-        this.dataSource.data = client;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
-    }
-  
-    fetchClients() {
-      this.http.get<Client[]>('http://64.227.145.117/api/clients/').subscribe({
-        next: (data) => {
-          this.clientService.setInitialData(data); 
-        },
-        error: (error) => console.error('Error fetching clients:', error)
-      });
-    }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-    applyFilter(event: Event) {
-      const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-      this.dataSource.filter = filterValue;
-    }
+  constructor(private http: HttpClient, private clientService: ClientService, private httpService: HttpService) { }
+
+  ngOnInit() {
+    this.fetchClients();
+    this.clientService.clients$.subscribe(client => {
+      this.dataSource.data = client;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  fetchClients() {
+    this.httpService.getClientDetails().subscribe({
+      next: (data) => {
+        this.clientService.setInitialData(data);
+      },
+      error: (err) => console.error('Error fetching demands', err)
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
 }

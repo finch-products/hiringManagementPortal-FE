@@ -1,13 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LegendPosition } from '@swimlane/ngx-charts';
+import { HttpService } from '../app/services/http.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   legendPosition: LegendPosition = LegendPosition.Right;
+  total_open_demands: any[] = [];
+  total_non_open_demands: any[] = [];
+  total_india_open_demands: any[] = [];;
+  total_non_india_open_demands: any[] = [];
+
+
+  
+  ngOnInit() {
+    this.loadOpemnDemands();
+  }
+
+  constructor(private httpService: HttpService) {
+
+  }
+
+  loadOpemnDemands() {
+
+    this.httpService.getOpenDemandCount().subscribe({
+      next: (data) => {
+        this.total_open_demands = data.total_open_demands;
+        this.total_non_open_demands = data.total_non_open_demands;
+        this.total_india_open_demands = data.total_india_open_demands;
+        this.total_non_india_open_demands = data.total_non_india_open_demands;
+      },
+      error: (err) => console.error('Error fetching clients', err)
+    });
+  }
+
 
   pieChartData = [
     { name: 'Open Positions', value: 60 },

@@ -24,8 +24,8 @@ export class CreateInternalDepartmentComponent implements OnInit {
       idm_spoc_id: [''],
       idm_deliverymanager_id: [''],
       idm_isactive: [''],
-      idm_insertby: [1],
-      idm_updateby: [1]
+      idm_insertby: ['emp_10022025_01'],
+      idm_updateby: ['emp_10022025_01']
     });
   }
 

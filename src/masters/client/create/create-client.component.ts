@@ -28,7 +28,7 @@ export class CreateClientComponent implements OnInit {
       clm_address: ['', [Validators.required, Validators.pattern(this.validatorsService.detailPattern())]],
       clm_lcm_id: [''],
       clm_isactive: [true],
-      clm_insertby: [1]
+      clm_insertby: ['emp_10022025_01']
     });
   }
 

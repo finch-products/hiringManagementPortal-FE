@@ -43,6 +43,12 @@ export class HttpService {
     );
   }
 
+  getOpenDemandCount(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/open-demand-count/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   addCandidate(candidateData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}candidates/`, candidateData);
   }
@@ -95,8 +101,8 @@ export class HttpService {
     );
   }
 
-  getCPDMDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}employees/cp-dm/`, this.getHeaders()).pipe(
+  getEmployeeByRolesDetails(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}employees/employee-by-role/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }

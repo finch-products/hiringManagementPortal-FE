@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { HttpClient } from '@angular/common/http';
 import { LOB } from '../../../interfaces/lob.interface';
 import { LobService } from '../../../app/services/lob.service';
+import { HttpService } from '../../../app/services/http.service';
 
 @Component({
   selector: 'app-list-lob',
@@ -19,7 +20,7 @@ export class ListLOBComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, private lobService: LobService) { }
+  constructor(private http: HttpClient, private lobService: LobService, private httpService: HttpService) { }
 
   ngOnInit() {
     this.fetchLOB();
@@ -31,13 +32,14 @@ export class ListLOBComponent {
   }
 
   fetchLOB() {
-    this.http.get<LOB[]>('http://64.227.145.117/api/lobs/').subscribe({
+    this.httpService.getLOBDetails().subscribe({
       next: (data) => {
-        this.lobService.setInitialData(data); 
+        this.lobService.setInitialData(data);
       },
-      error: (error) => console.error('Error fetching lobs:', error)
+      error: (err) => console.error('Error fetching demands', err)
     });
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();

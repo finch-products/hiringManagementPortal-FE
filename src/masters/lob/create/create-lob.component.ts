@@ -20,20 +20,20 @@ export class CreateLOBComponent implements OnInit {
       lob_description: [''],
       lob_clientpartner: ['', Validators.required],
       lob_deliverymanager: ['', Validators.required],
-      lob_insertby: [1],
-      lob_updateby: [1]
+      lob_insertby: ['emp_10022025_01'],
+      lob_updateby: ['emp_10022025_01']
     });
   }
 
   ngOnInit(): void {
-    this.loadCPDMDetails();
+    this.loadEmpByRoles();
   }
 
-  loadCPDMDetails(): void {
-    this.httpService.getCPDMDetails().subscribe({
+  loadEmpByRoles(): void {
+    this.httpService.getEmployeeByRolesDetails().subscribe({
       next: (data) => {
-        this.clientPartners = data.client_partners;
-        this.deliveryManagers = data.delivery_managers;
+        this.clientPartners = data.client_partner;
+        this.deliveryManagers = data.delivery_manager;
         console.log('Client Partners & Delivery Managers:' + JSON.stringify(data));
       },
       error: (err) => console.error('Error fetching CP DM', err)

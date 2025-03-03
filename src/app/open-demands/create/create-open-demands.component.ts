@@ -43,8 +43,8 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_comment: [''],
       dem_isreopened: ['no'],
       dem_isactive: ['yes'],
-      dem_insertby: [''],
-      dem_updateby: [''],
+      dem_insertby: ['emp_10022025_01'],
+      dem_updateby: ['emp_10022025_01'],
     });
   }
 
@@ -138,8 +138,6 @@ export class CreateOpenDemandComponent implements OnInit {
       error: (err) => console.error('Error fetching departments', err)
     });
   }
-
-
 
 
   onFileSelected(event: any) {

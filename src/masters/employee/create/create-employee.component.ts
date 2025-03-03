@@ -24,8 +24,8 @@ export class CreateEmployeeComponent {
       emp_rlm_id: [''],
       emp_isactive: [true],
       emp_keyword: [],
-      emp_insertby: [1],
-      emp_updateby: [1],
+      emp_insertby: ['emp_10022025_01'],
+      emp_updateby: ['emp_10022025_01'],
     });
   }
 
