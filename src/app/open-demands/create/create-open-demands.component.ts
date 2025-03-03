@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -22,9 +22,11 @@ export class CreateOpenDemandComponent implements OnInit {
   isEditMode: boolean = false;
   demands: any;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router) {
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
+      dem_id:[''],
+      dem_updateby_id:[''],
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
@@ -33,7 +35,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_skillset: [''],
       dem_lob_id: [''],
       dem_idm_id: [''],
-      dem_position_name: [''],
+      position_name: [''],
       dem_positions: [''],
       dem_rrnumber: [''],
       dem_jrnumber: [''],
@@ -71,6 +73,8 @@ export class CreateOpenDemandComponent implements OnInit {
         this.demands = data;
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
+          dem_id:this.demands.dem_id,
+          // dem_updateby_id:this.demands.updateby_id,
           dem_ctoolnumber: this.demands.dem_ctoolnumber,
           dem_ctooldate: this.demands.dem_ctooldate,
           dem_clm_id: this.demands.client_details.clm_id,
@@ -79,7 +83,7 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_skillset: this.demands.dem_skillset,
           dem_lob_id: this.demands.lob_details.lob_id,
           dem_idm_id: this.demands.department_details.idm_id,
-          dem_position_name: this.demands.dem_position_name,
+          position_name: this.demands.position_name,
           dem_positions: this.demands.dem_positions,
           dem_rrnumber: this.demands.dem_rrnumber,
           dem_jrnumber: this.demands.dem_jrnumber,
@@ -167,65 +171,73 @@ export class CreateOpenDemandComponent implements OnInit {
 
   onSubmit() {
 
+    const updatedFields: any = {};
     const formData = new FormData();
-    console.log("this.demands:", this.demands);
-    console.log("Form Values:", this.demandForm.value);
-
-    Object.keys(this.demandForm.value).forEach(key => {
-      let value = this.demandForm.value[key];
-      if (value instanceof Date) {
-        value = this.formatDate(value); // Extract YYYY-MM-DD
-        console.log(`Formatted Date for ${key}: ${value}`);
-      }
-
-      if (value) {
-        formData.append(key, value);
-      } else {
-        console.warn(`Skipping empty field: ${key}`);
-      }
-
-
-      // if (this.demandForm.value[key]) {  // Ensure value is not null or undefined
-      //   formData.append(key, this.demandForm.value[key]);
-      // } else {
-      //   console.warn(`Skipping empty field: ${key}`);
-      // }
-    });
-
-    // Debug: Check if file exists before appending
-    if (this.selectedFile) {
-      console.log("Selected File:", this.selectedFile);
-      formData.append("job_description", this.selectedFile);
-    } else {
-      console.warn("No file selected");
-    }
-
-    // Debug: Check contents of `formData`
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}:`, pair[1]);
-    // }
-
-    // Send API request
     if (this.isEditMode) {
-      // UPDATE existing demand
-      console.log("this.demands.dem_id", this.demands.dem_id)
-      this.httpService.updateDemand(formData).subscribe({
+      updatedFields["dem_id"] = this.demandForm.value.dem_id;
+      updatedFields["dem_updateby_id"] ='emp_11022025_02';
+      Object.keys(this.demandForm.controls).forEach((field) => {
+        if (this.demandForm.controls[field].dirty) {
+          updatedFields[field] = this.demandForm.value[field];
+        }
+      });
+  
+      // Append file only if changed
+      if (this.selectedFile) {
+        formData.append("job_description", this.selectedFile);
+      }
+  
+      console.log("Final Update Request Body:");
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+  
+      // 🔹 Update API Call
+      this.httpService.updateDemand(updatedFields).subscribe({
         next: (response) => {
           console.log('Demand Updated Successfully:', response);
           alert('Demand updated successfully!');
+          this.router.navigate(['/list']);
         },
         error: (error) => {
           console.error('Error updating demand:', error);
           alert('Failed to update demand. Check console for details.');
         }
       });
+  
     } else {
-      console.log("Form Data Before Submission: ", this.demandForm.value);
+      // 🟢 Create Mode: Send all fields
+      Object.keys(this.demandForm.value).forEach(key => {
+        let value = this.demandForm.value[key];
+  
+        // Format date fields
+        if (value instanceof Date) {
+          value = this.formatDate(value);
+        }
+  
+        if (value !== null && value !== undefined) {
+          formData.append(key, value);
+        }
+      });
+  
+      // Append file if available
+      if (this.selectedFile) {
+        formData.append("job_description", this.selectedFile);
+      }
+  
+      console.log("Final Create Request Body:");
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+  
+      // 🔹 Create API Call
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
           console.log('Demand Added Successfully:', response);
+          alert('Demand Added Successfully');
           this.openDemandService.addDemand(response);
           this.demandForm.reset();
+          this.router.navigate(['/list']);
         },
         error: (error) => {
           console.error('Error adding demands:', error);

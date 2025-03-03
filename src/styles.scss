@@ -492,3 +492,28 @@ mat-radio-button.mat-accent {
   margin: auto;
 }
 
+.wrap-height{
+height:80%;
+}
+
+// .mat-checkbox-checked .mat-checkbox-background,
+// .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color: #F7CB15 !important; /* Change to yellow */
+// }
+
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+//   background-color: #F7CB15 !important; /* Yellow background when checked */
+// }
+
+.mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background{
+  border-color:#F7CB15 !important;
+  background-color:#F7CB15 !important;
+}
+.mdc-checkbox .mdc-checkbox__ripple {
+  background-color: #F7CB15 !important; 
+  opacity: 0.4; 
+}
+.submit:disabled {
+  opacity: 0.5; 
+}
+
