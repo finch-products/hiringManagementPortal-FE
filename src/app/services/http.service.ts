@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpService {
   private baseUrl = 'http://64.227.145.117/api/';
-  // private baseUrl = 'http://localhost:8000/api/';
+  //private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -23,6 +23,18 @@ export class HttpService {
 
   getLocations(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}locations/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getclientpartner(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}employees/employee-by-role/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getdileverymanager(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}employees/employee-by-role/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -130,6 +142,27 @@ export class HttpService {
 
   getEmployees(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/employee-by-role/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getDemandFulfillmentMetricsReport(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/demand-fulfillment-metric/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getReportLOBTargetProgress(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/LOB-Target-Progress/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getopenposition(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/total-open-positions-last-week/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getReportagedemand(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/age-demand/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
