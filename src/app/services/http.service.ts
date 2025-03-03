@@ -134,6 +134,27 @@ export class HttpService {
     );
   }
 
+  getDemandFulfillmentMetricsReport(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/demand-fulfillment-metric/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getReportLOBTargetProgress(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/LOB-Target-Progress/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getopenposition(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/total-open-positions-last-week/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getReportagedemand(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/age-demand/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {

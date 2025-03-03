@@ -86,14 +86,32 @@
 
 .charts {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-around;
     gap: 20px;
     width: 100%;
 }
-
+.legend {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 10px;
+  }
+::ng-deep ngx-charts-legend {
+    width: 300px !important;
+    margin-top: 5px;  /* Increase legend width */
+  }
+  
+::ng-deep .legend-label-text {
+    font-size: 14px !important;  /* Improve readability */
+    white-space: nowrap !important;  /* Prevent line break */
+    overflow: visible !important;
+    text-overflow: clip !important;  /* Ensure full visibility */
+  }
+  
+  
 .graph {
-    width: 52.13%;
+    width: 52.13%; 
     height: auto;
     min-height: 3.95%;
     display: flex;
@@ -216,11 +234,21 @@ ngx-charts-pie-chart {
     }
 }
 
-
-
-
-
-
-
-
-
+.chart-card {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  
+    .chart-title {
+      text-align: center;
+      font-weight: bold;
+      color: #333;
+    }
+  
+    ngx-charts-bar-vertical {
+      display: block;
+    }
+  }
