@@ -6,6 +6,7 @@ export interface OpenDemand {
   dem_clm_id: string;
   dem_lcm_id: string;
   location_details: any;
+  client_details: any;
   dem_validtill: string;
   dem_skillset: string;
   dem_lob_id: string;
@@ -24,4 +25,5 @@ export interface OpenDemand {
   dem_updateby: string;
   dem_insertdate: string;
   dem_updatedate: string;
+  lob_details: any;
   }

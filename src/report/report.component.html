@@ -42,7 +42,7 @@
   </div>
 
   <div class="filters">
-    <!-- <mat-form-field class="filter-chip" appearance="fill" floatLabel="always">
+    <mat-form-field class="filter-chip">
       <mat-label>Hiring Manager</mat-label>
       <input type="text" matInput [formControl]="hiringManagerControl"
         [matAutocomplete]="autoHiringManager">
@@ -52,9 +52,9 @@
           {{ manager }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field> -->
+    </mat-form-field>
 
-    <!-- <mat-form-field class="filter-chip">
+    <mat-form-field class="filter-chip">
       <mat-label>Skills</mat-label>
       <input type="text" matInput [formControl]="skillsControl"
         [matAutocomplete]="autoSkills">
@@ -64,7 +64,7 @@
           {{ skill }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field> -->
+    </mat-form-field>
 
     <mat-form-field class="filter-chip">
       <mat-label>Location</mat-label>
@@ -78,7 +78,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <!-- <mat-form-field class="filter-chip">
+    <mat-form-field class="filter-chip">
       <mat-label>Delivery Manager</mat-label>
       <input type="text" matInput [formControl]="deliveryManagerControl"
         [matAutocomplete]="autoDeliveryManager">
@@ -88,9 +88,9 @@
           {{ manager }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field> -->
+    </mat-form-field> 
 
-    <!-- <mat-form-field class="filter-chip">
+    <mat-form-field class="filter-chip">
       <mat-label>Client Partner</mat-label>
       <input type="text" matInput [formControl]="clientPartnerControl"
         [matAutocomplete]="autoClientPartner">
@@ -100,7 +100,7 @@
           {{ partner }}
         </mat-option>
       </mat-autocomplete>
-    </mat-form-field> -->
+    </mat-form-field>
   </div>
 
 </div>
@@ -109,7 +109,7 @@
     matSort>
     <ng-container matColumnDef="manager">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Hiring Manager</th>
-      <td mat-cell *matCellDef="let demand"> Swathi </td>
+      <td mat-cell *matCellDef="let demand"> {{demand.client_details.clm_managername}}</td>
     </ng-container>
 
     <ng-container matColumnDef="skills">
@@ -125,14 +125,14 @@
     <ng-container matColumnDef="delivery_manager">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Manager
       </th>
-      <td mat-cell *matCellDef="let demand"> {{ demand.delivery_manager }}
+      <td mat-cell *matCellDef="let demand"> {{ demand.lob_details.delivery_manager.emp_name }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="client_partner">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Client Partner
       </th>
-      <td mat-cell *matCellDef="let demand"> {{ demand.client_partner }}
+      <td mat-cell *matCellDef="let demand"> {{ demand.lob_details.client_partner.emp_name }}
       </td>
     </ng-container>
 
