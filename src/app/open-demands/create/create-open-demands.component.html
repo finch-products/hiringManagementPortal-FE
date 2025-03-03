@@ -78,7 +78,7 @@
       </mat-form-field>
 
       <!-- Internal or External Selection -->
-      <mat-radio-group formControlName="isInternal">
+      <mat-radio-group formControlName="isInternal" class="mat-accent">
         <mat-radio-button value="yes">Internal</mat-radio-button>
         <mat-radio-button value="no">External</mat-radio-button>
       </mat-radio-group>
@@ -95,29 +95,29 @@
         <input matInput formControlName="dem_jrnumber">
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>RR Grade</mat-label>
-        <input matInput formControlName="dem_rrgade">
-      </mat-form-field>
+      <mat-radio-group formControlName="dem_isactive" appearance="fill"
+        class="form-field" class="mat-accent">
+        <mat-label>Active?</mat-label>
+        <mat-radio-button value="yes">Yes</mat-radio-button>
+        <mat-radio-button value="no">No</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-radio-group formControlName="dem_isreopened" appearance="fill"
+      class="form-field" class="mat-accent">
+        <mat-label>Reopen</mat-label>
+        <mat-radio-button value="yes">Yes</mat-radio-button>
+        <mat-radio-button value="no">No</mat-radio-button>
+      </mat-radio-group>
 
       <mat-form-field appearance="fill" class="form-field field-30">
         <mat-label>GCB Level</mat-label>
         <input matInput formControlName="dem_gcblevel">
       </mat-form-field>
 
-      <mat-radio-group formControlName="dem_isreopened" appearance="fill"
-      class="form-field">
-        <mat-label>Reopen</mat-label>
-        <mat-radio-button value="yes">Yes</mat-radio-button>
-        <mat-radio-button value="no">No</mat-radio-button>
-      </mat-radio-group>
-
-      <mat-radio-group formControlName="dem_isactive" appearance="fill"
-        class="form-field">
-        <mat-label>Active?</mat-label>
-        <mat-radio-button value="yes">Yes</mat-radio-button>
-        <mat-radio-button value="no">No</mat-radio-button>
-      </mat-radio-group>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>RR Grade</mat-label>
+        <input matInput formControlName="dem_rrgade">
+      </mat-form-field>
 
       <div class="file-input-container">
         <label for="job_description">Upload Job Description</label>
