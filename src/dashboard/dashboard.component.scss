@@ -88,7 +88,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-content: space-around;
-    gap: 20px;
+    gap: 10px;
     width: 50%;
     height: 100%;
 }
@@ -99,7 +99,7 @@
     align-items: center;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 15px;
 }
 .left-section {
     display: flex;
@@ -116,7 +116,7 @@
 
 .progress-chart {
     height: 100%;
-    width: 500px;
+    width: 30vw;
 }
 
 .target-card {
