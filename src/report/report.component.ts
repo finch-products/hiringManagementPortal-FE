@@ -16,7 +16,8 @@ import { OpenDemandService } from '../app/services/open.demand.service';
 export class ReportComponent implements OnInit {
 
   locations: any[] = [];
-
+  clientPartners: any[] = [];
+  deliveryManagers: any[] = [];
   lobData = [
     { lob: "LOB 1", India: 32, UK: 38, Poland: 37 },
     { lob: "LOB 2", India: 42, UK: 54, Poland: 64 },
@@ -79,7 +80,11 @@ export class ReportComponent implements OnInit {
   async ngOnInit() {
     this.fetchOpenDemands();
     await this.loadLocations();
+    await this.loadClientPartners();
+    await this.loadDeliveryManagers();
     this.allLocations = [...new Set(this.locations.map(location => location.lcm_name))];
+    this.allClientPartners = [...new Set(this.clientPartners.map(partner => partner.emp_name))];
+    this.allDeliveryManagers = [...new Set(this.deliveryManagers.map(manager => manager.emp_name))];
     this.demandService.demands$.subscribe(demand => {
       this.dataSource.data = demand;
       this.dataSource.paginator = this.paginator;
@@ -98,19 +103,28 @@ export class ReportComponent implements OnInit {
     // this.allDeliveryManagers = [...new Set(this.employeeData.map(emp => emp.manager))];
     // this.allClientPartners = [...new Set(this.employeeData.map(emp => emp.partner))];
 
-    // this.filteredManagers = this.hiringManagerControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => this.filterOptions(value || '', this.allManagers))
-    // );
-    // this.filteredSkills = this.skillsControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => this.filterOptions(value || '', this.allSkills))
-    // );
+    this.filteredManagers = this.hiringManagerControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterOptions(value || '', this.allManagers))
+    );
+    this.filteredSkills = this.skillsControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterOptions(value || '', this.allSkills))
+    );
     this.filteredLocations = this.locationControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value || '', this.allLocations))
     );
-   
+    this.filteredClientPartners = this.clientPartnerControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterOptions(value || '', this.allClientPartners))
+    );
+
+    this.filteredDeliveryManagers = this.deliveryManagerControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterOptions(value || '', this.allDeliveryManagers))
+    );
+    
     // alert(JSON.stringify(this.filteredLocations))
     // this.filteredDeliveryManagers = this.deliveryManagerControl.valueChanges.pipe(
     //   startWith(''),
@@ -121,16 +135,16 @@ export class ReportComponent implements OnInit {
     //   map(value => this.filterOptions(value || '', this.allClientPartners))
     // );
 
-    // **Custom Filtering Logic for Multiple Fields**
+    // *Custom Filtering Logic for Multiple Fields*
     this.dataSource.filterPredicate = (data, filter) => {
       const searchTerms = JSON.parse(filter); // Convert filter string back to object
 
       return (
-        // (!searchTerms.hiringManager || data.name.toLowerCase().includes(searchTerms.hiringManager)) &&
-        // (!searchTerms.skills || data.skills.toLowerCase().includes(searchTerms.skills)) &&
-        (!searchTerms.location || data.location_details.lcm_name.toLowerCase().includes(searchTerms.location))
-        // (!searchTerms.deliveryManager || data.manager.toLowerCase().includes(searchTerms.deliveryManager)) &&
-        // (!searchTerms.clientPartner || data.partner.toLowerCase().includes(searchTerms.clientPartner))
+        (!searchTerms.hiringManager || data.client_details.clm_managername.toLowerCase().includes(searchTerms.hiringManager)) &&
+        (!searchTerms.skills || data.dem_skillset.toLowerCase().includes(searchTerms.skills)) &&
+        (!searchTerms.location || data.location_details.lcm_name.toLowerCase().includes(searchTerms.location)) &&
+        (!searchTerms.deliveryManager || data.lob_details.delivery_manager.emp_name.toLowerCase().includes(searchTerms.deliveryManager)) &&
+        (!searchTerms.clientPartner || data.lob_details.client_partner.emp_name.toLowerCase().includes(searchTerms.clientPartner))
       );
     };
 
@@ -139,6 +153,15 @@ export class ReportComponent implements OnInit {
 
   async loadLocations() {
     this.locations = await this.httpService.getLocations().toPromise(); // Convert Observable to Promise
+  }
+  async loadClientPartners() {
+    const response = await this.httpService.getclientpartner().toPromise();
+    this.clientPartners = response.client_partner;
+  }
+
+  async loadDeliveryManagers() {
+    const response = await this.httpService.getdileverymanager().toPromise();
+    this.deliveryManagers = response.delivery_manager;
   }
 
   ngAfterViewInit() {
@@ -151,20 +174,20 @@ export class ReportComponent implements OnInit {
     return options.filter(option => option.toLowerCase().includes(filterValue));
   }
   private setupFilterListeners() {
-    // this.hiringManagerControl.valueChanges.subscribe(() => this.applyFilters());
-    // this.skillsControl.valueChanges.subscribe(() => this.applyFilters());
+    this.hiringManagerControl.valueChanges.subscribe(() => this.applyFilters());
+    this.skillsControl.valueChanges.subscribe(() => this.applyFilters());
     this.locationControl.valueChanges.subscribe(() => this.applyFilters());
-    // this.deliveryManagerControl.valueChanges.subscribe(() => this.applyFilters());
-    // this.clientPartnerControl.valueChanges.subscribe(() => this.applyFilters());
+    this.deliveryManagerControl.valueChanges.subscribe(() => this.applyFilters());
+    this.clientPartnerControl.valueChanges.subscribe(() => this.applyFilters());
   }
 
   private applyFilters() {
     const searchTerms = {
-      // hiringManager: this.hiringManagerControl.value?.trim().toLowerCase() || '',
-      // skills: this.skillsControl.value?.trim().toLowerCase() || '',
-      location: this.locationControl.value?.trim().toLowerCase() || ''
-      // deliveryManager: this.deliveryManagerControl.value?.trim().toLowerCase() || '',
-      // clientPartner: this.clientPartnerControl.value?.trim().toLowerCase() || ''
+      hiringManager: this.hiringManagerControl.value?.trim().toLowerCase() || '',
+      skills: this.skillsControl.value?.trim().toLowerCase() || '',
+      location: this.locationControl.value?.trim().toLowerCase() || '',
+      deliveryManager: this.deliveryManagerControl.value?.trim().toLowerCase() || '',
+      clientPartner: this.clientPartnerControl.value?.trim().toLowerCase() || ''
     }
     this.dataSource.filter = JSON.stringify(searchTerms);
   };
@@ -172,8 +195,25 @@ export class ReportComponent implements OnInit {
   fetchOpenDemands() {
     this.httpService.getDemands().subscribe({
       next: (data) => {
-        this.demandService.setInitialData(data);
-        console.log(JSON.stringify(data))
+        const mappedData = data.map((demand: any) => ({
+          client_details:{
+            clm_managername: demand.client_details.clm_managername},
+          dem_skillset: demand.dem_skillset,
+          location_details: {
+            lcm_name: demand.location_details.lcm_name
+          },
+          lob_details: {
+            delivery_manager: {
+              emp_name: demand.lob_details.delivery_manager.emp_name
+            },
+            client_partner: {
+              emp_name: demand.lob_details.client_partner.emp_name
+            }},
+          dem_ctoolnumber: demand.dem_ctoolnumber,
+          dem_positions: demand.dem_positions
+        }));
+        this.demandService.setInitialData(mappedData);
+        console.log(JSON.stringify(mappedData));
       },
       error: (err) => console.error('Error fetching demands', err)
     });
@@ -195,5 +235,3 @@ export class ReportComponent implements OnInit {
   // }
 
 }
-
-

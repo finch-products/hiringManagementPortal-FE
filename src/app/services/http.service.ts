@@ -27,6 +27,18 @@ export class HttpService {
     );
   }
 
+  getclientpartner(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}employees/employee-by-role/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getdileverymanager(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}employees/employee-by-role/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getRoles(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}roles/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -84,7 +96,7 @@ export class HttpService {
   }
 
   getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -122,8 +134,13 @@ export class HttpService {
       catchError(this.handleError));
   }
 
+  getDemandIds(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demands/all`, this.getHeaders()).pipe(
+      catchError(this.handleError));
+  }
+
   updateDemand(form_data: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
+    return this.http.patch<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }

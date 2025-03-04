@@ -1,6 +1,6 @@
-* {
-    box-sizing: border-box;
-}
+// * {
+//     box-sizing: border-box;
+// }
 
 .dashboard-cards {
     display: flex;
@@ -212,9 +212,9 @@ mat-progress-bar {
     text-decoration: underline;
 }
 
-ngx-charts-pie-chart {
-    max-height: 110%;
-}
+// ngx-charts-pie-chart {
+//     max-height: 110%;
+// }
 
 @media (max-width: 768px) {
     .dashboard-cards .card {

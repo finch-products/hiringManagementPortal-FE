@@ -62,6 +62,10 @@ import { Otherview4Component } from './otherViews/otherview4/otherview4.componen
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DemandViewComponent } from './demand-view/demand-view.component';
+import { DemandComponent } from './demand-view/demand/demand.component';
+import { CandidateComponent } from './demand-view/candidate/candidate.component';
+import { PreviewComponent } from './demand-view/preview/preview.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +94,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     Otherview2Component,
     Otherview3Component,
     DemandHistoryComponent,
+    DemandViewComponent,
+    DemandComponent,
+    CandidateComponent,
+    PreviewComponent,
     Otherview4Component
   ],
   imports: [

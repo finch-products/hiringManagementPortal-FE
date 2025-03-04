@@ -16,6 +16,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ListOpenDemandsComponent {
   listForm:FormGroup;
   hoveredRow: any = null;
+  selectedRows: any[] = [];
 
   // displayedColumns: string[] = [
   //   'ctool_number', 'ctool_date', 'client_manager_name',
@@ -25,7 +26,7 @@ export class ListOpenDemandsComponent {
   // ];
 
   displayedColumns: string[] = [
-    'select','dem_ctoolnumber', 'dem_ctooldate' ,'dem_validtill', 'position_name',
+    'select','dem_ctoolnumber', 'dem_ctooldate' ,'dem_validtill', 'dem_position_name',
     'dem_lcm_id', 'dem_skillset', 'dem_positions', 'status'
   ];
 
@@ -39,7 +40,7 @@ isEditmode="false";
   constructor(private fb: FormBuilder,private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService) { 
     this.listForm = this.fb.group({
       status:[''],
-      comment:['']
+      dem_comment:['']
     })
   }
 
@@ -50,7 +51,10 @@ isEditmode="false";
       // console.log("demand",demand)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.loadStatus();
+    });
+    this.loadStatus();
+    this.listForm.get('status')?.valueChanges.subscribe(() => {
+      this.updateSaveButtonState();
     });
   }
 
@@ -59,6 +63,7 @@ isEditmode="false";
     this.httpService.getDemandStatusDetails().subscribe({
       next: (data) => {
         this.stat = data;
+        console.log("stat",this.stat)
       },
       error: (err) => console.error('Error fetching clients', err)
     });
@@ -66,13 +71,25 @@ isEditmode="false";
   }
 
   onSubmit(){
-
-    if(this.listForm.valid){
-      const formData=this.listForm.value
-      console.log("formdata",formData)
-      this.httpService.updateDemand(formData).subscribe({
+    console.log("button clicked")
+      if (this.listForm.valid && this.selectedRows.length > 0) {
+        // Extract DEM_IDs from selected rows
+        console.log("selected row", this.selectedRows)
+        // const demIds = this.selectedRows.map(row => row.dem_id);
+    
+        // Prepare request body
+        const requestBody = {
+          dem_id: this.selectedRows[0].dem_id,  
+          status: this.listForm.get('status')?.value,
+          dem_comment:this.listForm.get('dem_comment')?.value,
+          dem_updateby_id: 'emp_11022025_02'
+        };
+        console.log("Request Payload:", requestBody);
+      this.httpService.updateDemand(requestBody).subscribe({
         next:(data)=>{
           console.log('Form submission successful:', data);
+          alert('Demand updated successfully!');
+          this.fetchOpenDemands()
         },
         error: (err) => console.error('Form submission error:', err)
       })
@@ -98,6 +115,23 @@ isEditmode="false";
     console.log("Editing row: ", element);
     // this.element={...element}
    this.isEditmode="true";
+  }
+
+  toggleSelection(row: any, event: any) {
+    if (event.checked) {
+      this.selectedRows.push(row);
+    } else {
+      this.selectedRows = this.selectedRows.filter(selected => selected !== row);
+    }
+    this.updateSaveButtonState();
+  }
+  updateSaveButtonState() {
+    document.querySelector('.submit')?.toggleAttribute('disabled', this.isSaveDisabled());
+  }
+  isSaveDisabled(): boolean {
+    const isStatusSelected = !!this.listForm.get('status')?.value;
+    const isCheckboxSelected = this.selectedRows.length > 0;
+    return !(isStatusSelected && isCheckboxSelected);
   }
 
 }

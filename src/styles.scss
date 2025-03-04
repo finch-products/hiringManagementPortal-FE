@@ -354,6 +354,23 @@ mat-label {
 .mat-mdc-form-field-infix {
   padding: 10px !important;
 }
+.mat-form-field {
+  margin-bottom: 0px !important;  /* Reduce space below input fields */
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0px !important; /* Reduce padding inside the form field */
+}
+
+.mat-form-field-flex {
+  height: 36px !important; /* Reduce the height of the input field */
+  align-items: center !important;
+}
+
+.mat-input-element {
+  padding: 5px !important; /* Adjust the padding inside the input box */
+  font-size: 14px !important; /* Adjust font size if needed */
+}
 
 .search-container mat-form-field .mat-mdc-text-field-wrapper {
   background-color: #f5f5f5 !important;
@@ -492,3 +509,27 @@ mat-radio-button.mat-accent {
   margin: auto;
 }
 
+.wrap-height{
+height:80%;
+}
+
+// .mat-checkbox-checked .mat-checkbox-background,
+// .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color: #F7CB15 !important; /* Change to yellow */
+// }
+
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+//   background-color: #F7CB15 !important; /* Yellow background when checked */
+// }
+
+.mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background{
+  border-color:#F7CB15 !important;
+  background-color:#F7CB15 !important;
+}
+.mdc-checkbox .mdc-checkbox__ripple {
+  background-color: #F7CB15 !important; 
+  opacity: 0.4; 
+}
+.submit:disabled {
+  opacity: 0.5; 
+}
