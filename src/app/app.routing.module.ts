@@ -16,6 +16,7 @@ import { CreateCandidateComponent } from '../masters/candidate/create/create-can
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
 import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
+import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'other-view1', component: Otherview1Component },
   { path: 'other-view2', component: Otherview2Component },
   { path: 'other-view3', component: Otherview3Component },
+  { path: 'other-view4', component: Otherview4Component },
   { path: 'demand-history', component: DemandHistoryComponent }
 
 

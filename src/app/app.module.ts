@@ -58,6 +58,7 @@ import { ListCandidateComponent } from '../masters/candidate/list/list-candidate
 import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
+import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -88,7 +89,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     Otherview1Component,
     Otherview2Component,
     Otherview3Component,
-    DemandHistoryComponent
+    DemandHistoryComponent,
+    Otherview4Component
   ],
   imports: [
     MatRadioModule,
@@ -124,7 +126,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ListClientManagerComponent,
     RouterModule.forRoot([]),
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [],
