@@ -22,18 +22,41 @@
 
 <!-- Graphs and Charts -->
 <div class="charts">
-  <mat-card class="graph">
+  <div class="left-section">
+  <mat-card class="graph chart-box pie-chart">
     <ngx-charts-pie-chart 
     [results]="pieChartData"
-    [view]="[500, 400]"
-    [customColors]="customColors"
-    [legend]="true"
-    [labels]="true"
-    [doughnut]="false"
-    [trimLabels]="false">
+    [view]="[300, 250]"
+    [customColors]="customColors">
   </ngx-charts-pie-chart>
   </mat-card>
 
+  <div class="chart-box bar-chart">
+  <mat-card class="chart-card">
+    <h5 class="chart-title">Age of Applicants</h5>
+    <mat-card-content>
+      <ngx-charts-bar-vertical
+        [view]="[500, 250]"
+        [results]="agedata"
+        [customColors]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Age in days Group'"
+        [yAxisLabel]="'Count of open Application'"
+        [maxXAxisTickLength]="10"
+        [roundEdges]="true"
+        [animations]="true"
+        [barPadding]="5"
+        [tooltipDisabled]="false">
+      </ngx-charts-bar-vertical>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>
+<div class="chart-box progress-chart">
   <!-- Target Progress Card -->
   <mat-card class="target-card">
     <h5 class="head">Target Progress</h5>
@@ -49,7 +72,7 @@
     </mat-card-content>
   </mat-card>
 </div>
-
+</div>
 <!-- Position Cards -->
 <div class="position-cards">
   <div class="card">
@@ -69,29 +92,6 @@
       <a href="#" class="show-more">Show them</a>
     </div>
   </div>
-
-  <mat-card class="chart-card">
-    <h5 class="chart-title">Age of Applicants</h5>
-    <mat-card-content>
-      <ngx-charts-bar-vertical
-        [view]="[700, 400]"
-        [results]="agedata"
-        [customColors]="colorScheme"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="false"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Age Group'"
-        [yAxisLabel]="'Count of Age Cluster'"
-        [maxXAxisTickLength]="10"
-        [roundEdges]="true"
-        [animations]="true"
-        [barPadding]="5"
-        [tooltipDisabled]="false">
-      </ngx-charts-bar-vertical>
-    </mat-card-content>
-  </mat-card>
   
   
 </div> 

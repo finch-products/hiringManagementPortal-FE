@@ -96,7 +96,7 @@ export class HttpService {
   }
 
   getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -140,7 +140,7 @@ export class HttpService {
   }
 
   updateDemand(form_data: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
+    return this.http.patch<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }

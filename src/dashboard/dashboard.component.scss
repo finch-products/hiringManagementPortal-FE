@@ -85,42 +85,39 @@
 }
 
 .charts {
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
     gap: 20px;
-    // width: 100%;
+    width: 50%;
+    height: 100%;
 }
-.legend {
-    font-size: 14px;
-    font-weight: bold;
-    text-align: left;
-    padding-left: 10px;
-  }
-::ng-deep ngx-charts-legend {
-    width: 300px !important;
-    margin-top: 5px;  /* Increase legend width */
-  }
-  
-::ng-deep .legend-label-text {
-    font-size: 14px !important;  /* Improve readability */
-    white-space: nowrap !important;  /* Prevent line break */
-    overflow: visible !important;
-    text-overflow: clip !important;  /* Ensure full visibility */
-  }
-  
-  
-// .graph {
-//     width: 52.13%; 
-//     height: auto;
-//     min-height: 3.95%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     gap: 2.5%;
-//     border-radius: 4.63%;
-//     overflow: hidden;
-// }
+
+.chart-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+.left-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.pie-chart {
+    height: 50%;
+}
+
+.bar-chart {
+    height: 50%;
+}
+
+.progress-chart {
+    height: 100%;
+    width: 500px;
+}
 
 .target-card {
     flex: 1;
@@ -235,9 +232,6 @@ mat-progress-bar {
 }
 
 .chart-card {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 10px;
     background: #f8f9fa;
     border-radius: 10px;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
