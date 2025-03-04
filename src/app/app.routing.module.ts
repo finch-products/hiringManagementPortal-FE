@@ -17,6 +17,7 @@ import { Otherview2Component } from './otherViews/otherview2/otherview2.componen
 import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
 import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
+import { DemandViewComponent } from './demand-view/demand-view.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
@@ -39,7 +40,8 @@ const routes: Routes = [
   { path: 'other-view1', component: Otherview1Component },
   { path: 'other-view2', component: Otherview2Component },
   { path: 'other-view3', component: Otherview3Component },
-  { path: 'demand-history', component: DemandHistoryComponent }
+  { path: 'demand-history', component: DemandHistoryComponent },
+  {path:'demand-view',component:DemandViewComponent}
 
 
 
