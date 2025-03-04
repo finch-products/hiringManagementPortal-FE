@@ -1,56 +1,71 @@
 <div class="history-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <mat-toolbar class="sidebar-header">
-        <mat-icon>search</mat-icon>
-        <input matInput placeholder="Search" class="search-input">
-        <mat-icon>filter_list</mat-icon>
-      </mat-toolbar>
-  
-      <div class="demands-list">
-        <h3>Demands</h3>
-        <mat-list>
-          <mat-list-item *ngFor="let demand of demandIds" (click)="selectDemand(demand)">
-            {{ demand.dem_id }}
-          </mat-list-item>
-        </mat-list>
-      </div>
-    </aside>
-  
-    <!-- Main Content -->
-    <div class="content">
-      <mat-card *ngIf="selectedDemand">
-        <mat-card-title>Demand {{ selectedDemand.ctoolNumber }}</mat-card-title>
-        <mat-card-content>
-          <p><strong>CTool Number:</strong> {{ selectedDemand.ctoolNumber }}</p>
-          <p><strong>Skillset:</strong> {{ selectedDemand.skillset }}</p>
-          <p><strong>No Of Position:</strong> {{ selectedDemand.positions }}</p>
-          <p><strong>RR Grade:</strong> {{ selectedDemand.rrGrade }}</p>
-          <p><strong>Active:</strong> {{ selectedDemand.active }}</p>
-          <p><strong>CTool Date:</strong> {{ selectedDemand.ctoolDate }}</p>
-        </mat-card-content>
-      </mat-card>
-  
-      <mat-card *ngIf="selectedDemand">
-        <mat-card-title>Candidate Details</mat-card-title>
-        <mat-card-content>
-          <p><strong>Candidate Name:</strong> {{ selectedDemand.candidate.name }}</p>
-          <p><strong>Position Name:</strong> {{ selectedDemand.candidate.position }}</p>
-          <p><strong>Year Of Experience:</strong> {{ selectedDemand.candidate.experience }}</p>
-          <p><strong>Skill Set:</strong> {{ selectedDemand.candidate.skillset }}</p>
-          <p><strong>Status:</strong> <span class="status-selected">{{ selectedDemand.candidate.status }}</span></p>
-          <p><strong>L1 Schedule:</strong> {{ selectedDemand.candidate.l1Schedule }}</p>
-          <p><strong>Date Of Joining:</strong> {{ selectedDemand.candidate.joiningDate }}</p>
-          <p><strong>Profile:</strong> 📄 <a href="#">{{ selectedDemand.candidate.profile }}</a></p>
-        </mat-card-content>
-      </mat-card>
-  
-      <mat-card *ngIf="selectedDemand">
-        <mat-card-title>Job Description</mat-card-title>
-        <mat-card-content>
-          <p><strong>Upload Job Description 📄 </strong> <a href="#">{{ selectedDemand.jobDescription }}</a></p>
-        </mat-card-content>
-      </mat-card>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="search-container">
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Search" [(ngModel)]="searchText" />
+      </mat-form-field>
     </div>
+
+    <!-- Demand List with Scrollbar -->
+    <div class="demands-list">
+      <h3>Demands</h3>
+      <mat-list class="scrollable-list">
+        <mat-list-item
+          *ngFor="let demand of filteredDemands()"
+          (click)="selectDemand(demand.dem_id)">
+          {{ demand.dem_id }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="content">
+    <mat-card *ngIf="selectedDemand">
+      <mat-card-title>Demand {{ selectedDemand.dem_id }}</mat-card-title>
+      <mat-card-content>
+        <p><strong>CTool Number:</strong> {{ selectedDemand.dem_ctoolnumber
+          }}</p>
+        <p><strong>CTool Number:</strong> {{ selectedDemand.dem_ctoolnumber
+          }}</p>
+        <p><strong>Skillset:</strong> {{ selectedDemand.skillset }}</p>
+        <p><strong>No Of Position:</strong> {{ selectedDemand.positions }}</p>
+        <p><strong>RR Grade:</strong> {{ selectedDemand.rrGrade }}</p>
+        <p><strong>Active:</strong> {{ selectedDemand.active }}</p>
+        <p><strong>CTool Date:</strong> {{ selectedDemand.ctoolDate }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="selectedDemand">
+      <mat-card-title>Candidate Details</mat-card-title>
+      <mat-card-content>
+        <p><strong>Candidate Name:</strong> {{ selectedDemand.candidate.name
+          }}</p>
+        <p><strong>Position Name:</strong> {{ selectedDemand.candidate.position
+          }}</p>
+        <p><strong>Year Of Experience:</strong> {{
+          selectedDemand.candidate.experience }}</p>
+        <p><strong>Skill Set:</strong> {{ selectedDemand.candidate.skillset
+          }}</p>
+        <p><strong>Status:</strong> <span class="status-selected">{{
+            selectedDemand.candidate.status }}</span></p>
+        <p><strong>L1 Schedule:</strong> {{ selectedDemand.candidate.l1Schedule
+          }}</p>
+        <p><strong>Date Of Joining:</strong> {{
+          selectedDemand.candidate.joiningDate }}</p>
+        <p><strong>Profile:</strong> 📄 <a href="#">{{
+            selectedDemand.candidate.profile }}</a></p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="selectedDemand">
+      <mat-card-title>Job Description</mat-card-title>
+      <mat-card-content>
+        <p><strong>Upload Job Description 📄 </strong> <a href="#">{{
+            selectedDemand.jobDescription }}</a></p>
+      </mat-card-content>
+    </mat-card>
   </div>
-  
+</div>
