@@ -31,7 +31,6 @@ export class DemandHistoryComponent implements OnInit {
     this.httpService.getDemandIds().subscribe({
       next: (data) => {
         this.demandIds = data;
-        alert(JSON.stringify(this.demandIds));
       },
       error: (err) => console.error('Error fetching demands', err)
     });
