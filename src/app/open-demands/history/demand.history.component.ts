@@ -11,34 +11,52 @@ export class DemandHistoryComponent implements OnInit {
   demandIds: any[] = [];
   selectedDemand: any = null;
   searchText: string = '';
+  candidates: any[] = [];
 
   constructor(private http: HttpClient, private httpService: HttpService) { }
 
   ngOnInit(): void {
     this.fetchDemandIds();
+    this.filteredDemands()
   }
 
-  fetchDemandIds() {
+  fetchCandidateByDemandId(demandId?: string) {
+    if (!demandId) {
+        console.error('Demand ID is required');
+        return;
+    }
+    const payload = { dem_id: demandId };
+    this.httpService.postCandidateByDemandId(payload).subscribe({
+      next: (data: { cdl_dem_id: string; demand_details: any; candidates: any[] }) => {
+        if (data) {
+          this.selectedDemand = { ...data.demand_details};
+          this.candidates = data.candidates || [];
+        }
+      },
+      error: (err: any) => console.error('Error fetching demand and candidate details', err)
+    });
+}
+
+fetchDemandIds() {
     this.httpService.getDemandIds().subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.demandIds = data;
       },
-      error: (err) => console.error('Error fetching demands', err)
+      error: (err: any) => console.error('Error fetching demands', err)
     });
-  }
+}
 
-  filteredDemands() {
-    return this.demandIds.filter(demand =>
-      demand.dem_id.toLowerCase().includes(this.searchText.toLowerCase())
-    );
-  }
-  
-  selectDemand(demand: string) {
-    this.httpService.getSingleDemandDetail(demand).subscribe({
-      next: (data) => {
-        this.selectedDemand = data;
-      },
-      error: (err) => console.error('Error fetching demands', err)
-    });
-  }
+filteredDemands() {
+    return this.demandIds?.filter((demand: { dem_id: string }) =>
+        demand.dem_id.toLowerCase().includes(this.searchText?.toLowerCase() || '')
+    ) || [];
+}
+
+selectDemand(demandId: string) {
+  this.selectedDemand = null; // Reset selected demand
+  this.candidates = [];       // Clear candidates list
+  this.fetchCandidateByDemandId(demandId);
+}
+
+
 }
