@@ -71,6 +71,10 @@ table {
   padding: 0 !important;
 }
 
+.mat-expansion-panel:not([class*=mat-elevation-z]){
+  box-shadow: none !important;
+  background-color: #F6F5F1;
+}
 
 
 
