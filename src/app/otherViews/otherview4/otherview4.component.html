@@ -1,0 +1,52 @@
+
+<div class="chart-container">
+    <!-- Profile Submission Chart -->
+    <mat-card class="chart-card">
+      <h4 class="chart-title">How long it takes to submit profile for each demand </h4>
+      <ngx-charts-bar-horizontal
+        [view]="view"
+        [results]="profileSubmissionData"
+        [customColors]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Days'"
+        [yAxisLabel]="'Demands'"
+        [roundEdges]="true">
+      </ngx-charts-bar-horizontal>
+      <h5 class="chart-title"> Time taken for profile Submission </h5>
+    </mat-card>
+  
+    <!-- Interview Feedback Chart -->
+    <mat-card class="chart-card">
+      <h4 class="chart-title">How long client taking to do interview and provide feedback</h4>
+      <ngx-charts-bar-horizontal
+        [view]="view"
+        [results]="interviewFeedbackData"
+        [customColors]="colorScheme2"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Days'"
+        [yAxisLabel]="'Clients'"
+        [roundEdges]="true">
+      </ngx-charts-bar-horizontal>
+      <h5 class="chart-title">Time taken to do interview and provide feedback</h5>
+    </mat-card>
+  
+    <!-- Selection Percentage Chart -->
+    <mat-card class="chart-card">
+      <h4 class="chart-title"> what is the Selection Percentage by client </h4>
+      <ngx-charts-pie-chart
+        [view]="view"
+        [results]="selectionChartData"
+        [customColors]="colorScheme"
+        [labels]="true"
+        [doughnut]="true">
+      </ngx-charts-pie-chart>
+    </mat-card>
+  </div>
+  
