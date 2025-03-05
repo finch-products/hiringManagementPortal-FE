@@ -48,25 +48,22 @@
             <ng-container matColumnDef="dem_ctoolnumber">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>CTool</th>
 
-                <td mat-cell *matCellDef="let element"
-                (mouseenter)="hoveredRow = element"
+                <td mat-cell *matCellDef="let element">
+                <!-- (mouseenter)="hoveredRow = element"
                 (mouseleave)="hoveredRow = null"
-                class="hover-container">
+                class="hover-container"> -->
               
               {{ element.dem_ctoolnumber }}
         
               <!-- Floating Edit Button (Appears on Hover) -->
-              <a [routerLink]="['/entry',element.dem_id]" *ngIf="hoveredRow === element"
+              <!-- <a [routerLink]="['/entry',element.dem_id]" *ngIf="hoveredRow === element"
                       mat-icon-button 
                       class="edit-btn"
                       (click)="editRow(element)">
                 <mat-icon>edit</mat-icon>
-              </a>
+              </a> -->
         
             </td>
-
-
-
                 <!-- <td mat-cell *matCellDef="let element">{{
                     element.dem_ctoolnumber
                     }}</td> -->
@@ -116,6 +113,21 @@
                 </th>
                 <td mat-cell *matCellDef="let element">{{element.status_details.dsm_code
                    }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">
+                    <!-- Edit Button -->
+                    <button mat-icon-button [routerLink]="['/entry', element.dem_id]">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+            
+                    <!-- View Link -->
+                    <a [routerLink]="['/demand-view', element.dem_id]" class="view-link">
+                       Link
+                    </a>
+                </td>
             </ng-container>
 
             <!-- <ng-container matColumnDef="dem_jrnumber">

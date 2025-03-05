@@ -66,6 +66,7 @@ import { DemandViewComponent } from './demand-view/demand-view.component';
 import { DemandComponent } from './demand-view/demand/demand.component';
 import { CandidateComponent } from './demand-view/candidate/candidate.component';
 import { PreviewComponent } from './demand-view/preview/preview.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { PreviewComponent } from './demand-view/preview/preview.component';
     RouterModule.forRoot([]),
     MatCheckboxModule,
     MatTooltipModule,
+    NgxExtendedPdfViewerModule
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [],

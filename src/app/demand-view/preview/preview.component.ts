@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-preview',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './preview.component.scss'
 })
 export class PreviewComponent {
-
+  @Input() pdfUrl!: string ;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['pdfUrl'] && changes['pdfUrl'].currentValue) {
+      console.log("PDF URL from Preview Component:", this.pdfUrl);
+    }
+  }
 }

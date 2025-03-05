@@ -43,7 +43,7 @@ const routes: Routes = [
   { path: 'other-view3', component: Otherview3Component },
   { path: 'other-view4', component: Otherview4Component },
   { path: 'demand-history', component: DemandHistoryComponent },
-  {path:'demand-view',component:DemandViewComponent}
+  {path:'demand-view/:id',component:DemandViewComponent}
 
 
 

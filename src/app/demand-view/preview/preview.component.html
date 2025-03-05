@@ -1,1 +1,7 @@
-<p>preview works!</p>
+<ng-container *ngIf="pdfUrl">
+    <ngx-extended-pdf-viewer 
+      [src]="pdfUrl"
+      useBrowserLocale="true"
+      width="100%">
+    </ngx-extended-pdf-viewer>
+  </ng-container>
