@@ -1,58 +1,87 @@
 .history-container {
+  display: flex;
+  height: 100vh;
+
+  .sidebar {
+    width: 22%;
+    background: #F1F0F0;
+    padding: 15px;
     display: flex;
-    height: 100vh;
-  
-    .sidebar {
-      width: 250px;
-      background: #f4f4f4;
-      padding: 15px;
+    // overflow: hidden
+    flex-direction: column;
+
+    .sidebar-header {
       display: flex;
-      flex-direction: column;
-  
-      .sidebar-header {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background: white;
-        border-radius: 8px;
-      }
-  
-      .search-input {
-        flex: 1;
-        border: none;
-        padding: 5px;
-        outline: none;
-      }
-  
-      .demands-list {
-        margin-top: 10px;
-      }
-  
-      mat-list-item {
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 5px;
-        transition: background 0.3s;
-      }
-  
-      mat-list-item:hover {
-        background: #e0e0e0;
-      }
+      align-items: center;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
     }
-  
-    .content {
-      flex-grow: 1;
-      padding: 20px;
-      overflow-y: auto;
-  
-      mat-card {
-        margin-bottom: 20px;
-      }
-  
-      .status-selected {
-        color: green;
-        font-weight: bold;
-      }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      padding: 5px;
+      outline: none;
+    }
+
+    .demands-list {
+      margin-top: 10px;
+    }
+
+    mat-list-item {
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    mat-list-item:hover {
+      background: #e0e0e0;
     }
   }
-  
+
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+
+    mat-card {
+      margin-bottom: 20px;
+    }
+
+    .status-selected {
+      color: green;
+      font-weight: bold;
+    }
+  }
+}
+
+.demands-list h3 {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1em;
+  color: black;
+}
+
+
+.search-container {
+  margin-bottom: 10px;
+}
+
+.scrollable-list {
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+
+.demand-details {
+  flex-grow: 1;
+  padding: 20px;
+  background: white;
+  border-left: 1px solid #ccc;
+}
+
+.mat-mdc-card-content {
+  border: 1px solid #ccc;
+}
