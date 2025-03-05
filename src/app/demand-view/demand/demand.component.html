@@ -1,1 +1,58 @@
-<p>demand works!</p>
+<mat-card class="demand-container">
+    <!-- Header --> 
+    <div class="demand-head">
+      <div>{{demands.dem_id}} / {{demands.dem_ctoolnumber}}</div>
+      <div fxLayout="row" fxLayoutGap="10px">
+    <!-- <button mat-button color="primary">Set Status</button> -->
+
+    <mat-form-field appearance="fill" class="mat-drop">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of stat" [value]="status.dsm_code"
+        >{{ status.dsm_code }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+        <mat-icon>history</mat-icon>
+        <mat-icon>share</mat-icon>
+      </div>
+    </div>
+     <!-- Client Info Section -->
+    <div class="client-info">
+        <div class="client">
+            <div class="profile-icon">
+                <mat-icon>account_circle</mat-icon>
+            </div>
+            <div class="client-details">
+                <p>{{demands.client_details.clm_name}}
+                <br/>Client Manager: <b>{{demands.client_details.clm_managername}}</b></p>
+                </div>
+         </div>     
+        <div class="dates">
+            <p>Open Date: <b>{{demands.dem_ctooldate| date:'dd-MM-yyyy'}}</b></p>
+            <p>Valid Till: <b>{{demands.dem_validtill| date:'dd-MM-yyyy'}}</b></p>
+          </div>
+    </div>
+    
+    
+
+  <!-- Details Section -->
+  <div class="details-section">
+    <div class="details-header">
+      <div>Number of Positions: <span class="position-count">{{demands.dem_positions}}</span></div>
+      <div>rr / Jr number: <b>{{demands.dem_rrnumber}}/{{demands.dem_jrnumber}}</b> </div>
+      <div> LOB: <b>{{demands.lob_details.lob_name}}</b></div>
+    </div>  
+    <!-- Skills Section -->
+    <div class="skills">
+      <span class="skill">{{ demands.dem_skillset }}</span>
+    </div>
+  
+    <!-- Manager & Job Description -->
+    <div class="footer-section">
+      <div>Delivery Manager: <b>{{demands.lob_details.delivery_manager.emp_name}}</b></div>
+      <div>Job Description: <a href="demands.dem_jd">{{demands.dem_jd}}</a></div>
+    </div>
+  </div>
+</mat-card>
