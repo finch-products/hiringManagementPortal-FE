@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './demand-view.component.scss'
 })
 export class DemandViewComponent {
+  selectedPdfUrl!: string 
 
+  handlePdfSelection(pdfUrl: string) {
+    this.selectedPdfUrl = pdfUrl;
+
+}
 }

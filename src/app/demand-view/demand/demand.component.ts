@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 
@@ -8,6 +8,8 @@ import { HttpService } from '../../services/http.service';
   styleUrl: './demand.component.scss'
 })
 export class DemandComponent implements OnInit {
+  @Output() pdfSelected = new EventEmitter<string>();
+
   demands: any;
   stat: any;
 
@@ -42,6 +44,9 @@ loadStatus(): void {
     },
     error: (err) => console.error('Error fetching clients', err)
   });
-
+}
+openPdf(pdfUrl: string) {
+  this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
+  console.log("pdfUrl",pdfUrl)
 }
 }
