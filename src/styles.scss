@@ -34,7 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 78.5%;
+    width: 75%;
     padding-left: 16px;
 
     .page-title {
@@ -212,9 +212,9 @@ mat-form-field {
   background-color: transparent !important;
 }
 
-mat-card {
-  overflow: hidden;
-}
+// mat-card {
+//   overflow: hidden;
+// }
 
 .form-container {
   background: #fff;
@@ -239,6 +239,10 @@ mat-card {
   flex: 1 1 100%;
   display: flex;
   flex-direction: column;
+}
+
+.mdc-list{
+  padding: 0 10px;
 }
 
 // .form-field:last-child input {

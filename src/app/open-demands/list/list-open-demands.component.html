@@ -129,27 +129,25 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                 <td mat-cell *matCellDef="let element">
-                    <!-- Edit Button -->
                     <button mat-button
                         [routerLink]="['/entry', element.dem_id]">
-                        edit
+                        Edit
                     </button>
-                            <!-- View Link -->
-                            <a [routerLink]="['/demand-view', element.dem_id]"
-                                class="view-link">
-                                Link
-                            </a>
-                        </td>
-                    </ng-container>
+                    <button mat-button
+                        [routerLink]="['/demand-view', element.dem_id]">
+                        Link
+                    </button>
+                </td>
+            </ng-container>
 
-                <!-- <ng-container matColumnDef="dem_jrnumber">
+            <!-- <ng-container matColumnDef="dem_jrnumber">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>JR
                 </th>
                 <td mat-cell *matCellDef="let element">{{
                     element.dem_jrnumber }}</td>
             </ng-container> -->
 
-                <!-- <ng-container matColumnDef="skillset">
+            <!-- <ng-container matColumnDef="skillset">
                 <th mat-header-cell *matHeaderCellDef
                     mat-sort-header>Skillset</th>
                 <td mat-cell *matCellDef="let element">{{ element.skillset
@@ -200,7 +198,7 @@
                     }}</td>
             </ng-container>
  -->
-                <!-- Header and Row Definitions -->
+            <!-- Header and Row Definitions -->
             <!-- </ng-container> -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row
