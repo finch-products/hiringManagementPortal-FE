@@ -1,51 +1,57 @@
 <div class="search-container">
     <h2 class="page-title">Candidate List</h2>
     <!-- Search Box -->
-    <mat-form-field appearance="outline" class="search-box">
-        <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyFilter($event)"
-            placeholder="Filter data">
-        <mat-icon>search</mat-icon>
-    </mat-form-field>
-  </div>
+    <div class="custom-search-box">
+        <input type="text" (keyup)="applyFilter($event)"
+            placeholder="Search ..." />
+        <mat-icon class="search-icon">search</mat-icon>
+    </div>
+</div>
 
 <mat-card class="table-container">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
         <ng-container matColumnDef="cdm_emp_id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>cEmp Id</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_emp_id }}</td>
+            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_emp_id
+                }}</td>
         </ng-container>
 
         <ng-container matColumnDef="cdm_name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_name }}</td>
+            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_name
+                }}</td>
         </ng-container>
 
         <ng-container matColumnDef="cdm_email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_email }}</td>
+            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_email
+                }}</td>
         </ng-container>
 
         <ng-container matColumnDef="cdm_phone">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_phone }}</td>
+            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_phone
+                }}</td>
         </ng-container>
 
         <ng-container matColumnDef="cdm_location">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_location }}</td>
+            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_location
+                }}</td>
         </ng-container>
 
         <ng-container matColumnDef="cdm_profile">
             <th mat-header-cell *matHeaderCellDef
                 mat-sort-header>Profile</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_profile }}</td>
+            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_profile
+                }}</td>
         </ng-container>
 
         <ng-container matColumnDef="cdm_keywords">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Keyword</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_keywords }}</td>
+            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_keywords
+                }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

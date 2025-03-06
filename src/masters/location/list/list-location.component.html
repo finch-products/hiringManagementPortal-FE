@@ -1,14 +1,13 @@
 <div class="search-container">
   <h2 class="page-title">LOB List</h2>
   <!-- Search Box -->
-  <mat-form-field appearance="outline" class="search-box">
-      <mat-label>Search</mat-label>
-      <input matInput (keyup)="applyFilter($event)"
-          placeholder="Filter data">
-      <mat-icon>search</mat-icon>
-  </mat-form-field>
+  <div class="custom-search-box">
+    <input type="text" (keyup)="applyFilter($event)"
+      placeholder="Search ..." />
+    <mat-icon class="search-icon">search</mat-icon>
+  </div>
 </div>
-<div class="table-container">
+<mat-card class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="lcm_name">
@@ -29,7 +28,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</div>
+</mat-card>
 
 <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
   showFirstLastButtons></mat-paginator>
