@@ -2,9 +2,10 @@
     <div class="search-container">
         <h2 class="page-title">Demands List</h2>
         <div class="custom-search-box">
-            <input type="text" (keyup)="applyFilter($event)" placeholder="Search ..." />
+            <input type="text" (keyup)="applyFilter($event)"
+                placeholder="Search ..." />
             <mat-icon class="search-icon">search</mat-icon>
-          </div>
+        </div>
     </div>
 
     <mat-card class="form-container">
@@ -37,110 +38,121 @@
     </mat-card>
 
     <mat-card class="table-container">
-            <table mat-table [dataSource]="dataSource" matSort
-                class="mat-elevation-z8">
-                <ng-container matColumnDef="select">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <mat-checkbox
-                            (change)="$event ? selectedRows = $event.checked ? dataSource.data.slice() : [] : []"></mat-checkbox>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <mat-checkbox
-                            (change)="toggleSelection(element, $event)"></mat-checkbox>
-                    </td>
-                </ng-container>
+        <table mat-table [dataSource]="dataSource" matSort
+            class="mat-elevation-z8">
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox
+                        (change)="$event ? selectedRows = $event.checked ? dataSource.data.slice() : [] : []"></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox
+                        (change)="toggleSelection(element, $event)"></mat-checkbox>
+                </td>
+            </ng-container>
 
-                <ng-container matColumnDef="dem_ctoolnumber">
-                    <th mat-header-cell *matHeaderCellDef
-                        mat-sort-header>CTool</th>
+            <ng-container matColumnDef="dem_ctoolnumber">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>CTool</th>
 
-                    <td mat-cell *matCellDef="let element">
-                        <!-- (mouseenter)="hoveredRow = element"
+                <td mat-cell *matCellDef="let element">
+                    <!-- (mouseenter)="hoveredRow = element"
                 (mouseleave)="hoveredRow = null"
                 class="hover-container"> -->
 
-                        {{ element.dem_ctoolnumber }}
+                    {{ element.dem_ctoolnumber }}
 
-                        <!-- Floating Edit Button (Appears on Hover) -->
-                        <!-- <a [routerLink]="['/entry',element.dem_id]" *ngIf="hoveredRow === element"
+                    <!-- Floating Edit Button (Appears on Hover) -->
+                    <!-- <a [routerLink]="['/entry',element.dem_id]" *ngIf="hoveredRow === element"
                       mat-icon-button 
                       class="edit-btn"
                       (click)="editRow(element)">
                 <mat-icon>edit</mat-icon>
               </a> -->
 
-                    </td>
-                    <!-- <td mat-cell *matCellDef="let element">{{
+                </td>
+                <!-- <td mat-cell *matCellDef="let element">{{
                     element.dem_ctoolnumber
                     }}</td> -->
-                </ng-container>
+            </ng-container>
 
-                <ng-container matColumnDef="dem_ctooldate">
-                    <th mat-header-cell *matHeaderCellDef
-                        mat-sort-header>Date</th>
-                    <td mat-cell *matCellDef="let element">{{
-                        element.dem_ctooldate | date:'dd-MM-yyyy' }}</td>
-                </ng-container>
-                <ng-container matColumnDef="dem_validtill">
-                    <th mat-header-cell *matHeaderCellDef
-                        mat-sort-header>Required
-                        By</th>
-                    <td mat-cell *matCellDef="let element">{{
-                        element.dem_validtill | date:'dd-MM-yyyy' }}</td>
-                </ng-container>
+            <ng-container matColumnDef="dem_ctooldate">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Date</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_ctooldate | date:'dd-MM-yyyy' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="dem_validtill">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Required
+                    By</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_validtill | date:'dd-MM-yyyy' }}</td>
+            </ng-container>
 
-                <ng-container matColumnDef="dem_position_name">
-                    <th mat-header-cell *matHeaderCellDef
-                        mat-sort-header>Position</th>
-                    <td mat-cell *matCellDef="let element">{{
-                        element.dem_position_name }}</td>
-                </ng-container>
+            <ng-container matColumnDef="dem_position_name">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Position</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_position_name }}</td>
+            </ng-container>
 
-                <ng-container matColumnDef="dem_lcm_id">
-                    <th mat-header-cell *matHeaderCellDef
-                        mat-sort-header>Location</th>
-                    <td mat-cell *matCellDef="let element">{{
-                        element.location_details.lcm_name }}</td>
-                </ng-container>
+            <ng-container matColumnDef="dem_lcm_id">
+                <th mat-header-cell *matHeaderCellDef
+                    mat-sort-header>Location</th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.location_details.lcm_name }}</td>
+            </ng-container>
 
-                <ng-container matColumnDef="dem_skillset">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Skills
-                    </th>
-                    <td mat-cell *matCellDef="let element">{{
-                        element.dem_skillset }}</td>
-                </ng-container>
+            <ng-container matColumnDef="dem_skillset">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Skills
+                </th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_skillset }}</td>
+            </ng-container>
 
-                <ng-container matColumnDef="dem_positions">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Positions
-                    </th>
-                    <td mat-cell *matCellDef="let element">{{
-                        element.dem_positions }}</td>
-                </ng-container>
+            <ng-container matColumnDef="dem_positions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Positions
+                </th>
+                <td mat-cell *matCellDef="let element">{{
+                    element.dem_positions }}</td>
+            </ng-container>
 
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status
-                    </th>
-                    <td mat-cell
-                        *matCellDef="let element">{{element.status_details.dsm_code
-                        }}</td>
-                </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status
+                </th>
+                <td mat-cell
+                    *matCellDef="let element">{{element.status_details.dsm_code
+                    }}</td>
+            </ng-container>
 
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
-                    <td mat-cell *matCellDef="let element">
-                        <!-- Edit Button -->
-                        <button mat-icon-button
-                            [routerLink]="['/entry', element.dem_id]">
-                            <mat-icon>edit</mat-icon>
-                        </button>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">
+                    <!-- Edit Button -->
+                    <button mat-icon-button
+                        [routerLink]="['/entry', element.dem_id]">
+                        <mat-icon>edit</mat-icon>
+                    </button>
 
-                        <!-- View Link -->
-                        <a [routerLink]="['/demand-view', element.dem_id]"
-                            class="view-link">
-                            Link
-                        </a>
-                    </td>
-                </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element">
+                            <!-- Edit Button -->
+                            <button mat-icon-button
+                                [routerLink]="['/entry', element.dem_id]"
+                                class="edit-btn">
+                                edit
+                            </button>
+
+                            <!-- View Link -->
+                            <a [routerLink]="['/demand-view', element.dem_id]"
+                                class="view-link">
+                                Link
+                            </a>
+                        </td>
+                    </ng-container>
+                </td>
 
                 <!-- <ng-container matColumnDef="dem_jrnumber">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>JR
@@ -201,11 +213,11 @@
             </ng-container>
  -->
                 <!-- Header and Row Definitions -->
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row
-                    *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
     </mat-card>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons></mat-paginator>
-</mat-card>
