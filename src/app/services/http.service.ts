@@ -171,7 +171,9 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
-
+  postData(url: string, data: any): Observable<any> {
+    return this.http.post(url, data);
+  }
 
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
