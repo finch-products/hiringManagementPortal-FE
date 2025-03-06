@@ -1,18 +1,18 @@
 <mat-card class="demand-container">
     <!-- Header --> 
     <div class="demand-head">
-      <div>{{demands.dem_id}} / {{demands.dem_ctoolnumber}}</div>
+      <div>{{demands?.cdl_dem_id}}/{{demands?.demand_details?.dem_ctoolnumber}}</div>
       <div fxLayout="row" fxLayoutGap="10px">
     <!-- <button mat-button color="primary">Set Status</button> -->
-
+    <form [formGroup]="demandForm">
     <mat-form-field appearance="fill" class="mat-drop">
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
-        <mat-option *ngFor="let status of stat" [value]="status.dsm_code"
-        >{{ status.dsm_code }}
+        <mat-option *ngFor="let status of stat" [value]="status.dsm_code">{{ status?.dsm_code }}
         </mat-option>
       </mat-select>
     </mat-form-field>
+   </form> 
 
         <mat-icon>history</mat-icon>
         <mat-icon>share</mat-icon>
@@ -25,13 +25,13 @@
                 <mat-icon>account_circle</mat-icon>
             </div>
             <div class="client-details">
-                <p>{{demands.client_details.clm_name}}
-                <br/>Client Manager: <b>{{demands.client_details.clm_managername}}</b></p>
+                <p>{{demands?.demand_details?.client_details.clm_name}}
+                <br/>Client Manager: <b>{{demands?.demand_details?.client_details.clm_managername}}</b></p>
                 </div>
          </div>     
         <div class="dates">
-            <p>Open Date: <b>{{demands.dem_ctooldate| date:'dd-MM-yyyy'}}</b></p>
-            <p>Valid Till: <b>{{demands.dem_validtill| date:'dd-MM-yyyy'}}</b></p>
+            <p>Open Date: <b>{{demands?.demand_details?.dem_ctooldate| date:'dd-MM-yyyy'}}</b></p>
+            <p>Valid Till: <b>{{demands?.demand_details?.dem_validtill| date:'dd-MM-yyyy'}}</b></p>
           </div>
     </div>
     
@@ -40,18 +40,18 @@
   <!-- Details Section -->
   <div class="details-section">
     <div class="details-header">
-      <div>Number of Positions: <span class="position-count">{{demands.dem_positions}}</span></div>
-      <div>rr / Jr number: <b>{{demands.dem_rrnumber}}/{{demands.dem_jrnumber}}</b> </div>
-      <div> LOB: <b>{{demands.lob_details.lob_name}}</b></div>
+      <div>Number of Positions: <span class="position-count">{{demands?.demand_details?.dem_positions}}</span></div>
+      <div>rr / Jr number: <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b> </div>
+      <div> LOB: <b>{{demands?.demand_details?.lob_details.lob_name}}</b></div>
     </div>  
     <!-- Skills Section -->
     <div class="skills">
-      <span class="skill">{{ demands.dem_skillset }}</span>
+      <span class="skill">{{ demands?.demand_details?.dem_skillset }}</span>
     </div>
   
     <!-- Manager & Job Description -->
     <div class="footer-section">
-      <div>Delivery Manager: <b>{{demands.lob_details.delivery_manager.emp_name}}</b></div>
+      <div>Delivery Manager: <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b></div>
       <div>Job Description: <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a></div>
     </div>
   </div>

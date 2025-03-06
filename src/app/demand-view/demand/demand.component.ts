@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../../services/http.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-demand',
@@ -9,6 +10,9 @@ import { HttpService } from '../../services/http.service';
 })
 export class DemandComponent implements OnInit {
   @Output() pdfSelected = new EventEmitter<string>();
+  demandForm = new FormGroup({
+    status: new FormControl(null)
+  });
 
   demands: any;
   stat: any;
@@ -26,7 +30,8 @@ export class DemandComponent implements OnInit {
 }
 
 loadData(demandId: any) {
-  this.httpService.getSingleDemandDetail(demandId).subscribe({
+  const payload = { dem_id: demandId };
+  this.httpService. postCandidateByDemandId(payload).subscribe({
     next: (data) => {
       this.demands = data;
       console.log("delivery manager",this.demands.lob_details.delivery_manager.emp_name)
@@ -39,8 +44,9 @@ loadData(demandId: any) {
 loadStatus(): void {
   this.httpService.getDemandStatusDetails().subscribe({
     next: (data) => {
+      console.log("stat",data)
       this.stat = data;
-      console.log("stat",this.stat)
+    
     },
     error: (err) => console.error('Error fetching clients', err)
   });
