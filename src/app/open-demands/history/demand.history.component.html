@@ -14,10 +14,12 @@
       <h3>Demands</h3>
       <mat-list class="scrollable-list">
         <mat-list-item
-          *ngFor="let demand of filteredDemands()"
-          (click)="selectDemand(demand.dem_id)">
-          {{ demand.dem_id }}
-        </mat-list-item>
+        *ngFor="let demand of filteredDemands()"
+        (click)="selectDemand(demand.dem_id)"
+        [ngClass]="{'selected-demand': selectedDemandId === demand.dem_id}">
+        {{ demand.dem_id }}
+      </mat-list-item>
+      
       </mat-list>
     </div>
   </aside>

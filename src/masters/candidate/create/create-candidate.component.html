@@ -10,6 +10,9 @@
                     <app-form-error
                         [errors]="employeeForm.controls['clm_clientid'].errors"></app-form-error>
                 </mat-error> -->
+                <mat-error *ngIf="candidateForm.controls['cdm_emp_id'].hasError('serverError')">
+                    {{ candidateForm.controls['cdm_emp_id'].errors?.['serverError'] }}
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
@@ -19,6 +22,9 @@
                     <app-form-error
                         [errors]="employeeForm.controls['emp_name'].errors"></app-form-error>
                 </mat-error> -->
+                <mat-error *ngIf="candidateForm.controls['cdm_name'].hasError('serverError')">
+                    {{ candidateForm.controls['cdm_name'].errors?.['serverError'] }}
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
@@ -28,6 +34,9 @@
                     <app-form-error
                         [errors]="employeeForm.controls['emp_email'].errors"></app-form-error>
                 </mat-error> -->
+                <mat-error *ngIf="candidateForm.controls['cdm_email'].hasError('serverError')">
+                    {{ candidateForm.controls['cdm_email'].errors?.['serverError'] }}
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
@@ -38,6 +47,9 @@
                     <app-form-error
                         [errors]="employeeForm.controls['emp_phone'].errors"></app-form-error>
                 </mat-error> -->
+                <mat-error *ngIf="candidateForm.controls['cdm_phone'].hasError('serverError')">
+                    {{ candidateForm.controls['cdm_phone'].errors?.['serverError'] }}
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">

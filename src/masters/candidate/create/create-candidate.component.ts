@@ -72,7 +72,7 @@ export class CreateCandidateComponent implements OnInit {
   onSubmit() {
     const formData = new FormData();
 
-    // Debug: Check if form values exist before appending
+    // Debug: Log form values before appending to FormData
     console.log("Form Values:", this.candidateForm.value);
 
     Object.keys(this.candidateForm.value).forEach(key => {
@@ -83,16 +83,9 @@ export class CreateCandidateComponent implements OnInit {
       } else {
         console.warn(`Skipping empty field: ${key}`);
       }
-
-
-      // if (this.demandForm.value[key]) {  // Ensure value is not null or undefined
-      //   formData.append(key, this.demandForm.value[key]);
-      // } else {
-      //   console.warn(`Skipping empty field: ${key}`);
-      // }
     });
 
-    // Debug: Check if file exists before appending
+    // Debug: Log selected file before appending
     if (this.selectedFile) {
       console.log("Selected File:", this.selectedFile);
       formData.append("profile", this.selectedFile);
@@ -100,22 +93,29 @@ export class CreateCandidateComponent implements OnInit {
       console.warn("No file selected");
     }
 
-    // Debug: Check contents of `formData`
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}:`, pair[1]);
-    // }
-
-    // Send API request
+    // Submit form data
     this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
         console.log('Candidate Added Successfully:', response);
+        alert('Candidate added successfully!'); // Success alert
         this.candidateForm.reset();
       },
       error: (error) => {
         console.error('Error adding Candidate:', error);
-        alert('Failed to add Candidate. Check console for details.');
+
+        if (error.status === 400 && error.error) {
+          // Handle validation errors from backend
+          for (const field in error.error) {
+            if (this.candidateForm.controls[field]) {
+              this.candidateForm.controls[field].setErrors({ serverError: error.error[field][0] });
+            }
+          }
+        } else {
+          alert('Failed to add candidate. Check console for details.');
+        }
       }
     });
-  }
+}
+
 
 }
