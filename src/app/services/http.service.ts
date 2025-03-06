@@ -171,11 +171,7 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
-  postCandidateByDemandId(payload:any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}candidate-demand/candidateby_opendemand/`, payload, this.getHeaders()).pipe(
-        catchError(this.handleError)
-    );
-  }
+
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
