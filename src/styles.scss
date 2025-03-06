@@ -455,26 +455,13 @@ table.mat-table {
   /* Needed for absolute positioning */
 }
 
-// .edit-btn {
-//   position: absolute;
-//   right: 5px;
-//   /* Adjust position inside the cell */
-//   top: 50%;
-//   transform: translateY(-50%);
-//   background: white;
-//   border-radius: 50%;
-//   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-//   opacity: 0;
-//   transition: opacity 0.3s ease-in-out;
+  // .edit-btn{
+  //   font-size: 5px;
+  // }
+//   .hover-container:hover .edit-btn {
+//   opacity: 1;
+//   /* Button appears smoothly on hover */
 // }
-
-  .edit-btn{
-    font-size: 5px;
-  }
-  .hover-container:hover .edit-btn {
-  opacity: 1;
-  /* Button appears smoothly on hover */
-}
 
 // added from here 
 /* Ensures file input container aligns well */

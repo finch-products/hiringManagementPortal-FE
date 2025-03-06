@@ -34,7 +34,7 @@ loadData(demandId: any) {
   this.httpService. postCandidateByDemandId(payload).subscribe({
     next: (data) => {
       this.demands = data;
-      console.log("delivery manager",this.demands.lob_details.delivery_manager.emp_name)
+      // console.log("delivery manager",this.demands.lob_details.delivery_manager.emp_name)
       console.log("jrnumber",this.demands.dem_jrnumber)
       console.log("jd",this.demands.dem_jd)
       
