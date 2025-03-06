@@ -171,6 +171,7 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+
   postCandidateByDemandId(payload:any): Observable<any> {
     console.log("payload",payload)
     return this.http.post<any>(`${this.baseUrl}candidate-demand/candidateby_opendemand/`,payload,this.getHeaders()).pipe(
@@ -188,5 +189,8 @@ export class HttpService {
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
+  }
+  postData(url: string, data: any): Observable<any> {
+    return this.http.post(url, data);
   }
 }
