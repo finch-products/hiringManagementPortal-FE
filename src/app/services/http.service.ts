@@ -7,8 +7,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl = 'http://64.227.145.117/api/';
-  // private baseUrl = 'http://localhost:8000/api/';
+  //private baseUrl = 'http://64.227.145.117/api/';
+  private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -168,6 +168,12 @@ export class HttpService {
   }
   getReportagedemand(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}reports/age-demand/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  postCandidateByDemandId(payload:any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}candidate-demand/candidateby_opendemand/`,payload,this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
