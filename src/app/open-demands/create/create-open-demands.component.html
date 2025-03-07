@@ -10,15 +10,14 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>CTool Date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dem_ctooldate"
-          required>
+        <input matInput [matDatepicker]="picker" formControlName="dem_ctooldate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Client Name</mat-label>
-        <mat-select formControlName="dem_clm_id">
+        <mat-label>Hiring manager</mat-label>
+        <mat-select formControlName="dem_clm_id" required>
           <mat-option *ngFor="let client of clients" [value]="client.clm_id">
             {{ client.clm_name }}
           </mat-option>
@@ -26,7 +25,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Client Location</mat-label>
+        <mat-label>Hiring manager location</mat-label>
         <mat-select formControlName="dem_lcm_id">
           <mat-option *ngFor="let location of locations"
             [value]="location.lcm_id">
@@ -133,7 +132,7 @@
 
     <div class="submit-container">
       <button mat-raised-button color="primary"
-        type="submit" class="cancel">Cancel</button>
+        type="submit" class="cancel" (click) = cancel()>Cancel</button>
       <button mat-raised-button color="primary"
         type="submit" class="submit"> {{ isEditMode ? 'Update' : 'Submit' }}</button>
     </div>

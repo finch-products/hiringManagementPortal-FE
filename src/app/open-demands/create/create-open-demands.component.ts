@@ -253,4 +253,8 @@ export class CreateOpenDemandComponent implements OnInit {
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
     return `${year}-${month}-${day}`;
   }
+
+  cancel(){
+    this.router.navigate(['/dashboard']);
+  }
 }

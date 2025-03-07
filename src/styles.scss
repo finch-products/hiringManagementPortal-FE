@@ -1,9 +1,6 @@
 html,
 body {
-  height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: #4C4C4B;
 }
 
 * {
@@ -19,9 +16,9 @@ body {
 
   .left-sidebar {
     //background-color: #e0b60c;
-    width: 25%;
-    height: 29.03%;
-    border-radius: 2%;
+    width: 20.64%;
+    // height: 29.03%;
+    // border-radius: 2%;
   }
 
 
@@ -34,8 +31,9 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 75%;
+    width: 79.36%;
     padding-left: 16px;
+    height: 100vh;
 
     .page-title {
       margin: 20px;
@@ -78,6 +76,12 @@ table {
   background-color: #F6F5F1;
 }
 
+.mat-mdc-card,
+.mat-mdc-table {
+  box-shadow: none !important;
+
+}
+
 
 
 
@@ -103,6 +107,9 @@ mat-sidenav {
 
 span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
   display: flex;
+  font-size: 16px !important;
+  line-height: 1em !important;
+  color: #4C4C4B !important;
 }
 
 .container-fluid {
@@ -150,10 +157,13 @@ span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
   // max-width: 100%;
   // overflow-x: auto;
   // border-color: #000;
-  background: #FAFAFA; /* Light gray background */
-  border-radius: 20px; 
-  width: 100%; /* Full width */
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  background: #FAFAFA;
+  /* Light gray background */
+  border-radius: 20px;
+  width: 100%;
+  /* Full width */
+  overflow-x: auto;
+  // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 
   tr {
     font-size: 12px;
@@ -200,7 +210,7 @@ mat-form-field {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-
+  box-shadow: none !important;
   justify-content: flex-start;
   gap: 20px;
   width: 100%;
@@ -241,7 +251,7 @@ mat-form-field {
   flex-direction: column;
 }
 
-.mdc-list{
+.mdc-list {
   padding: 0 10px;
 }
 
@@ -254,7 +264,7 @@ mat-form-field {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-    width: 260px;
+  width: 260px;
 
 }
 
@@ -461,9 +471,9 @@ table.mat-table {
   /* Needed for absolute positioning */
 }
 
-  // .edit-btn{
-  //   font-size: 5px;
-  // }
+// .edit-btn{
+//   font-size: 5px;
+// }
 //   .hover-container:hover .edit-btn {
 //   opacity: 1;
 //   /* Button appears smoothly on hover */
