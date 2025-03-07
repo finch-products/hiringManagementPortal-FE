@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -67,6 +67,8 @@ import { DemandComponent } from './demand-view/demand/demand.component';
 import { CandidateComponent } from './demand-view/candidate/candidate.component';
 import { PreviewComponent } from './demand-view/preview/preview.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { LoaderComponent } from './loader/loader.component';
+import { HttpInterceptorService } from './services/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     DemandComponent,
     CandidateComponent,
     PreviewComponent,
-    Otherview4Component
+    Otherview4Component,
+    LoaderComponent
   ],
   imports: [
     MatRadioModule,
@@ -139,7 +142,13 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     NgxExtendedPdfViewerModule
   ],
   exports: [MatSidenavModule, MatExpansionModule],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true, // Ensures multiple interceptors can exist
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

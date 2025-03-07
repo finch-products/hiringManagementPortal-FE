@@ -37,6 +37,12 @@
   </div>
 </mat-card> -->
 
+<app-loader [isLoading]="(isLoading | async) ?? false"></app-loader>
+
+<!-- Your main application content -->
+<router-outlet></router-outlet>
+
+
 <div class="main-layout">
   <div class="grid-container">
 
