@@ -7,6 +7,14 @@ import { Router } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
+  isCollapsed = false;
+
+  togglesidenav(collapsed: boolean) {
+    console.log("hello")
+    this.isCollapsed = collapsed;
+  }
+
   title = 'Internal Hiring Tool';
   showRightSidebar = false;
   constructor(private router: Router) {
