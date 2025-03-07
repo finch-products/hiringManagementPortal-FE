@@ -88,6 +88,7 @@ isEditmode="false";
         next:(data)=>{
           console.log('Form submission successful:', data);
           alert('Demand updated successfully!');
+          this.listForm.reset();
           this.fetchOpenDemands()
         },
         error: (err) => console.error('Form submission error:', err)

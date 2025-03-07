@@ -30,6 +30,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
+      clm_email: [''],
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],

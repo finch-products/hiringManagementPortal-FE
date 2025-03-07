@@ -260,13 +260,7 @@ mat-form-field {
 //   border-bottom: 1px solid #ccc;
 // }
 
-.file-input-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  width: 260px;
 
-}
 
 .file-input-container label {
   font-family: Inter, sans-serif;
@@ -380,12 +374,12 @@ mat-label {
 }
 
 /* Optional: Adjust input field padding for better look */
-.mat-mdc-form-field-infix {
-  padding: 10px !important;
-}
+
 
 .mat-form-field {
-  margin-bottom: 0px !important;
+  width: 100%; // Ensure consistent width
+  margin-bottom: 8px;
+  // margin-bottom: 0px !important;
   /* Reduce space below input fields */
 }
 
@@ -471,46 +465,17 @@ table.mat-table {
   /* Needed for absolute positioning */
 }
 
-// .edit-btn{
-//   font-size: 5px;
-// }
-//   .hover-container:hover .edit-btn {
-//   opacity: 1;
-//   /* Button appears smoothly on hover */
-// }
-
-// added from here 
-/* Ensures file input container aligns well */
 .file-input-container {
   width: 30%;
-  margin: 2.5%;
   display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 }
 
-mat-radio-group[formControlName="dem_isreopened"] {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  margin-left: 10%;
-  min-width: 40px;
-}
-
-mat-radio-group[formControlName="dem_isactive"] {
-  margin-left: 4%;
-  margin-top: 1.7%;
-  align-items: center;
-}
-
-mat-radio-group[formControlName="isInternal"],
-mat-radio-group[formControlName="!isInternal"],
-mat-form-field[formControlName="dem_positions"] mat-radio-button {
-  margin: 7px;
-  display: inline-block;
-  width: 25%;
+.mat-radio-group {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
 }
 
 mat-radio-button.mat-accent {
@@ -538,10 +503,13 @@ mat-radio-button.mat-accent {
 
 //new  ranch
 .form-container {
-  justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1200px;
-  margin: auto;
+  // justify-content: space-between;
+  // align-items: flex-start;
+  // max-width: 1200px;
+  // margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // Adjust based on form structure
+  gap: 12px;
 }
 
 .wrap-height {

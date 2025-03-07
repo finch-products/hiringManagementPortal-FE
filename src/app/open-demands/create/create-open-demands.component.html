@@ -5,12 +5,13 @@
     <div class="form-row">
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>CTool Number</mat-label>
-        <input matInput formControlName="dem_ctoolnumber" required>
+        <input matInput formControlName="dem_ctoolnumber">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>CTool Date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dem_ctooldate">
+        <input matInput [matDatepicker]="picker"
+          formControlName="dem_ctooldate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -22,6 +23,11 @@
             {{ client.clm_name }}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Manager Email</mat-label>
+        <input matInput formControlName="clm_email">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -51,7 +57,7 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>LOB</mat-label>
-        <mat-select formControlName="dem_lob_id">
+        <mat-select formControlName="dem_lob_id" required>
           <mat-option *ngFor="let lob of lobs" [value]="lob.lob_id">
             {{ lob.lob_name }}
           </mat-option>
@@ -74,42 +80,35 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>No Of Positions</mat-label>
-        <input matInput formControlName="dem_positions">
+        <input matInput formControlName="dem_positions" required>
       </mat-form-field>
 
       <!-- Internal or External Selection -->
-      <mat-radio-group formControlName="isInternal" class="mat-accent">
+      <!-- <mat-radio-group formControlName="isInternal" class="mat-accent">
         <mat-radio-button value="yes">Internal</mat-radio-button>
         <mat-radio-button value="no">External</mat-radio-button>
-      </mat-radio-group>
+      </mat-radio-group> -->
 
       <!-- RR Number Field (Visible when "Yes" is selected) -->
-      <mat-form-field appearance="fill" class="form-field" *ngIf="isInternal">
+      <mat-form-field appearance="fill" class="form-field">
         <mat-label>RR Numbers</mat-label>
         <input matInput formControlName="dem_rrnumber">
       </mat-form-field>
 
       <!-- JR Number Field (Visible when "No" is selected) -->
-      <mat-form-field appearance="fill" class="form-field" *ngIf="!isInternal">
+      <mat-form-field appearance="fill" class="form-field">
         <mat-label>JR Numbers</mat-label>
         <input matInput formControlName="dem_jrnumber">
       </mat-form-field>
 
-      <mat-radio-group formControlName="dem_isactive" appearance="fill"
-        class="form-field" class="mat-accent">
-        <mat-label>Active?</mat-label>
-        <mat-radio-button value="yes">Yes</mat-radio-button>
-        <mat-radio-button value="no">No</mat-radio-button>
-      </mat-radio-group>
-
-      <mat-radio-group formControlName="dem_isreopened" appearance="fill"
+      <!-- <mat-radio-group formControlName="dem_isreopened" appearance="fill"
       class="form-field" class="mat-accent">
         <mat-label>Reopen</mat-label>
         <mat-radio-button value="yes">Yes</mat-radio-button>
         <mat-radio-button value="no">No</mat-radio-button>
-      </mat-radio-group>
+      </mat-radio-group> -->
 
-      <mat-form-field appearance="fill" class="form-field field-30">
+      <mat-form-field appearance="fill" class="form-field">
         <mat-label>GCB Level</mat-label>
         <input matInput formControlName="dem_gcblevel">
       </mat-form-field>
@@ -124,17 +123,26 @@
         <input type="file" id="dem_jd" (change)="onFileSelected($event)">
       </div>
 
-      <mat-form-field appearance="fill" class="form-field field-30">
+      <mat-form-field appearance="fill" class="form-field">
         <mat-label>Comment</mat-label>
         <textarea matInput formControlName="dem_comment" rows="3"></textarea>
       </mat-form-field>
+
+      <mat-radio-group formControlName="dem_isactive" appearance="fill"
+        class="form-field" class="mat-accent">
+        <mat-label>Active?</mat-label>
+        <mat-radio-button value="yes">Yes</mat-radio-button>
+        <mat-radio-button value="no">No</mat-radio-button>
+      </mat-radio-group>
+
     </div>
 
     <div class="submit-container">
       <button mat-raised-button color="primary"
-        type="submit" class="cancel" (click) = cancel()>Cancel</button>
+        type="submit" class="cancel" (click)=cancel()>Cancel</button>
       <button mat-raised-button color="primary"
-        type="submit" class="submit"> {{ isEditMode ? 'Update' : 'Submit' }}</button>
+        type="submit" class="submit"> {{ isEditMode ? 'Update' : 'Submit'
+        }}</button>
     </div>
   </form>
 </mat-card>
