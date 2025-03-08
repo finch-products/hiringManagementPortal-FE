@@ -178,7 +178,23 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+  getreportclientselection(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/client-selection/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
 
+  getreportoftimeforprofilesubmit(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/demand-time-taken-for-profile-submission/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getreportoftimetakenfortillfeedback(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/TimeTakenFromInterviewToFeedbackView/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
