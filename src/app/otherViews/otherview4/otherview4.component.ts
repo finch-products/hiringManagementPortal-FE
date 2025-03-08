@@ -33,16 +33,36 @@ export class Otherview4Component {
     { name: 'Client5', value: 60 }
   ];
 
-  // Chart Color Scheme
-colorScheme = {
-  domain: ['#FFC0CB'] // Light Pink for bars
-};
+//   // Chart Color Scheme
+// colorScheme = {
+//   domain: ['#FFC0CB'] // Light Pink for bars
+// };
 
-colorScheme2 = {
-  domain: ['#cfc9fe'] // Light Purple for secondary usage (if needed)
-};
+// colorScheme2 = {
+//   domain: ['#cfc9fe'] // Light Purple for secondary usage (if needed)
+// };
+customColors = [
+  { name: 'Demand1', value: '#FF9999' },
+  { name: 'Demand2', value: '#FF9999' },
+  { name: 'Demand3', value: '#FF9999' },
+  { name: 'Demand4', value: '#FF9999' },
+  { name: 'Demand5', value: '#FF9999' }
+];
 
-
+customColors2 = [
+  { name: 'Client1', value: '#B399FF' },
+  { name: 'Client2', value: '#B399FF' },
+  { name: 'Client3', value: '#B399FF' },
+  { name: 'Client4', value: '#B399FF' },
+  { name: 'Client5', value: '#B399FF' }
+];
+customColors3=[
+  { name: 'Client1', value: '#8979FF'},
+    { name: 'Client2', value: '#FF928A' },
+    { name: 'Client3', value: '#3CC3DF' },
+    { name: 'Client4', value: '#FFAE4C' },
+    { name: 'Client5', value: '#537FF1'}
+]
   // Chart View Dimensions
   view: [number, number] = [500, 300];
 }

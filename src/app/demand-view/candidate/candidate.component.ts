@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 interface Candidate {
   cdm_name: string;
@@ -28,7 +28,7 @@ export class CandidateComponent {
   selectedCandidates: any[] = [];
   dem_id: string = '';
 
-  constructor(private httpService: HttpService, private route: ActivatedRoute,private snackBar: MatSnackBar ) {}
+  constructor(private httpService: HttpService, private route: ActivatedRoute,private snackBar: MatSnackBar, private router:Router ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -115,6 +115,7 @@ export class CandidateComponent {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.router.navigate(['/list']);
       },
       error: (error) => {
         this.snackBar.open("❌ Failed to link candidates. Try again.", "Close", {

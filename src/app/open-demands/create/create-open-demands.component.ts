@@ -44,8 +44,8 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_gcblevel: [''],
       dem_jd: [''],
       dem_comment: [''],
-      dem_isreopened: ['no'],
-      dem_isactive: ['yes'],
+      // dem_isreopened: ['no'],
+      dem_isactive: [true],
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
     });
@@ -72,6 +72,8 @@ export class CreateOpenDemandComponent implements OnInit {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
         this.demands = data;
+        console.log("demands",this.demands)
+        console.log("active",this.demands.dem_isactive)
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
           dem_id:this.demands.dem_id,
