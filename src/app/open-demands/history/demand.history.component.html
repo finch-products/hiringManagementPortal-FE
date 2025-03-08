@@ -1,12 +1,25 @@
 <div class="history-container">
   <!-- Sidebar -->
   <aside class="sidebar">
+    <!-- <div class="custom-search-box">
+      <input type="text" (keyup)="applyFilter($event)"
+          placeholder="Search ..." />
+      <mat-icon class="search-icon">search</mat-icon>
+  </div> -->
+
+
     <div class="search-container">
-      <mat-form-field appearance="outline">
+      <div class="custom-search-box">
+        <input type="text"  [(ngModel)]="searchText"
+            placeholder="Search ..." />
+        <mat-icon class="search-icon">search</mat-icon>
+    </div>
+
+
+      <!-- <mat-form-field appearance="outline">
         <mat-icon matPrefix>search</mat-icon>
         <input matInput placeholder="Search" [(ngModel)]="searchText" />
-        <!--<mat-icon >filter</mat-icon>-->
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
 
     <!-- Demand List with Scrollbar -->
@@ -14,10 +27,12 @@
       <h3>Demands</h3>
       <mat-list class="scrollable-list">
         <mat-list-item
-          *ngFor="let demand of filteredDemands()"
-          (click)="selectDemand(demand.dem_id)">
-          {{ demand.dem_id }}
-        </mat-list-item>
+        *ngFor="let demand of filteredDemands()"
+        (click)="selectDemand(demand.dem_id)"
+        [ngClass]="{'selected-demand': selectedDemandId === demand.dem_id}">
+        {{ demand.dem_id }}
+      </mat-list-item>
+      
       </mat-list>
     </div>
   </aside>

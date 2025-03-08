@@ -19,7 +19,6 @@ export class LeftSiderbarComponent {
 
   togglesidenav() {
     this.isCollapsed = !this.isCollapsed;
-    this.collapseChange.emit(this.isCollapsed);
   }
 
   setActive(event: Event) {
@@ -30,5 +29,6 @@ export class LeftSiderbarComponent {
     // Add active class to the clicked item
     const clickedElement = event.currentTarget as HTMLElement;
     clickedElement.classList.add('active');
+
   }
 }

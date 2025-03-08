@@ -27,8 +27,7 @@ export class ListOpenDemandsComponent {
 
   displayedColumns: string[] = [
     'select','dem_ctoolnumber', 'dem_ctooldate' ,'dem_validtill', 'dem_position_name',
-    'dem_lcm_id', 'dem_skillset', 'dem_positions', 'status','action'
-  ];
+    'dem_lcm_id', 'dem_skillset', 'dem_positions', 'status','action'];
 
   dataSource = new MatTableDataSource<OpenDemand>([]);
 
@@ -89,6 +88,7 @@ isEditmode="false";
         next:(data)=>{
           console.log('Form submission successful:', data);
           alert('Demand updated successfully!');
+          this.listForm.reset();
           this.fetchOpenDemands()
         },
         error: (err) => console.error('Form submission error:', err)

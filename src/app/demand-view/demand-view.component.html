@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutGap="10px" style="width: 100%; height: 100vh;">
     <app-demand fxFlex="40" (pdfSelected)="handlePdfSelection($event)"></app-demand>
-    <app-candidate fxFlex="30"></app-candidate>
+    <app-candidate (pdfSelected)="handlePdfSelection($event)"></app-candidate>
     <app-preview fxFlex="30" [pdfUrl]="selectedPdfUrl"></app-preview>
 </div>

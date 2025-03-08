@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class DemandHistoryComponent implements OnInit {
   demandIds: any[] = [];
   selectedDemand: any = null;
+  selectedDemandId: string | null = null; // To track highlighted demand
   searchText: string = '';
   candidates: any[] = [];
 
@@ -17,7 +18,6 @@ export class DemandHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchDemandIds();
-    this.filteredDemands()
   }
 
   fetchCandidateByDemandId(demandId?: string) {
@@ -29,34 +29,36 @@ export class DemandHistoryComponent implements OnInit {
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data: { cdl_dem_id: string; demand_details: any; candidates: any[] }) => {
         if (data) {
-          this.selectedDemand = { ...data.demand_details};
+          this.selectedDemand = { ...data.demand_details };
           this.candidates = data.candidates || [];
+          this.selectedDemandId = demandId; // Highlight the selected demand
         }
       },
       error: (err: any) => console.error('Error fetching demand and candidate details', err)
     });
-}
+  }
 
-fetchDemandIds() {
+  fetchDemandIds() {
     this.httpService.getDemandIds().subscribe({
       next: (data: any) => {
         this.demandIds = data;
+        if (this.demandIds.length > 0) {
+          this.selectDemand(this.demandIds[0].dem_id); // Auto-select first demand
+        }
       },
       error: (err: any) => console.error('Error fetching demands', err)
     });
-}
+  }
 
-filteredDemands() {
+  filteredDemands() {
     return this.demandIds?.filter((demand: { dem_id: string }) =>
         demand.dem_id.toLowerCase().includes(this.searchText?.toLowerCase() || '')
     ) || [];
-}
+  }
 
-selectDemand(demandId: string) {
-  this.selectedDemand = null; // Reset selected demand
-  this.candidates = [];       // Clear candidates list
-  this.fetchCandidateByDemandId(demandId);
-}
-
-
+  selectDemand(demandId: string) {
+    this.selectedDemand = null; // Reset selected demand
+    this.candidates = [];       // Clear candidates list
+    this.fetchCandidateByDemandId(demandId);
+  }
 }

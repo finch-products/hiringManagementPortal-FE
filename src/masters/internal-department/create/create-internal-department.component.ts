@@ -12,6 +12,7 @@ import { HttpService } from '../../../app/services/http.service';
 export class CreateInternalDepartmentComponent implements OnInit {
   activeStatus: string = 'yes';
   deptForm: FormGroup;
+  spoc:any[]=[];
   deliveryManagers: any[] = [];
   spocs: any[] = [];
 
@@ -34,12 +35,13 @@ export class CreateInternalDepartmentComponent implements OnInit {
   }
 
   loadEmployees(): void {
-    this.httpService.getEmployees().subscribe({
+    this.httpService.getEmployeeByRolesDetails().subscribe({
       next: (data) => {
-        this.deliveryManagers = data["Delivery Manager"];
-        this.spocs = data["SPOC"];
+        this.spoc = data.spoc;
+        this.deliveryManagers = data.delivery_manager;
+        console.log('Client Partners & Delivery Managers:' + JSON.stringify(data));
       },
-      error: (err) => console.error('Error fetching clients', err)
+      error: (err) => console.error('Error fetching CP DM', err)
     });
   }
 

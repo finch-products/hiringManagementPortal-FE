@@ -1,12 +1,9 @@
 <div class="search-container">
-  <div>
-    <mat-form-field class="search-box" >
-      <mat-label>Search</mat-label>
-      <input matInput #searchInput placeholder="Search ..." (keyup)="applyFilter($event)"  />
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+  <div class="custom-search-box">
+    <input type="text" (keyup)="applyFilter($event)"
+      placeholder="Search ..." />
+    <mat-icon class="search-icon">search</mat-icon>
   </div>
-
 
 
   <!-- <div class="search-container">

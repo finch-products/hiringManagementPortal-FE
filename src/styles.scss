@@ -1,15 +1,14 @@
 html,
 body {
-  height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: #4C4C4B;
 }
+
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 }
+
 .grid-container {
   display: flex;
   padding: 20px;
@@ -17,9 +16,9 @@ body {
 
   .left-sidebar {
     //background-color: #e0b60c;
-    width: 25%;
-    height: 29.03%;
-    border-radius: 2%;
+    width: 20.64%;
+    // height: 29.03%;
+    // border-radius: 2%;
   }
 
 
@@ -32,11 +31,12 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 78.5%;
+    width: 79.36%;
     padding-left: 16px;
+    height: 100vh;
 
     .page-title {
-      margin: 20px 0;
+      margin: 20px;
       font-size: 14px;
       // line-height: 0.75em;
       color: #3F3F3F;
@@ -71,9 +71,15 @@ table {
   padding: 0 !important;
 }
 
-.mat-expansion-panel:not([class*=mat-elevation-z]){
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none !important;
   background-color: #F6F5F1;
+}
+
+.mat-mdc-card,
+.mat-mdc-table {
+  box-shadow: none !important;
+
 }
 
 
@@ -84,10 +90,10 @@ mat-sidenav {
   border-radius: 0 !important;
 }
 
-.sidebar-logo img {
-  max-width: 100%;
-  height: auto;
-}
+// .sidebar-logo img {
+//   max-width: 100%;
+//   height: auto;
+// }
 
 .content {
   padding: 16px;
@@ -96,11 +102,14 @@ mat-sidenav {
 .mat-drawer-container {
   background-color: transparent !important;
 
-  .mdc-list-item__primary-text {
-    color: #000 !important;
-    font-size: 14px;
-    line-height: 0.75em;
-  }
+
+}
+
+span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
+  display: flex;
+  font-size: 16px !important;
+  line-height: 1em !important;
+  color: #4C4C4B !important;
 }
 
 .container-fluid {
@@ -141,13 +150,20 @@ mat-sidenav {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 
 .table-container {
+  // max-width: 100%;
+  // overflow-x: auto;
+  // border-color: #000;
+  background: #FAFAFA;
+  /* Light gray background */
+  border-radius: 20px;
   width: 100%;
+  /* Full width */
   overflow-x: auto;
-  border-color: #000;
+  // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 
   tr {
     font-size: 12px;
@@ -157,7 +173,8 @@ mat-sidenav {
 
 table {
   width: 100%;
-  table-layout: fixed;
+  border-collapse: collapse;
+  // table-layout: fixed;
 }
 
 mat-paginator {
@@ -193,7 +210,7 @@ mat-form-field {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-
+  box-shadow: none !important;
   justify-content: flex-start;
   gap: 20px;
   width: 100%;
@@ -205,7 +222,9 @@ mat-form-field {
   background-color: transparent !important;
 }
 
-
+// mat-card {
+//   overflow: hidden;
+// }
 
 .form-container {
   background: #fff;
@@ -232,16 +251,16 @@ mat-form-field {
   flex-direction: column;
 }
 
+.mdc-list {
+  padding: 0 10px;
+}
+
 // .form-field:last-child input {
 //   padding-bottom: 4px;
 //   border-bottom: 1px solid #ccc;
 // }
 
-.file-input-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-}
+
 
 .file-input-container label {
   font-family: Inter, sans-serif;
@@ -346,8 +365,8 @@ mat-label {
   overflow: hidden;
   background: #fff;
   border-radius: 20px;
-  margin-top: 15px; 
-  margin-right: 2%;// margin to adjust search button
+  margin-top: 15px;
+  margin-right: 2%; // margin to adjust search button
 }
 
 .mat-mdc-form-field {
@@ -355,25 +374,31 @@ mat-label {
 }
 
 /* Optional: Adjust input field padding for better look */
-.mat-mdc-form-field-infix {
-  padding: 10px !important;
-}
+
+
 .mat-form-field {
-  margin-bottom: 0px !important;  /* Reduce space below input fields */
+  width: 100%; // Ensure consistent width
+  margin-bottom: 8px;
+  // margin-bottom: 0px !important;
+  /* Reduce space below input fields */
 }
 
 .mat-form-field-wrapper {
-  padding-bottom: 0px !important; /* Reduce padding inside the form field */
+  padding-bottom: 0px !important;
+  /* Reduce padding inside the form field */
 }
 
 .mat-form-field-flex {
-  height: 36px !important; /* Reduce the height of the input field */
+  height: 36px !important;
+  /* Reduce the height of the input field */
   align-items: center !important;
 }
 
 .mat-input-element {
-  padding: 5px !important; /* Adjust the padding inside the input box */
-  font-size: 14px !important; /* Adjust font size if needed */
+  padding: 5px !important;
+  /* Adjust the padding inside the input box */
+  font-size: 14px !important;
+  /* Adjust font size if needed */
 }
 
 .search-container mat-form-field .mat-mdc-text-field-wrapper {
@@ -440,81 +465,55 @@ table.mat-table {
   /* Needed for absolute positioning */
 }
 
-.edit-btn {
-  position: absolute;
-  right: 5px;
-  /* Adjust position inside the cell */
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.hover-container:hover .edit-btn {
-  opacity: 1;
-  /* Button appears smoothly on hover */
-}
-
-// added from here 
-/* Ensures file input container aligns well */
 .file-input-container {
   width: 30%;
-  margin: 2.5%;
   display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 }
 
-mat-radio-group[formControlName="dem_isreopened"] {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  margin-left: 10%;
-  min-width: 40px;
-}
-mat-radio-group[formControlName="dem_isactive"]{
-  margin-left: 4%;
-  margin-top: 1.7%;
-  align-items: center;
-}
-
-mat-radio-group[formControlName="isInternal"],mat-radio-group[formControlName="!isInternal"],mat-form-field[formControlName="dem_positions"] mat-radio-button {
-  margin: 7px;
-  display: inline-block;
-  width: 25%;
+.mat-radio-group {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
 }
 
 mat-radio-button.mat-accent {
-  --mdc-radio-selected-icon-color: #FACC15 !important;  /* Darker yellow inner circle */
-  --mdc-radio-selected-focus-icon-color: #EAB308 !important; /* Even darker yellow outer ring */
-  --mdc-radio-selected-hover-icon-color: #EAB308 !important; /* Dark yellow on hover */
-  --mdc-radio-selected-pressed-icon-color: #EAB308 !important; /* Dark yellow on press */
-  --mat-radio-checked-ripple-color: rgba(234, 179, 8, 0.4) !important; /* Stronger ripple effect */
+  --mdc-radio-selected-icon-color: #FACC15 !important;
+  /* Darker yellow inner circle */
+  --mdc-radio-selected-focus-icon-color: #EAB308 !important;
+  /* Even darker yellow outer ring */
+  --mdc-radio-selected-hover-icon-color: #EAB308 !important;
+  /* Dark yellow on hover */
+  --mdc-radio-selected-pressed-icon-color: #EAB308 !important;
+  /* Dark yellow on press */
+  --mat-radio-checked-ripple-color: rgba(234, 179, 8, 0.4) !important;
+  /* Stronger ripple effect */
 }
 
 ::ng-deep .mat-radio .mdc-radio__outer-circle {
-  border-color: #EAB308 !important;  /* Even darker yellow outer circle */
+  border-color: #EAB308 !important;
+  /* Even darker yellow outer circle */
 }
 
 ::ng-deep .mat-radio .mdc-radio__inner-circle {
-  background-color: #FACC15 !important;  /* Darker yellow inner circle */
+  background-color: #FACC15 !important;
+  /* Darker yellow inner circle */
 }
 
 //new  ranch
 .form-container {
-  justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1200px;
-  margin: auto;
+  // justify-content: space-between;
+  // align-items: flex-start;
+  // max-width: 1200px;
+  // margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // Adjust based on form structure
+  gap: 12px;
 }
 
-.wrap-height{
-height:80%;
+.wrap-height {
+  height: 80%;
 }
 
 // .mat-checkbox-checked .mat-checkbox-background,
@@ -526,14 +525,56 @@ height:80%;
 //   background-color: #F7CB15 !important; /* Yellow background when checked */
 // }
 
-.mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background{
-  border-color:#F7CB15 !important;
-  background-color:#F7CB15 !important;
+.mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+.mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background {
+  border-color: #F7CB15 !important;
+  background-color: #F7CB15 !important;
 }
+
 .mdc-checkbox .mdc-checkbox__ripple {
-  background-color: #F7CB15 !important; 
-  opacity: 0.4; 
+  background-color: #F7CB15 !important;
+  opacity: 0.4;
 }
+
 .submit:disabled {
-  opacity: 0.5; 
+  opacity: 0.5;
+}
+
+// search box
+
+.custom-search-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ;
+  background: #FAFAFA;
+  border-radius: 10px;
+  padding: 6px 12px;
+  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 32%;
+  height: 36px;
+
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    color: #727270;
+    background: transparent;
+  }
+
+  &:focus-within {
+    box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .search-icon {
+    color: #000;
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
+
 }

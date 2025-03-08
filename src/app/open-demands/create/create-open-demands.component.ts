@@ -30,6 +30,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
+      clm_email: [''],
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],
@@ -252,5 +253,9 @@ export class CreateOpenDemandComponent implements OnInit {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
     return `${year}-${month}-${day}`;
+  }
+
+  cancel(){
+    this.router.navigate(['/dashboard']);
   }
 }
