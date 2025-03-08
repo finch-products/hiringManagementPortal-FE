@@ -100,3 +100,199 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  .candidates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.candidate-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.candidate-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.avatar-container {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-icon {
+    font-size: 24px;
+    color: #666;
+}
+
+.candidate-info {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.candidate-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.candidate-id {
+  padding-top: 2px;
+    font-size: 15px;
+    padding-bottom: -10px;
+}
+
+.candidate-email{
+  font-size: 12px;
+  padding-top: -10px;
+}
+.status {
+    display: inline-block; /* Makes the span behave like a badge */
+    padding: 5px 12px; /* Adjust padding as needed */
+    background-color: #eaffea; /* Light green background */
+    color: #228B22; /* Green text */
+    border-radius: 20px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    font-size: 8px; /* Adjust font size */
+    text-align: center;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.status.Selected {
+    background-color: #E6F4EA;
+    color: #137333;
+}
+
+.status.Rejected {
+    background-color: #FCE8E6;
+    color: #D93025;
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.skill-chip {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.resume-link {
+    text-decoration: none;
+    font-size: 14px;
+    color: #717BFF;
+
+}
+
+.icon {
+    padding: 0px;
+    margin-bottom: -5px;
+}
+.icon1 {
+    padding: 0px;
+    margin-bottom: -12px;
+    margin-right: -8px;
+}
+.candidate-header{
+    padding: 5px 5px;
+    border-radius: 10px;
+    background: #ECECEC;
+
+}
+
+
+.candidates-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+.candidates-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.candidates-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.candidates-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.candidates-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.candidateheading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 15px;
+}
+
+.linking {
+    padding: 8px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f8a1a1;
+    color: #f8a1a1;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    height: 26px;
+}
+
+.linking:hover {
+    background-color: #d9534f; 
+}
+
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between "Status:" and the status label */
+    flex-wrap: wrap; /* Prevents overflow issues */
+}
+
+.status-label {
+    display: inline-block;
+    padding: 5px 12px;
+    background-color: #eaffea;
+    color: #228B22;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap; /* Prevents text from breaking */
+    max-width: 100%; /* Ensures it fits within the container */
+    overflow: hidden;
+    text-overflow: ellipsis; /* In case the text is too long */
+}

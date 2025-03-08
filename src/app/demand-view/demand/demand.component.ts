@@ -16,7 +16,7 @@ export class DemandComponent implements OnInit {
 
   demands: any;
   stat: any;
-
+  candidates: any[] = [];
   constructor(private route:ActivatedRoute,private httpService:HttpService){
 
   }
@@ -29,7 +29,7 @@ export class DemandComponent implements OnInit {
   })
 }
 
-loadData(demandId: any) {
+public loadData(demandId: any) {
   const payload = { dem_id: demandId };
   this.httpService. postCandidateByDemandId(payload).subscribe({
     next: (data) => {
@@ -37,6 +37,8 @@ loadData(demandId: any) {
       // console.log("delivery manager",this.demands.lob_details.delivery_manager.emp_name)
       console.log("jrnumber",this.demands.dem_jrnumber)
       console.log("jd",this.demands.dem_jd)
+      this.candidates = data.candidates; 
+      console.log("candidates linked", this.candidates);
       
     }
 })
