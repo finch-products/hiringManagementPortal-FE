@@ -30,7 +30,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
-      clm_email: [''],
+      clm_email: [{ value: '', disabled: false }], 
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],
@@ -66,8 +66,34 @@ export class CreateOpenDemandComponent implements OnInit {
       this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
         this.isInternal = value === 'yes';
       });
+      this.demandForm.get('dem_clm_id')?.valueChanges.subscribe(value => {
+        console.log('Hiring Manager Changed:', value); // Debugging: Log the selected value
+        this.onHiringManagerChange(value);
+      });
     })
   };
+
+  onHiringManagerChange(managerId: string) {
+    console.log('Selected Manager ID:', managerId); // Debugging: Log the selected manager ID
+    console.log('Clients Array:', this.clients); // Debugging: Log the clients array
+  
+    const selectedManager = this.clients.find(client => client.clm_id == managerId); // Use loose comparison
+    console.log('Selected Manager:', selectedManager); // Debugging: Log the selected manager
+  
+    if (selectedManager && selectedManager.clm_clientemail) {
+      // If the manager is found and has an email, set the email value and disable the field
+      this.demandForm.get('clm_email')?.setValue(selectedManager.clm_clientemail);
+      this.demandForm.get('clm_email')?.disable(); // Disable the field
+      console.log('Email Set:', selectedManager.clm_clientemail); // Debugging: Log the email value
+    } else {
+      // If the manager is not found or has no email, clear the email value and enable the field
+      this.demandForm.get('clm_email')?.setValue(''); // Clear the email field
+      this.demandForm.get('clm_email')?.enable(); // Enable the field
+      console.log('No Email Found - Email Field Enabled'); // Debugging: Log when no email is found
+    }
+  }
+
+
   loadData(demandId: string) {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
@@ -94,7 +120,7 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isactive: this.demands.dem_isactive,
           dem_comment: this.demands.dem_comment
         });
-
+        this.onHiringManagerChange(this.demands.client_details.clm_id);
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
         //Ensure correct visibility for RR/JR fields
         this.isInternal = data.isInternal === 'yes';
