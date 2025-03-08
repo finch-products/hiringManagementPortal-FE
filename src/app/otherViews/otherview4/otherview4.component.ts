@@ -1,68 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-otherview4',
   templateUrl: './otherview4.component.html',
   styleUrls: ['./otherview4.component.scss']
 })
-export class Otherview4Component {
-  // Profile Submission Chart Data (Vertical Bar)
-  profileSubmissionData = [
-    { name: 'Demand1', value: 4 },
-    { name: 'Demand2', value: 10 },
-    { name: 'Demand3', value: 3 },
-    { name: 'Demand4', value: 2 },
-    { name: 'Demand5', value: 5 }
-  ];
+export class Otherview4Component implements OnInit {
 
-  // Interview Feedback Chart Data (Vertical Bar)
-  interviewFeedbackData = [
-    { name: 'Client1', value: 5 },
-    { name: 'Client2', value: 10 },
-    { name: 'Client3', value: 3 },
-    { name: 'Client4', value: 2 },
-    { name: 'Client5', value: 5 }
-  ];
-
-  // Selection Percentage Chart Data (Doughnut)
-  selectionChartData = [
-    { name: 'Client1', value: 20 },
-    { name: 'Client2', value: 30 },
-    { name: 'Client3', value: 40 },
-    { name: 'Client4', value: 50 },
-    { name: 'Client5', value: 60 }
-  ];
-
-//   // Chart Color Scheme
-// colorScheme = {
-//   domain: ['#FFC0CB'] // Light Pink for bars
-// };
-
-// colorScheme2 = {
-//   domain: ['#cfc9fe'] // Light Purple for secondary usage (if needed)
-// };
-customColors = [
-  { name: 'Demand1', value: '#FF9999' },
-  { name: 'Demand2', value: '#FF9999' },
-  { name: 'Demand3', value: '#FF9999' },
-  { name: 'Demand4', value: '#FF9999' },
-  { name: 'Demand5', value: '#FF9999' }
-];
-
-customColors2 = [
-  { name: 'Client1', value: '#B399FF' },
-  { name: 'Client2', value: '#B399FF' },
-  { name: 'Client3', value: '#B399FF' },
-  { name: 'Client4', value: '#B399FF' },
-  { name: 'Client5', value: '#B399FF' }
-];
-customColors3=[
-  { name: 'Client1', value: '#8979FF'},
-    { name: 'Client2', value: '#FF928A' },
-    { name: 'Client3', value: '#3CC3DF' },
-    { name: 'Client4', value: '#FFAE4C' },
-    { name: 'Client5', value: '#537FF1'}
-]
-  // Chart View Dimensions
+  clientselection: any[] = [];
   view: [number, number] = [500, 300];
+  demand_timetaken:any[]=[];
+  interviewFeedbackData:any[]=[];
+
+  colorScheme = {
+    domain: ['#FFC0CB', '#cfc9fe', '#FFA07A', '#87CEFA', '#32CD32'] // Custom color scheme
+  };
+
+  constructor(private httpService: HttpService) {}
+
+  ngOnInit() {
+    this.loadClientSelectionData();
+    this.loadprofileSubmissionData();
+    this.loadinterviewFeedbackData();
+  }
+
+  loadClientSelectionData() {
+    this.httpService.getreportclientselection().subscribe(
+      (data: any[]) => {
+        this.clientselection = data.map(client => ({
+          name: client.client_name,
+          value: parseFloat(client.selection_percentage)
+        }));
+      },
+      error => {
+        console.error('Error fetching client selection data:', error);
+      }
+    );
+  }
+
+  loadprofileSubmissionData() {
+    this.httpService.getreportoftimeforprofilesubmit().subscribe(
+      (data: any[]) => {
+        this.demand_timetaken = data.map(demand => ({
+          name: demand.demand_id,
+          value: parseFloat(demand.time_taken)
+        }));
+      },
+      error => {
+        console.error('Error fetching demand-time-taken-for-profile-submission data:', error);
+      }
+    );
+  }
+
+  loadinterviewFeedbackData() {
+    this.httpService.getreportoftimetakenfortillfeedback().subscribe(
+      (data: any[]) => {
+        this.interviewFeedbackData = data.map(data => ({
+          name: data.client_name,
+          value: parseFloat(data.time_taken)
+        }));
+      },
+      error => {
+        console.error('Error fetching demand-time-taken-for-profile-submission data:', error);
+      }
+    );
+  }
+
+  colorSchemeProfile = [
+    { name: 'default', value: '#FF5733' } // All bars will be this color
+  ];
+  
+  colorSchemeInterview = [
+    { name: 'default', value: '#6A0DAD' } // All bars will be this color
+  ];
+
 }

@@ -55,6 +55,8 @@
           maxlength="500"></textarea>
       </mat-form-field>
 
+      
+
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>LOB</mat-label>
         <mat-select formControlName="dem_lob_id" required>
@@ -91,13 +93,13 @@
 
       <!-- RR Number Field (Visible when "Yes" is selected) -->
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>RR Numbers</mat-label>
+        <mat-label>RR Number</mat-label>
         <input matInput formControlName="dem_rrnumber">
       </mat-form-field>
 
       <!-- JR Number Field (Visible when "No" is selected) -->
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>JR Numbers</mat-label>
+        <mat-label>JR Number</mat-label>
         <input matInput formControlName="dem_jrnumber">
       </mat-form-field>
 
@@ -118,15 +120,20 @@
         <input matInput formControlName="dem_rrgade">
       </mat-form-field>
 
-      <div class="file-input-container">
-        <label for="job_description">Upload Job Description</label>
-        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
-      </div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Mandatory Skill Set</mat-label>
+        <input matInput formControlName="dem_mandatoryskill">
+      </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Comment</mat-label>
         <textarea matInput formControlName="dem_comment" rows="3"></textarea>
       </mat-form-field>
+
+      <div class="file-input-container">
+        <label for="job_description">Upload Job Description</label>
+        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
+      </div>
 
       <mat-radio-group formControlName="dem_isactive" appearance="fill"
         class="form-field" class="mat-accent">

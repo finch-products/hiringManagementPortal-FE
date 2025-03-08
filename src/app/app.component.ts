@@ -9,6 +9,12 @@ import { LoaderService } from './services/loader.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
+  isCollapsed = false;
+
+  togglesidenav(collapsed: boolean) {
+    this.isCollapsed = collapsed;
+  }
   isLoading!: Observable<boolean>;
 
   title = 'Internal Hiring Tool';

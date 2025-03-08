@@ -503,12 +503,8 @@ mat-radio-button.mat-accent {
 
 //new  ranch
 .form-container {
-  // justify-content: space-between;
-  // align-items: flex-start;
-  // max-width: 1200px;
-  // margin: auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); // Adjust based on form structure
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
@@ -516,14 +512,6 @@ mat-radio-button.mat-accent {
   height: 80%;
 }
 
-// .mat-checkbox-checked .mat-checkbox-background,
-// .mat-checkbox-indeterminate .mat-checkbox-background {
-//   background-color: #F7CB15 !important; /* Change to yellow */
-// }
-
-// ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
-//   background-color: #F7CB15 !important; /* Yellow background when checked */
-// }
 
 .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
 .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background {

@@ -30,12 +30,14 @@ export class DemandComponent implements OnInit {
     })
   }
 
-  loadData(demandId: any) {
+public   loadData(demandId: any) {
     const payload = { dem_id: demandId };
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data) => {
         this.demands = data;
         this.candidates = data.candidates || [];
+      // this.candidates = data.candidates; 
+      console.log("candidates linked", this.candidates);
 
       }
     })

@@ -3,6 +3,7 @@ import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DemandComponent } from '../demand/demand.component'; 
 interface Candidate {
   cdm_name: string;
   cdm_id: string;
@@ -21,6 +22,7 @@ interface Candidate {
   styleUrl: './candidate.component.scss'
 })
 export class CandidateComponent {
+  @Output() candidatesLinked = new EventEmitter<void>(); 
   @Output() pdfSelected = new EventEmitter<string>();
   candidates: Candidate[] = [];
   filteredCandidates: Candidate[] = [];
@@ -115,6 +117,7 @@ export class CandidateComponent {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.candidatesLinked.emit();
         this.router.navigate(['/list']);
       },
       error: (error) => {

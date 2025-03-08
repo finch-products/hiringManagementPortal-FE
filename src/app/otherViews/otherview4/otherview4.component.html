@@ -5,8 +5,8 @@
       <h4 class="chart-title">How long it takes to submit profile for each demand </h4>
       <ngx-charts-bar-horizontal
         [view]="view"
-        [results]="profileSubmissionData"
-        [customColors]="customColors"
+        [results]="demand_timetaken"
+        [customColors]="customColorsProfile"
         [xAxis]="true"
         [yAxis]="true"
         [legend]="false"
@@ -42,7 +42,7 @@
       <h4 class="chart-title"> what is the Selection Percentage by client </h4>
       <ngx-charts-pie-chart
         [view]="view"
-        [results]="selectionChartData"
+        [results]="clientselection"
         [customColors]="customColors3"
         [labels]="true"
         [doughnut]="true">

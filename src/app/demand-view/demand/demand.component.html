@@ -62,7 +62,45 @@
         <div>Job Description: <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a></div>
       </div>
     </div>
-  </mat-card>
+  
+  <div class="candidates-list">
+    <div class="candidate-item" *ngFor="let candidate of candidates">
+      <!-- Candidate Card -->
+      <div class="candidate-card">
+        <div class="candidate-header">
+          <div class="avatar-container">
+            <mat-icon>person_outline</mat-icon>
+          </div>
+          <div class="candidate-info">
+            <h3 class="candidate-name">{{ candidate.name }}</h3>
+            <p class="candidate-id">ID: {{ candidate.cdl_cdm_id }}</p>
+            <p class="candidate-email">{{ candidate.email }}</p>
+          </div>
+          <span class="status">
+            {{ candidate.candidate_status.csm_code || 'N/A' }}
+          </span>
+        </div>
+  
+        <div class="skills">
+          <ng-container *ngIf="candidate.keywords; else noKeywords">
+            <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
+              <mat-icon aria-hidden="false" class="icon1" style="font-size: 13px;">check_circle_outline</mat-icon>
+              {{ keyword.trim() }}
+            </span>
+          </ng-container>
+          <ng-template #noKeywords>
+            <span class="skill-chip">N/A</span>
+          </ng-template>
+        </div>
+        
+  
+        <span class="Description">
+            Description: {{ candidate.candidate_status.csm_code || 'N/A' }}
+          </span>
+      </div>
+    </div>
+  </div>
+</mat-card>
 
     <mat-card *ngFor="let candidate of candidates" class="demand-container">
       <mat-card-title>Candidate Details</mat-card-title>

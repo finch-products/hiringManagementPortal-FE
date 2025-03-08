@@ -48,6 +48,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_isactive: [true],
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
+      dem_mandatoryskill: ['']
     });
   }
 
@@ -94,7 +95,7 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_gcblevel: this.demands.dem_gcblevel,
           dem_isreopened: this.demands.dem_isreopened,
           dem_isactive: this.demands.dem_isactive,
-          dem_comment: this.demands.dem_comment
+          dem_comment: this.demands.dem_comment,
         });
 
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
