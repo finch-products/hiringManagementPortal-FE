@@ -73,7 +73,11 @@ export class CandidateComponent {
   }
 
   openFilter() {
-    alert('Filter feature coming soon!');
+    // alert('Filter feature coming soon!');
+    this.snackBar.open("Filter feature coming soon!!", "Close", {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
   }
 
 
@@ -94,7 +98,11 @@ export class CandidateComponent {
 
   submitSelectedCandidates() {
     if (this.selectedCandidates.length === 0) {
-      alert('No candidates selected.');
+      // alert('No candidates selected.');
+      this.snackBar.open("No candidates selected..!", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
       return;
     }
 
@@ -107,7 +115,11 @@ export class CandidateComponent {
       }));
 
     if (payload.length === 0) {
-      alert('No candidates with valid status selected.');
+      this.snackBar.open("No candidates with valid status selected.!", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+     // alert('No candidates with valid status selected.');
       return;
     }
 
@@ -118,7 +130,7 @@ export class CandidateComponent {
           panelClass: ['success-snackbar']
         });
         this.candidatesLinked.emit();
-        this.router.navigate(['/list']);
+       // this.router.navigate(['/list']);
       },
       error: (error) => {
         this.snackBar.open("❌ Failed to link candidates. Try again.", "Close", {
