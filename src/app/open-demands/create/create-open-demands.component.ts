@@ -5,6 +5,7 @@ import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -21,7 +22,12 @@ export class CreateOpenDemandComponent implements OnInit {
   isInternal = true;
   isEditMode: boolean = false;
   demands: any;
+  customEntryEnabled = false;
+  clm_name:string = '';
+  hiringManagerControl = new FormControl('');
+  form!: FormGroup;
 
+  
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router) {
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
@@ -50,7 +56,11 @@ export class CreateOpenDemandComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Initialize form
+    this.form = this.fb.group({
+      dem_clm_id: [null]
+    }); 
     this.route.paramMap.subscribe(params => {
       const demandId = params.get('id');
       if (demandId) {
@@ -66,7 +76,45 @@ export class CreateOpenDemandComponent implements OnInit {
         this.isInternal = value === 'yes';
       });
     })
-  };
+  }
+  onHiringManagerChange(event: any) {
+    const selectedValue = event.value;
+
+    if (selectedValue === 'custom') {
+      this.customEntryEnabled = true;
+      this.form.get('dem_clm_id')?.setValue(Number(selectedValue)); // Clear value to avoid "custom" being submitted
+    } else {
+      this.customEntryEnabled = false;
+      this.form.get('dem_clm_id')?.setValue(Number(selectedValue)); // Make sure it's a number (pk)
+    }
+  }
+
+  // Add new client
+  addClient() {
+    if (!this.clm_name || this.clm_name.trim() === '') {
+      alert('Please enter a valid Client Name.');
+      return;
+    }
+
+    const clientData = { clm_name: this.clm_name };
+
+    this.httpService.postaddClient(clientData).subscribe({
+      next: (response: any) => {
+        alert('Client added successfully!');
+        const newClmId = Number(response.clm_id);
+        this.clm_name = ''; // Clear custom name field
+        this.customEntryEnabled = false; // Hide input custom field
+        this.loadClients(() => {
+          this.form.get('dem_clm_id')?.setValue(newClmId); // Auto-select new client
+        });
+      },
+      error: (error: any) => {
+        console.error('Error adding client:', error);
+        alert('Failed to add client. Check console for details.');
+      }
+    });
+  }
+
   loadData(demandId: string) {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
@@ -104,14 +152,16 @@ export class CreateOpenDemandComponent implements OnInit {
     })
   }
 
-  loadClients(): void {
+  loadClients(callback?: () => void): void {
     this.httpService.getClientDetails().subscribe({
       next: (data) => {
         this.clients = data;
+        if (callback) callback(); // Execute callback after clients are loaded
       },
       error: (err) => console.error('Error fetching clients', err)
     });
   }
+  
 
   loadLocations(): void {
     this.httpService.getLocationDetails().subscribe({
@@ -253,4 +303,10 @@ export class CreateOpenDemandComponent implements OnInit {
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
     return `${year}-${month}-${day}`;
   }
+
+
+  navigateToClientMaster() {
+    this.router.navigate(['client-master']);
+  }
 }
+
