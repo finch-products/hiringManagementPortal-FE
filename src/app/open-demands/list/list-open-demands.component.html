@@ -14,7 +14,7 @@
                 <mat-form-field appearance="fill"
                     class="form-field wrap-height">
                     <mat-label>Status</mat-label>
-                    <mat-select formControlName="status">
+                    <mat-select formControlName="dem_dsm_id">
                         <mat-option *ngFor="let status of stat"
                             [value]="status.dsm_id">{{ status.dsm_code }}
                         </mat-option>
@@ -118,7 +118,7 @@
                     element.dem_positions }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="status">
+            <ng-container matColumnDef="dem_dsm_id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Status
                 </th>
                 <td mat-cell
@@ -131,11 +131,11 @@
                 <td mat-cell *matCellDef="let element">
                     <button mat-button
                         [routerLink]="['/entry', element.dem_id]">
-                        Edit
+                       <mat-icon>edit</mat-icon> 
                     </button>
                     <button mat-button
                         [routerLink]="['/demand-view', element.dem_id]">
-                        Link
+                       <mat-icon>link</mat-icon>
                     </button>
                 </td>
             </ng-container>
