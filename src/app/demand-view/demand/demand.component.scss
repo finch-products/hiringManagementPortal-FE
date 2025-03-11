@@ -296,3 +296,14 @@
     overflow: hidden;
     text-overflow: ellipsis; /* In case the text is too long */
 }
+.header{
+  text-align:center;
+  padding-top: 10px;
+  font-size: large
+}
+
+.new-candidate {
+  animation: highlightFade 2s ease-in-out;
+  background-color: #e6ffe6; /* Light green */
+  border-left: 4px solid #4caf50; /* Green border */
+}

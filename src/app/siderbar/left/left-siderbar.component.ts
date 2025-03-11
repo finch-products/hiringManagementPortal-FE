@@ -19,6 +19,7 @@ export class LeftSiderbarComponent {
 
   togglesidenav() {
     this.isCollapsed = !this.isCollapsed;
+    this.collapseChange.emit(this.isCollapsed);
   }
 
   setActive(event: Event) {
