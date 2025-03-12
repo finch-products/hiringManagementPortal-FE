@@ -60,7 +60,8 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Tentative Required By</mat-label>
         <input matInput [matDatepicker]="datePicker"
-          formControlName="dem_validtill">
+          formControlName="dem_validtill"
+          [min]="minDate">
         <mat-datepicker-toggle matSuffix
           [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
