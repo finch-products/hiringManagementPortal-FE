@@ -21,12 +21,12 @@
   color: #4C4C4B;
   font-weight: 600;
   border-right: none;
-  
+
 }
 
 .sidenav.collapsed mat-expansion-panel {
-    display: none !important;
-  }
+  display: none !important;
+}
 
 mat-nav-list {
   padding: 2px;
@@ -68,6 +68,12 @@ mat-expansion-panel-header {
   // display: flex;
   // align-items: center;
   // padding: 10px;
+  span {
+    font-size: 16px !important;
+    line-height: 1em !important;
+    color: #4C4C4B !important;
+    font-weight: 400 !important;
+  }
 }
 
 
@@ -159,7 +165,9 @@ mat-expansion-panel-header {
   /* Push items to edges */
   padding: 10px;
 }
-  .toggle-icon {
-    cursor: pointer;
-    margin-left: auto;
-  }
+
+.toggle-icon {
+  cursor: pointer;
+  margin-left: auto;
+}
+
