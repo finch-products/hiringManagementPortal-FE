@@ -1,0 +1,44 @@
+.status-tabs {
+    margin-bottom: 20px;
+  
+    mat-tab-group {
+      background: white;
+    }
+  }
+  
+  .candidate-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+  
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .source {
+    color: gray;
+    font-size: 12px;
+  }
+  
+  .score-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .score-label {
+    position: absolute;
+    font-weight: bold;
+  }
+  
+  .status-badge {
+    background-color: #ff6f61;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  

@@ -235,7 +235,7 @@ mat-form-field {
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 16px;
   justify-content: space-between;
 }
 
@@ -571,6 +571,7 @@ mat-radio-button.mat-accent {
   line-height: 1em !important;
   color: #4C4C4B !important;
   font-weight: 400 !important;
+  display: block !important;
 }
 /* --- Snackbar Main Container --- */
 .mat-mdc-snack-bar-container {
