@@ -1,12 +1,13 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="side" [style.collapsed]="isCollapsed ? 70 : 290"  [class.collapsed]="isCollapsed" opened position="start" class="sidenav">
+  <mat-sidenav #sidenav mode="side" [style.collapsed]="isCollapsed ? 70 : 290"
+    [class.collapsed]="isCollapsed" opened position="start" class="sidenav">
     <div class="sidebar-header">
       <!-- Show logo only when sidebar is expanded -->
       <div class="sidebar-logo" *ngIf="!isCollapsed">
         <img
-        src="../../../assets/img/logo.jpg">
+          src="../../../assets/img/logo.jpg">
       </div>
-      
+
       <!-- Toggle button at right -->
       <mat-icon class="toggle-icon" (click)="togglesidenav()">
         {{ isCollapsed ? 'chevron_right' : 'chevron_left' }}
@@ -43,7 +44,7 @@
       <mat-expansion-panel class="view_panel">
         <mat-expansion-panel-header>
           <mat-icon>view_in_ar</mat-icon>
-          <span>Other Views</span>
+          Other Views
         </mat-expansion-panel-header>
         <mat-action-list class="view-action-list">
           <a mat-list-item routerLink="/other-view1"
@@ -72,16 +73,16 @@
         </mat-action-list>
       </mat-expansion-panel>
 
-      <a mat-list-item routerLink="/reports" (click)="setActive($event)">
-        <mat-icon>widgets</mat-icon>
-        <span>Reports</span>
+      <a mat-list-item routerLink="/reports"
+        (click)="setActive($event)">
+        <mat-icon>widgets</mat-icon> Reports
       </a>
 
       <!-- Masters (Expandable) -->
       <mat-expansion-panel class="masters-panel">
         <mat-expansion-panel-header>
           <mat-icon>auto_stories</mat-icon>
-          <span>Masters</span>
+          Masters
         </mat-expansion-panel-header>
 
         <mat-action-list class="master-list">
@@ -125,7 +126,7 @@
     <hr style="border: none; border-top: 1px solid #ccc; margin: 10px 0;">
     <mat-nav-list>
       <div class="documents-title">
-        Documents
+        Docs
       </div>
       <br>
       <a mat-list-item routerLink="/documents/job-descriptions"
