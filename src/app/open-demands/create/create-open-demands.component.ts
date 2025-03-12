@@ -5,6 +5,7 @@ import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -22,8 +23,15 @@ export class CreateOpenDemandComponent implements OnInit {
   isInternal = true;
   isEditMode: boolean = false;
   demands: any;
+  customEntryEnabled = false;
+  clm_name:string = '';
+  hiringManagerControl = new FormControl('');
+  form!: FormGroup;
+  minDate: Date;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router,private snackBar:MatSnackBar) {
+    this.minDate = new Date();
+    console.log(this.minDate)
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
       dem_id:[''],
@@ -53,7 +61,11 @@ export class CreateOpenDemandComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Initialize form
+    this.form = this.fb.group({
+      dem_clm_id: [null]
+    }); 
     this.route.paramMap.subscribe(params => {
       const demandId = params.get('id');
       if (demandId) {
@@ -69,7 +81,42 @@ export class CreateOpenDemandComponent implements OnInit {
         this.isInternal = value === 'yes';
       });
     })
-  };
+  }
+  onHiringManagerChange(event: any) {
+    const selectedValue = event.value;
+
+    if (selectedValue === 'custom') {
+      this.customEntryEnabled = true;
+      this.form.get('dem_clm_id')?.setValue(Number(selectedValue)); // Clear value to avoid "custom" being submitted
+    } else {
+      this.customEntryEnabled = false;
+    }
+  }
+
+  // Add new client
+  addClient() {
+    if (!this.clm_name || this.clm_name.trim() === '') {
+      alert('Please enter a valid Client Name.');
+      return;
+    }
+
+    const clientData = { clm_name: this.clm_name };
+
+    this.httpService.postaddClient(clientData).subscribe({
+      next: (response: any) => {
+        alert('Client added successfully!');
+        const newClmId = Number(response.clm_id);
+        this.clm_name = ''; // Clear custom name field
+        this.customEntryEnabled = false; // Hide input custom field
+        this.loadClients(newClmId)
+      },
+      error: (error: any) => {
+        console.error('Error adding client:', error);
+        alert('Failed to add client. Check console for details.');
+      }
+    });
+  }
+
   loadData(demandId: string) {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
@@ -109,14 +156,20 @@ export class CreateOpenDemandComponent implements OnInit {
     })
   }
 
-  loadClients(): void {
-    this.httpService.getClientDetails().subscribe({
-      next: (data) => {
-        this.clients = data;
-      },
-      error: (err) => console.error('Error fetching clients', err)
-    });
-  }
+  loadClients(selectedId?: number): void {
+  this.httpService.getClientDetails().subscribe((clients: any[]) => {
+    this.clients = clients; // Assuming 'clients' holds the client list used in form dropdown
+
+    if (selectedId) {
+      const foundClient = clients.find(client => client.clm_id === selectedId);
+      if (foundClient) {
+        console.log("auto selecting :",foundClient)
+        this.form.get('dem_clm_id')?.setValue(selectedId); // Set form value only if found
+      }
+    }
+  });
+}
+  
 
   loadLocations(): void {
     this.httpService.getLocationDetails().subscribe({
@@ -213,8 +266,6 @@ export class CreateOpenDemandComponent implements OnInit {
             duration: 3000,
             panelClass: ['error-snackbar']
           });
-          // console.error('Error updating demand:', error);
-          // alert('Failed to update demand. Check console for details.');
         }
       });
   
@@ -271,7 +322,12 @@ export class CreateOpenDemandComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
+
+  navigateToClientMaster() {
+    this.router.navigate(['client-master']);
+  }
   cancel(){
     this.router.navigate(['/dashboard']);
   }
 }
+
