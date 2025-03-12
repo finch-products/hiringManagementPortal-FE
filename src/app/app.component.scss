@@ -1,0 +1,18 @@
+.left-sidebar {
+    width: 290px;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .left-sidebar.collapsed {
+    width: 70px;
+  }
+  
+  .content-area {
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    width: calc(100% - 290px);
+  }
+  
+  .content-area.expanded {
+    width: calc(100% - 70px);
+  }
+  

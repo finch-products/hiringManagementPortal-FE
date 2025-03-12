@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DemandComponent } from '../demand/demand.component'; 
 interface Candidate {
   cdm_name: string;
   cdm_id: string;
@@ -21,6 +22,7 @@ interface Candidate {
   styleUrl: './candidate.component.scss'
 })
 export class CandidateComponent {
+  @Output() candidatesLinked = new EventEmitter<void>(); 
   @Output() pdfSelected = new EventEmitter<string>();
   candidates: Candidate[] = [];
   filteredCandidates: Candidate[] = [];
@@ -28,7 +30,7 @@ export class CandidateComponent {
   selectedCandidates: any[] = [];
   dem_id: string = '';
 
-  constructor(private httpService: HttpService, private route: ActivatedRoute,private snackBar: MatSnackBar ) {}
+  constructor(private httpService: HttpService, private route: ActivatedRoute,private snackBar: MatSnackBar, private router:Router ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -71,14 +73,18 @@ export class CandidateComponent {
   }
 
   openFilter() {
-    alert('Filter feature coming soon!');
+    // alert('Filter feature coming soon!');
+    this.snackBar.open("Filter feature coming soon!!", "Close", {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
   }
 
 
-  redirectToAddCandidates() {
+  /*redirectToAddCandidates() {
     // Change this URL if needed
     window.location.href = 'http://64.227.145.117/candidate-master';
-  }
+  }*/
 
 
   toggleSelection(candidate: Candidate) {
@@ -92,7 +98,11 @@ export class CandidateComponent {
 
   submitSelectedCandidates() {
     if (this.selectedCandidates.length === 0) {
-      alert('No candidates selected.');
+      // alert('No candidates selected.');
+      this.snackBar.open("No candidates selected..!", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
       return;
     }
 
@@ -105,7 +115,11 @@ export class CandidateComponent {
       }));
 
     if (payload.length === 0) {
-      alert('No candidates with valid status selected.');
+      this.snackBar.open("No candidates with valid status selected.!", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+     // alert('No candidates with valid status selected.');
       return;
     }
 
@@ -115,6 +129,8 @@ export class CandidateComponent {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.candidatesLinked.emit();
+       // this.router.navigate(['/list']);
       },
       error: (error) => {
         this.snackBar.open("❌ Failed to link candidates. Try again.", "Close", {

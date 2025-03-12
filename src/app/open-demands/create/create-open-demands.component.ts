@@ -6,6 +6,7 @@ import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -27,8 +28,7 @@ export class CreateOpenDemandComponent implements OnInit {
   hiringManagerControl = new FormControl('');
   form!: FormGroup;
 
-  
-  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router,private snackBar:MatSnackBar) {
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
       dem_id:[''],
@@ -36,6 +36,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
+      clm_email: [''],
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],
@@ -49,10 +50,11 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_gcblevel: [''],
       dem_jd: [''],
       dem_comment: [''],
-      dem_isreopened: ['no'],
-      dem_isactive: ['yes'],
+      // dem_isreopened: ['no'],
+      dem_isactive: [true],
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
+      dem_mandatoryskill: ['']
     });
   }
 
@@ -116,6 +118,8 @@ export class CreateOpenDemandComponent implements OnInit {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
         this.demands = data;
+        console.log("demands",this.demands)
+        console.log("active",this.demands.dem_isactive)
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
           dem_id:this.demands.dem_id,
@@ -136,7 +140,7 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_gcblevel: this.demands.dem_gcblevel,
           dem_isreopened: this.demands.dem_isreopened,
           dem_isactive: this.demands.dem_isactive,
-          dem_comment: this.demands.dem_comment
+          dem_comment: this.demands.dem_comment,
         });
 
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
@@ -246,13 +250,21 @@ export class CreateOpenDemandComponent implements OnInit {
       // 🔹 Update API Call
       this.httpService.updateDemand(updatedFields).subscribe({
         next: (response) => {
-          console.log('Demand Updated Successfully:', response);
-          alert('Demand updated successfully!');
+          // console.log('Demand Updated Successfully:', response);
+          // alert('Demand updated successfully!');
+          this.snackBar.open("✅ Demand Updated Successfully!", "Close", {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
           this.router.navigate(['/list']);
         },
         error: (error) => {
-          console.error('Error updating demand:', error);
-          alert('Failed to update demand. Check console for details.');
+          this.snackBar.open("❌ Failed to update demand. Check console for details.", "Close", {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+          });
+          // console.error('Error updating demand:', error);
+          // alert('Failed to update demand. Check console for details.');
         }
       });
   
@@ -284,15 +296,19 @@ export class CreateOpenDemandComponent implements OnInit {
       // 🔹 Create API Call
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
-          console.log('Demand Added Successfully:', response);
-          alert('Demand Added Successfully');
+          this.snackBar.open("✅ Demand Added Successfully!", "Close", {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
           this.openDemandService.addDemand(response);
           this.demandForm.reset();
           this.router.navigate(['/list']);
         },
         error: (error) => {
-          console.error('Error adding demands:', error);
-          alert('Failed to add demand. Check console for details.');
+          this.snackBar.open("❌Failed to add demand. Check console for details", "Close", {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+          });
         }
       });
     }
@@ -308,6 +324,9 @@ export class CreateOpenDemandComponent implements OnInit {
 
   navigateToClientMaster() {
     this.router.navigate(['client-master']);
+  }
+  cancel(){
+    this.router.navigate(['/dashboard']);
   }
 }
 

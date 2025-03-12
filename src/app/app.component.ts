@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { LoaderService } from './services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +9,22 @@ import { Router } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
+  isCollapsed = false;
+
+  togglesidenav(collapsed: boolean) {
+    this.isCollapsed = collapsed;
+  }
+  isLoading!: Observable<boolean>;
+
   title = 'Internal Hiring Tool';
   showRightSidebar = false;
-  constructor(private router: Router) {
+  constructor(private router: Router,private loaderService: LoaderService) {
     this.router.events.subscribe(() => {
       // Show right sidebar only on the Dashboard
       this.showRightSidebar = this.router.url === '/dashboard';
+      this.isLoading = this.loaderService.loading$;
     });
   }
+
 }
