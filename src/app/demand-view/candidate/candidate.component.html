@@ -5,23 +5,28 @@
         <button mat-icon-button (click)="openFilter()">
             <mat-icon>filter_list</mat-icon>
         </button>
-        <button mat-icon-button (click)="redirectToAddCandidates()">
+        <button mat-icon-button  (click)="submitSelectedCandidates() ">
             <mat-icon>group_add</mat-icon>
         </button>
     </div>
 
-    <div class="candidateheading">
+    <!-- <div class="candidateheading">
         <span>Candidates</span>
         <!-- <button mat-raised-button color="primary"
             type="button" class="linking" 
             style="background-color: #f8a1a1;"
             [disabled]="selectedCandidates.length === 0"
             onmouseover="this.style.backgroundColor='#d9534f'"
-            onmouseout="this.style.backgroundColor='#f8a1a1'"
-            (click)="submitSelectedCandidates()">
+            onmouseout="this.style.backgroundColor='#f8a1a1'">
+            (click)="submitSelectedCandidates()" 
             Update
+<<<<<<< HEAD
         </button> -->
     </div>
+=======
+        </button>
+    </div> -->
+>>>>>>> a39f13778340ca3a40bce61d5b7637062100e296
 
     <!-- Candidate List with Checkboxes -->
     <div class="candidates-list">

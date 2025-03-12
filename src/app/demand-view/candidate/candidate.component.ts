@@ -92,10 +92,10 @@ export class CandidateComponent {
   }
 
 
-  redirectToAddCandidates() {
+  /*redirectToAddCandidates() {
     // Change this URL if needed
     window.location.href = 'http://64.227.145.117/candidate-master';
-  }
+  }*/
 
 
   toggleSelection(candidate: Candidate) {

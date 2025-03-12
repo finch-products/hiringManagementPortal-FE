@@ -17,13 +17,30 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Hiring manager</mat-label>
-        <mat-select formControlName="dem_clm_id" required>
+        <mat-label>Hiring Manager</mat-label>
+        <mat-select formControlName="dem_clm_id" (selectionChange)="onHiringManagerChange($event)" required>
           <mat-option *ngFor="let client of clients" [value]="client.clm_id">
             {{ client.clm_name }}
           </mat-option>
+          <mat-option [value]="'custom'">Other (Enter New)</mat-option>
         </mat-select>
       </mat-form-field>
+      
+      <!-- Show the input field only when 'Other (Enter New)' is selected -->
+      <div *ngIf="customEntryEnabled">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Enter New Hiring Manager</mat-label>
+          <input matInput [(ngModel)]="clm_name" [ngModelOptions]="{standalone: true}" required>
+        </mat-form-field>
+      
+        <div class="button-group">
+          <button mat-raised-button color="accent" type="button" (click)="addClient()">Add</button>
+          <button mat-stroked-button color="accent" class="small-button" (click)="navigateToClientMaster()">Add More Details</button>
+        </div>
+      </div>
+      
+      
+      
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Manager Email</mat-label>
@@ -43,7 +60,8 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Tentative Required By</mat-label>
         <input matInput [matDatepicker]="datePicker"
-          formControlName="dem_validtill">
+          formControlName="dem_validtill"
+          [min]="minDate">
         <mat-datepicker-toggle matSuffix
           [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
