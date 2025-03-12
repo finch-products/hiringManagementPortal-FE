@@ -22,8 +22,11 @@ export class CreateOpenDemandComponent implements OnInit {
   isInternal = true;
   isEditMode: boolean = false;
   demands: any;
+  minDate: Date;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router,private snackBar:MatSnackBar) {
+    this.minDate = new Date();
+    console.log(this.minDate)
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
       dem_id:[''],
@@ -213,8 +216,6 @@ export class CreateOpenDemandComponent implements OnInit {
             duration: 3000,
             panelClass: ['error-snackbar']
           });
-          // console.error('Error updating demand:', error);
-          // alert('Failed to update demand. Check console for details.');
         }
       });
   
