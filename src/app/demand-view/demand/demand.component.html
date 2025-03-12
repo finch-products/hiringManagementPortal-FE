@@ -17,8 +17,8 @@
       </mat-form-field>
      </form> 
   
-          <mat-icon>history</mat-icon>
-          <mat-icon>share</mat-icon>
+          <!-- <mat-icon>history</mat-icon>
+          <mat-icon>share</mat-icon> -->
         </div>
       </div>
        <!-- Client Info Section -->
@@ -77,9 +77,11 @@
             <p class="candidate-id">ID: {{ candidate.cdl_cdm_id }}</p>
             <p class="candidate-email">{{ candidate.email }}</p>
           </div>
-          <span class="status">
-            {{ candidate.candidate_status.csm_code || 'N/A' }}
-          </span>
+          <select class="status" [(ngModel)]="candidate.candidate_status.csm_code">
+            <option *ngFor="let status of statusList" [value]="status.csm_code">
+              {{ status.csm_code }}
+            </option>
+          </select>
         </div>
   
         <div class="skills">
