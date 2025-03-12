@@ -85,7 +85,6 @@ export class CreateOpenDemandComponent implements OnInit {
       this.form.get('dem_clm_id')?.setValue(Number(selectedValue)); // Clear value to avoid "custom" being submitted
     } else {
       this.customEntryEnabled = false;
-      this.form.get('dem_clm_id')?.setValue(Number(selectedValue)); // Make sure it's a number (pk)
     }
   }
 
@@ -104,9 +103,7 @@ export class CreateOpenDemandComponent implements OnInit {
         const newClmId = Number(response.clm_id);
         this.clm_name = ''; // Clear custom name field
         this.customEntryEnabled = false; // Hide input custom field
-        this.loadClients(() => {
-          this.form.get('dem_clm_id')?.setValue(newClmId); // Auto-select new client
-        });
+        this.loadClients(newClmId)
       },
       error: (error: any) => {
         console.error('Error adding client:', error);
@@ -152,15 +149,19 @@ export class CreateOpenDemandComponent implements OnInit {
     })
   }
 
-  loadClients(callback?: () => void): void {
-    this.httpService.getClientDetails().subscribe({
-      next: (data) => {
-        this.clients = data;
-        if (callback) callback(); // Execute callback after clients are loaded
-      },
-      error: (err) => console.error('Error fetching clients', err)
-    });
-  }
+  loadClients(selectedId?: number): void {
+  this.httpService.getClientDetails().subscribe((clients: any[]) => {
+    this.clients = clients; // Assuming 'clients' holds the client list used in form dropdown
+
+    if (selectedId) {
+      const foundClient = clients.find(client => client.clm_id === selectedId);
+      if (foundClient) {
+        console.log("auto selecting :",foundClient)
+        this.form.get('dem_clm_id')?.setValue(selectedId); // Set form value only if found
+      }
+    }
+  });
+}
   
 
   loadLocations(): void {
