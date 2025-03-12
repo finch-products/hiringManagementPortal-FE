@@ -17,6 +17,9 @@ import { Otherview2Component } from './otherViews/otherview2/otherview2.componen
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 import { DemandViewComponent } from './demand-view/demand-view.component';
+import { CandidateHistoryComponent } from './candidates/history/history.component';
+import { CandidateProfileComponent } from './candidates/profile/profile.component';
+import { CandidadteReportComponent } from './candidates/report/report.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
@@ -27,6 +30,9 @@ const routes: Routes = [
   { path: 'entry', component: CreateOpenDemandComponent },
   { path: 'entry/:id', component: CreateOpenDemandComponent },
   { path: 'list', component: ListOpenDemandsComponent },
+  { path: 'candidate/history', component: CandidateHistoryComponent },
+  { path: 'candidate/profile', component: CandidateProfileComponent },
+  { path: 'candidate/report', component: CandidadteReportComponent },
   { path: 'client-master', component: CreateClientComponent },
   { path: 'lob-master', component: CreateLOBComponent },
   { path: 'location-master', component: CreateLocationComponent },

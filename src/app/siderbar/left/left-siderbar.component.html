@@ -41,6 +41,29 @@
           </a>
         </mat-action-list></mat-expansion-panel>
 
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-icon>library_books</mat-icon>Candidates<!--list-->
+          </mat-expansion-panel-header>
+          <mat-action-list class="view-action-list">
+            <!--<a mat-list-item routerLink="/entry" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>Demand Entry</span>
+            </a>-->
+            <a mat-list-item routerLink="/candidate/history" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>History</span>
+            </a>
+            <a mat-list-item routerLink="/candidate/profile" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>Profile</span>
+            </a>
+            <a mat-list-item routerLink="/candidate/report" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>Report</span>
+            </a>
+          </mat-action-list></mat-expansion-panel>
+
       <mat-expansion-panel class="view_panel">
         <mat-expansion-panel-header>
           <mat-icon>view_in_ar</mat-icon>

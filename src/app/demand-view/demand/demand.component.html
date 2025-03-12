@@ -2,110 +2,120 @@
 
 <div fxLayout="column" fxLayoutAlign="center center">
   <mat-card class="demand-container">
-      <!-- Header --> 
-     <div class="demand-head">
-        <div>{{demands?.cdl_dem_id}}/{{demands?.demand_details?.dem_ctoolnumber}}</div>
-        <div fxLayout="row" fxLayoutGap="10px">
-      <!-- <button mat-button color="primary">Set Status</button> -->
-      <form [formGroup]="demandForm">
-      <mat-form-field appearance="fill" class="mat-drop">
-        <mat-label>Status</mat-label>
-        <mat-select formControlName="status">
-          <mat-option *ngFor="let status of stat" [value]="status.dsm_code">{{ status?.dsm_code }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-     </form> 
-  
-          <!-- <mat-icon>history</mat-icon>
+    <!-- Header -->
+    <div class="demand-head">
+      <div>{{demands?.cdl_dem_id}}/{{demands?.demand_details?.dem_ctoolnumber}}</div>
+      <div fxLayout="row" fxLayoutGap="10px">
+        <!-- <button mat-button color="primary">Set Status</button> -->
+        <form [formGroup]="demandForm">
+          <mat-form-field appearance="fill" class="mat-drop">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of stat"
+                [value]="status.dsm_code">{{ status?.dsm_code }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+
+        <!-- <mat-icon>history</mat-icon>
           <mat-icon>share</mat-icon> -->
+      </div>
+    </div>
+    <!-- Client Info Section -->
+    <div class="client-info">
+      <div class="client">
+        <div class="profile-icon">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <div class="client-details">
+          <p>{{demands?.demand_details?.client_details.clm_name}}
+            <br />Client Manager:
+            <b>{{demands?.demand_details?.client_details.clm_managername}}</b></p>
         </div>
       </div>
-       <!-- Client Info Section -->
-      <div class="client-info">
-          <div class="client">
-              <div class="profile-icon">
-                  <mat-icon>account_circle</mat-icon>
-              </div>
-              <div class="client-details">
-                  <p>{{demands?.demand_details?.client_details.clm_name}}
-                  <br/>Client Manager: <b>{{demands?.demand_details?.client_details.clm_managername}}</b></p>
-                  </div>
-           </div>     
-          <div class="dates">
-              <p>Open Date: <b>{{demands?.demand_details?.dem_ctooldate| date:'dd-MM-yyyy'}}</b></p>
-              <p>Valid Till: <b>{{demands?.demand_details?.dem_validtill| date:'dd-MM-yyyy'}}</b></p>
-            </div>
+      <div class="dates">
+        <p>Open Date: <b>{{demands?.demand_details?.dem_ctooldate|
+            date:'dd-MM-yyyy'}}</b></p>
+        <p>Valid Till: <b>{{demands?.demand_details?.dem_validtill|
+            date:'dd-MM-yyyy'}}</b></p>
       </div>
-      
-      
-  
+    </div>
+
     <!-- Details Section -->
     <div class="details-section">
       <div class="details-header">
-        <div>Position: <b>{{demands?.demand_details?.dem_position_name}}</b></div>
-        <div>Number of Positions <span class="position-count">{{demands?.demand_details?.dem_positions}}</span></div>
-        <div>rr / Jr number <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b> </div>
+        <div>Position:
+          <b>{{demands?.demand_details?.dem_position_name}}</b></div>
+        <div>Number of Positions <span
+            class="position-count">{{demands?.demand_details?.dem_positions}}</span></div>
+        <div>rr / Jr number
+          <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b>
+        </div>
         <div> LOB <b>{{demands?.demand_details?.lob_details.lob_name}}</b></div>
-      
-      </div>  
+
+      </div>
       <!-- Skills Section -->
       <div class="skills">
         <span class="skill">{{ demands?.demand_details?.dem_skillset }}</span>
       </div>
-    
+
       <!-- Manager & Job Description -->
       <div class="footer-section">
         <div>Delivery Manager:
-           <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b>
-          </div>
-        <div>Job Description: <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a></div>
+          <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b>
+        </div>
+        <div>Job Description: <a href="javascript:void(0);"
+            (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a></div>
       </div>
     </div>
-  
-    <div>  <h1 class="mat-h3 header">Candidate Details</h1></div>
-  <div class="candidates-list">
-    <div class="candidate-item" *ngFor="let candidate of candidates"   [ngClass]="{ 'new-candidate': candidate.isNew }">
-      <!-- Candidate Card -->
-      <div class="candidate-card">
-        <div class="candidate-header">
-          <div class="avatar-container">
-            <mat-icon>person_outline</mat-icon>
+
+    <div> <h1 class="mat-h3 header">Candidate Details</h1></div>
+    <div class="candidates-list">
+      <div class="candidate-item" *ngFor="let candidate of candidates"
+        [ngClass]="{ 'new-candidate': candidate.isNew }">
+=        <div class="candidate-card">
+          <div class="candidate-header">
+            <div class="avatar-container">
+              <mat-icon>person_outline</mat-icon>
+            </div>
+            <div class="candidate-info">
+              <h3 class="candidate-name">{{ candidate.name }}</h3>
+              <p class="candidate-id">ID: {{ candidate.cdl_cdm_id }}</p>
+              <p class="candidate-email">{{ candidate.email }}</p>
+            </div>
+            <select class="status"
+              [(ngModel)]="candidate.candidate_status.csm_code">
+              <option *ngFor="let status of statusList"
+                [value]="status.csm_code">
+                {{ status.csm_code }}
+              </option>
+            </select>
           </div>
-          <div class="candidate-info">
-            <h3 class="candidate-name">{{ candidate.name }}</h3>
-            <p class="candidate-id">ID: {{ candidate.cdl_cdm_id }}</p>
-            <p class="candidate-email">{{ candidate.email }}</p>
+
+          <div class="skills">
+            <ng-container *ngIf="candidate.keywords; else noKeywords">
+              <span *ngFor="let keyword of candidate.keywords.split(',')"
+                class="skill-chip">
+                <mat-icon aria-hidden="false" class="icon1"
+                  style="font-size: 13px;">check_circle_outline</mat-icon>
+                {{ keyword.trim() }}
+              </span>
+            </ng-container>
+            <ng-template #noKeywords>
+              <span class="skill-chip">N/A</span>
+            </ng-template>
           </div>
-          <select class="status" [(ngModel)]="candidate.candidate_status.csm_code">
-            <option *ngFor="let status of statusList" [value]="status.csm_code">
-              {{ status.csm_code }}
-            </option>
-          </select>
-        </div>
-  
-        <div class="skills">
-          <ng-container *ngIf="candidate.keywords; else noKeywords">
-            <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
-              <mat-icon aria-hidden="false" class="icon1" style="font-size: 13px;">check_circle_outline</mat-icon>
-              {{ keyword.trim() }}
-            </span>
-          </ng-container>
-          <ng-template #noKeywords>
-            <span class="skill-chip">N/A</span>
-          </ng-template>
-        </div>
-        
-  
-        <span class="Description">
+
+          <span class="Description">
             Description: {{ candidate.candidate_status.csm_code || 'N/A' }}
           </span>
+        </div>
       </div>
     </div>
-  </div>
-</mat-card>
+  </mat-card>
 
-    <!-- <mat-card *ngFor="let candidate of candidates" class="demand-container">
+  <!-- <mat-card *ngFor="let candidate of candidates" class="demand-container">
       <mat-card-title>Candidate Details</mat-card-title>
       <mat-card-content>
         <p><strong>Candidate Name:</strong> {{ candidate.name }}</p>

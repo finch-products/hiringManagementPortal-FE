@@ -1,0 +1,52 @@
+<div class="status-tabs">
+    <!-- <mat-tab-group>
+      <mat-tab label="New (15)"></mat-tab>
+      <mat-tab label="In Review (12)"></mat-tab>
+      <mat-tab label="Interview (8)"></mat-tab>
+      <mat-tab label="Offered (5)"></mat-tab>
+      <mat-tab label="Hired (2)"></mat-tab>
+    </mat-tab-group> -->
+  </div>
+  
+  <table mat-table  class="candidate-table">
+    <!-- Profile Column -->
+    <ng-container matColumnDef="profile">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let candidate">
+        <img [src]="candidate.image" class="profile-pic">
+      </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Candidate </th>
+      <td mat-cell *matCellDef="let candidate">
+        <strong>{{ candidate.name }}</strong>
+        <br>
+        <span class="source">{{ candidate.source }}</span>
+      </td>
+    </ng-container>
+  
+    <!-- Score Column -->
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef> Score </th>
+      <td mat-cell *matCellDef="let candidate">
+        <div class="score-container">
+            <!-- <mat-progress-spinner mode="determinate" [value]="candidate.score" diameter="40"></mat-progress-spinner> -->
+            <span class="score-label">{{ candidate.score }}</span>
+        </div>
+      </td>
+    </ng-container>
+  
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let candidate">
+        <span class="status-badge">{{ candidate.status }}</span>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
