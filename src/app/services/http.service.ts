@@ -71,6 +71,12 @@ export class HttpService {
     );
   }
 
+  getCandidateStatuses(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidate-status/list`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   getClientDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}clients/clients-details/`, this.getHeaders()).pipe(

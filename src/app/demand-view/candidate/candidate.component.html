@@ -12,7 +12,7 @@
 
     <div class="candidateheading">
         <span>Candidates</span>
-        <button mat-raised-button color="primary"
+        <!-- <button mat-raised-button color="primary"
             type="button" class="linking" 
             style="background-color: #f8a1a1;"
             [disabled]="selectedCandidates.length === 0"
@@ -20,7 +20,7 @@
             onmouseout="this.style.backgroundColor='#f8a1a1'"
             (click)="submitSelectedCandidates()">
             Update
-        </button>
+        </button> -->
     </div>
 
     <!-- Candidate List with Checkboxes -->
@@ -41,9 +41,11 @@
                         <h3 class="candidate-name">{{ candidate.cdm_name }}</h3>
                         <p class="candidate-id">ID: {{ candidate.cdm_id }}</p>
                     </div>
-                    <span class="status" >
-                        {{ candidate.candidate_status.csm_code }}
-                    </span>
+                    <select class="status" [(ngModel)]="candidate.candidate_status.csm_code">
+                        <option *ngFor="let status of statusList" [value]="status.csm_code">
+                          {{ status.csm_code }}
+                        </option>
+                      </select>
                 </div>
 
                 <div class="skills">

@@ -17,6 +17,7 @@ export class DemandComponent implements OnInit {
   demands: any;
   stat: any;
   candidates: any;
+  statusList: any[] = [];
 
   constructor(private route: ActivatedRoute, private httpService: HttpService) {
 
@@ -27,7 +28,19 @@ export class DemandComponent implements OnInit {
       const demandId = params.get('id');
       this.loadData(demandId);
       this.loadStatus()
+      this.loadCandidateStatuses()
     })
+  }
+
+  loadCandidateStatuses() {
+    this.httpService.getCandidateStatuses().subscribe(
+      (response) => {
+        this.statusList = response;
+      },
+      (error) => {
+        console.error('Error fetching candidate statuses:', error);
+      }
+    );
   }
 
 public   loadData(demandId: any) {

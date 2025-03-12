@@ -29,15 +29,26 @@ export class CandidateComponent {
   searchTerm: string = '';
   selectedCandidates: any[] = [];
   dem_id: string = '';
-
+  statusList: any[] = [];
   constructor(private httpService: HttpService, private route: ActivatedRoute,private snackBar: MatSnackBar, private router:Router ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.dem_id = params.get('id') || '';
     });
-
+    this.loadCandidateStatuses();
     this.fetchCandidates();
+  }
+
+  loadCandidateStatuses() {
+    this.httpService.getCandidateStatuses().subscribe(
+      (response) => {
+        this.statusList = response;
+      },
+      (error) => {
+        console.error('Error fetching candidate statuses:', error);
+      }
+    );
   }
 
   fetchCandidates(): void {
