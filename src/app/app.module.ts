@@ -55,9 +55,7 @@ import { CreateEmployeeComponent } from '../masters/employee/create/create-emplo
 import { ListEmployeeComponent } from '../masters/employee/list/list-employee.component';
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
 import { ListCandidateComponent } from '../masters/candidate/list/list-candidate.component';
-import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
-import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
@@ -93,9 +91,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     ListCandidateComponent,
     FormErrorComponent,
     ReportComponent,
-    Otherview1Component,
     Otherview2Component,
-    Otherview3Component,
     DemandHistoryComponent,
     DemandViewComponent,
     DemandComponent,

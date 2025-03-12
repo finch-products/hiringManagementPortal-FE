@@ -5,11 +5,9 @@
   color: #333;
   border-right: 1px solid #E0E0E0;
   width: 100%;
-
   .sidebar-logo img {
-    width: 120px;
-    height: auto;
-
+    width: 100%;
+    display: block;
   }
 }
 
@@ -17,7 +15,6 @@
   width: 100%;
   background-color: #F6F5F1;
   font-size: 16px;
-  // line-height: 1em;
   color: #4C4C4B;
   font-weight: 600;
   border-right: none;
@@ -49,7 +46,8 @@ mat-nav-list .mat-list-item {
 
 }
 
-mat-icon {
+mat-icon,
+.mat-expansion-panel-header mat-icon {
   margin-right: 20px !important;
   font-size: 24px;
   width: 24px;
@@ -62,18 +60,18 @@ a:hover {
   border-radius: 5px;
 }
 
+a.active {
+  background-color: #ffdb4d;
+  border-radius: 5px;
+}
+
 
 mat-expansion-panel-header {
   padding: 0 16px;
   // display: flex;
   // align-items: center;
   // padding: 10px;
-  span {
-    font-size: 16px !important;
-    line-height: 1em !important;
-    color: #4C4C4B !important;
-    font-weight: 400 !important;
-  }
+
 }
 
 
@@ -171,3 +169,58 @@ mat-expansion-panel-header {
   margin-left: auto;
 }
 
+
+::ng-deep .mat-expansion-panel-header {
+  height: 48px !important;
+  /* Set desired height */
+  min-height: 48px !important;
+  /* Ensure consistency */
+}
+
+::ng-deep .mat-expansion-panel-header.mat-expanded {
+  height: 48px !important;
+  min-height: 48px !important;
+}
+
+.sidebar {
+  width: 260px;
+  /* Adjust width as needed */
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  /* Light background */
+  padding-top: 10px;
+  /* Adjust top padding */
+}
+
+.mat-list-item {
+  padding: 10px 16px !important;
+  /* Adjust padding */
+  border-radius: 8px;
+}
+
+.mat-list-item:hover,
+.mat-list-item.active {
+  background-color: #ffe082;
+  /* Highlight selected item */
+}
+
+.mat-expansion-panel {
+  background: transparent !important;
+  /* Remove white background */
+  box-shadow: none !important;
+}
+
+.mat-expansion-panel-header {
+  padding: 0 16px !important;
+}
+
+.mat-action-list {
+  padding-left: 16px;
+  /* Indent submenu items */
+}
+
+.mat-expansion-panel-header mat-icon {
+  margin-right: 8px;
+  /* Adjust space between icon & text */
+  font-size: 20px;
+}
