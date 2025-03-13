@@ -65,7 +65,7 @@
   
     <div>  <h1 class="mat-h3 header">Candidate Details</h1></div>
   <div class="candidates-list">
-    <div class="candidate-item" *ngFor="let candidate of candidates"   [ngClass]="{ 'new-candidate': candidate.isNew }">
+    <div class="candidate-item" *ngFor="let candidate of candidates">
       <!-- Candidate Card -->
       <div class="candidate-card">
         <div class="candidate-header">
@@ -102,18 +102,4 @@
     </div>
   </div>
 </mat-card>
-
-    <!-- <mat-card *ngFor="let candidate of candidates" class="demand-container">
-      <mat-card-title>Candidate Details</mat-card-title>
-      <mat-card-content>
-        <p><strong>Candidate Name:</strong> {{ candidate.name }}</p>
-        <p><strong>Email:</strong> {{ candidate.email }}</p>
-        <p><strong>Phone:</strong> {{ candidate.phone }}</p>
-        <p><strong>Location:</strong> {{ candidate.location_name }}</p>
-        <p><strong>Description:</strong> {{ candidate.description }}</p>
-        <p><strong>keywords :</strong> {{ candidate.keywords}}</p>
-        <p><strong>Skills:</strong> {{ candidate.keywords || 'Not Provided' }}</p>
-        <p><strong>Date Of Joining:</strong> {{ candidate.cdl_joiningdate || 'TBD' }}</p>
-      </mat-card-content>
-    </mat-card> -->
 </div>
