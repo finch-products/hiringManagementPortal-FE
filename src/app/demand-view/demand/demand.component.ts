@@ -30,27 +30,13 @@ export class DemandComponent implements OnInit {
     })
   }
 
-public   loadData(demandId: any) {
+public  loadData(demandId: any) {
     const payload = { dem_id: demandId };
    
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data) => {
         this.demands = data;
-        // const existingCandidateIds = new Set((data.candidates || []).map((c: { cdl_id: string }) => c.cdl_id));
-        // this.candidates = data.candidates || [];
        this.candidates = data.candidates ? [...data.candidates].reverse() : [];
-      // console.log("candidates linked", this.candidates);
-   
-  //     console.log("existingCandidateIds",existingCandidateIds)
-
-  //     this.candidates = data.candidates
-  // ? [...data.candidates]
-  //     .reverse()
-  //     .map(candidate => ({
-  //       ...candidate, // Keeps all existing properties dynamically
-  //       isNew: !existingCandidateIds.has(candidate.cdl_id)
-  //     }))
-  // : [];
   console.log("Updated candidates list:", this.candidates);
 
       }
