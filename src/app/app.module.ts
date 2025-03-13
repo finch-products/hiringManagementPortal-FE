@@ -59,6 +59,7 @@ import { Otherview1Component } from './otherViews/otherview1/otherview1.componen
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
+import { Otherview5Component } from './otherViews/otherview5/otherview5.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -99,7 +100,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     DemandComponent,
     CandidateComponent,
     PreviewComponent,
-    Otherview4Component
+    Otherview4Component,
+    Otherview5Component
   ],
   imports: [
     MatRadioModule,
