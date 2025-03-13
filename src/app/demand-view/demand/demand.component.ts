@@ -74,7 +74,6 @@ public   loadData(demandId: any) {
   loadStatus(): void {
     this.httpService.getDemandStatusDetails().subscribe({
       next: (data) => {
-        console.log("stat", data)
         this.stat = data;
 
       },

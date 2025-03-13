@@ -203,8 +203,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row
                 *matRowDef="let row; columns: displayedColumns;"
-                (click)="navigateToHistory(row)"
-                [class.disable-click]="disableRowClick(row.dem_id)"></tr>
+                (click)="disableRowClick($event, row)"
+                ></tr>
         </table>
     </mat-card>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"

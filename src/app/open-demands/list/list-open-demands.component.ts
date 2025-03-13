@@ -143,10 +143,17 @@ isEditmode="false";
     return !(isStatusSelected && isCheckboxSelected);
   }
 
-  disableRowClick(event: Event): boolean {
-    return (event.target as HTMLElement).closest('button') !== null;
+  disableRowClick(event: Event, row: any) {
+    const target = event.target as HTMLElement;
+    
+    if (target && target.closest && target.closest('.ignore-click')) {  
+      return;  
+    }
+  
+    this.navigateToHistory(row);
   }
 
+  
   navigateToHistory(row: any): void {
     if (row && row.dem_id) {
       this.router.navigate([`/demand-view/${row.dem_id}`]);
