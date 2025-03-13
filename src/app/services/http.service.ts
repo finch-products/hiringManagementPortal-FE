@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpService {
   private baseUrl = 'http://64.227.145.117/api/';
-  // private baseUrl = 'http://localhost:8000/api/';
+  //  private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -67,6 +67,12 @@ export class HttpService {
 
   getCandidate(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}candidates/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getCandidateStatuses(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidate-status/list`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -192,6 +198,12 @@ export class HttpService {
 
   getreportoftimetakenfortillfeedback(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}reports/TimeTakenFromInterviewToFeedbackView/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  postaddClient(clientData:any): Observable<any> {
+    console.log("client data",clientData)
+    return this.http.post<any>(`${this.baseUrl}clients/`,clientData,{headers: { 'Content-Type': 'application/json' }}).pipe(
       catchError(this.handleError)
     );
   }

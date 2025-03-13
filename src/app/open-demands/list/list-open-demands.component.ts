@@ -8,6 +8,7 @@ import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-open-demands',
@@ -37,7 +38,7 @@ export class ListOpenDemandsComponent {
   stat:any
 isEditmode="false";
   element: any;
-  constructor(private fb: FormBuilder,private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService,private snackBar:MatSnackBar) { 
+  constructor(private fb: FormBuilder,private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService,private snackBar:MatSnackBar, private router: Router) { 
     this.listForm = this.fb.group({
       dem_dsm_id:[''],
       dem_comment:['']
@@ -140,6 +141,16 @@ isEditmode="false";
     const isStatusSelected = !!this.listForm.get('dem_dsm_id')?.value;
     const isCheckboxSelected = this.selectedRows.length > 0;
     return !(isStatusSelected && isCheckboxSelected);
+  }
+
+  disableRowClick(event: Event): boolean {
+    return (event.target as HTMLElement).closest('button') !== null;
+  }
+
+  navigateToHistory(row: any): void {
+    if (row && row.dem_id) {
+      this.router.navigate([`/demand-view/${row.dem_id}`]);
+    }
   }
 
 }

@@ -22,24 +22,29 @@
         <mat-icon>dashboard</mat-icon>
         <span>Dashboard</span>
       </a>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-icon>library_books</mat-icon>Open Demands <!--list-->
-        </mat-expansion-panel-header>
-        <mat-action-list class="view-action-list">
-          <!--<a mat-list-item routerLink="/entry" (click)="setActive($event)">
-            <mat-icon>assignment</mat-icon>
-            <span>Demand Entry</span>
-          </a>-->
-          <a mat-list-item routerLink="/list" (click)="setActive($event)">
-            <mat-icon>assignment</mat-icon>
-            <span>List</span>
-          </a>
-          <a mat-list-item routerLink="/history" (click)="setActive($event)">
-            <mat-icon>assignment</mat-icon>
-            <span>Demand History</span>
-          </a>
-          <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-icon>library_books</mat-icon>Candidates<!--list-->
+          </mat-expansion-panel-header>
+          <mat-action-list class="view-action-list">
+            <!--<a mat-list-item routerLink="/entry" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>Demand Entry</span>
+            </a>-->
+            <a mat-list-item routerLink="/candidate/history" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>History</span>
+            </a>
+            <a mat-list-item routerLink="/candidate/profile" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>Profile</span>
+            </a>
+            <a mat-list-item routerLink="/candidate/report" (click)="setActive($event)">
+              <mat-icon>assignment</mat-icon>
+              <span>Report</span>
+            </a>
+            <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
             <mat-icon>assignment</mat-icon>
             <span>Candidate History</span>
           </a>
@@ -51,28 +56,17 @@
           Other Views
         </mat-expansion-panel-header>
         <mat-action-list class="view-action-list">
-          <a mat-list-item routerLink="/other-view1"
-            (click)="setActive($event)">
-            <mat-icon>folder</mat-icon>
-            <span> View 1</span>
-          </a>
 
           <a mat-list-item routerLink="/other-view2"
             (click)="setActive($event)">
             <mat-icon>folder</mat-icon>
-            <span>View 2</span>
-          </a>
-
-          <a mat-list-item routerLink="/other-view3"
-            (click)="setActive($event)">
-            <mat-icon>folder</mat-icon>
-            <span> View 3</span>
+            <span>View 1</span>
           </a>
 
           <a mat-list-item routerLink="/other-view4"
             (click)="setActive($event)">
             <mat-icon>folder</mat-icon>
-            <span> View 4</span>
+            <span> View 2</span>
           </a>
         </mat-action-list>
       </mat-expansion-panel>

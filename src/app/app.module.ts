@@ -19,13 +19,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // Import all necessary components
 import { CreateOpenDemandComponent } from './open-demands/create/create-open-demands.component';
 import { ListOpenDemandsComponent } from './open-demands/list/list-open-demands.component';
@@ -55,9 +57,7 @@ import { CreateEmployeeComponent } from '../masters/employee/create/create-emplo
 import { ListEmployeeComponent } from '../masters/employee/list/list-employee.component';
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
 import { ListCandidateComponent } from '../masters/candidate/list/list-candidate.component';
-import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
-import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
@@ -93,9 +93,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     ListCandidateComponent,
     FormErrorComponent,
     ReportComponent,
-    Otherview1Component,
     Otherview2Component,
-    Otherview3Component,
     DemandHistoryComponent,
     DemandViewComponent,
     DemandComponent,
@@ -120,6 +118,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     MatInputModule,
     MatSelectModule,
     MatTableModule,
+    MatTabsModule,
     MatIconModule,
     MatCardModule,
     MatDatepickerModule,
@@ -139,7 +138,8 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     RouterModule.forRoot([]),
     MatCheckboxModule,
     MatTooltipModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    MatProgressSpinnerModule
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [

@@ -23,9 +23,9 @@ export class CreateClientComponent implements OnInit {
       clm_clientid: [''],
       clm_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
       clm_managername: ['', [Validators.pattern(this.validatorsService.namePattern())]],
-      clm_clientemail: ['', [Validators.required, Validators.email]],
-      clm_clientphone: ['', [Validators.required, Validators.pattern(this.validatorsService.phonePattern())]],
-      clm_address: ['', [Validators.required, Validators.pattern(this.validatorsService.detailPattern())]],
+      clm_clientemail: ['', [ Validators.email]],
+      clm_clientphone: ['', [ Validators.pattern(this.validatorsService.phonePattern())]],
+      clm_address: ['', [ Validators.pattern(this.validatorsService.detailPattern())]],
       clm_lcm_id: [''],
       clm_isactive: [true],
       clm_insertby: ['emp_10022025_01']

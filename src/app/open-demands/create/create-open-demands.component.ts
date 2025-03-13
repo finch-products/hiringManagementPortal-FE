@@ -5,6 +5,7 @@ import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -22,8 +23,13 @@ export class CreateOpenDemandComponent implements OnInit {
   isInternal = true;
   isEditMode: boolean = false;
   demands: any;
+  customEntryEnabled = false;
+  newClient = { clm_name: '', clm_clientemail: '' };
+  hiringManagerControl = new FormControl('');
+  form!: FormGroup;
   minDate: Date;
-
+  
+ 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router,private snackBar:MatSnackBar) {
     this.minDate = new Date();
     console.log(this.minDate)
@@ -34,7 +40,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
-      clm_email: [''],
+      clm_clientemail: [''],
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],
@@ -56,7 +62,11 @@ export class CreateOpenDemandComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Initialize form
+    this.form = this.fb.group({
+      dem_clm_id: [null]
+    }); 
     this.route.paramMap.subscribe(params => {
       const demandId = params.get('id');
       if (demandId) {
@@ -72,7 +82,56 @@ export class CreateOpenDemandComponent implements OnInit {
         this.isInternal = value === 'yes';
       });
     })
-  };
+  }
+  onHiringManagerChange(event: any) {
+    const selectedValue = event.value;
+  
+  if (selectedValue === 'custom') {
+    this.customEntryEnabled = true;
+    this.demandForm.get('clm_clientemail')?.setValue(''); // Clear email field for manual entry
+  } else {
+    this.customEntryEnabled = false;
+    
+    // Find selected manager and auto-fill email
+    const selectedManager = this.clients.find(client => client.clm_id === selectedValue);
+    // alert('selectedManager' + JSON.stringify(selectedManager))
+    if (selectedManager) {
+      this.demandForm.get('clm_clientemail')?.setValue(selectedManager.clm_clientemail);
+      // alert('selectedManager' + this.demandForm.get('clm_clientemail')?.value())
+    }
+  }
+  }
+
+  // Add new client
+  addClient() {
+    if (!this.newClient.clm_name || !this.newClient.clm_clientemail) {
+      alert('Please enter valid details.');
+      return;
+    }
+  
+    this.httpService.postaddClient(this.newClient).subscribe({
+      next: (response: any) => {
+        alert('Client added successfully!');
+        const newClmId = response.clm_id;
+  
+        // Add new client to the list
+        this.clients.push({ clm_id: newClmId, clm_name: this.newClient.clm_name, clm_clientemail: this.newClient.clm_clientemail });
+  
+        // Auto-select newly added client
+        this.demandForm.get('dem_clm_id')?.setValue(newClmId);
+        this.demandForm.get('clm_clientemail')?.setValue(this.newClient.clm_clientemail);
+  
+        // Reset the input fields
+        this.newClient = { clm_name: '', clm_clientemail: '' };
+        this.customEntryEnabled = false;
+      },
+      error: (error: any) => {
+        console.error('Error adding client:', error);
+        alert('Failed to add client.');
+      }
+    });
+  }
+
   loadData(demandId: string) {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
@@ -83,43 +142,47 @@ export class CreateOpenDemandComponent implements OnInit {
           isInternal: this.demands.isInternal,
           dem_id:this.demands.dem_id,
           // dem_updateby_id:this.demands.updateby_id,
-          dem_ctoolnumber: this.demands.dem_ctoolnumber,
-          dem_ctooldate: this.demands.dem_ctooldate,
-          dem_clm_id: this.demands.client_details.clm_id,
-          dem_lcm_id: this.demands.location_details.lcm_id,
-          dem_validtill: this.demands.dem_validtill,
-          dem_skillset: this.demands.dem_skillset,
-          dem_lob_id: this.demands.lob_details.lob_id,
-          dem_idm_id: this.demands.department_details.idm_id,
-          dem_position_name: this.demands.dem_position_name,
-          dem_positions: this.demands.dem_positions,
-          dem_rrnumber: this.demands.dem_rrnumber,
-          dem_jrnumber: this.demands.dem_jrnumber,
-          dem_rrgade: this.demands.dem_rrgade,
-          dem_gcblevel: this.demands.dem_gcblevel,
-          dem_isreopened: this.demands.dem_isreopened,
-          dem_isactive: this.demands.dem_isactive,
-          dem_comment: this.demands.dem_comment,
+          dem_ctoolnumber: this.demands?.dem_ctoolnumber,
+          dem_ctooldate: this.demands?.dem_ctooldate,
+          dem_clm_id: this.demands.client_details?.clm_id,
+          dem_lcm_id: this.demands.location_details?.lcm_id,
+          dem_validtill: this.demands?.dem_validtill,
+          dem_skillset: this.demands?.dem_skillset,
+          dem_lob_id: this.demands.lob_details?.lob_id,
+          dem_idm_id: this.demands.department_details?.idm_id,
+          dem_position_name: this.demands?.dem_position_name,
+          dem_positions: this.demands?.dem_positions,
+          dem_rrnumber: this.demands?.dem_rrnumber,
+          dem_jrnumber: this.demands?.dem_jrnumber,
+          dem_rrgade: this.demands?.dem_rrgade,
+          dem_gcblevel: this.demands?.dem_gcblevel,
+          dem_isreopened: this.demands?.dem_isreopened,
+          dem_isactive: this.demands?.dem_isactive,
+          dem_comment: this.demands?.dem_comment,
         });
-
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
         //Ensure correct visibility for RR/JR fields
         this.isInternal = data.isInternal === 'yes';
         console.log("Clients list after setting value:", this.demands);
       },
-
       error: (err) => console.error('Error fetching a sinlge demand', err)
     })
   }
 
-  loadClients(): void {
-    this.httpService.getClientDetails().subscribe({
-      next: (data) => {
-        this.clients = data;
-      },
-      error: (err) => console.error('Error fetching clients', err)
-    });
-  }
+  loadClients(selectedId?: number): void {
+  this.httpService.getClientDetails().subscribe((clients: any[]) => {
+    this.clients = clients; // Assuming 'clients' holds the client list used in form dropdown
+
+    if (selectedId) {
+      const foundClient = clients.find(client => client.clm_id === selectedId);
+      if (foundClient) {
+        console.log("auto selecting :",foundClient)
+        this.form.get('dem_clm_id')?.setValue(selectedId); // Set form value only if found
+      }
+    }
+  });
+}
+  
 
   loadLocations(): void {
     this.httpService.getLocationDetails().subscribe({
@@ -272,7 +335,12 @@ export class CreateOpenDemandComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
+
+  navigateToClientMaster() {
+    this.router.navigate(['client-master']);
+  }
   cancel(){
     this.router.navigate(['/dashboard']);
   }
 }
+

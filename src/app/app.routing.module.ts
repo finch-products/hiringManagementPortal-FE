@@ -14,11 +14,12 @@ import { ReportComponent } from '../report/report.component';
 import { CreateEmployeeComponent } from '../masters/employee/create/create-employee.component';
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
-import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
-import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 import { DemandViewComponent } from './demand-view/demand-view.component';
+import { CandidateHistoryComponent } from './candidates/history/history.component';
+import { CandidateProfileComponent } from './candidates/profile/profile.component';
+import { CandidadteReportComponent } from './candidates/report/report.component';
 // import { ClientMasterComponent } from './client-master/client-master.component';
 // import { LobMasterComponent } from './lob-master/lob-master.component';
 // import { LocationMasterComponent } from './location-master/location-master.component';
@@ -29,6 +30,9 @@ const routes: Routes = [
   { path: 'entry', component: CreateOpenDemandComponent },
   { path: 'entry/:id', component: CreateOpenDemandComponent },
   { path: 'list', component: ListOpenDemandsComponent },
+  { path: 'candidate/history', component: CandidateHistoryComponent },
+  { path: 'candidate/profile', component: CandidateProfileComponent },
+  { path: 'candidate/report', component: CandidadteReportComponent },
   { path: 'client-master', component: CreateClientComponent },
   { path: 'lob-master', component: CreateLOBComponent },
   { path: 'location-master', component: CreateLocationComponent },
@@ -38,9 +42,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'reports', component: ReportComponent },
   { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) },
-  { path: 'other-view1', component: Otherview1Component },
   { path: 'other-view2', component: Otherview2Component },
-  { path: 'other-view3', component: Otherview3Component },
   { path: 'other-view4', component: Otherview4Component },
   // { path: 'demand-history', component: DemandHistoryComponent ,data: { type: 'demand' } },
   {path: 'candidate-history',component:DemandHistoryComponent,data: { type: 'candidate' }},

@@ -16,18 +16,74 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Hiring manager</mat-label>
-        <mat-select formControlName="dem_clm_id" required>
+      <!-- <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Hiring Manager</mat-label>
+        <mat-select formControlName="dem_clm_id" (selectionChange)="onHiringManagerChange($event)" required>
           <mat-option *ngFor="let client of clients" [value]="client.clm_id">
             {{ client.clm_name }}
           </mat-option>
+          <mat-option [value]="'custom'">Other (Enter New)</mat-option>
         </mat-select>
       </mat-form-field>
+      
+      <div *ngIf="customEntryEnabled">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Enter New Hiring Manager</mat-label>
+          <input matInput [(ngModel)]="clm_name" [ngModelOptions]="{standalone: true}" required>
+        </mat-form-field>
+      
+        <div class="button-group">
+          <button mat-raised-button color="accent" type="button" (click)="addClient()">Add</button>
+          <button mat-stroked-button color="accent" class="small-button" (click)="navigateToClientMaster()">Add More Details</button>
+        </div>
+      </div>
+      
+      
+      
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Manager Email</mat-label>
         <input matInput formControlName="clm_email">
+      </mat-form-field> -->
+
+      <!-- Hiring Manager Selection -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Hiring Manager</mat-label>
+        <mat-select formControlName="dem_clm_id"
+          (selectionChange)="onHiringManagerChange($event)" required>
+          <mat-option *ngFor="let client of clients" [value]="client.clm_id">
+            {{ client.clm_name }}
+          </mat-option>
+          <mat-option [value]="'custom'">Other (Enter New)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Show input fields only when "Other (Enter New)" is selected -->
+      <div *ngIf="customEntryEnabled">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Enter New Hiring Manager</mat-label>
+          <input matInput [(ngModel)]="newClient.clm_name"
+            [ngModelOptions]="{standalone: true}" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Enter Email</mat-label>
+          <input matInput [(ngModel)]="newClient.clm_clientemail"
+            [ngModelOptions]="{standalone: true}" required>
+        </mat-form-field>
+
+        <div class="button-group">
+          <button mat-raised-button color="accent" type="button"
+            (click)="addClient()">Add</button>
+          <button mat-stroked-button color="accent" class="small-button"
+            (click)="navigateToClientMaster()">Add More Details</button>
+        </div>
+      </div>
+
+      <!-- Manager Email (Auto-filled when selected) -->
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Manager Email</mat-label>
+        <input matInput formControlName="clm_clientemail">
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -49,14 +105,6 @@
           [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
       </mat-form-field>
-
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Skillset</mat-label>
-        <textarea matInput formControlName="dem_skillset"
-          maxlength="500"></textarea>
-      </mat-form-field>
-
-      
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>LOB</mat-label>
@@ -121,27 +169,33 @@
         <input matInput formControlName="dem_rrgade">
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Mandatory Skill Set</mat-label>
-        <input matInput formControlName="dem_mandatoryskill">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Comment</mat-label>
-        <textarea matInput formControlName="dem_comment" rows="3"></textarea>
-      </mat-form-field>
-
-      <div class="file-input-container">
-        <label for="job_description">Upload Job Description</label>
-        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
-      </div>
-
       <mat-radio-group formControlName="dem_isactive" appearance="fill"
         class="form-field" class="mat-accent">
         <mat-label>Active?</mat-label>
         <mat-radio-button [value]="true">Yes</mat-radio-button>
         <mat-radio-button [value]="false">No</mat-radio-button>
       </mat-radio-group>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Skillset</mat-label>
+        <textarea matInput formControlName="dem_skillset"
+        ></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Mandatory Skill Set</mat-label>
+        <textarea matInput formControlName="dem_mandatoryskill"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Comment</mat-label>
+        <textarea matInput formControlName="dem_comment"></textarea>
+      </mat-form-field>
+
+      <div class="file-input-container">
+        <label for="job_description">Upload Job Description</label>
+        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
+      </div>
 
     </div>
 
