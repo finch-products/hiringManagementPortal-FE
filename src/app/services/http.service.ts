@@ -135,6 +135,11 @@ export class HttpService {
     );
   }
 
+  getNotAddedCandidatesBySearch(data:any): Observable<any> {
+    console.log(data,"service")
+    return this.http.post<any>(`${this.baseUrl}candidate-demand/not_added_candidatebydemandid/`, data)
+  }
+
   getSingleDemandDetail(demandId: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}demands/id/${demandId}`, this.getHeaders()).pipe(
       catchError(this.handleError));

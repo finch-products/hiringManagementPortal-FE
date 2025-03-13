@@ -10,9 +10,9 @@
         </button>
     </div>
 
-    <div class="candidateheading">
+    <!-- <div class="candidateheading">
         <span>Candidates</span>
-        <!-- <button mat-raised-button color="primary"
+        <button mat-raised-button color="primary"
             type="button" class="linking" 
             style="background-color: #f8a1a1;"
             [disabled]="selectedCandidates.length === 0"
@@ -20,47 +20,48 @@
             onmouseout="this.style.backgroundColor='#f8a1a1'">
             (click)="submitSelectedCandidates()" 
             Update
-        </button> -->
+        </button>
+    </div> -->
+    <div>
+        <h1 class="mat-h3 header">Candidate Details</h1>
     </div>
-
-    <!-- Candidate List with Checkboxes -->
     <div class="candidates-list">
-        <div class="candidate-item" *ngFor="let candidate of filteredCandidates">
-            <!-- Checkbox outside the candidate card -->
+        <div class="candidate-item" *ngFor="let candidate of searchTerm?.trim() ? filteredCandidates : candidates">
+
             <input type="checkbox" (change)="toggleSelection(candidate)" [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />
-
-
-            <!-- Candidate Card -->
             <div class="candidate-card">
                 <div class="candidate-header">
                     <div class="avatar-container">
-                        <img *ngIf="candidate.avatar" [src]="candidate.avatar" alt="Avatar" class="avatar" />
-                        <mat-icon *ngIf="!candidate.avatar">person_outline</mat-icon>
+                        <mat-icon>person_outline</mat-icon>
                     </div>
                     <div class="candidate-info">
-                        <h3 class="candidate-name">{{ candidate.cdm_name }}</h3>
-                        <p class="candidate-id">ID: {{ candidate.cdm_id }}</p>
+                        <h3 class="candidate-name">{{ candidate.name || candidate.cdm_name }}</h3>
+                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id || candidate.cdl_cdm_id}}</p>
+                        <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
                     </div>
                     <select class="status" [(ngModel)]="candidate.candidate_status.csm_code">
                         <option *ngFor="let status of statusList" [value]="status.csm_code">
-                          {{ status.csm_code }}
+                            {{ status.csm_code }}
                         </option>
-                      </select>
+                    </select>
                 </div>
 
                 <div class="skills">
-                    <span *ngFor="let skill of candidate.cdm_keywords" class="skill-chip">
-                        <mat-icon aria-hidden="false" class="icon1" style="font-size: 13px;">check_circle_outline</mat-icon>{{ skill }}
-                    </span>
+                    <ng-container *ngIf="candidate.keywords; else noKeywords">
+                        <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
+                            <mat-icon aria-hidden="false" class="icon1"
+                                style="font-size: 13px;">check_circle_outline</mat-icon>
+                            {{ keyword.trim() }}
+                        </span>
+                    </ng-container>
+                    <ng-template #noKeywords>
+                        <span class="skill-chip">N/A</span>
+                    </ng-template>
                 </div>
 
-                <span *ngIf="candidate.cdm_profile !== '#'">
-                    <span>CV </span>
-                    <a href="javascript:void(0);" (click)="openPdf('/assets/chatboat.pdf')" class="resume-link">
-                        <mat-icon class="icon">save_alt</mat-icon> Resume.pdf
-                    </a>
+                <span class="Description">
+                    Description: {{ candidate.candidate_status.csm_code || 'N/A' }}
                 </span>
-                <span *ngIf="candidate.cdm_profile === '#'">CV Not Provided</span>
             </div>
         </div>
     </div>
