@@ -59,6 +59,7 @@ import { CreateCandidateComponent } from '../masters/candidate/create/create-can
 import { ListCandidateComponent } from '../masters/candidate/list/list-candidate.component';
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
+import { Otherview5Component } from './otherViews/otherview5/otherview5.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -100,6 +101,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     CandidateComponent,
     PreviewComponent,
     Otherview4Component,
+    Otherview5Component,
     LoaderComponent
   ],
   imports: [
