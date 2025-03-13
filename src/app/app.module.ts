@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -19,13 +19,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // Import all necessary components
 import { CreateOpenDemandComponent } from './open-demands/create/create-open-demands.component';
 import { ListOpenDemandsComponent } from './open-demands/list/list-open-demands.component';
@@ -55,9 +57,7 @@ import { CreateEmployeeComponent } from '../masters/employee/create/create-emplo
 import { ListEmployeeComponent } from '../masters/employee/list/list-employee.component';
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
 import { ListCandidateComponent } from '../masters/candidate/list/list-candidate.component';
-import { Otherview1Component } from './otherViews/otherview1/otherview1.component';
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
-import { Otherview3Component } from './otherViews/otherview3/otherview3.component';
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
 import { Otherview5Component } from './otherViews/otherview5/otherview5.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -68,6 +68,8 @@ import { DemandComponent } from './demand-view/demand/demand.component';
 import { CandidateComponent } from './demand-view/candidate/candidate.component';
 import { PreviewComponent } from './demand-view/preview/preview.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { LoaderComponent } from './loader/loader.component';
+import { HttpInterceptorService } from './services/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -92,9 +94,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ListCandidateComponent,
     FormErrorComponent,
     ReportComponent,
-    Otherview1Component,
     Otherview2Component,
-    Otherview3Component,
     DemandHistoryComponent,
     DemandViewComponent,
     DemandComponent,
@@ -102,6 +102,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     PreviewComponent,
     Otherview4Component,
     Otherview5Component
+    LoaderComponent
   ],
   imports: [
     MatRadioModule,
@@ -119,6 +120,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     MatInputModule,
     MatSelectModule,
     MatTableModule,
+    MatTabsModule,
     MatIconModule,
     MatCardModule,
     MatDatepickerModule,
@@ -138,10 +140,17 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     RouterModule.forRoot([]),
     MatCheckboxModule,
     MatTooltipModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    MatProgressSpinnerModule
   ],
   exports: [MatSidenavModule, MatExpansionModule],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true, // Ensures multiple interceptors can exist
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

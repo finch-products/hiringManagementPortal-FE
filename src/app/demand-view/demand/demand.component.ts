@@ -16,8 +16,10 @@ export class DemandComponent implements OnInit {
 
   demands: any;
   stat: any;
+  candidates: any;
+  statusList: any[] = [];
 
-  constructor(private route:ActivatedRoute,private httpService:HttpService){
+  constructor(private route: ActivatedRoute, private httpService: HttpService) {
 
   }
 
@@ -26,33 +28,60 @@ export class DemandComponent implements OnInit {
       const demandId = params.get('id');
       this.loadData(demandId);
       this.loadStatus()
-  })
-}
+      this.loadCandidateStatuses()
+    })
+  }
 
-loadData(demandId: any) {
-  const payload = { dem_id: demandId };
-  this.httpService. postCandidateByDemandId(payload).subscribe({
-    next: (data) => {
-      this.demands = data;
-      // console.log("delivery manager",this.demands.lob_details.delivery_manager.emp_name)
-      console.log("jrnumber",this.demands.dem_jrnumber)
-      console.log("jd",this.demands.dem_jd)
-      
-    }
-})
-}
-loadStatus(): void {
-  this.httpService.getDemandStatusDetails().subscribe({
-    next: (data) => {
-      console.log("stat",data)
-      this.stat = data;
-    
-    },
-    error: (err) => console.error('Error fetching clients', err)
-  });
-}
-openPdf(pdfUrl: string) {
-  this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
-  console.log("pdfUrl",pdfUrl)
-}
+  loadCandidateStatuses() {
+    this.httpService.getCandidateStatuses().subscribe(
+      (response) => {
+        this.statusList = response;
+      },
+      (error) => {
+        console.error('Error fetching candidate statuses:', error);
+      }
+    );
+  }
+
+public   loadData(demandId: any) {
+    const payload = { dem_id: demandId };
+   
+    this.httpService.postCandidateByDemandId(payload).subscribe({
+      next: (data) => {
+        this.demands = data;
+        // const existingCandidateIds = new Set((data.candidates || []).map((c: { cdl_id: string }) => c.cdl_id));
+        // this.candidates = data.candidates || [];
+       this.candidates = data.candidates ? [...data.candidates].reverse() : [];
+      // console.log("candidates linked", this.candidates);
+   
+  //     console.log("existingCandidateIds",existingCandidateIds)
+
+  //     this.candidates = data.candidates
+  // ? [...data.candidates]
+  //     .reverse()
+  //     .map(candidate => ({
+  //       ...candidate, // Keeps all existing properties dynamically
+  //       isNew: !existingCandidateIds.has(candidate.cdl_id)
+  //     }))
+  // : [];
+  console.log("Updated candidates list:", this.candidates);
+
+      }
+    })
+  }
+ 
+
+  loadStatus(): void {
+    this.httpService.getDemandStatusDetails().subscribe({
+      next: (data) => {
+        this.stat = data;
+
+      },
+      error: (err) => console.error('Error fetching clients', err)
+    });
+  }
+  openPdf(pdfUrl: string) {
+    this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
+    console.log("pdfUrl", pdfUrl)
+  }
 }
