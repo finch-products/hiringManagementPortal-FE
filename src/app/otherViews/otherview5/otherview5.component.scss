@@ -79,23 +79,16 @@ h3{
   }
   
   /* Filter button styling */
-  .filter-btn {
-    background-color: rgb(234, 234, 133);
+  span {
+    background-color: rgb(230, 230, 228);
     padding: 12px 20px;
-    border: none;
+    border:#333;
     margin:15px 20px;
-    border-radius: 20px;
+    border-radius: 5px;
     font-weight: bold;
-    cursor: pointer;
+    min-width: 30vw;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
     height: max-content;
-    width: 19vw;
     align-self: center;
   }
-  
-  /* Button hover effect */
-  .filter-btn:hover {
-    background-color: #eed46b;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  }
+

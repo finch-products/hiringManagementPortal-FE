@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-otherview5',
@@ -7,13 +8,44 @@ import { Component } from '@angular/core';
 })
 export class Otherview5Component {
     // State for filters
-    showFilters = false;
     selectedFilter: string | null = null;
     showMonthly = false;
     selectedQuarterYear: string | null = null;
     selectedMonth: string | null = null;
     selectedYear: string | null = null;
+    candidateSelectionTable: any[] = [];
+    start_date:string='';
+    end_date: string = '';
   
+    constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.fetchCandidateSelectionReport();
+  }
+
+  fetchCandidateSelectionReport(): void {
+    const today = new Date();
+    this.start_date = '2024-01-10'//today.toISOString().split('T')[0];  format YYYY-MM-DD
+
+    const lastYear = new Date();
+    lastYear.setFullYear(today.getFullYear() - 1);
+    this.end_date ='2024-12-13' //lastYear.toISOString().split('T')[0]; // format YYYY-MM-DD
+
+    const apiUrl = `http://127.0.0.1:8000/api/reports/candidate-selection/?reportType=custom&start_date=${this.start_date}&end_date=${this.end_date}`;
+
+    this.http.get<any>(apiUrl).subscribe({
+      next: (data) =>{ if (data && data.report && data.report.Custom) {
+        this.candidateSelectionTable = data.report.Custom;
+      } else {
+        this.candidateSelectionTable = [];
+      }
+      console.log('API Data:', this.candidateSelectionTable);
+    },
+      error: (error) => {
+        console.error('Error fetching candidate selection report:', error);
+      }
+    });
+  }
     // Default table data
     defaultTable = [
       { lob: 'LOB1', cp: 'CP1', dm: 'DM1', count: 5, startDate: '2023-01-01', endDate: '2023-12-31' },
@@ -24,11 +56,11 @@ export class Otherview5Component {
     tableHeaders: string[] = [];
     filteredTables: any[] = [];
   
-     // Dummy Data
+     /* Dummy Data
   candidateSelectionTable = [
     { cp: 'CP1', lob: 'LOB1', dm: 'DM1', count: 10, startDate: '2023-01-01', endDate: '2023-12-31' },
     { cp: 'CP2', lob: 'LOB2', dm: 'DM2', count: 20, startDate: '2023-02-01', endDate: '2023-11-30' },
-  ];
+  ];*/
     // Month and year options
     months = [
       { name: 'January', value: '01' }, { name: 'February', value: '02' },
@@ -40,11 +72,6 @@ export class Otherview5Component {
     ];
   
     years: string[] = ['2022', '2023', '2024'];
-  
-    // Toggle the filter dropdown visibility
-    toggleFilters(): void {
-      this.showFilters = !this.showFilters;
-    }
   
     // Apply filters and update the filteredTable accordingly
     applyFilters(): void {
