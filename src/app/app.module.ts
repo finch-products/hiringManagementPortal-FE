@@ -101,7 +101,7 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     CandidateComponent,
     PreviewComponent,
     Otherview4Component,
-    Otherview5Component
+    Otherview5Component,
     LoaderComponent
   ],
   imports: [
