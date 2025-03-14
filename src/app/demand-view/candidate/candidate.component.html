@@ -5,7 +5,7 @@
         <button mat-icon-button (click)="openFilter()">
             <mat-icon>filter_list</mat-icon>
         </button>
-        <button mat-icon-button  (click)="submitSelectedCandidates() ">
+        <button mat-icon-button (click)="submitSelectedCandidates() ">
             <mat-icon>group_add</mat-icon>
         </button>
     </div>
@@ -28,7 +28,8 @@
     <div class="candidates-list">
         <div class="candidate-item" *ngFor="let candidate of searchTerm?.trim() ? filteredCandidates : candidates">
 
-            <input type="checkbox" (change)="toggleSelection(candidate)" [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />
+            <input *ngIf="searchTerm?.trim()" type="checkbox" (change)="toggleSelection(candidate)"
+                [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />
             <div class="candidate-card">
                 <div class="candidate-header">
                     <div class="avatar-container">
@@ -39,7 +40,8 @@
                         <p class="candidate-id">ID: {{ candidate.cdl_cdm_id || candidate.cdl_cdm_id}}</p>
                         <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
                     </div>
-                    <select class="status" [(ngModel)]="candidate.candidate_status.csm_code">
+                    <select class="status" [(ngModel)]="candidate.candidate_status.csm_code"
+                        [ngClass]="{'no-arrow': searchTerm?.trim()}">
                         <option *ngFor="let status of statusList" [value]="status.csm_code">
                             {{ status.csm_code }}
                         </option>
