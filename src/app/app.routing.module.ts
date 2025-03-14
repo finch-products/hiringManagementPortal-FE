@@ -21,10 +21,6 @@ import { DemandViewComponent } from './demand-view/demand-view.component';
 import { CandidateHistoryComponent } from './candidates/history/history.component';
 import { CandidateProfileComponent } from './candidates/profile/profile.component';
 import { CandidadteReportComponent } from './candidates/report/report.component';
-// import { ClientMasterComponent } from './client-master/client-master.component';
-// import { LobMasterComponent } from './lob-master/lob-master.component';
-// import { LocationMasterComponent } from './location-master/location-master.component';
-// import { PracticeUnitMasterComponent } from './internal-department-master/internal-department-master.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -50,13 +46,6 @@ const routes: Routes = [
   { path: 'demand-view/:id', component: DemandViewComponent },
   { path: 'history', component: DemandHistoryComponent },
   { path: '', component: DashboardComponent },
-
-
-
-  // { path: 'client-master', component: ClientMasterComponent },
-  // { path: 'lob-master', component: LobMasterComponent },
-  // { path: 'location-master', component: LocationMasterComponent },
-  // { path: 'internal-department-master', component: PracticeUnitMasterComponent }
 ];
 
 @NgModule({
