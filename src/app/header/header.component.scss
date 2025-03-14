@@ -52,24 +52,29 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    width:min-content;
-}
-
-.icons a {
-    width:min-content;
-   padding: 0px;
-}
-
-.icon {
+    width: min-content;
     cursor: pointer;
+  }
+
+  .icons a {
+    width: min-content;
+    padding: 0px;
+    background-color: #f4c542;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .icon {
     color: #555;
     font-size: 24px;
     transition: color 0.3s;
-    display: flex; /* Ensures proper alignment */
+    display: flex;
+    /* Ensures proper alignment */
     align-items: center;
     justify-content: center;
-    width:min-content;
-}
+    width: min-content;
+  }
 
   .icon:hover {
     color: #333;

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DemandComponent } from '../demand/demand.component';
 interface Candidate {
   cdm_name: string;
   cdm_id: string;
@@ -21,31 +22,65 @@ interface Candidate {
   styleUrl: './candidate.component.scss'
 })
 export class CandidateComponent {
+  @Output() candidatesLinked = new EventEmitter<void>();
   @Output() pdfSelected = new EventEmitter<string>();
-  candidates: Candidate[] = [];
+  candidates: any[] = [];
   filteredCandidates: Candidate[] = [];
   searchTerm: string = '';
   selectedCandidates: any[] = [];
   dem_id: string = '';
-
-  constructor(private httpService: HttpService, private route: ActivatedRoute,private snackBar: MatSnackBar ) {}
+  statusList: any[] = [];
+  demands: any;
+  constructor(private httpService: HttpService, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.dem_id = params.get('id') || '';
+      const demandId = params.get('id');
+      if (demandId) {
+        this.dem_id = demandId; // ✅ Ensure demand ID is stored
+        this.loadData(demandId);
+        this.loadCandidateStatuses();
+      }
     });
-
-    this.fetchCandidates();
+    console.log("Demand ID on Init:", this.dem_id);
   }
 
-  fetchCandidates(): void {
-    this.httpService.getCandidate().subscribe({
-      next: (data: any[]) => {
-        this.candidates = data.map((candidate: any) => this.handleNullValues(candidate));
-        this.filteredCandidates = [...this.candidates];
+  public loadData(demandId: any) {
+    const payload = { dem_id: demandId };
+
+    this.httpService.postCandidateByDemandId(payload).subscribe({
+      next: (data) => {
+        this.demands = data;
+        // const existingCandidateIds = new Set((data.candidates || []).map((c: { cdl_id: string }) => c.cdl_id));
+        // this.candidates = data.candidates || [];
+        this.candidates = data.candidates ? [...data.candidates].reverse() : [];
+        // console.log("candidates linked", this.candidates);
+
+        //     console.log("existingCandidateIds",existingCandidateIds)
+
+        //     this.candidates = data.candidates
+        // ? [...data.candidates]
+        //     .reverse()
+        //     .map(candidate => ({
+        //       ...candidate, // Keeps all existing properties dynamically
+        //       isNew: !existingCandidateIds.has(candidate.cdl_id)
+        //     }))
+        // : [];
+        console.log("Updated candidates list:", this.candidates);
+
+      }
+    })
+  }
+
+  loadCandidateStatuses() {
+    this.httpService.getCandidateStatuses().subscribe(
+      (response) => {
+        this.statusList = response;
       },
-      error: (err) => console.error('Error fetching candidates', err)
-    });
+      (error) => {
+        console.error('Error fetching candidate statuses:', error);
+      }
+    );
   }
 
   handleNullValues(candidate: any): Candidate {
@@ -53,32 +88,62 @@ export class CandidateComponent {
       cdm_name: candidate.cdm_name || 'Not Provided',
       cdm_id: candidate.cdm_id || 'Not Provided',
       candidate_status: {
-        csm_id : candidate?.candidate_status?.csm_id ?? null,
+        csm_id: candidate?.candidate_status?.csm_id ?? null,
         csm_code: candidate.candidate_status ? candidate.candidate_status.csm_code : 'Unknown'
-      }, 
+      },
       cdm_keywords: candidate.cdm_keywords ? candidate.cdm_keywords.split(',') : ['Not Provided'],
       cdm_profile: candidate.cdm_profile || '#'
     };
   }
 
   filterCandidates(): void {
-    this.filteredCandidates = this.candidates.filter(candidate =>
-      candidate.cdm_name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    if (!this.dem_id) {
+      this.filteredCandidates = [...this.candidates];
+      console.log("No demand ID provided. Showing all candidates.");
+      return;
+    }
+  
+    const requestBody = { dem_id: this.dem_id };
+  
+    this.httpService.getNotAddedCandidatesBySearch(requestBody).subscribe({
+      next: (data) => {
+        console.log("Full API Response:", data);
+        const allCandidates: Candidate[] = data?.candidates_not_added || [];
+  
+        if (this.searchTerm?.trim()) {
+          const term = this.searchTerm.trim().toLowerCase();
+          this.filteredCandidates = allCandidates.filter(candidate =>
+            (candidate?.cdm_name || '').toLowerCase().includes(term)
+          );
+        } else {
+          this.filteredCandidates = [...allCandidates];
+        }
+  
+        console.log("Filtered Candidates:", this.filteredCandidates);
+      },
+      error: (err) => {
+        console.error("Error fetching candidates:", err);
+        this.filteredCandidates = [];
+      }
+    });
   }
+  
   getSafeValue(value: any): string {
     return value && value.trim() ? value : 'Not Provided';
   }
 
   openFilter() {
-    alert('Filter feature coming soon!');
+    // alert('Filter feature coming soon!');
+    this.snackBar.open("Filter feature coming soon!!", "Close", {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
   }
 
-
-  redirectToAddCandidates() {
+  /*redirectToAddCandidates() {
     // Change this URL if needed
     window.location.href = 'http://64.227.145.117/candidate-master';
-  }
+  }*/
 
 
   toggleSelection(candidate: Candidate) {
@@ -92,7 +157,11 @@ export class CandidateComponent {
 
   submitSelectedCandidates() {
     if (this.selectedCandidates.length === 0) {
-      alert('No candidates selected.');
+      // alert('No candidates selected.');
+      this.snackBar.open("No candidates selected..!", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
       return;
     }
 
@@ -105,7 +174,11 @@ export class CandidateComponent {
       }));
 
     if (payload.length === 0) {
-      alert('No candidates with valid status selected.');
+      this.snackBar.open("No candidates with valid status selected.!", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+      // alert('No candidates with valid status selected.');
       return;
     }
 
@@ -115,6 +188,8 @@ export class CandidateComponent {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.candidatesLinked.emit();
+        // this.router.navigate(['/list']);
       },
       error: (error) => {
         this.snackBar.open("❌ Failed to link candidates. Try again.", "Close", {
@@ -128,6 +203,6 @@ export class CandidateComponent {
 
   openPdf(pdfUrl: string) {
     this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
-    console.log("pdfUrl",pdfUrl)
+    console.log("pdfUrl", pdfUrl)
   }
 }

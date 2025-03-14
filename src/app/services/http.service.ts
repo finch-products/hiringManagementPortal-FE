@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpService {
   private baseUrl = 'http://64.227.145.117/api/';
-  //private baseUrl = 'http://localhost:8000/api/';
+  //  private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -71,6 +71,12 @@ export class HttpService {
     );
   }
 
+  getCandidateStatuses(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidate-status/list`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 
   getClientDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}clients/clients-details/`, this.getHeaders()).pipe(
@@ -127,6 +133,11 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}demands/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
+  }
+
+  getNotAddedCandidatesBySearch(data:any): Observable<any> {
+    console.log(data,"service")
+    return this.http.post<any>(`${this.baseUrl}candidate-demand/not_added_candidatebydemandid/`, data)
   }
 
   getSingleDemandDetail(demandId: any): Observable<any> {

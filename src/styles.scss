@@ -1,9 +1,6 @@
 html,
 body {
-  height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: #4C4C4B;
 }
 
 * {
@@ -19,9 +16,9 @@ body {
 
   .left-sidebar {
     //background-color: #e0b60c;
-    width: 25%;
-    height: 29.03%;
-    border-radius: 2%;
+    width: 20.64%;
+    // height: 29.03%;
+    // border-radius: 2%;
   }
 
 
@@ -34,8 +31,9 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 75%;
+    width: 79.36%;
     padding-left: 16px;
+    height: 100vh;
 
     .page-title {
       margin: 20px;
@@ -78,6 +76,12 @@ table {
   background-color: #F6F5F1;
 }
 
+.mat-mdc-card,
+.mat-mdc-table {
+  box-shadow: none !important;
+
+}
+
 
 
 
@@ -102,7 +106,9 @@ mat-sidenav {
 }
 
 span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
-  display: flex;
+  font-size: 16px !important;
+  line-height: 1em !important;
+  color: #4C4C4B !important;
 }
 
 .container-fluid {
@@ -150,14 +156,18 @@ span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
   // max-width: 100%;
   // overflow-x: auto;
   // border-color: #000;
-  background: #FAFAFA; /* Light gray background */
-  border-radius: 20px; 
-  width: 100%; /* Full width */
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  background: #FAFAFA;
+  /* Light gray background */
+  border-radius: 20px;
+  width: 100%;
+  /* Full width */
+  overflow-x: auto;
+  // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 
   tr {
     font-size: 12px;
     line-height: 0.75em;
+    cursor: pointer;
   }
 }
 
@@ -200,7 +210,7 @@ mat-form-field {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-
+  box-shadow: none !important;
   justify-content: flex-start;
   gap: 20px;
   width: 100%;
@@ -226,7 +236,7 @@ mat-form-field {
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 16px;
   justify-content: space-between;
 }
 
@@ -241,7 +251,7 @@ mat-form-field {
   flex-direction: column;
 }
 
-.mdc-list{
+.mdc-list {
   padding: 0 10px;
 }
 
@@ -250,13 +260,7 @@ mat-form-field {
 //   border-bottom: 1px solid #ccc;
 // }
 
-.file-input-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-    width: 260px;
 
-}
 
 .file-input-container label {
   font-family: Inter, sans-serif;
@@ -370,12 +374,12 @@ mat-label {
 }
 
 /* Optional: Adjust input field padding for better look */
-.mat-mdc-form-field-infix {
-  padding: 10px !important;
-}
+
 
 .mat-form-field {
-  margin-bottom: 0px !important;
+  width: 100%; // Ensure consistent width
+  margin-bottom: 8px;
+  // margin-bottom: 0px !important;
   /* Reduce space below input fields */
 }
 
@@ -461,46 +465,17 @@ table.mat-table {
   /* Needed for absolute positioning */
 }
 
-  // .edit-btn{
-  //   font-size: 5px;
-  // }
-//   .hover-container:hover .edit-btn {
-//   opacity: 1;
-//   /* Button appears smoothly on hover */
-// }
-
-// added from here 
-/* Ensures file input container aligns well */
 .file-input-container {
   width: 30%;
-  margin: 2.5%;
   display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 }
 
-mat-radio-group[formControlName="dem_isreopened"] {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-  margin-left: 10%;
-  min-width: 40px;
-}
-
-mat-radio-group[formControlName="dem_isactive"] {
-  margin-left: 4%;
-  margin-top: 1.7%;
-  align-items: center;
-}
-
-mat-radio-group[formControlName="isInternal"],
-mat-radio-group[formControlName="!isInternal"],
-mat-form-field[formControlName="dem_positions"] mat-radio-button {
-  margin: 7px;
-  display: inline-block;
-  width: 25%;
+.mat-radio-group {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
 }
 
 mat-radio-button.mat-accent {
@@ -528,24 +503,15 @@ mat-radio-button.mat-accent {
 
 //new  ranch
 .form-container {
-  justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1200px;
-  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
 }
 
 .wrap-height {
   height: 80%;
 }
 
-// .mat-checkbox-checked .mat-checkbox-background,
-// .mat-checkbox-indeterminate .mat-checkbox-background {
-//   background-color: #F7CB15 !important; /* Change to yellow */
-// }
-
-// ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
-//   background-color: #F7CB15 !important; /* Yellow background when checked */
-// }
 
 .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
 .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background {
@@ -599,4 +565,110 @@ mat-radio-button.mat-accent {
     }
   }
 
+}
+
+.mat-content {
+  font-size: 16px !important;
+  line-height: 1em !important;
+  color: #4C4C4B !important;
+  font-weight: 400 !important;
+  display: block !important;
+}
+/* --- Snackbar Main Container --- */
+.mat-mdc-snack-bar-container {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px !important;
+  border-radius: 12px !important;
+  border-bottom: 5px solid; 
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); 
+  min-width: 360px;
+  max-width: 440px;
+  margin: 12px auto;
+  color: #1b1818 !important; 
+  animation: fadeInUp 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Remove default background --- */
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* --- Message Section --- */
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  flex-grow: 1;
+  margin-right: 10px;
+  white-space: pre-wrap !important;
+  padding: 0;
+  color: black !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.snackbar-message {
+  font-weight: 400;
+  font-size: 15px;
+  opacity: 0.95;
+  line-height: 1.5;
+  color: black !important;
+}
+
+/* --- Snackbar Icon --- */
+.snackbar-icon {
+  margin-right: 8px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+}
+
+/* --- Close Button --- */
+.mat-mdc-snack-bar-container button {
+  background: transparent;
+  border: none;
+  color: black !important;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.8;
+  margin-left: 10px;
+  transition: opacity 0.2s;
+}
+.mat-mdc-snack-bar-container button:hover {
+  opacity: 1;
+}
+
+/* --- Success Snackbar --- */
+.mat-mdc-snack-bar-container.success-snackbar {
+  background-color: #e5f9eb; /* Light green */
+  border-bottom-color: #27ae60 !important;
+  color: #14532d !important; /* Darker green text */
+}
+
+/* --- Error Snackbar --- */
+.mat-mdc-snack-bar-container.error-snackbar {
+  background-color: #fde8e8; /* Light red */
+  border-bottom-color: #e74c3c !important;
+  color: #7f1d1d !important; /* Darker red text */
+}
+
+/* --- Warning Snackbar --- */
+.mat-mdc-snack-bar-container.warning-snackbar {
+  background-color: #fff4e5; /* Soft yellow */
+  border-bottom-color: #f39c12 !important;
+  color: #7a4700 !important; /* Dark amber text */
+}
+
+/* --- Info Snackbar --- */
+.mat-mdc-snack-bar-container.info-snackbar {
+  background-color: #e5f4fd; /* Light blue */
+  border-bottom-color: #3498db !important;
+  color: #1d4e89 !important; /* Darker blue text */
 }

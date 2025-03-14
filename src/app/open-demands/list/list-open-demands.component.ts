@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-open-demands',
@@ -27,7 +29,7 @@ export class ListOpenDemandsComponent {
 
   displayedColumns: string[] = [
     'select','dem_ctoolnumber', 'dem_ctooldate' ,'dem_validtill', 'dem_position_name',
-    'dem_lcm_id', 'dem_skillset', 'dem_positions', 'status','action'];
+    'dem_lcm_id', 'dem_skillset', 'dem_positions', 'dem_dsm_id','action'];
 
   dataSource = new MatTableDataSource<OpenDemand>([]);
 
@@ -36,9 +38,9 @@ export class ListOpenDemandsComponent {
   stat:any
 isEditmode="false";
   element: any;
-  constructor(private fb: FormBuilder,private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService) { 
+  constructor(private fb: FormBuilder,private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService,private snackBar:MatSnackBar, private router: Router) { 
     this.listForm = this.fb.group({
-      status:[''],
+      dem_dsm_id:[''],
       dem_comment:['']
     })
   }
@@ -52,7 +54,7 @@ isEditmode="false";
       this.dataSource.sort = this.sort;
     });
     this.loadStatus();
-    this.listForm.get('status')?.valueChanges.subscribe(() => {
+    this.listForm.get('dem_dsm_id')?.valueChanges.subscribe(() => {
       this.updateSaveButtonState();
     });
   }
@@ -79,18 +81,26 @@ isEditmode="false";
         // Prepare request body
         const requestBody = {
           dem_id: this.selectedRows[0].dem_id,  
-          status: this.listForm.get('status')?.value,
+          dem_dsm_id: this.listForm.get('dem_dsm_id')?.value,
           dem_comment:this.listForm.get('dem_comment')?.value,
           dem_updateby_id: 'emp_11022025_02'
         };
         console.log("Request Payload:", requestBody);
       this.httpService.updateDemand(requestBody).subscribe({
         next:(data)=>{
-          console.log('Form submission successful:', data);
-          alert('Demand updated successfully!');
+          // console.log('Form submission successful:', data);
+          // alert('Demand updated successfully!');
+          this.snackBar.open("✅ Demand Added Successfully!", "Close", {
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
+          this.listForm.reset()
           this.fetchOpenDemands()
         },
-        error: (err) => console.error('Form submission error:', err)
+        error: (err) =>  this.snackBar.open("❌Failed to add demand. Check console for details", "Close", {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        })
       })
     }
  
@@ -128,9 +138,26 @@ isEditmode="false";
     document.querySelector('.submit')?.toggleAttribute('disabled', this.isSaveDisabled());
   }
   isSaveDisabled(): boolean {
-    const isStatusSelected = !!this.listForm.get('status')?.value;
+    const isStatusSelected = !!this.listForm.get('dem_dsm_id')?.value;
     const isCheckboxSelected = this.selectedRows.length > 0;
     return !(isStatusSelected && isCheckboxSelected);
+  }
+
+  disableRowClick(event: Event, row: any) {
+    const target = event.target as HTMLElement;
+    
+    if (target && target.closest && target.closest('.ignore-click')) {  
+      return;  
+    }
+  
+    this.navigateToHistory(row);
+  }
+
+  
+  navigateToHistory(row: any): void {
+    if (row && row.dem_id) {
+      this.router.navigate([`/demand-view/${row.dem_id}`]);
+    }
   }
 
 }

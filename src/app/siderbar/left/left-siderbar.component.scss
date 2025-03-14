@@ -1,28 +1,28 @@
 .sidenav-container {
   height: 100vh;
   width: 21.2%;
-  background-color: #faf9f6;
   background-color: #F6F5F1;
   color: #333;
   border-right: 1px solid #E0E0E0;
   width: 100%;
-  //border-radius: 20%;
+  .sidebar-logo img {
+    width: 100%;
+    display: block;
+  }
 }
 
 .sidenav {
-  width: 290px;
+  width: 100%;
   background-color: #F6F5F1;
   font-size: 16px;
-  line-height: 1em;
   color: #4C4C4B;
   font-weight: 600;
+  border-right: none;
 
-  a, mat-expansion-panel-header{
-    margin-bottom: 5px;
-    font-size: 16px;
-    line-height: 1em;
-    color: #4C4C4B;
-  }
+}
+
+.sidenav.collapsed mat-expansion-panel {
+  display: none !important;
 }
 
 mat-nav-list {
@@ -32,6 +32,7 @@ mat-nav-list {
 mat-nav-list .mat-list-item {
   display: flex;
   align-items: center;
+  color: #333;
   gap: 10px;
   padding: 10px 16px;
   // font-size: 16px;
@@ -42,10 +43,11 @@ mat-nav-list .mat-list-item {
   display: flex;
   align-items: center;
   width: 100%;
+
 }
 
-
-mat-icon {
+mat-icon,
+.mat-expansion-panel-header mat-icon {
   margin-right: 20px !important;
   font-size: 24px;
   width: 24px;
@@ -53,7 +55,11 @@ mat-icon {
   color: #4C4C4B;
 }
 
-a:hover,
+a:hover {
+  background-color: #ffdb4d;
+  border-radius: 5px;
+}
+
 a.active {
   background-color: #ffdb4d;
   border-radius: 5px;
@@ -65,6 +71,7 @@ mat-expansion-panel-header {
   // display: flex;
   // align-items: center;
   // padding: 10px;
+
 }
 
 
@@ -89,7 +96,7 @@ mat-expansion-panel-header {
 
 .master-list a {
   padding: 10px 16px;
-  // font-size: 16px;
+  font-size: 14px;
   color: #ffdb4d;
 }
 
@@ -117,4 +124,103 @@ mat-expansion-panel-header {
 
 .view-action-list a:hover {
   background-color: rgba(255, 219, 77, 0.7);
+}
+
+
+.sidenav {
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.sidenav .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.black-icon {
+  color: black !important;
+}
+
+.sidenav .menu-item mat-icon {
+  font-size: 24px;
+  margin-right: 100px;
+  min-width: 40px;
+}
+
+.sidenav.collapsed {
+  width: 70px !important;
+}
+
+.sidenav.collapsed .menu-text {
+  display: none;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Push items to edges */
+  padding: 10px;
+}
+
+.toggle-icon {
+  cursor: pointer;
+  margin-left: auto;
+}
+
+
+::ng-deep .mat-expansion-panel-header {
+  height: 48px !important;
+  /* Set desired height */
+  min-height: 48px !important;
+  /* Ensure consistency */
+}
+
+::ng-deep .mat-expansion-panel-header.mat-expanded {
+  height: 48px !important;
+  min-height: 48px !important;
+}
+
+.sidebar {
+  width: 260px;
+  /* Adjust width as needed */
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  /* Light background */
+  padding-top: 10px;
+  /* Adjust top padding */
+}
+
+.mat-list-item {
+  padding: 10px 16px !important;
+  /* Adjust padding */
+  border-radius: 8px;
+}
+
+.mat-list-item:hover,
+.mat-list-item.active {
+  background-color: #ffe082;
+  /* Highlight selected item */
+}
+
+.mat-expansion-panel {
+  background: transparent !important;
+  /* Remove white background */
+  box-shadow: none !important;
+}
+
+.mat-expansion-panel-header {
+  padding: 0 16px !important;
+}
+
+.mat-action-list {
+  padding-left: 16px;
+  /* Indent submenu items */
+}
+
+.mat-expansion-panel-header mat-icon {
+  margin-right: 8px;
+  /* Adjust space between icon & text */
+  font-size: 20px;
 }
