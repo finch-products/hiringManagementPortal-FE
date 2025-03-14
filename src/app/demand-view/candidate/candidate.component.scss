@@ -12,6 +12,13 @@ body, html {
     width: 100%;
 }
 
+.no-arrow {
+    appearance: none;  /* Hides default dropdown arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none !important; /* Ensures no dropdown icon */
+}
+
 .search-bar input {
     width: 100%;
     padding: 10px;
