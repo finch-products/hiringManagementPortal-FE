@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-otherview5',
@@ -16,51 +17,46 @@ export class Otherview5Component {
     candidateSelectionTable: any[] = [];
     start_date:string='';
     end_date: string = '';
+    isFilterApplied:boolean=false;
+    reporttype: string= '';
   
-    constructor(private http: HttpClient) {}
+    constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
     this.fetchCandidateSelectionReport();
   }
 
   fetchCandidateSelectionReport(): void {
-    const today = new Date();
-    this.start_date = '2024-01-10'//today.toISOString().split('T')[0];  format YYYY-MM-DD
-
-    const lastYear = new Date();
-    lastYear.setFullYear(today.getFullYear() - 1);
-    this.end_date ='2024-12-13' //lastYear.toISOString().split('T')[0]; // format YYYY-MM-DD
-
-    const apiUrl = `http://127.0.0.1:8000/api/reports/candidate-selection/?reportType=custom&start_date=${this.start_date}&end_date=${this.end_date}`;
-
-    this.http.get<any>(apiUrl).subscribe({
-      next: (data) =>{ if (data && data.report && data.report.Custom) {
-        this.candidateSelectionTable = data.report.Custom;
-      } else {
-        this.candidateSelectionTable = [];
-      }
-      console.log('API Data:', this.candidateSelectionTable);
-    },
-      error: (error) => {
+    // Dynamic date assignment (optional, uncomment if needed)
+    // const today = new Date();
+    // const lastYear = new Date();
+    // lastYear.setFullYear(today.getFullYear() - 1);
+    // this.start_date = lastYear.toISOString().split('T')[0]; // format YYYY-MM-DD
+    // this.end_date = today.toISOString().split('T')[0]; // format YYYY-MM-DD
+  
+    // Static date assignment (if fixed date range is preferred)
+    this.start_date = '2024-01-10'; // format YYYY-MM-DD
+    this.end_date = '2024-12-13'; // format YYYY-MM-DD
+  
+    // Now call the API with start_date and end_date properly passed
+    this.httpService.getcandidateselectioncustomreport(this.start_date, this.end_date).subscribe({
+      next: (data:any) => {
+        if (data && data.report && data.report.Custom) {
+          this.candidateSelectionTable = data.report.Custom;
+        } else {
+          this.candidateSelectionTable = [];
+        }
+        console.log('API Data:', this.candidateSelectionTable);
+      },
+      error: (error:any) => {
         console.error('Error fetching candidate selection report:', error);
       }
     });
   }
-    // Default table data
-    defaultTable = [
-      { lob: 'LOB1', cp: 'CP1', dm: 'DM1', count: 5, startDate: '2023-01-01', endDate: '2023-12-31' },
-      { lob: 'LOB2', cp: 'CP2', dm: 'DM2', count: 3, startDate: '2023-02-01', endDate: '2023-11-30' }
-    ];
-  
     // Headers and data for filtered table
     tableHeaders: string[] = [];
     filteredTables: any[] = [];
-  
-     /* Dummy Data
-  candidateSelectionTable = [
-    { cp: 'CP1', lob: 'LOB1', dm: 'DM1', count: 10, startDate: '2023-01-01', endDate: '2023-12-31' },
-    { cp: 'CP2', lob: 'LOB2', dm: 'DM2', count: 20, startDate: '2023-02-01', endDate: '2023-11-30' },
-  ];*/
+
     // Month and year options
     months = [
       { name: 'January', value: '01' }, { name: 'February', value: '02' },
@@ -71,45 +67,134 @@ export class Otherview5Component {
       { name: 'November', value: '11' }, { name: 'December', value: '12' }
     ];
   
-    years: string[] = ['2022', '2023', '2024'];
+    years: string[] = ['2022', '2023', '2024','2025'];
+
+    onQuarterYearChange() {
+      this.selectedYear = null;
+      this.selectedMonth = null;
+      this.showMonthly = false;
+      this.reporttype='quarterly';
+      this.selectedFilter='Quaterly data';
+      this.applyFilters();
+    }
+    
+    onYearChange() {
+      this.selectedQuarterYear = null;
+      this.showMonthly = false;
+      this.selectedFilter='Yearly data';
+      this.selectedMonth = null;
+      this.reporttype='yearly';
+      this.applyFilters();
+    }
+    
+    onMonthlyCheckboxChange() {
+      if (this.showMonthly) {
+        this.selectedMonth = null;
+        this.selectedFilter='monthly data';
+        this.reporttype='monthly';
+        this.selectedQuarterYear = null; // Clear quarterly if monthly is selected
+      }
+      this.applyFilters();
+    }
+    
+    onMonthChange() {
+      this.selectedQuarterYear = null;
+      this.showMonthly = false;
+      this.selectedFilter='weekly data';
+      this.reporttype='weekly';
+      this.applyFilters();
+    }
+    
   
-    // Apply filters and update the filteredTable accordingly
+    //Apply filters and update the filteredTable accordingly
     applyFilters(): void {
+      this.isFilterApplied=true;
       this.filteredTables = []; // Reset filtered table
       this.tableHeaders = [];  // Reset table headers
+
+     // Prioritize Monthly if checkbox + year selected
+  if (this.showMonthly && this.selectedYear) {
+    this.httpService.getcandidateselectionreports(this.selectedYear,this.reporttype).subscribe(response => {
+      console.log(this.selectedYear);
+      const data = response.report.monthlyClientSelects;
+      this.tableHeaders =  ['January','February', 'March','April', 'May', 'June', 'July', 'August','September', 'October','November', 'December'];
+      this.filteredTables = data.map((item:any)=> ({
+        lob: item.lob,
+        cp: item.clientPartner,
+        dm: item.deliveryManager,
+        values: [
+          item.January, item.February, item.March, item.April, item.May, item.June,
+          item.July, item.August, item.September, item.October, item.November, item.December
+        ]
+      }));
+    });
+    return;
+  }
+
+   // Weekly filter (if year and month selected)
+   if (this.selectedYear && this.selectedMonth) {
+    this.httpService.getcandidateselectionweeklyreport(this.selectedYear,this.selectedMonth).subscribe(response => {
+      console.log(this.selectedYear);
+      const data = response.report.weeklyClientSelects;
+      if (data.length > 0) {
+        // Dynamically extract week keys from first object
+        const weekKeys = Object.keys(data[0]).filter(key => key.startsWith('week'));
   
-      // Example logic for generating data based on filter
-      if (this.selectedFilter === 'quarterly') {
-        this.tableHeaders = ['Q1', 'Q2', 'Q3', 'Q4'];
-        this.filteredTables = [
-          { lob: 'LOB1', cp: 'CP1', dm: 'DM1', values: [10, 20, 30, 40] },
-          { lob: 'LOB2', cp: 'CP2', dm: 'DM2', values: [15, 25, 35, 45] }
-        ];
-      } else if (this.selectedFilter === 'yearly') {
-        this.tableHeaders = ['Year'];
-        this.filteredTables = [
-          { lob: 'LOB1', cp: 'CP1', dm: 'DM1', values: [100] },
-          { lob: 'LOB2', cp: 'CP2', dm: 'DM2', values: [200] }
-        ];
-      } else if (this.selectedFilter === 'monthly' && this.showMonthly) {
-        this.tableHeaders = this.months.map(month => month.name);
-        this.filteredTables = [
-          { lob: 'LOB1', cp: 'CP1', dm: 'DM1', values: [8, 12, 15, 20, 25, 18, 22, 19, 23, 16, 21, 24] },
-          { lob: 'LOB2', cp: 'CP2', dm: 'DM2', values: [11, 14, 17, 13, 19, 15, 20, 18, 22, 14, 19, 21] }
-        ];
-      } else if (this.selectedFilter === 'monthly' && this.selectedMonth && this.selectedYear) {
-        const monthName = this.months.find(m => m.value === this.selectedMonth)?.name || '';
-        this.tableHeaders = [monthName + ' ' + this.selectedYear];
-        this.filteredTables = [
-          { lob: 'LOB1', cp: 'CP1', dm: 'DM1', values: [10] },
-          { lob: 'LOB2', cp: 'CP2', dm: 'DM2', values: [15] }
-        ];
-      }
-    }
+        // Set dynamic headers like ['W1', 'W2', 'W3', ...] based on extracted keys
+        this.tableHeaders = weekKeys.map(week => week.replace('week', 'W'));  // ['W1', 'W2', ...]
   
-    // Helper function to determine if any filter is applied
-    isFilterApplied(): boolean {
-      return this.filteredTables.length > 0;
-    }
+      this.filteredTables = data.map((item:any)=> ({
+        lob: item.lob,
+        cp: item.clientPartner,
+        dm: item.deliveryManager,
+        values: weekKeys.map(weekKey => item[weekKey]) 
+      }));
+    }});
+    return;
   }
   
+   // Quarterly filter (if selected)
+   if (this.selectedQuarterYear) {
+    this.httpService.getcandidateselectionreports(this.selectedQuarterYear,this.reporttype).subscribe(response => {
+      console.log(this.selectedQuarterYear);
+      const data = response.report.quarterlyClientSelects;
+      this.tableHeaders = ['Q1', 'Q2', 'Q3', 'Q4'];
+      this.filteredTables = data.map((item:any)=> ({
+        lob: item.lob,
+        cp: item.clientPartner,
+        dm: item.deliveryManager,
+        values: [item.Q1, item.Q2, item.Q3, item.Q4]
+      }));
+    });
+    return;
+  }
+
+     // Yearly filter (if selected and not monthly or quarterly)
+  if (this.selectedYear) {
+    this.httpService.getcandidateselectionreports(this.selectedYear,this.reporttype).subscribe(response => {
+      console.log(this.selectedYear);
+      const data = response.report.yearlyClientSelects;
+      this.tableHeaders = ['Total count'];
+      this.filteredTables = data.map((item:any)=> ({
+        lob: item.lob,
+        cp: item.clientPartner,
+        dm: item.deliveryManager,
+        values: [item.totalCount]
+      }));
+    });
+    return;
+}
+ // If nothing is selected
+ this.isFilterApplied = false;
+
+  } 
+  resetFilters(): void {
+    this.selectedQuarterYear = null;
+    this.selectedYear = null;
+    this.selectedMonth = null;
+    this.showMonthly = false;
+    this.isFilterApplied = false;
+    this.filteredTables = [];
+  }
+  
+}
