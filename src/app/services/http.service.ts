@@ -230,15 +230,22 @@ export class HttpService {
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Client-side error: ${error.error.message}`;
-    } else {
-      errorMessage = `Server-side error: ${error.status} - ${error.message}`;
+    if (error.error && error.error.error) {
+      // Extract the error message from the response
+      errorMessage = error.error.error;
+    } else if (error.error && error.error.message) {
+      errorMessage = error.error.message;
+    } else if (error.statusText) {
+      errorMessage = error.statusText;
     }
-    console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
   postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data);
+  }
+  updateCandidateStatus(form_data: any): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
+      catchError(this.handleError) // Handle errors
+    );
   }
 }
