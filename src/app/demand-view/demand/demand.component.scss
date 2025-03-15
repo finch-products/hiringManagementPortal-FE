@@ -5,6 +5,9 @@
     border-radius: 8px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to prevent overflow */
+    gap: 10px;
 }
 
 .demand-head{
@@ -14,15 +17,21 @@
     background-color:#FEFEFE;
     padding: 8px;
 }
-.mat-drop{
-    background-color:#E0FBFC;
-    border-radius: 18px;
-  height:45px;
-  width:150px;
+mat-select {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mat-drop {
+  background-color: #E0FBFC;
+  border-radius: 18px;
+  height: 45px;
+  min-width: 200px; /* Increase min-width to accommodate content */
+  max-width: 100%; /* Ensure it doesn't exceed the container */
   display: flex;
   align-items: center;
   box-sizing: border-box;
-
+  padding: 0 10px; /* Add padding to avoid text touching the edges */
 }
 ::ng-deep .mat-mdc-form-field-subscript-wrapper{
   height: 0px !important;
@@ -312,8 +321,7 @@
   border-left: 4px solid #4caf50; /* Green border */
 }
 
-mat-form-field mat-label {
-  font-size: 17px;
-  text-align: center;
-  padding:10px;
+mmat-form-field {
+  width: 100%; /* Ensure it takes the available space */
+  max-width: 250px; /* Prevent it from being too wide */
 }

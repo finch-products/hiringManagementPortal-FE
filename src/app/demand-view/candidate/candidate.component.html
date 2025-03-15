@@ -41,7 +41,7 @@
                         <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
                     </div>
                     <select class="status" [(ngModel)]="candidate.candidate_status.csm_code"
-                        [ngClass]="{'no-arrow': searchTerm?.trim()}">
+                        [ngClass]="{'no-arrow': searchTerm?.trim()}" [disabled]="!!searchTerm?.trim()">
                         <option *ngFor="let status of statusList" [value]="status.csm_code">
                             {{ status.csm_code }}
                         </option>
@@ -62,7 +62,7 @@
                 </div>
 
                 <span class="Description">
-                    Description: {{ candidate.candidate_status.csm_code || 'N/A' }}
+                    Description: {{ candidate.description || 'N/A' }}
                 </span>
             </div>
         </div>

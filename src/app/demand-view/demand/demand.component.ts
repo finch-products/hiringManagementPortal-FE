@@ -27,9 +27,9 @@ export class DemandComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const demandId = params.get('id');
       this.loadData(demandId);
-      this.loadStatus()
-      this.loadCandidateStatuses()
-    })
+      this.loadStatus();
+      this.loadCandidateStatuses();
+    });
   }
 
   loadCandidateStatuses() {
@@ -43,39 +43,28 @@ export class DemandComponent implements OnInit {
     );
   }
 
-public   loadData(demandId: any) {
+  public loadData(demandId: any) {
     const payload = { dem_id: demandId };
-   
+  
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data) => {
         this.demands = data;
-        // const existingCandidateIds = new Set((data.candidates || []).map((c: { cdl_id: string }) => c.cdl_id));
-        // this.candidates = data.candidates || [];
-       this.candidates = data.candidates ? [...data.candidates].reverse() : [];
-      // console.log("candidates linked", this.candidates);
-   
-  //     console.log("existingCandidateIds",existingCandidateIds)
 
-  //     this.candidates = data.candidates
-  // ? [...data.candidates]
-  //     .reverse()
-  //     .map(candidate => ({
-  //       ...candidate, // Keeps all existing properties dynamically
-  //       isNew: !existingCandidateIds.has(candidate.cdl_id)
-  //     }))
-  // : [];
-  console.log("Updated candidates list:", this.candidates);
-
+        // Set the default value of the status dropdown
+        if (this.demands?.demand_details?.status_details?.dsm_code) {
+          this.demandForm.patchValue({
+            status: this.demands.demand_details.status_details.dsm_code
+          });
+        }
       }
-    })
+    });
   }
- 
+
 
   loadStatus(): void {
     this.httpService.getDemandStatusDetails().subscribe({
       next: (data) => {
         this.stat = data;
-
       },
       error: (err) => console.error('Error fetching clients', err)
     });
