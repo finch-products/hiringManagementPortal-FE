@@ -1,20 +1,15 @@
 
 <h3 class="">Candidate Selection Metrics  </h3>
-<div class="relative inline-block">
-  <button (click)="toggleFilters()" class="filter-btn">
-    <span>Filter</span>
-    <span *ngIf="showFilters">&#9650;</span>
-    <span *ngIf="!showFilters">&#9660;</span>
-  </button>
+    <span class="'filter-btn ">Filter :</span>
 
 
-    <div *ngIf="showFilters" class="filterclass">
+    <div class="filterclass">
         <!-- Quarterly Selection -->
         <div class="qualterly">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Quarterly</mat-label>
-            <mat-select [(ngModel)]="selectedQuarterYear">
-              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+            <mat-select [(ngModel)]="selectedQuarterYear" (selectionChange)="onQuarterYearChange()">
+              <mat-option  *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -23,48 +18,76 @@
         <div class="Yearly">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Yearly</mat-label>
-            <mat-select [(ngModel)]="selectedYear">
+            <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()">
               <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="monthly-checkbox">
-            <mat-checkbox [(ngModel)]="showMonthly">Monthly</mat-checkbox>
+            <mat-checkbox [(ngModel)]="showMonthly" (change)="onMonthlyCheckboxChange()">Monthly</mat-checkbox>
           </div>
       
         <!-- Monthly Selection -->
         <div class="monthly">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Select Month</mat-label>
-            <mat-select [(ngModel)]="selectedMonth">
+            <mat-select [(ngModel)]="selectedMonth" (selectionChange)="onMonthChange()">
               <mat-option *ngFor="let month of months" [value]="month.value">{{ month.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>      
-  </div>
 
-<table class="styled-table" *ngIf="!isFilterApplied()">
-  <thead>
-    <tr><th>Client Partner (CP)</th><th>LOB</th><th>Delivery Manager (DM)</th><th>Count</th><th>Start Date</th><th>End Date</th></tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of candidateSelectionTable">
-      <td>{{ row.cp }}</td><td>{{ row.lob }}</td><td>{{ row.dm }}</td><td>{{ row.count }}</td><td>{{ row.startDate }}</td><td>{{ row.endDate }}</td>
-    </tr>
-  </tbody>
-</table>
-
-<ng-container *ngIf="isFilterApplied()">
-  <div *ngFor="let lobData of filteredTables" class="lob-table">
-    <h3>{{ lobData.lob }}</h3>
+<ng-container *ngIf="!isFilterApplied">
+  <div class="lob-table">
     <table class="styled-table">
-      <thead><tr><th>CP</th><th>DM</th><th>LOB</th><th *ngFor="let month of lobData.months">{{ month }}</th></tr></thead>
-      <tbody>
-        <tr *ngFor="let row of lobData.data">
-          <td>{{ row.cp }}</td><td>{{ row.dm }}</td><td>{{ row.lob }}</td><td *ngFor="let value of row.values">{{ value }}</td>
-        </tr>
-      </tbody>
-    </table>
+        <thead>
+          <tr>
+            <th>Client Partner (CP)</th>
+            <th>LOB</th>
+            <th>Delivery Manager (DM)</th>
+            <th>Count</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Check if data exists -->
+          <tr *ngIf="candidateSelectionTable.length === 0">
+            <td colspan="6" class="text-center">No data available for the selected period.</td>
+          </tr>
+          <!-- Loop through data if available -->
+          <tr *ngFor="let row of candidateSelectionTable">
+            <td>{{ row.clientPartner }}</td>
+            <td>{{ row.lob }}</td>
+            <td>{{ row.deliveryManager }}</td>
+            <td>{{ row.totalCount }}</td>
+            <td> {{start_date }}</td>
+            <td>{{end_date}} </td>
+          </tr>
+        </tbody>
+      </table>
+      
   </div>
 </ng-container>
+
+<ng-container *ngIf="isFilterApplied">
+    <div class="lob-table">
+      
+      <h3 >{{ selectedFilter }}</h3>
+      <!-- Check if data exists -->
+      <tr *ngIf="filteredTables.length === 0">
+        <td colspan="6" class="text-center">No data available for the selected period.</td>
+      </tr>
+      <table class="styled-table">
+        <thead><tr><th>CP</th><th>DM</th><th>LOB</th><th *ngFor="let month of tableHeaders">{{ month }}</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let row of filteredTables">
+            <td>{{ row.cp }}</td><td>{{ row.dm }}</td><td>{{ row.lob }}</td><td *ngFor="let value of row.values">{{ value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container> 
+
+  <button mat-raised-button color="warn" (click)="resetFilters()">Reset Filters</button>
