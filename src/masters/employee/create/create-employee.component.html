@@ -53,7 +53,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Location*</mat-label>
+                <mat-label>Location</mat-label>
                 <mat-select formControlName="emp_lcm_id">
                   <mat-option *ngFor="let location of locations" [value]="location.lcm_id">
                     {{ location.lcm_name }}
@@ -62,7 +62,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Role*</mat-label>
+                <mat-label>Role</mat-label>
                 <mat-select formControlName="emp_rlm_id">
                   <mat-option *ngFor="let role of roles" [value]="role.rlm_id">
                     {{ role.rlm_name }}
