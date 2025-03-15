@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,7 +31,15 @@ export class CandidateComponent {
   dem_id: string = '';
   statusList: any[] = [];
   demands: any;
-  constructor(private httpService: HttpService, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) { }
+  showPopup: boolean = false;
+  selectedCandidate: any = null; 
+  selectedStatus: string = ''; 
+  cdm_comment: string = ''; 
+  csm_code: string = ''; 
+
+  // Define cdm_updateby_id as a constant
+  readonly cdm_updateby_id = 'emp_10022025_01';
+  constructor(private httpService: HttpService,private cdr: ChangeDetectorRef, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -45,6 +53,94 @@ export class CandidateComponent {
     console.log("Demand ID on Init:", this.dem_id);
   }
 
+  onSubmit() {
+    this.onStatusFormSubmit(); // Call the existing method
+  }
+
+  onCancel() {
+    this.onPopupClose(); // Call the existing method
+  }
+
+  onStatusChange(candidate: any, event: any) {
+    console.log('Candidate:', candidate); // Debugging
+    console.log('Status changed:', event.target.value); // Debugging
+    const newStatus = event.target.value;
+  
+    // Ensure candidate.candidate_status is defined
+    if (!candidate.candidate_status) {
+      console.error('Candidate status is undefined');
+      return;
+    }
+  
+    console.log('Current Status:', candidate.candidate_status.csm_code); // Debugging
+    console.log('New Status:', newStatus); // Debugging
+  
+    if (newStatus !== candidate.candidate_status.csm_code) {
+      this.selectedCandidate = candidate;
+      this.selectedStatus = newStatus;
+      this.csm_code = newStatus;
+      this.showPopup = true; // Show the pop-up
+      console.log('showPopup:', this.showPopup);
+    }
+  }
+
+  onPopupClose() {
+    this.showPopup = false;
+    this.selectedCandidate = null;
+    this.selectedStatus = '';
+    this.cdm_comment = '';
+    this.csm_code = '';
+  }
+
+  onStatusFormSubmit() {
+    if (!this.selectedCandidate || !this.selectedStatus) {
+      this.snackBar.open("Invalid data. Please try again.", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+  
+    const csm_id = this.statusList.find(status => status.csm_code === this.selectedStatus)?.csm_id;
+  
+    if (!csm_id) {
+      this.snackBar.open("Invalid status selected. Please try again.", "Close", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+  
+    const payload = {
+      cdm_id: this.selectedCandidate.cdl_cdm_id,
+      csm_id: csm_id,
+      cdm_comment: this.cdm_comment,
+      cdm_updateby_id: this.cdm_updateby_id // Use the constant here
+    };
+  
+    console.log('Payload:', payload); // Debugging
+  
+    this.httpService.updateCandidateStatus(payload).subscribe({
+      next: (response) => {
+        this.snackBar.open("✅ Candidate status updated successfully!", "Close", {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+        this.onPopupClose();
+        this.loadData(this.dem_id); // Reload data to reflect changes
+      },
+      error: (error) => {
+        // Display the error message returned by the API
+        this.snackBar.open(`❌ ${error.message}`, "Close", {
+          duration: 5000, // Increase duration for better readability
+          panelClass: ['error-snackbar']
+        });
+        console.error("Error updating candidate status", error);
+      }
+    });
+  }
+  
+  
   public loadData(demandId: any) {
     const payload = { dem_id: demandId };
 
@@ -67,7 +163,9 @@ export class CandidateComponent {
         //     }))
         // : [];
         console.log("Updated candidates list:", this.candidates);
-
+        this.candidates.forEach(candidate => {
+          candidate.selectedStatus = candidate.candidate_status.csm_code;
+        });
       }
     })
   }
@@ -76,6 +174,7 @@ export class CandidateComponent {
     this.httpService.getCandidateStatuses().subscribe(
       (response) => {
         this.statusList = response;
+        console.log('Status List:', this.statusList); // Debugging
       },
       (error) => {
         console.error('Error fetching candidate statuses:', error);
