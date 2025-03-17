@@ -8,11 +8,11 @@
       <!-- Status Dropdown -->
       <div class="form-group">
         <label for="status">Status</label>
-        <mat-select id="status" [(ngModel)]="selectedStatus" name="status">
-          <mat-option *ngFor="let status of stat" [value]="status.dsm_code">
+        <select id="status" [(ngModel)]="selectedStatus" name="status">
+          <option *ngFor="let status of stat" [value]="status.dsm_code">
             {{ status.dsm_code }}
-          </mat-option>
-        </mat-select>
+          </option>
+        </select>
       </div>
 
       <!-- Comment Textarea -->

@@ -17,7 +17,7 @@ interface Status {
 export class DemandComponent implements OnInit {
   @Output() pdfSelected = new EventEmitter<string>();
   demandForm = new FormGroup({
-    status: new FormControl(null)
+    status: new FormControl<string | null>(null)
   });
 
   demands: any;
@@ -26,6 +26,7 @@ export class DemandComponent implements OnInit {
   statusList: any[] = [];
   showPopup: boolean = false;
   selectedStatus: string = '';
+  originalStatus: string | null = null;
   dem_comment: string = '';
   readonly dem_updateby_id = 'emp_10022025_01';
   constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar) {
@@ -64,6 +65,7 @@ export class DemandComponent implements OnInit {
           this.demandForm.patchValue({
             status: this.demands.demand_details.status_details.dsm_code
           });
+          this.originalStatus = this.demands.demand_details.status_details.dsm_code;
         }
       }
     });
@@ -100,7 +102,7 @@ export class DemandComponent implements OnInit {
 
   onSubmit() {
     if (!this.selectedStatus) {
-      this.snackBar.open("Invalid status selected. Please try again.", "Close", {
+      this.snackBar.open("Invalid status selected. Please try again.", "❌", {
         duration: 3000,
         panelClass: ['error-snackbar']
       });
@@ -110,7 +112,7 @@ export class DemandComponent implements OnInit {
     const dsm_id = this.stat.find((status: Status) => status.dsm_code === this.selectedStatus)?.dsm_id;
 
     if (!dsm_id) {
-      this.snackBar.open("Invalid status selected. Please try again.", "Close", {
+      this.snackBar.open("Invalid status selected. Please try again.", "❌", {
         duration: 3000,
         panelClass: ['error-snackbar']
       });
@@ -123,7 +125,7 @@ export class DemandComponent implements OnInit {
       dem_comment: this.dem_comment,
       dem_updateby_id: this.dem_updateby_id
     };
-    console.log(payload)
+    this.onCancel();
     this.httpService.updateDemand(payload).subscribe({
       next: (response) => {
         this.snackBar.open("✅ Demand status updated successfully!", "Close", {
@@ -134,11 +136,13 @@ export class DemandComponent implements OnInit {
         this.loadData(this.demands.cdl_dem_id); // Reload data to reflect changes
       },
       error: (error) => {
-        this.snackBar.open(`❌ ${error.message}`, "Close", {
+        this.snackBar.open(`${error.message}`, "❌", {
           duration: 5000,
           panelClass: ['error-snackbar']
         });
         console.error("Error updating demand status", error);
+        console.log(this.originalStatus)
+        this.demandForm.patchValue({ status: this.originalStatus ?? null });
       }
     });
   }
