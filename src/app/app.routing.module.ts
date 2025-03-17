@@ -42,9 +42,10 @@ const routes: Routes = [
   { path: 'other-view2', component: Otherview2Component },
   { path: 'other-view4', component: Otherview4Component },
   { path: 'other-view5', component: Otherview5Component },
-  { path: 'demand-history', component: DemandHistoryComponent },
+  // { path: 'demand-history', component: DemandHistoryComponent ,data: { type: 'demand' } },
+  {path: 'candidate-history',component:DemandHistoryComponent,data: { type: 'candidate' }},
   { path: 'demand-view/:id', component: DemandViewComponent },
-  { path: 'history', component: DemandHistoryComponent },
+  { path: 'history', component: DemandHistoryComponent ,data: { type: 'demand'}},
   { path: '', component: DashboardComponent },
 ];
 

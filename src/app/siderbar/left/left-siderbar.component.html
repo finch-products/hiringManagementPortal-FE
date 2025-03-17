@@ -44,7 +44,11 @@
               <mat-icon>assignment</mat-icon>
               <span>Report</span>
             </a>
-          </mat-action-list></mat-expansion-panel>
+            <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
+            <mat-icon>assignment</mat-icon>
+            <span>Candidate History</span>
+          </a>
+        </mat-action-list></mat-expansion-panel>
 
       <mat-expansion-panel class="view_panel">
         <mat-expansion-panel-header>

@@ -149,12 +149,25 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}demands/all`, this.getHeaders()).pipe(
       catchError(this.handleError));
   }
-
+  
+  getCandidateIds():Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}candidates/`,this.getHeaders()).pipe(
+      catchError(this.handleError))
+  }
   updateDemand(form_data: any): Observable<any> {
     return this.http.patch<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
+
+  DemandByCadidateId(candidateId:any): Observable<any> {
+    console.log("payload=",candidateId)
+    return this.http.get<any>(`${this.baseUrl}candidates/candidate-history/${candidateId}/`,this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
 
   getEmployees(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/employee-by-role/`, this.getHeaders()).pipe(
@@ -189,6 +202,7 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+
   getreportclientselection(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}reports/client-selection/`, this.getHeaders()).pipe(
       catchError(this.handleError)
