@@ -14,70 +14,70 @@ export class DemandHistoryComponent implements OnInit {
   selectedDemand: any = null;
   selectedDemandId: string | null = null; // To track highlighted demand
   searchText: string = '';
-  // candidates: any[] = [];
+  candidates: any[] = [];
   selectedCandidate: any = null;
   selectedCandidateId: string | null = null;
   candidateIds : any[]=[]
   associatedDemands: any
-  displayedColumns: string[] = ['date', 'status'];
-  candidates = [
-    {
-      id: 'CAND123',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '+1234567890',
-      location_name: 'Bangalore',
-      description: 'Experienced Frontend Developer',
-      skills: ['Angular', 'TypeScript', 'HTML', 'CSS'],
-      keywords: ['frontend', 'developer', 'Angular'],
-      cdl_joiningdate: '2024-05-10',
-      demands: [
-        {
-          dem_id: 'DEM123',
-          position: 'Frontend Developer',
-          skillset: 'Angular, TypeScript',
-          valid_till: '2025-06-30',
-        },
-        {
-          dem_id: 'DEM124',
-          position: 'UI Designer',
-          skillset: 'Figma, CSS',
-          valid_till: '2025-07-15',
-        },
-      ],
-      status: [
-        { date: '2025-03-01', value: 'Application Submitted' },
-        { date: '2025-03-05', value: 'Interview Scheduled' },
-        { date: '2025-03-10', value: 'Interview Completed' },
-        { date: '2025-03-12', value: 'Offer Extended' },
-      ],
-    },
-    {
-      id: 'CAND124',
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      phone: '+9876543210',
-      location_name: 'Hyderabad',
-      description: 'Full Stack Developer with 5+ years of experience',
-      skills: ['Node.js', 'Angular', 'MongoDB', 'Express'],
-      cdl_joiningdate: '2024-04-15',
-      demands: [
-        {
-          dem_id: 'DEM125',
-          position: 'Full Stack Developer',
-          skillset: 'Node.js, Angular',
-          valid_till: '2025-08-01',
-        },
-      ],
-      status: [
-        { date: '2025-02-20', value: 'Application Submitted' },
-        { date: '2025-02-25', value: 'Technical Interview' },
-        { date: '2025-03-01', value: 'HR Discussion' },
-        { date: '2025-03-07', value: 'Offer Released' },
-      ],
-    }
-  ];
+  displayedColumns: string[] = ['date', 'status','comment'];
+  // candidates = [
+  //   {
+  //     id: "dem_03032025_1", // Changed to match candidateIds
+  //     name: "John Doe",
+  //     email: "john.doe@example.com",
+  //     phone: "+1234567890",
+  //     location_name: "Bangalore",
+  //     description: "Experienced Frontend Developer",
+  //     skills: ["Angular", "TypeScript", "HTML", "CSS"],
+  //     keywords: ["frontend", "developer", "Angular"],
+  //     cdl_joiningdate: "2024-05-10",
+  //     demands: [
+  //       {
+  //         dem_id: "dem_03032025_1", // Matches candidate ID
+  //         position: "Frontend Developer",
+  //         skillset: "Angular, TypeScript",
+  //         valid_till: "2025-06-30"
+  //       }
+  //     ],
+  //     status: [
+  //       { date: "2025-03-01", value: "Application Submitted", comment: "Resume received" },
+  //       { date: "2025-03-05", value: "Interview Scheduled", comment: "Interview on March 7 at 10 AM" },
+  //       { date: "2025-03-10", value: "Interview Completed", comment: "Candidate performed well" },
+  //       { date: "2025-03-12", value: "Offer Extended", comment: "Offer sent, awaiting response" }
+  //     ]
+  //   },
+  //   {
+  //     id: "dem_04032025_1",
+  //     name: 'Jane Smith',
+  //     email: 'jane.smith@example.com',
+  //     phone: '+9876543210',
+  //     location_name: 'Hyderabad',
+  //     description: 'Full Stack Developer with 5+ years of experience',
+  //     skills: ['Node.js', 'Angular', 'MongoDB', 'Express'],
+  //     keywords: ['fullstack', 'developer', 'Angular'],
+  //     cdl_joiningdate: '2024-04-15',
+  //     demands: [
+  //       {
+  //         dem_id: 'DEM125',
+  //         position: 'Full Stack Developer',
+  //         skillset: 'Node.js, Angular',
+  //         valid_till: '2025-08-01',
+  //       },
+  //     ],
+  //     status: [
+  //       { date: '2025-02-20', value: 'Application Submitted',comment: 'Resume received'},
+  //       { date: '2025-02-25', value: 'Technical Interview' , comment: 'Interview on March 7 at 10 AM' },
+  //       { date: '2025-03-01', value: 'HR Discussion', comment: 'Candidate performed well' },
+  //       { date: '2025-03-07', value: 'Offer Released' , comment: 'Offer sent, awaiting response'},
+  //     ],
+  //   }
+  // ];
   
+  data: any;
+  demands:any[] = [];
+  demandStatus: any;
+  candidateStatus:any;
+ 
   
 
   constructor(private http: HttpClient, private httpService: HttpService,private route: ActivatedRoute) { }
@@ -99,6 +99,24 @@ export class DemandHistoryComponent implements OnInit {
     }
   }
 
+  fetchDemandIds() {
+    this.httpService.getDemandIds().subscribe({
+      next: (data: any) => {
+        this.demandIds = data;
+        if (this.demandIds.length > 0) {
+          this.selectDemand(this.demandIds[0].dem_id); // Auto-select first demand
+        }
+      },
+      error: (err: any) => console.error('Error fetching demands', err)
+    });
+  }
+
+  selectDemand(demandId: string) {
+    this.selectedDemand = null; // Reset selected demand
+    this.candidates = [];       // Clear candidates list
+    this.fetchCandidateByDemandId(demandId);
+  }
+
   fetchCandidateByDemandId(demandId?: string) {
     if (!demandId) {
         console.error('Demand ID is required');
@@ -117,75 +135,55 @@ export class DemandHistoryComponent implements OnInit {
     });
   }
 
-  fetchDemandIds() {
-    this.httpService.getDemandIds().subscribe({
-      next: (data: any) => {
-        this.demandIds = data;
-        if (this.demandIds.length > 0) {
-          this.selectDemand(this.demandIds[0].dem_id); // Auto-select first demand
-        }
-      },
-      error: (err: any) => console.error('Error fetching demands', err)
-    });
-  }
-
   filteredDemands() {
     return this.demandIds?.filter((demand: { dem_id: string }) =>
         demand.dem_id.toLowerCase().includes(this.searchText?.toLowerCase() || '')
     ) || [];
   }
 
-  selectDemand(demandId: string) {
-    this.selectedDemand = null; // Reset selected demand
-    this.candidates = [];       // Clear candidates list
-    this.fetchCandidateByDemandId(demandId);
+// candidate history
+
+  fetchCandidateIds(){
+    this.httpService.getCandidateIds().subscribe({
+      next:(data:any)=>{
+        console.log("candidateIDs",data)
+        this.candidateIds = data;
+        if (this.candidateIds.length > 0) {
+          this.selectCandidate(this.candidateIds[0].cdm_id); 
+        }
+      }
+    })
+  }
+  selectCandidate(candidateId: string) {
+    this.selectedCandidate = null;
+    this.demands = [];     
+    this.fetchDemandByCandidateId(candidateId);
   }
 
-// candidate history
-  fetchCandidateIds(){
-    this.candidateIds=[
-      {
-          "c_id": "dem_03032025_1"
-      },
-      {
-          "c_id": "dem_04032025_1"
-      },
-      {
-          "c_id": "dem_04032025_2"
-      }]
-        
-    if (this.candidateIds.length > 0) {
-      console.log("selected candidate",this.candidateIds[0])
-      this.selectCandidate(this.candidateIds[0].c_id); // Auto-select first candidate
-    }
+  fetchDemandByCandidateId(candidateId?:string){
+    if (!candidateId) {
+      console.error('Candidate ID is required');
+      return;
+  }
+  console.log("candidate Id",candidateId)
+  this.httpService.DemandByCadidateId(candidateId).subscribe({
+    next: (data) => {
+      if (data) {
+        // this.selectedCandidate = { ...data.candidate };
+        this.selectedCandidate = data
+         this.demands = data.demands|| [];
+         this.demandStatus = this.demands.flatMap(demand => demand.demand_status_history || []);
+         this.candidateStatus = this.demands.flatMap(demand => demand.candidate_status_history || []);
+        this.selectedCandidateId = candidateId; // Highlight the selected demand
+      }
+    },
+    error: (err: any) => console.error('Error fetching demand and candidate details', err)
+  });
   }
 
   filteredCandidates() {
-    return this.candidates?.filter((candidate) =>
-      candidate.name.toLowerCase().includes(this.searchText?.toLowerCase() || '')
+    return this.candidateIds?.filter((candidate:{ cdm_id: string }) =>
+      candidate.cdm_id.toLowerCase().includes(this.searchText?.toLowerCase() || '')
     ) || [];
   }
-
-  selectCandidate(candidateId: string) {
-    console.log("candidateId", candidateId);
-
-  this.selectedCandidateId = candidateId;
-
-  // Ensure candidates list is populated before searching
-  if (!this.candidates || this.candidates.length === 0) {
-    console.warn("Candidates list is empty!");
-    return;
-  }
-
-  // Find the candidate by ID
-  this.selectedCandidate = this.candidates.find(candidate => candidate.id === candidateId) || null;
-
-  // Reset associatedDemands if no candidate is found
-  this.associatedDemands = this.selectedCandidate ? this.selectedCandidate.demands || [] : [];
-
-  console.log("Selected Candidate1:", this.selectedCandidate);
-  }
-
-  
-
 }
