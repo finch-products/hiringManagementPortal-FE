@@ -9,6 +9,7 @@ import { HttpService } from '../../services/http.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-list-open-demands',
@@ -19,6 +20,7 @@ export class ListOpenDemandsComponent {
   listForm:FormGroup;
   hoveredRow: any = null;
   selectedRows: any[] = [];
+  selection = new SelectionModel<OpenDemand>(true, []);
 
   // displayedColumns: string[] = [
   //   'ctool_number', 'ctool_date', 'client_manager_name',
@@ -126,14 +128,30 @@ isEditmode="false";
    this.isEditmode="true";
   }
 
-  toggleSelection(row: any, event: any) {
-    if (event.checked) {
-      this.selectedRows.push(row);
-    } else {
-      this.selectedRows = this.selectedRows.filter(selected => selected !== row);
-    }
+  toggleSelection(row: any) {
+    this.selection.toggle(row);
+    this.selectedRows = this.selection.selected;
     this.updateSaveButtonState();
   }
+
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }  
+
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.selection.select(...this.dataSource.data);
+    }
+    this.selectedRows = this.selection.selected;
+    this.updateSaveButtonState();
+  }
+
+  
   updateSaveButtonState() {
     document.querySelector('.submit')?.toggleAttribute('disabled', this.isSaveDisabled());
   }

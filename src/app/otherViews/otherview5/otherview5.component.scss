@@ -1,0 +1,94 @@
+/* filter-table.component.css */
+h3{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 300;
+    font-size: 25px;
+    padding:10px;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 10px;
+    font-size: 0.9em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .styled-table th, .styled-table td {
+    border: 1px solid #dddddd;
+    padding: 8px 12px;
+    text-align: center;
+  }
+  
+  .styled-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .lob-table {
+    margin-top: 30px;
+  }
+
+/* Main container styling */
+.filterclass {
+    display: flex;
+    gap: 3vw;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: start;
+    margin: 30px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+  }
+  
+  /* Card-like box for each filter */
+  .filterclass .qualterly, 
+  .filterclass .Yearly, 
+  .filterclass .monthly { /* Monthly selection dropdown stays styled */
+    background: #f7f7f7;
+    border-radius: 20px;
+    padding: 8px 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    min-width: 220px;
+    height: 60px;
+    text-align: left;
+    display: flex;
+    align-items: canter;
+    flex-direction: column;
+    gap: 45px;
+    position: relative;
+  }
+
+  /* Checkbox without background */
+  .monthly-checkbox {
+    margin-top: 10px; /* Adjust as needed to pull closer to Yearly */
+    margin-left: 5px;
+    margin-bottom: 10px;
+  }
+  
+  /* Checkbox simple look */
+  .monthly-checkbox mat-checkbox {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Mat-select dropdown width control */
+  .mat-select-panel {
+    max-width: 250px !important;
+    width: 100% !important;
+  }
+  
+  /* Filter button styling */
+  span {
+    background-color: rgb(230, 230, 228);
+    padding: 12px 20px;
+    border:#333;
+    margin:15px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    min-width: 30vw;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    height: max-content;
+    align-self: center;
+  }
+

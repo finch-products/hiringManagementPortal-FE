@@ -15,15 +15,12 @@ import { CreateEmployeeComponent } from '../masters/employee/create/create-emplo
 import { CreateCandidateComponent } from '../masters/candidate/create/create-candidate.component';
 import { Otherview2Component } from './otherViews/otherview2/otherview2.component';
 import { Otherview4Component } from './otherViews/otherview4/otherview4.component';
+import { Otherview5Component } from './otherViews/otherview5/otherview5.component';
 import { DemandHistoryComponent } from './open-demands/history/demand.history.component';
 import { DemandViewComponent } from './demand-view/demand-view.component';
 import { CandidateHistoryComponent } from './candidates/history/history.component';
 import { CandidateProfileComponent } from './candidates/profile/profile.component';
 import { CandidadteReportComponent } from './candidates/report/report.component';
-// import { ClientMasterComponent } from './client-master/client-master.component';
-// import { LobMasterComponent } from './lob-master/lob-master.component';
-// import { LocationMasterComponent } from './location-master/location-master.component';
-// import { PracticeUnitMasterComponent } from './internal-department-master/internal-department-master.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -44,18 +41,12 @@ const routes: Routes = [
   { path: 'documents', loadChildren: () => import('../documents/documents.module').then(m => m.DocumentsModule) },
   { path: 'other-view2', component: Otherview2Component },
   { path: 'other-view4', component: Otherview4Component },
+  { path: 'other-view5', component: Otherview5Component },
   // { path: 'demand-history', component: DemandHistoryComponent ,data: { type: 'demand' } },
   {path: 'candidate-history',component:DemandHistoryComponent,data: { type: 'candidate' }},
   { path: 'demand-view/:id', component: DemandViewComponent },
   { path: 'history', component: DemandHistoryComponent ,data: { type: 'demand'}},
   { path: '', component: DashboardComponent },
-
-
-
-  // { path: 'client-master', component: ClientMasterComponent },
-  // { path: 'lob-master', component: LobMasterComponent },
-  // { path: 'location-master', component: LocationMasterComponent },
-  // { path: 'internal-department-master', component: PracticeUnitMasterComponent }
 ];
 
 @NgModule({

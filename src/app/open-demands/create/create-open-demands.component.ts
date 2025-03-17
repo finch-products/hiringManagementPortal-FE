@@ -40,7 +40,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
-      clm_clientemail: [''],
+      clm_clientemail: [{ value: '', disabled: true }], // Initially disabled
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],
@@ -88,7 +88,7 @@ export class CreateOpenDemandComponent implements OnInit {
   
   if (selectedValue === 'custom') {
     this.customEntryEnabled = true;
-    this.demandForm.get('clm_clientemail')?.setValue(''); // Clear email field for manual entry
+    this.demandForm.get('clm_clientemail')?.disable() //setValue(''); // Clear email field for manual entry
   } else {
     this.customEntryEnabled = false;
     
@@ -96,7 +96,7 @@ export class CreateOpenDemandComponent implements OnInit {
     const selectedManager = this.clients.find(client => client.clm_id === selectedValue);
     // alert('selectedManager' + JSON.stringify(selectedManager))
     if (selectedManager) {
-      this.demandForm.get('clm_clientemail')?.setValue(selectedManager.clm_clientemail);
+      this.demandForm.get('clm_clientemail')?.disable(); // Keep it disabled (readonly)  .setValue(selectedManager.clm_clientemail);
       // alert('selectedManager' + this.demandForm.get('clm_clientemail')?.value())
     }
   }
