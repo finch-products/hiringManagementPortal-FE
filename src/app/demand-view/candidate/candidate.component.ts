@@ -94,7 +94,7 @@ export class CandidateComponent {
 
   onStatusFormSubmit() {
     if (!this.selectedCandidate || !this.selectedStatus) {
-      this.snackBar.open("Invalid data. Please try again.", "Close", {
+      this.snackBar.open("Invalid data. Please try again.", "❌", {
         duration: 3000,
         panelClass: ['error-snackbar']
       });
@@ -104,7 +104,7 @@ export class CandidateComponent {
     const csm_id = this.statusList.find(status => status.csm_code === this.selectedStatus)?.csm_id;
   
     if (!csm_id) {
-      this.snackBar.open("Invalid status selected. Please try again.", "Close", {
+      this.snackBar.open("Invalid status selected. Please try again.", "❌", {
         duration: 3000,
         panelClass: ['error-snackbar']
       });
@@ -117,9 +117,7 @@ export class CandidateComponent {
       cdm_comment: this.cdm_comment,
       cdm_updateby_id: this.cdm_updateby_id // Use the constant here
     };
-  
-    console.log('Payload:', payload); // Debugging
-  
+    this.onCancel();
     this.httpService.updateCandidateStatus(payload).subscribe({
       next: (response) => {
         this.snackBar.open("✅ Candidate status updated successfully!", "Close", {
@@ -131,11 +129,12 @@ export class CandidateComponent {
       },
       error: (error) => {
         // Display the error message returned by the API
-        this.snackBar.open(`❌ ${error.message}`, "Close", {
+        this.snackBar.open(` ${error.message}`, "❌", {
           duration: 5000, // Increase duration for better readability
           panelClass: ['error-snackbar']
         });
         console.error("Error updating candidate status", error);
+        this.loadData(this.dem_id);
       }
     });
   }
