@@ -29,46 +29,61 @@
           <mat-icon>account_circle</mat-icon>
         </div>
         <div class="client-details">
-          <p>{{demands?.demand_details?.client_details.clm_name}}
+          <p> Client: {{demands?.demand_details?.client_details.clm_name}}
             <br />Client Manager:
             <b>{{demands?.demand_details?.client_details.clm_managername}}</b></p>
         </div>
       </div>
       <div class="dates">
-        <p>Open Date: <b>{{demands?.demand_details?.dem_ctooldate|
-            date:'dd-MM-yyyy'}}</b></p>
-        <p>Valid Till: <b>{{demands?.demand_details?.dem_validtill|
-            date:'dd-MM-yyyy'}}</b></p>
+        <span class="date-item">
+          <p>Open Date : <b>{{demands?.demand_details?.dem_ctooldate | date:'dd-MMM-yy'}}</b></p>
+        </span>
+        <span class="date-item">
+          <p>Valid Till : <b>{{demands?.demand_details?.dem_validtill | date:'dd-MMM-yy'}}</b></p>
+        </span>
       </div>
+      
     </div>
 
     <!-- Details Section -->
-    <div class="details-section">
-      <div class="details-header">
-        <div>Position:
-          <b>{{demands?.demand_details?.dem_position_name}}</b></div>
-        <div>Number of Positions <span
-            class="position-count">{{demands?.demand_details?.dem_positions}}</span></div>
-        <div>rr / Jr number
-          <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b>
-        </div>
-        <div> LOB <b>{{demands?.demand_details?.lob_details.lob_name}}</b></div>
-
-      </div>
-      <!-- Skills Section -->
-      <div class="skills">
-        <span class="skill">{{ demands?.demand_details?.dem_skillset }}</span>
-      </div>
-
-      <!-- Manager & Job Description -->
-      <div class="footer-section">
-        <div>Delivery Manager:
-          <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b>
-        </div>
-        <div>Job Description: <a href="javascript:void(0);"
-            (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a></div>
-      </div>
+<div class="details-section">
+  <div class="details-header">
+    <div class="detail-box">
+      <span>Position</span>
+      <b>{{demands?.demand_details?.dem_position_name}}</b>
     </div>
+    <div class="detail-box">
+      <span>Number of Positions</span>
+      <b class="position-count">{{demands?.demand_details?.dem_positions}}</b>
+    </div>
+    <div class="detail-box">
+      <span>RR / JR number</span>
+      <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div class="skills">
+    <span>Skills</span>
+    <b class="skill">{{ demands?.demand_details?.dem_skillset }}</b>
+  </div>
+
+  <!-- Manager & Job Description -->
+  <div class="footer-section">
+    <div class="detail-box">
+      <span>LOB</span>
+      <b>{{demands?.demand_details?.lob_details.lob_name}}</b>
+    </div>
+    <div class="detail-box">
+      <span>Delivery Manager</span>
+      <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b>
+    </div>
+    <div class="detail-box">
+      <span>Job Description</span>
+      <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
+    </div>
+  </div>
+</div>
   </mat-card>
 
   <!-- <mat-card *ngFor="let candidate of candidates" class="demand-container">

@@ -36,25 +36,37 @@ body, html {
     margin-left: 8px;
 }
 
+/* Align checkbox properly */
+.candidate-item input[type="checkbox"] {
+    margin-right: 10px; /* Add space between checkbox and candidate card */
+    margin-left: 5px; /* Optional: space from left edge */
+    align-self: flex-start; /* Align to top */
+}
+
 .candidates-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-
 .candidate-card {
     background: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-height: 80px; 
+    border: 1px solid #ddd;
+    position: relative;
 }
-
 .candidate-header {
     display: flex;
+    min-height: 80px; 
     align-items: center;
+    gap: 10px; /* Proper space between items */
+    padding: 5px 10px; /* Space inside */
+    box-sizing: border-box; /* Prevent size issues */
     justify-content: space-between;
 }
 
@@ -83,6 +95,7 @@ body, html {
 .candidate-info {
     flex-grow: 1;
     margin-left: 10px;
+    min-width: 0; 
 }
 
 .candidate-name {
@@ -95,26 +108,49 @@ body, html {
     font-size: 10px;
 }
 
+/* Modernized Status Badge */
 .status {
-    display: inline-block; /* Makes the span behave like a badge */
-    padding: 5px 12px; /* Adjust padding as needed */
-    background-color: #eaffea; /* Light green background */
-    color: #228B22; /* Green text */
-    border-radius: 20px; /* Rounded corners */
-    font-weight: bold; /* Bold text */
-    font-size: 8px; /* Adjust font size */
+    display: inline-block;
+    padding: 2px 5px; /* Slightly increased padding for better spacing */
+    background-color: #D1FADF; /* Softer light green */
+    color: #027A48; /* Darker text for better contrast */
+    border-radius: 999px; /* Fully rounded pill shape */
+    font-weight: 600; /* Medium bold */
+    font-size: 12px;
     text-align: center;
-    white-space: nowrap; /* Prevent text from wrapping */
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 5px 0 0 0; /* Adjust margin to separate from text */
+    min-width: max-content;
+    max-width: 140px;
+    width: 100%; /* So it adjusts inside its space */
+    box-sizing: border-box; 
 }
 
+/* Specific Status Colors */
 .status.Selected {
-    background-color: #E6F4EA;
-    color: #137333;
+    background-color: #D1FADF;
+    color: #027A48;
 }
 
 .status.Rejected {
-    background-color: #FCE8E6;
-    color: #D93025;
+    background-color: #FEE4E2;
+    color: #B42318;
+}
+
+.status.Pending {
+    background-color: #FEF0C7;
+    color: #B54708;
+}
+
+ /*Floating Style (Optional if you want to move it to top-right)*/ 
+.floating-status {
+    top: 10px;
+    right: 10px;
+    padding: 2px 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    
 }
 
 .skills {
@@ -216,8 +252,8 @@ body, html {
     background-color: #eaffea;
     color: #228B22;
     border-radius: 15px;
-    font-weight: bold;
-    font-size: 14px;
+    //font-weight: bold;
+    //font-size: 14px;
     text-align: center;
     white-space: nowrap; /* Prevents text from breaking */
     max-width: 100%; /* Ensures it fits within the container */

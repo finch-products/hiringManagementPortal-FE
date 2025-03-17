@@ -34,18 +34,19 @@
                 <div class="candidate-header">
                     <div class="avatar-container">
                         <mat-icon>person_outline</mat-icon>
-                    </div>
+                    </div> 
                     <div class="candidate-info">
                         <h3 class="candidate-name">{{ candidate.name || candidate.cdm_name }}</h3>
-                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id || candidate.cdl_cdm_id}}</p>
+                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id || candidate.cdm_id}}</p>
                         <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
                     </div>
                     <select class="status" [(ngModel)]="candidate.candidate_status.csm_code"
-                        [ngClass]="{'no-arrow': searchTerm?.trim()}">
+                        [ngClass]="{'no-arrow': searchTerm?.trim()}" *ngIf="!searchTerm?.trim()">
                         <option *ngFor="let status of statusList" [value]="status.csm_code">
                             {{ status.csm_code }}
                         </option>
                     </select>
+                    <div *ngIf="searchTerm?.trim()" class="status"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
                 </div>
 
                 <div class="skills">
@@ -62,7 +63,7 @@
                 </div>
 
                 <span class="Description">
-                    Description: {{ candidate.candidate_status.csm_code || 'N/A' }}
+                    Description: {{ candidate.description || candidate.cdm_description ||'N/A' }}
                 </span>
             </div>
         </div>

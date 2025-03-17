@@ -2,6 +2,7 @@
     background-color:#F5F5F4;
     padding:10px;
     width:100%;
+    min-width:max-content;
     border-radius: 8px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
@@ -51,45 +52,87 @@
   }
   
   
-  .dates p {
+  .dates {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 3px;
+    flex-direction: column;
+    gap: 2px; /* Space between Open Date and Valid Till */
+  }
+  
+  .date-item p {
     margin: 0;
+    font-size: small;
     color: gray;
-    align-items: end;
+    white-space: nowrap; /* Prevent breaking into two lines */
+  }
+  
+  .date-item b {
+    color: black; /* Bold date in black */
+    font-size: smaller;
+    font-weight: 200;
+    background-color:#cbcaca;
+    border-radius: 3px;
+    padding:2px;
+    margin-left: 4px;
   }
   
   .details-section {
     margin-top: 10px;
     padding: 10px;
+    flex-direction: column;
     background: #ffffff;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    padding:5px;
   }
   
   .position-count {
     background-color: #FFC4C4;
     color: #000000;
-    padding: 5px 10px;
+    padding: 3px 8px;
+    height:27px;
+    margin:0px;
     background: #ffe5e5;
     border-radius: 8px;
   }
-  
-  .details-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px; 
-    padding:30px;
-  }
-  
-  .details-header {
+  .details-header,.footer-section {
     display: flex;
     justify-content: space-between;
     align-items: center; 
+    //gap: 1px; /* Add space between items */
+    padding: 3px;
+    flex-wrap: wrap; /* Wrap on smaller screens */
+  }
+  .details-header{
+    padding-top:15px;
+  }
+  .detail-box {
+    display: flex;
+    flex-direction: column;
+    height:80px;
+    align-items: center; /* Center align text */
+    text-align: center;
+    padding-top: 3px;
+    min-width: 120px; /* Prevent squeezing */
+  }
+  
+  .detail-box span {
+    margin-bottom: 5px; /* Space between label and value */
   }
   
   .skills {
     display: flex;
     gap: 10px;
+    align-items: baseline;
     flex-wrap: wrap; /* Ensures responsiveness */
-    margin-top: 10px;
+    //justify-content: center;
+    margin-left: 15px;
+    padding-bottom: 15px;
+    gap:5px;
   }
   
   .skill {
@@ -97,6 +140,10 @@
     background: #E8E8D7;
     color: #282801;
     border-radius: 15px;
+  }
+
+  .skills span{
+    margin-left:15px;
   }
   
   .footer-section {

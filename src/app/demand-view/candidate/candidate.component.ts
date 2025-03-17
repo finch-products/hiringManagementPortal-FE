@@ -151,6 +151,7 @@ export class CandidateComponent {
     if (index > -1) {
       this.selectedCandidates.splice(index, 1);
     } else {
+      console.log('pushing candidate:',candidate)
       this.selectedCandidates.push(candidate);
     }
   }
@@ -165,14 +166,20 @@ export class CandidateComponent {
       return;
     }
 
-    const payload = this.selectedCandidates
-      .filter(candidate => candidate.candidate_status.csm_id !== null) // Skip if status is null
+    /*const payload = this.selectedCandidates
+      //.filter(candidate => candidate.candidate_status.csm_id !== null) // Skip if status is null
       .map(candidate => ({
-        cdl_cdm_id: candidate.cdm_id,
-        cdl_dem_id: this.dem_id,
-        cdl_csm_id: candidate.candidate_status.csm_id
+        cdl_cdm_id: candidate.cdl_cdm_id,
+        cdl_dem_id: this.dem_id
+        //cdl_csm_id: candidate.candidate_status.csm_id
+      }));*/
+      const payload = this.selectedCandidates.map(candidate => ({
+        cdl_cdm_id: candidate.cdl_cdm_id,
+        cdl_dem_id: this.dem_id
       }));
+      
 
+      console.log('payload for linking :',payload);
     if (payload.length === 0) {
       this.snackBar.open("No candidates with valid status selected.!", "Close", {
         duration: 3000,
