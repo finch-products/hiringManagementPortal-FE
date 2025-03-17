@@ -1,3 +1,31 @@
+<div class="popup-overlay" *ngIf="showPopup">
+  <div class="popup-content">
+    <button mat-icon-button class="close-button" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h2>Update Demand Status</h2>
+    <form (ngSubmit)="onSubmit()">
+      <!-- Status Dropdown -->
+      <div class="form-group">
+        <label for="status">Status</label>
+        <mat-select id="status" [(ngModel)]="selectedStatus" name="status">
+          <mat-option *ngFor="let status of stat" [value]="status.dsm_code">
+            {{ status.dsm_code }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Comment Textarea -->
+      <div class="form-group">
+        <label for="dem_comment">Comment</label>
+        <textarea id="dem_comment" [(ngModel)]="dem_comment" name="dem_comment"></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
 
 
 <div fxLayout="column" fxLayoutAlign="center center">
@@ -10,7 +38,7 @@
         <form [formGroup]="demandForm">
           <mat-form-field appearance="fill" class="mat-drop">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="status">
+            <mat-select formControlName="status" (selectionChange)="onStatusChange($event.value)">
               <mat-option *ngFor="let status of stat" [value]="status.dsm_code">
                 {{ status.dsm_code }}
               </mat-option>
