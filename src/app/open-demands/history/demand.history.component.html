@@ -24,23 +24,37 @@
 
     <!-- Demand List with Scrollbar -->
     <div class="demands-list">
-      <h3>Demands</h3>
-      <mat-list class="scrollable-list">
-        <mat-list-item
-        *ngFor="let demand of filteredDemands()"
-        (click)="selectDemand(demand.dem_id)"
-        [ngClass]="{'selected-demand': selectedDemandId === demand.dem_id}">
-        {{ demand.dem_id }}
-      </mat-list-item>
-      
+      <h3>{{ type === 'demand' ? 'Demands' : 'Candidates' }}</h3>
+      <ng-container *ngIf="type === 'demand'; else candidateList">
+        <mat-list class="scrollable-list">
+          <mat-list-item
+          *ngFor="let demand of filteredDemands()"
+          (click)="selectDemand(demand.dem_id)"
+          [ngClass]="{'selected-demand': selectedDemandId === demand.dem_id}">
+          {{ demand.dem_id }}
+        </mat-list-item>
       </mat-list>
+      </ng-container>
+
+      <ng-template #candidateList>
+        <mat-list class="scrollable-list">
+            <mat-list-item
+            *ngFor="let candidate of filteredCandidates()"
+            (click)="selectCandidate(candidate.cdm_id)"
+            [ngClass]="{'selected-candidate': selectedCandidateId === candidate.cdm_id}">
+            {{ candidate.cdm_id}}
+
+          </mat-list-item>
+     </mat-list>
+      </ng-template>
     </div>
   </aside>
 
   <!-- Main Content -->
   <div class="content">
+    <ng-container *ngIf="type === 'demand'; else candidateHistory">
     <mat-card *ngIf="selectedDemand">
-      <mat-card-title>Demand Details</mat-card-title>
+      <mat-card-title>Demand Details </mat-card-title>
       <mat-card-content>
         <p><strong>CTool Number:</strong> {{ selectedDemand?.dem_ctoolnumber }}</p>
         <p><strong>CTool Date:</strong> {{ selectedDemand?.dem_ctooldate }}</p>
@@ -86,5 +100,99 @@
         <p><strong>Job Description:</strong> <a [href]="selectedDemand?.dem_jd" target="_blank"> View Job Description</a></p>
       </mat-card-content>
     </mat-card>
+    </ng-container>
+
+    <ng-template #candidateHistory>
+      <mat-card *ngIf="selectedCandidate" >
+        <mat-card-title>Candidate Details</mat-card-title>
+        <mat-card-content class="card-grid">
+          <p><strong>Candidate Name:</strong> {{ selectedCandidate.candidate.name }}</p>
+          <p><strong>Id:</strong> {{ selectedCandidate.candidate.id}}</p>
+          <p><strong>Email:</strong> {{ selectedCandidate.candidate.email }}</p>
+          <p><strong>Phone:</strong> {{ selectedCandidate.candidate.phone }}</p>
+          <p><strong>Description:</strong> {{ selectedCandidate.candidate.description
+          }}</p>
+          <!-- <p><strong>Skills:</strong> {{ selectedCandidate.candidate.skills || 'Not Provided' }}</p> -->
+          <!-- <p><strong>Date Of Joining:</strong> {{ selectedCandidate.cdl_joiningdate || 'TBD' }}</p> -->
+          <p><strong>Current status:</strong> {{ selectedCandidate.candidate.current_status}}</p>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Associated Demands for the Selected Candidate -->
+      <mat-card *ngIf="selectedCandidate">
+        <mat-card-title>Demand Details</mat-card-title>
+        <mat-card-content >
+          <div class="demand-container">
+            <mat-card class="demand-card" *ngFor="let demand of selectedCandidate?.demands">
+              <div>
+            <p><strong>Demand id:</strong> {{demand.dem_id }}</p>
+            <!-- <p><strong>CTool Date:</strong> {{ demand.dem_ctooldate }}</p> -->
+            <p><strong>Position Name:</strong> {{ demand.dem_position_name }}</p>
+            <p><strong>Valid Till:</strong> {{ demand.dem_validtill | date:'dd-MM-yyyy'}}</p>
+            <p><strong>Skillset:</strong> {{ demand.dem_skillset }}</p>
+            <p><strong>No Of Positions:</strong> {{ demand.dem_positions }}</p>
+            <p><strong>RR Number:</strong> {{ demand.dem_rrnumber }}</p>
+            <!-- <p><strong>JR Number:</strong> {{ demand.dem_jrnumber }}</p> -->
+            <!-- <p><strong>RR Grade:</strong> {{ demand.dem_rrgade }}</p>
+            <p><strong>GCB Level:</strong> {{ demand.dem_gcblevel }}</p>
+            <p><strong>Comments:</strong> {{ demand.dem_comment }}</p> -->
+            <!-- <p><strong>Is Reopened:</strong> {{ demand.dem_isreopened ? 'Yes' : 'No' }}</p>
+            <p><strong>Active:</strong> {{ demand.dem_isactive ? 'Yes' : 'No' }}</p> -->
+          </div>
+          </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="selectedCandidate">
+        <mat-card-title>Demand Status Details</mat-card-title>
+        <mat-card-content>
+          <table mat-table [dataSource]="demandStatus" class="mat-elevation-z8">
+  
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let status"> {{ status.dhs_dsm_insertdate }} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let status"> {{ status.status }} </td>
+            </ng-container>
+            <ng-container matColumnDef="comment">
+              <th mat-header-cell *matHeaderCellDef> Comment </th>
+              <td mat-cell *matCellDef="let status"> {{ status.dem_comment }} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="selectedCandidate">
+        <mat-card-title>Candidate Status Details</mat-card-title>
+        <mat-card-content>
+          <table mat-table [dataSource]="candidateStatus" class="mat-elevation-z8">
+  
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let status"> {{ status.cdh_insertdate }} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let status"> {{ status.status }} </td>
+            </ng-container>
+            <ng-container matColumnDef="comment">
+              <th mat-header-cell *matHeaderCellDef> Comment </th>
+              <td mat-cell *matCellDef="let status"> {{ status.dem_comment }} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+        </mat-card-content>
+      </mat-card>
+    </ng-template>
   </div>
 </div>
