@@ -1,3 +1,30 @@
+<!-- Pop-up Form -->
+<div class="popup-overlay" *ngIf="showPopup">
+  <div class="popup-content">
+    <!-- Cross Icon in Top-Right Corner -->
+    <button mat-icon-button class="close-button" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <h2>Update Candidate Status</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="csm_code">Status Code</label>
+        <select id="csm_code" [(ngModel)]="csm_code" name="csm_code" required>
+          <option *ngFor="let status of statusList" [value]="status.csm_code">{{ status.csm_code }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cdm_comment">Comment</label>
+        <textarea id="cdm_comment" [(ngModel)]="cdm_comment" name="cdm_comment"></textarea>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+  
+
+
 <div class="candidates-container">
     <!-- Search Bar -->
     <div class="search-bar">
@@ -66,6 +93,6 @@
                     Description: {{ candidate.description || candidate.cdm_description ||'N/A' }}
                 </span>
             </div>
-        </div>
     </div>
+  </div>
 </div>

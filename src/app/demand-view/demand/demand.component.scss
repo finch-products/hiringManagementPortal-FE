@@ -6,6 +6,9 @@
     border-radius: 8px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to prevent overflow */
+    gap: 10px;
 }
 
 .demand-head{
@@ -15,15 +18,21 @@
     background-color:#FEFEFE;
     padding: 8px;
 }
-.mat-drop{
-    background-color:#E0FBFC;
-    border-radius: 18px;
-  height:45px;
-  width:150px;
+mat-select {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mat-drop {
+  background-color: #E0FBFC;
+  border-radius: 18px;
+  height: 45px;
+  min-width: 200px; /* Increase min-width to accommodate content */
+  max-width: 100%; /* Ensure it doesn't exceed the container */
   display: flex;
   align-items: center;
   box-sizing: border-box;
-
+  padding: 0 10px; /* Add padding to avoid text touching the edges */
 }
 ::ng-deep .mat-mdc-form-field-subscript-wrapper{
   height: 0px !important;
@@ -359,8 +368,107 @@
   border-left: 4px solid #4caf50; /* Green border */
 }
 
-mat-form-field mat-label {
-  font-size: 17px;
+mmat-form-field {
+  width: 100%; /* Ensure it takes the available space */
+  max-width: 250px; /* Prevent it from being too wide */
+}
+
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Content */
+.popup-content {
+  background: #fdfdfd;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
   text-align: center;
-  padding:10px;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close-button mat-icon {
+  color: #333;
+  font-size: 24px;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center; /* Centers horizontally */
+  justify-content: center; /* Centers vertically */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Input Fields */
+select {
+  background-color: white;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Comment Box with Reduced Height */
+textarea {
+  resize: none;
+  height: 60px;  /* Reduced from 80px */
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Submit Button Centered */
+button[type="submit"] {
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  display: block; /* Centers the button */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button[type="submit"]:hover {
+  background-color: #e64c4c;
 }
