@@ -61,34 +61,38 @@
                 <div class="candidate-header">
                     <div class="avatar-container">
                         <mat-icon>person_outline</mat-icon>
-                    </div>
+                    </div> 
                     <div class="candidate-info">
                         <h3 class="candidate-name">{{ candidate.name || candidate.cdm_name }}</h3>
-                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id || candidate.cdl_cdm_id}}</p>
+                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id || candidate.cdm_id}}</p>
                         <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
                     </div>
-                    <select class="status" [(ngModel)]="candidate.selectedStatus" (change)="onStatusChange(candidate, $event)"
-                    [ngClass]="{'no-arrow': searchTerm.trim()}">
-                    <option *ngFor="let status of statusList" [value]="status.csm_code">
-                        {{ status.csm_code }}
-                    </option>
+                    <select class="status" [(ngModel)]="candidate.candidate_status.csm_code"
+                        [ngClass]="{'no-arrow': searchTerm?.trim()}" *ngIf="!searchTerm?.trim()">
+                        <option *ngFor="let status of statusList" [value]="status.csm_code">
+                            {{ status.csm_code }}
+                        </option>
                     </select>
-        </div>
-        <div class="skills">
-          <ng-container *ngIf="candidate.keywords; else noKeywords">
-            <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
-              <mat-icon aria-hidden="false" class="icon1" style="font-size: 13px;">check_circle_outline</mat-icon>
-              {{ keyword.trim() }}
-            </span>
-          </ng-container>
-          <ng-template #noKeywords>
-            <span class="skill-chip">N/A</span>
-          </ng-template>
-        </div>
-        <span class="Description">
-            Description: {{ candidate.description || 'N/A' }}
-        </span>
-      </div>
+                    <div *ngIf="searchTerm?.trim()" class="status"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
+                </div>
+
+                <div class="skills">
+                    <ng-container *ngIf="candidate.keywords; else noKeywords">
+                        <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
+                            <mat-icon aria-hidden="false" class="icon1"
+                                style="font-size: 13px;">check_circle_outline</mat-icon>
+                            {{ keyword.trim() }}
+                        </span>
+                    </ng-container>
+                    <ng-template #noKeywords>
+                        <span class="skill-chip">N/A</span>
+                    </ng-template>
+                </div>
+
+                <span class="Description">
+                    Description: {{ candidate.description || candidate.cdm_description ||'N/A' }}
+                </span>
+            </div>
     </div>
   </div>
 </div>

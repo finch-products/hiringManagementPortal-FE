@@ -57,18 +57,21 @@
           <mat-icon>account_circle</mat-icon>
         </div>
         <div class="client-details">
-          <p>{{demands?.demand_details?.client_details.clm_name}}
+          <p> Client: {{demands?.demand_details?.client_details.clm_name}}
             <br />Client Manager:
             <b>{{demands?.demand_details?.client_details.clm_managername}}</b>
           </p>
         </div>
       </div>
       <div class="dates">
-        <p>Open Date: <b>{{demands?.demand_details?.dem_ctooldate|
-            date:'dd-MM-yyyy'}}</b></p>
-        <p>Valid Till: <b>{{demands?.demand_details?.dem_validtill|
-            date:'dd-MM-yyyy'}}</b></p>
+        <span class="date-item">
+          <p>Open Date : <b>{{demands?.demand_details?.dem_ctooldate | date:'dd-MMM-yy'}}</b></p>
+        </span>
+        <span class="date-item">
+          <p>Valid Till : <b>{{demands?.demand_details?.dem_validtill | date:'dd-MMM-yy'}}</b></p>
+        </span>
       </div>
+      
     </div>
 
     <!-- Details Section -->
@@ -83,11 +86,12 @@
         </div>
         <div> LOB <b>{{demands?.demand_details?.lob_details.lob_name}}</b></div>
 
-      </div>
-      <!-- Skills Section -->
-      <div class="skills">
-        <span class="skill">{{ demands?.demand_details?.dem_skillset }}</span>
-      </div>
+  <!-- Skills Section -->
+  <div class="skills">
+    <span>Skills</span>
+    <b class="skill">{{ demands?.demand_details?.dem_skillset }}</b>
+  </div>
+
 
       <!-- Manager & Job Description -->
       <div class="footer-section">
@@ -103,7 +107,7 @@
     <div class="candidates-list">
       <div class="candidate-item" *ngFor="let candidate of candidates"
         [ngClass]="{ 'new-candidate': candidate.isNew }">
-=        <div class="candidate-card">
+      <div class="candidate-card">
           <div class="candidate-header">
             <div class="avatar-container">
               <mat-icon>person_outline</mat-icon>
@@ -141,7 +145,9 @@
           </span>
         </div>
       </div>
-    </div>
+      </div>
+  </div>
+</div>
   </mat-card>
 
             <mat-card *ngFor="let candidate of candidates" class="demand-container">
