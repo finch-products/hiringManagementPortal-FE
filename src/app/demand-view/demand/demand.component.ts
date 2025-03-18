@@ -74,7 +74,7 @@ public  loadData(demandId: any) {
       next: (data) => {
         this.stat = data;
       },
-      error: (err) => console.error('Error fetching clients', err)
+      error: (err) => console.error('Error fetching status', err)
     });
   }
   openPdf(pdfUrl: string) {

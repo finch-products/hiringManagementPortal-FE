@@ -69,13 +69,11 @@
                     <div class="candidate-info">
                         <h3 class="candidate-name">{{ candidate.name ||
                             candidate.cdm_name }}</h3>
-                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id ||
+                        <p class="candidate-id"> {{ candidate.cdl_cdm_id ||
                             candidate.cdm_id}}</p>
                         <p class="candidate-email">{{ candidate.email ||
                             candidate.cdm_email}}</p>
-                    </div>
-                    <div>
-                        <select class="status"
+                            <select class="status"
                             [(ngModel)]="candidate.candidate_status.csm_code"
                             [ngClass]="{'no-arrow': searchTerm?.trim()}"
                             *ngIf="!searchTerm?.trim()">
@@ -84,10 +82,10 @@
                                 {{ status.csm_code }}
                             </option>
                         </select>
+                        <div *ngIf="searchTerm?.trim()" class="status"> Status : {{
+                            candidate.candidate_status.csm_code || 'N/A' }}</div>
                     </div>
-                    <div *ngIf="searchTerm?.trim()" class="status"> Status : {{
-                        candidate.candidate_status.csm_code || 'N/A' }}</div>
-                </div>
+                    </div>
 
                 <div class="skills">
                     <ng-container *ngIf="candidate.keywords; else noKeywords">

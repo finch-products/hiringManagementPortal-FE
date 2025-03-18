@@ -1,33 +1,3 @@
-<div class="popup-overlay" *ngIf="showPopup">
-  <div class="popup-content">
-    <button mat-icon-button class="close-button" (click)="onCancel()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <h2>Update Demand Status</h2>
-    <form (ngSubmit)="onSubmit()">
-      <!-- Status Dropdown -->
-      <div class="form-group">
-        <label for="status">Status</label>
-        <select id="status" [(ngModel)]="selectedStatus" name="status">
-          <option *ngFor="let status of stat" [value]="status.dsm_code">
-            {{ status.dsm_code }}
-          </option>
-        </select>
-      </div>
-
-      <!-- Comment Textarea -->
-      <div class="form-group">
-        <label for="dem_comment">Comment</label>
-        <textarea id="dem_comment" [(ngModel)]="dem_comment"
-          name="dem_comment"></textarea>
-      </div>
-
-      <!-- Submit Button -->
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-</div>
-
 <div fxLayout="column" fxLayoutAlign="center center">
   <mat-card class="demand-container">
     <!-- Header -->
@@ -38,10 +8,9 @@
         <form [formGroup]="demandForm">
           <mat-form-field appearance="fill" class="mat-drop">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="status"
-              (selectionChange)="onStatusChange($event.value)">
-              <mat-option *ngFor="let status of stat" [value]="status.dsm_code">
-                {{ status.dsm_code }}
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of stat"
+                [value]="status.dsm_code">{{ status?.dsm_code }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -60,51 +29,72 @@
         <div class="client-details">
           <p> Client: {{demands?.demand_details?.client_details.clm_name}}
             <br />Client Manager:
-            <b>{{demands?.demand_details?.client_details.clm_managername}}</b>
-          </p>
+            <b>{{demands?.demand_details?.client_details.clm_managername}}</b></p>
         </div>
       </div>
       <div class="dates">
         <span class="date-item">
-          <p>Open Date : <b>{{demands?.demand_details?.dem_ctooldate |
-              date:'dd-MMM-yy'}}</b></p>
+          <p>Open Date : <b>{{demands?.demand_details?.dem_ctooldate | date:'dd-MMM-yy'}}</b></p>
         </span>
         <span class="date-item">
-          <p>Valid Till : <b>{{demands?.demand_details?.dem_validtill |
-              date:'dd-MMM-yy'}}</b></p>
+          <p>Valid Till : <b>{{demands?.demand_details?.dem_validtill | date:'dd-MMM-yy'}}</b></p>
         </span>
       </div>
-
+      
     </div>
 
     <!-- Details Section -->
-    <div class="details-section">
-      <div class="details-header">
-        <div>Position:
-          <b>{{demands?.demand_details?.dem_position_name}}</b>
-        </div>
-        <div>Number of Positions <span
-            class="position-count">{{demands?.demand_details?.dem_positions}}</span></div>
-        <div>RR / JR number
-          <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b>
-        </div>
-        <div> LOB <b>{{demands?.demand_details?.lob_details.lob_name}}</b></div>
-
-        <!-- Skills Section -->
-        <div class="skills">
-          <span>Skills</span>
-          <b class="skill">{{ demands?.demand_details?.dem_skillset }}</b>
-        </div>
-
-        <!-- Manager & Job Description -->
-        <div class="footer-section">
-          <div>Delivery Manager:
-            <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b>
-          </div>
-          <div>Job Description: <a href="javascript:void(0);"
-              (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
-          </div>
-        </div>
-      </div>
+<div class="details-section">
+  <div class="details-header">
+    <div class="detail-box">
+      <span>Position</span>
+      <b>{{demands?.demand_details?.dem_position_name}}</b>
     </div>
-    <!-- </div> -->
+    <div class="detail-box">
+      <span>Number of Positions</span>
+      <b class="position-count">{{demands?.demand_details?.dem_positions}}</b>
+    </div>
+    <div class="detail-box">
+      <span>RR / JR number</span>
+      <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div class="skills">
+    <span>Skills</span>
+    <b class="skill">{{ demands?.demand_details?.dem_skillset }}</b>
+  </div>
+
+  <!-- Manager & Job Description -->
+  <div class="footer-section">
+    <div class="detail-box">
+      <span>LOB</span>
+      <b>{{demands?.demand_details?.lob_details.lob_name}}</b>
+    </div>
+    <div class="detail-box">
+      <span>Delivery Manager</span>
+      <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b>
+    </div>
+    <div class="detail-box">
+      <span>Job Description</span>
+      <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
+    </div>
+  </div>
+</div>
+  </mat-card>
+
+  <!-- <mat-card *ngFor="let candidate of candidates" class="demand-container">
+      <mat-card-title>Candidate Details</mat-card-title>
+      <mat-card-content>
+        <p><strong>Candidate Name:</strong> {{ candidate.name }}</p>
+        <p><strong>Email:</strong> {{ candidate.email }}</p>
+        <p><strong>Phone:</strong> {{ candidate.phone }}</p>
+        <p><strong>Location:</strong> {{ candidate.location_name }}</p>
+        <p><strong>Description:</strong> {{ candidate.description }}</p>
+        <p><strong>keywords :</strong> {{ candidate.keywords}}</p>
+        <p><strong>Skills:</strong> {{ candidate.keywords || 'Not Provided' }}</p>
+        <p><strong>Date Of Joining:</strong> {{ candidate.cdl_joiningdate || 'TBD' }}</p>
+      </mat-card-content>
+    </mat-card> -->
+</div>
