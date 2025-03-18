@@ -11,16 +11,22 @@
     <mat-card class="form-container">
         <form [formGroup]="listForm" (ngSubmit)="onSubmit()">
             <div class="form-row field-50 ">
-                <mat-form-field appearance="fill"
-                    class="form-field wrap-height">
+                <mat-form-field appearance="fill" class="form-field wrap-height">
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="dem_dsm_id">
-                        <mat-option *ngFor="let status of stat"
-                            [value]="status.dsm_id">{{ status.dsm_code }}
-                        </mat-option>
+                      <!-- Show "No demand selected" if no row is selected -->
+                      <mat-option *ngIf="!isRowSelected" disabled>
+                        No demand selected
+                      </mat-option>
+                  
+                      <!-- Show status options if a row is selected -->
+                      <mat-option *ngFor="let status of stat" [value]="status.dsm_id">
+                        {{ status.dsm_code }}
+                      </mat-option>
                     </mat-select>
-                </mat-form-field>
-
+                  </mat-form-field>
+                <!-- Conditionally display the "No demand selected" message -->
+                
                 <mat-form-field appearance="fill"
                     class="form-field wrap-height">
                     <mat-label>Comments</mat-label>

@@ -20,8 +20,9 @@ export class ListOpenDemandsComponent {
   listForm:FormGroup;
   hoveredRow: any = null;
   selectedRows: any[] = [];
+  dem_id: string = '';
+  isRowSelected: boolean = false;
   selection = new SelectionModel<OpenDemand>(true, []);
-
   // displayedColumns: string[] = [
   //   'ctool_number', 'ctool_date', 'client_manager_name',
   //   'client_location', 'position_location', 'tentative_required_by',
@@ -38,12 +39,13 @@ export class ListOpenDemandsComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   stat:any
-isEditmode="false";
+  isEditmode="false";
   element: any;
   constructor(private fb: FormBuilder,private http: HttpClient, private demandService: OpenDemandService, private httpService: HttpService,private snackBar:MatSnackBar, private router: Router) { 
     this.listForm = this.fb.group({
       dem_dsm_id:[''],
-      dem_comment:['']
+      dem_comment:[''],
+      dem_id:[''],
     })
   }
 
@@ -54,23 +56,42 @@ isEditmode="false";
       // console.log("demand",demand)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      
     });
-    this.loadStatus();
+
+    this.selection.changed.subscribe(() => {
+      this.selectedRows = this.selection.selected;
+      this.isRowSelected = this.selectedRows.length > 0; // Update the flag
+      this.updateSaveButtonState();
+    
+      if (this.isRowSelected) {
+        const selectedDemId = this.selectedRows[0].dem_id;
+        this.loadStatus(selectedDemId); // Load status for the selected demand
+      } else {
+        this.listForm.get('dem_dsm_id')?.reset(); // Reset the dropdown
+        this.stat = []; // Clear the dropdown data
+      }
+    });
+
     this.listForm.get('dem_dsm_id')?.valueChanges.subscribe(() => {
       this.updateSaveButtonState();
     });
   }
 
 
-  loadStatus(): void {
-    this.httpService.getDemandStatusDetails().subscribe({
+  loadStatus(dem_id: string): void {
+    if (!dem_id) {
+      console.error('No dem_id provided');
+      return;
+    }
+  
+    this.httpService.getDemandStatusDetails(dem_id).subscribe({
       next: (data) => {
         this.stat = data;
-        console.log("stat",this.stat)
+        console.log("stat", this.stat);
       },
-      error: (err) => console.error('Error fetching clients', err)
+      error: (err) => console.error('Error fetching demand status', err)
     });
-
   }
 
   onSubmit(){
@@ -79,7 +100,10 @@ isEditmode="false";
         // Extract DEM_IDs from selected rows
         console.log("selected row", this.selectedRows)
         // const demIds = this.selectedRows.map(row => row.dem_id);
-    
+        const selectedDemId = this.selectedRows[0].dem_id;
+
+        // Load status for the selected demand
+        this.loadStatus(selectedDemId); 
         // Prepare request body
         const requestBody = {
           dem_id: this.selectedRows[0].dem_id,  
@@ -131,8 +155,16 @@ isEditmode="false";
   toggleSelection(row: any) {
     this.selection.toggle(row);
     this.selectedRows = this.selection.selected;
+    this.isRowSelected = this.selectedRows.length > 0; // Update the flag
     this.updateSaveButtonState();
-  }
+  
+    if (this.isRowSelected) {
+      const selectedDemId = this.selectedRows[0].dem_id;
+      this.loadStatus(selectedDemId); // Load status for the selected demand
+    } else {
+      this.listForm.get('dem_dsm_id')?.reset(); // Reset the dropdown
+    }
+}
 
 
   isAllSelected() {

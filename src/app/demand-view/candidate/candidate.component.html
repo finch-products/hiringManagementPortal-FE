@@ -76,18 +76,18 @@
                     </div>
                     <div>
                         <select class="status"
-                            [(ngModel)]="candidate.candidate_status.csm_code"
-                            [ngClass]="{'no-arrow': searchTerm?.trim()}"
-                            *ngIf="!searchTerm?.trim()">
-                            <option *ngFor="let status of statusList"
-                                [value]="status.csm_code">
-                                {{ status.csm_code }}
-                            </option>
+                                [(ngModel)]="candidate.selectedStatus"
+                                [ngClass]="{'no-arrow': searchTerm?.trim()}"
+                                *ngIf="!searchTerm?.trim()"
+                                (change)="onStatusChange(candidate, $event)">
+                          <option *ngFor="let status of candidate.statusList"
+                                  [value]="status.csm_code">
+                            {{ status.csm_code }}
+                          </option>
                         </select>
+                      </div>
+                      <div *ngIf="searchTerm?.trim()" class="status"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
                     </div>
-                    <div *ngIf="searchTerm?.trim()" class="status"> Status : {{
-                        candidate.candidate_status.csm_code || 'N/A' }}</div>
-                </div>
 
                 <div class="skills">
                     <ng-container *ngIf="candidate.keywords; else noKeywords">
