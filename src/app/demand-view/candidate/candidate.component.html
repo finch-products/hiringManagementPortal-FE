@@ -1,34 +1,36 @@
 <!-- Pop-up Form -->
 <div class="popup-overlay" *ngIf="showPopup">
-  <div class="popup-content">
-    <!-- Cross Icon in Top-Right Corner -->
-    <button mat-icon-button class="close-button" (click)="onCancel()">
-      <mat-icon>close</mat-icon>
-    </button>
+    <div class="popup-content">
+        <!-- Cross Icon in Top-Right Corner -->
+        <button mat-icon-button class="close-button" (click)="onCancel()">
+            <mat-icon>close</mat-icon>
+        </button>
 
-    <h2>Update Candidate Status</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="csm_code">Status Code</label>
-        <select id="csm_code" [(ngModel)]="csm_code" name="csm_code" required>
-          <option *ngFor="let status of statusList" [value]="status.csm_code">{{ status.csm_code }}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="cdm_comment">Comment</label>
-        <textarea id="cdm_comment" [(ngModel)]="cdm_comment" name="cdm_comment"></textarea>
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+        <h2>Update Candidate Status</h2>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="csm_code">Status Code</label>
+                <select id="csm_code" [(ngModel)]="csm_code" name="csm_code"
+                    required>
+                    <option *ngFor="let status of statusList"
+                        [value]="status.csm_code">{{ status.csm_code }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cdm_comment">Comment</label>
+                <textarea id="cdm_comment" [(ngModel)]="cdm_comment"
+                    name="cdm_comment"></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </div>
-  
-
 
 <div class="candidates-container">
     <!-- Search Bar -->
     <div class="search-bar">
-        <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search..." />
+        <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()"
+            placeholder="Search..." />
         <button mat-icon-button (click)="openFilter()">
             <mat-icon>filter_list</mat-icon>
         </button>
@@ -53,32 +55,45 @@
         <h1 class="mat-h3 header">Candidate Details</h1>
     </div>
     <div class="candidates-list">
-        <div class="candidate-item" *ngFor="let candidate of searchTerm?.trim() ? filteredCandidates : candidates">
+        <div class="candidate-item"
+            *ngFor="let candidate of searchTerm?.trim() ? filteredCandidates : candidates">
 
-            <input *ngIf="searchTerm?.trim()" type="checkbox" (change)="toggleSelection(candidate)"
+            <input *ngIf="searchTerm?.trim()" type="checkbox"
+                (change)="toggleSelection(candidate)"
                 [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />
             <div class="candidate-card">
                 <div class="candidate-header">
                     <div class="avatar-container">
                         <mat-icon>person_outline</mat-icon>
-                    </div> 
-                    <div class="candidate-info">
-                        <h3 class="candidate-name">{{ candidate.name || candidate.cdm_name }}</h3>
-                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id || candidate.cdm_id}}</p>
-                        <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
                     </div>
-                    <select class="status" [(ngModel)]="candidate.candidate_status.csm_code"
-                        [ngClass]="{'no-arrow': searchTerm?.trim()}" *ngIf="!searchTerm?.trim()">
-                        <option *ngFor="let status of statusList" [value]="status.csm_code">
-                            {{ status.csm_code }}
-                        </option>
-                    </select>
-                    <div *ngIf="searchTerm?.trim()" class="status"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
+                    <div class="candidate-info">
+                        <h3 class="candidate-name">{{ candidate.name ||
+                            candidate.cdm_name }}</h3>
+                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id ||
+                            candidate.cdm_id}}</p>
+                        <p class="candidate-email">{{ candidate.email ||
+                            candidate.cdm_email}}</p>
+                    </div>
+                    <div>
+                        <select class="status"
+                            [(ngModel)]="candidate.candidate_status.csm_code"
+                            [ngClass]="{'no-arrow': searchTerm?.trim()}"
+                            *ngIf="!searchTerm?.trim()">
+                            <option *ngFor="let status of statusList"
+                                [value]="status.csm_code">
+                                {{ status.csm_code }}
+                            </option>
+                        </select>
+                    </div>
+                    <div *ngIf="searchTerm?.trim()" class="status"> Status : {{
+                        candidate.candidate_status.csm_code || 'N/A' }}</div>
                 </div>
 
                 <div class="skills">
                     <ng-container *ngIf="candidate.keywords; else noKeywords">
-                        <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
+                        <span
+                            *ngFor="let keyword of candidate.keywords.split(',')"
+                            class="skill-chip">
                             <mat-icon aria-hidden="false" class="icon1"
                                 style="font-size: 13px;">check_circle_outline</mat-icon>
                             {{ keyword.trim() }}
@@ -90,9 +105,10 @@
                 </div>
 
                 <span class="Description">
-                    Description: {{ candidate.description || candidate.cdm_description ||'N/A' }}
+                    Description: {{ candidate.description ||
+                    candidate.cdm_description ||'N/A' }}
                 </span>
             </div>
+        </div>
     </div>
-  </div>
 </div>
