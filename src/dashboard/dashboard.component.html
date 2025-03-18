@@ -23,13 +23,23 @@
 <!-- Graphs and Charts -->
 <div class="charts">
   <div class="left-section">
-  <mat-card class="graph chart-box pie-chart">
-    <ngx-charts-pie-chart 
-    [results]="pieChartData"
-    [view]="[300, 250]"
-    [customColors]="customColors">
-  </ngx-charts-pie-chart>
-  </mat-card>
+    <mat-card class="graph chart-box pie-chart">
+      <div class="chart-container">
+        <ngx-charts-pie-chart 
+          [results]="pieChartData"
+          [view]="[300, 250]"
+          [customColors]="customColors">
+        </ngx-charts-pie-chart>
+        
+        <div class="legend-container">
+          <div *ngFor="let item of customColors" class="legend-item">
+            <span class="legend-color-box" [ngStyle]="{'background-color': item.value}"></span>
+            <span class="legend-text">{{ item.name }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    
 
   <div class="chart-box bar-chart">
   <mat-card class="chart-card">
