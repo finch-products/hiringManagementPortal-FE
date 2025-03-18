@@ -1,0 +1,141 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background: #f9f3d5;
+
+    .top-bar {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        background: #f6e8a6;
+        border-radius: 10px;
+        margin: 10px;
+        
+        .search-input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .demand-entry-btn {
+            background: #eabf46;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .icons {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+
+            mat-icon {
+                cursor: pointer;
+                color: #333;
+            }
+        }
+    }
+
+    .content {
+        display: flex;
+        gap: 15px;
+        padding: 10px;
+
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+
+            .sidebar-search {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+
+            .candidate-list {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    padding: 8px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    margin-bottom: 5px;
+                    
+                    &.selected, &:hover {
+                        background: #f6e8a6;
+                    }
+                }
+            }
+        }
+
+        .details-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .details-card {
+                background: #fff;
+                padding: 15px;
+                border-radius: 10px;
+
+                .demand-box {
+                    background: #f9f3d5;
+                    padding: 10px;
+                    border-radius: 5px;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+}
+
+
+.container {
+    padding: 20px;
+  
+    .add-btn {
+      background-color: #3f51b5;
+      color: white;
+      margin-bottom: 10px;
+    }
+  
+    .status-filter {
+      width: 300px;
+      margin-right: 10px;
+    }
+  
+    table {
+      width: 100%;
+    }
+  
+    .status-default {
+      color: black;
+    }
+  
+    .status-shortlisted {
+      color: orange;
+      font-weight: bold;
+    }
+  
+    .status-interviewed {
+      color: blue;
+      font-weight: bold;
+    }
+  
+    .status-offered {
+      color: green;
+      font-weight: bold;
+    }
+  
+    .status-joined {
+      color: darkgreen;
+      font-weight: bold;
+    }
+  }
+  

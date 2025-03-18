@@ -70,6 +70,7 @@ import { PreviewComponent } from './demand-view/preview/preview.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { LoaderComponent } from './loader/loader.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { CandidateTrackingComponent } from './candidates/tracking/candidate-tracking.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
     PreviewComponent,
     Otherview4Component,
     Otherview5Component,
-    LoaderComponent
+    LoaderComponent,
+    CandidateTrackingComponent
   ],
   imports: [
     MatRadioModule,

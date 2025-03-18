@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpService {
   private baseUrl = 'http://64.227.145.117/api/';
-  //private baseUrl = 'http://localhost:8000/api/';
+  //  private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -149,25 +149,24 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}demands/all`, this.getHeaders()).pipe(
       catchError(this.handleError));
   }
-  
+
   getCandidateIds():Observable<any>{
     return this.http.get<any>(`${this.baseUrl}candidates/`,this.getHeaders()).pipe(
       catchError(this.handleError))
   }
+
   updateDemand(form_data: any): Observable<any> {
     return this.http.patch<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
-
+  
   DemandByCadidateId(candidateId:any): Observable<any> {
     console.log("payload=",candidateId)
     return this.http.get<any>(`${this.baseUrl}candidates/candidate-history/${candidateId}/`,this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
-
-
 
   getEmployees(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/employee-by-role/`, this.getHeaders()).pipe(
@@ -202,7 +201,6 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
-
   getreportclientselection(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}reports/client-selection/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -241,25 +239,24 @@ export class HttpService {
       catchError(this.handleError));
   }
 
-  /** Handle API Errors */
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred!';
-    if (error.error && error.error.error) {
-      // Extract the error message from the response
-      errorMessage = error.error.error;
-    } else if (error.error && error.error.message) {
-      errorMessage = error.error.message;
-    } else if (error.statusText) {
-      errorMessage = error.statusText;
-    }
-    return throwError(() => new Error(errorMessage));
-  }
-  postData(url: string, data: any): Observable<any> {
-    return this.http.post(url, data);
-  }
   updateCandidateStatus(form_data: any): Observable<any> {
     return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError) // Handle errors
     );
+  }
+
+  /** Handle API Errors */
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Client-side error: ${error.error.message}`;
+    } else {
+      errorMessage = `Server-side error: ${error.status} - ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
+  postData(url: string, data: any): Observable<any> {
+    return this.http.post(url, data);
   }
 }
