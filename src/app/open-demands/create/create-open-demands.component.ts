@@ -62,7 +62,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
       dem_mandatoryskill: [''],
-      dem_position_location: [[]]
+      dem_position_location: ['']
     });
   }
 
@@ -158,9 +158,8 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isreopened: this.demands?.dem_isreopened,
           dem_isactive: this.demands?.dem_isactive,
           dem_comment: this.demands?.dem_comment,
-          dem_position_location: this.demands?.dem_position_location 
-          ? JSON.parse(this.demands.dem_position_location) 
-          : []
+          dem_position_location: this.demands?.dem_position_location,
+          
         });
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
         //Ensure correct visibility for RR/JR fields
@@ -252,16 +251,14 @@ export class CreateOpenDemandComponent implements OnInit {
   
       Object.keys(this.demandForm.controls).forEach((field) => {
         if (this.demandForm.controls[field].dirty) {
-          let value = this.demandForm.value[field];
-  
-          // ✅ Convert multi-select field to JSON array
-          if (field === "dem_position_location" && Array.isArray(value)) {
-            value = JSON.stringify(value);
-          }
-  
-          updatedFields[field] = value;
+          updatedFields[field] = this.demandForm.value[field];
         }
       });
+  
+      // 🔹 Ensure `dem_position_location` is always an array
+      // updatedFields["dem_position_location"] = this.demandForm.value.dem_position_location?.length
+      //   ? this.demandForm.value.dem_position_location
+      //   : [];
   
       // Append file only if changed
       if (this.selectedFile) {
@@ -297,10 +294,10 @@ export class CreateOpenDemandComponent implements OnInit {
           value = this.formatDate(value);
         }
   
-        // ✅ Convert multi-select field to JSON array
-        if (key === "dem_position_location" && Array.isArray(value)) {
-          value = JSON.stringify(value);
-        }
+        // 🔹 Ensure `dem_position_location` is always an array
+        // if (key === "dem_position_location") {
+        //   value = value?.length ? value : [];
+        // }
   
         if (value !== null && value !== undefined) {
           formData.append(key, value);
