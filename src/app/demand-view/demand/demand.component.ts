@@ -35,9 +35,9 @@ export class DemandComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const demandId = params.get('id');
+      const demandId = params.get('id') ?? '';
       this.loadData(demandId);
-      this.loadStatus();
+      this.loadStatus(demandId); 
       this.loadCandidateStatuses();
     });
   }
@@ -69,12 +69,17 @@ public  loadData(demandId: any) {
   }
 
 
-  loadStatus(): void {
-    this.httpService.getDemandStatusDetails().subscribe({
+  loadStatus(dem_id: string): void {
+    if (!dem_id) {
+      console.error('No demand ID provided');
+      return;
+    }
+  
+    this.httpService.getDemandStatusDetails(dem_id).subscribe({
       next: (data) => {
         this.stat = data;
       },
-      error: (err) => console.error('Error fetching clients', err)
+      error: (err) => console.error('Error fetching demand status', err)
     });
   }
   openPdf(pdfUrl: string) {

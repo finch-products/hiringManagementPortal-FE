@@ -39,6 +39,7 @@ export class CandidateTrackingComponent {
   loadCandidates() {
     this.httpService.getCandidate().subscribe(
       (data) => {
+        this.candidates = data; 
         this.filteredCandidates.data = data;
       },
       (error) => {
@@ -49,7 +50,22 @@ export class CandidateTrackingComponent {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  
+    // Custom filter predicate to search across multiple columns
+    this.filteredCandidates.filterPredicate = (data: any, filter: string) => {
+      const columnsToSearch = ['cdm_name', 'cdm_location', 'candidate_status.csm_code']; // Add more columns if needed
+      return columnsToSearch.some(column => {
+        const columnValue = this.getNestedValue(data, column)?.toString().toLowerCase();
+        return columnValue?.includes(filter);
+      });
+    };
+  
     this.filteredCandidates.filter = filterValue;
+  }
+  
+  // Helper function to get nested object properties (e.g., candidate_status.csm_code)
+  getNestedValue(obj: any, path: string) {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
   }
 
  
@@ -97,6 +113,7 @@ export class CandidateTrackingComponent {
   
   resetFilters() {
     this.selectedStatuses = [];
+    this.filteredCandidates.data = this.candidates;
     this.loadCandidates();
   }
 

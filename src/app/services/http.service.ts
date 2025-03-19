@@ -101,8 +101,8 @@ export class HttpService {
     );
   }
 
-  getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
+  getDemandStatusDetails(dem_id: string) {
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status/${dem_id}`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -258,5 +258,11 @@ export class HttpService {
   }
   postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data);
+  }
+
+  getCandidateStatusesbyid(cdm_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidate-status/list/${cdm_id}/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
   }
 }
