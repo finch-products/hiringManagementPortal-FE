@@ -4,8 +4,10 @@
     <div class="sidebar-header">
       <!-- Show logo only when sidebar is expanded -->
       <div class="sidebar-logo" *ngIf="!isCollapsed">
-        <img
-          src="../../../assets/img/logo.jpg">
+        <a href="/dashboard">
+          <img
+            src="../../../assets/img/logo.jpg">
+        </a>
       </div>
 
       <!-- Toggle button at right -->
@@ -23,20 +25,21 @@
         <span>Dashboard</span>
       </a>
 
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-icon>library_books</mat-icon>Candidates<!--list-->
-          </mat-expansion-panel-header>
-          <mat-action-list class="view-action-list">
-            <!--<a mat-list-item routerLink="/entry" (click)="setActive($event)">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-icon>library_books</mat-icon>Candidates<!--list-->
+        </mat-expansion-panel-header>
+        <mat-action-list class="view-action-list">
+          <!--<a mat-list-item routerLink="/entry" (click)="setActive($event)">
               <mat-icon>assignment</mat-icon>
               <span>Demand Entry</span>
             </a>-->
-            <a mat-list-item routerLink="/candidate-tracking" (click)="setActive($event)">
-              <mat-icon>assignment</mat-icon>
-              <span>Tracking</span>
-            </a>
-            <!-- <a mat-list-item routerLink="/candidate/profile" (click)="setActive($event)">
+          <a mat-list-item routerLink="/candidate-tracking"
+            (click)="setActive($event)">
+            <mat-icon>assignment</mat-icon>
+            <span>Tracking</span>
+          </a>
+          <!-- <a mat-list-item routerLink="/candidate/profile" (click)="setActive($event)">
               <mat-icon>assignment</mat-icon>
               <span>Profile</span>
             </a>
@@ -44,7 +47,8 @@
               <mat-icon>assignment</mat-icon>
               <span>Report</span>
             </a> -->
-            <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
+          <a mat-list-item routerLink="/candidate-history"
+            (click)="setActive($event)">
             <mat-icon>assignment</mat-icon>
             <span>History</span>
           </a>
