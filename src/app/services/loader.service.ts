@@ -10,12 +10,12 @@ export class LoaderService {
   loading$ = this.loadingSubject.asObservable();
 
   show() {
-    // console.log('Loader Activated!'); 
+    console.log('Loader Activated!'); 
     this.loadingSubject.next(true);
   }
 
   hide() {
-    // console.log('Loader Deactivated!'); 
+    console.log('Loader Deactivated!'); 
     this.loadingSubject.next(false);
   }
 }

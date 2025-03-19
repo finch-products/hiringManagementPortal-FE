@@ -53,20 +53,16 @@ export class DemandComponent implements OnInit {
     );
   }
 
-  public loadData(demandId: any) {
+public  loadData(demandId: any) {
     const payload = { dem_id: demandId };
   
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data) => {
         this.demands = data;
+    
+       this.candidates = data.candidates ? [...data.candidates].reverse() : [];
+  console.log("Updated candidates list:", this.candidates);
 
-        // Set the default value of the status dropdown
-        if (this.demands?.demand_details?.status_details?.dsm_code) {
-          this.demandForm.patchValue({
-            status: this.demands.demand_details.status_details.dsm_code
-          });
-          this.originalStatus = this.demands.demand_details.status_details.dsm_code;
-        }
       }
     });
 
