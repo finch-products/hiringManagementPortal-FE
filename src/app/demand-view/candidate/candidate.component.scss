@@ -131,6 +131,33 @@ body, html {
     box-sizing: border-box; 
     margin-bottom: 10px;
 }
+
+/* Specific Status Colors */
+.status.Selected {
+    background-color: #D1FADF;
+    color: #027A48;
+}
+
+.status.Rejected {
+    background-color: #FEE4E2;
+    color: #B42318;
+}
+
+.status.Pending {
+    background-color: #FEF0C7;
+    color: #B54708;
+}
+
+ /*Floating Style (Optional if you want to move it to top-right)*/ 
+.floating-status {
+    top: 10px;
+    right: 10px;
+    padding: 2px 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+
+}
+
 .skills {
     display: flex;
     flex-wrap: wrap;
@@ -170,6 +197,21 @@ body, html {
     max-height: 600px;
     overflow-y: auto;
     padding-right: 5px;
+}
+
+.status-label {
+    display: inline-block;
+    padding: 5px 12px;
+    background-color: #eaffea;
+    color: #228B22;
+    border-radius: 15px;
+    //font-weight: bold;
+    //font-size: 14px;
+    text-align: center;
+    white-space: nowrap; /* Prevents text from breaking */
+    max-width: 100%; /* Ensures it fits within the container */
+    overflow: hidden;
+    text-overflow: ellipsis; /* In case the text is too long */
 }
 
 .candidates-list::-webkit-scrollbar {
