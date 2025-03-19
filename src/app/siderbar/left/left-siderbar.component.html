@@ -4,8 +4,10 @@
     <div class="sidebar-header">
       <!-- Show logo only when sidebar is expanded -->
       <div class="sidebar-logo" *ngIf="!isCollapsed">
-        <img
-          src="../../../assets/img/logo.jpg">
+        <a href="/dashboard">
+          <img
+            src="../../../assets/img/logo.jpg">
+        </a>
       </div>
 
       <!-- Toggle button at right -->
@@ -19,110 +21,91 @@
 
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard">
-        <mat-icon>dashboard</mat-icon>
+        <mat-icon [matTooltip]="isCollapsed ? 'Dashboard' : null" matTooltipPosition="right" >dashboard</mat-icon>
         <span>Dashboard</span>
       </a>
 
         <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-icon>library_books</mat-icon>Candidates<!--list-->
-          </mat-expansion-panel-header>
-          <mat-action-list class="view-action-list">
-            <!--<a mat-list-item routerLink="/entry" (click)="setActive($event)">
-              <mat-icon>assignment</mat-icon>
-              <span>Demand Entry</span>
-            </a>-->
-            <a mat-list-item routerLink="/candidate-tracking" (click)="setActive($event)">
-              <mat-icon>assignment</mat-icon>
-              <span>Tracking</span>
-            </a>
-            <!-- <a mat-list-item routerLink="/candidate/profile" (click)="setActive($event)">
-              <mat-icon>assignment</mat-icon>
-              <span>Profile</span>
-            </a>
-            <a mat-list-item routerLink="/candidate/report" (click)="setActive($event)">
-              <mat-icon>assignment</mat-icon>
-              <span>Report</span>
-            </a> -->
-            <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
-            <mat-icon>assignment</mat-icon>
-            <span>History</span>
-          </a>
-        </mat-action-list></mat-expansion-panel>
-
-      <mat-expansion-panel class="view_panel">
         <mat-expansion-panel-header>
-          <mat-icon>view_in_ar</mat-icon>
-          Other Views
+          <mat-icon [matTooltip]="isCollapsed ? 'Candidates' : null" matTooltipPosition="right">library_books</mat-icon>
+          <span>Candidates</span>
         </mat-expansion-panel-header>
         <mat-action-list class="view-action-list">
-
-          <a mat-list-item routerLink="/other-view2"
-            (click)="setActive($event)">
-            <mat-icon>folder</mat-icon>
-            <span>View 1</span>
+          <a mat-list-item routerLink="/candidate-tracking" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'History' : null" matTooltipPosition="right">assignment</mat-icon>
+            <span>Tracking</span>
           </a>
-
-          <a mat-list-item routerLink="/other-view4"
-            (click)="setActive($event)">
-            <mat-icon>folder</mat-icon>
-            <span> View 2</span>
-          </a>
-          <a mat-list-item routerLink="/other-view5"
-            (click)="setActive($event)">
-            <mat-icon>folder</mat-icon>
-            <span> View 5</span>
+          <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'Candidate History' : null" matTooltipPosition="right">assignment</mat-icon>
+            <span>History</span>
           </a>
         </mat-action-list>
       </mat-expansion-panel>
 
-      <a mat-list-item routerLink="/reports"
-        (click)="setActive($event)">
-        <mat-icon>widgets</mat-icon> Reports
+      <mat-expansion-panel class="view_panel">
+        <mat-expansion-panel-header>
+          <mat-icon [matTooltip]="isCollapsed ? 'Other Views' : null" matTooltipPosition="right">view_in_ar</mat-icon>
+          <span>Other Views</span>
+        </mat-expansion-panel-header>
+        <mat-action-list class="view-action-list">
+          <a mat-list-item routerLink="/other-view2" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'View 1' : null" matTooltipPosition="right">folder</mat-icon>
+            <span>View 1</span>
+          </a>
+          <a mat-list-item routerLink="/other-view4" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'View 2' : null" matTooltipPosition="right">folder</mat-icon>
+            <span>View 2</span>
+          </a>
+          <a mat-list-item routerLink="/other-view5" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'View 5' : null" matTooltipPosition="right">folder</mat-icon>
+            <span>View 5</span>
+          </a>
+        </mat-action-list>
+      </mat-expansion-panel>
+
+      <a mat-list-item routerLink="/reports" (click)="setActive($event)">
+        <mat-icon [matTooltip]="isCollapsed ? 'Reports' : null" matTooltipPosition="right">widgets</mat-icon>
+        <span>Reports</span>
       </a>
 
       <!-- Masters (Expandable) -->
       <mat-expansion-panel class="masters-panel">
         <mat-expansion-panel-header>
-          <mat-icon>auto_stories</mat-icon>
-          Masters
+          <mat-icon [matTooltip]="isCollapsed ? 'Masters' : null" matTooltipPosition="right">auto_stories</mat-icon>
+          <span>Masters</span>
         </mat-expansion-panel-header>
 
         <mat-action-list class="master-list">
-          <a mat-list-item routerLink="/client-master"
-            (click)="setActive($event)">
-            <mat-icon>library_books</mat-icon>
+          <a mat-list-item routerLink="/client-master" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'Client Master' : null" matTooltipPosition="right">library_books</mat-icon>
             <span>Client Master</span>
           </a>
           <a mat-list-item routerLink="/lob-master" (click)="setActive($event)">
-            <mat-icon>library_books</mat-icon>
+            <mat-icon [matTooltip]="isCollapsed ? 'Lob Master' : null" matTooltipPosition="right">library_books</mat-icon>
             <span>Lob Master</span>
           </a>
-          <a mat-list-item routerLink="/employee-master"
-            (click)="setActive($event)">
-            <mat-icon>library_books</mat-icon>
+          <a mat-list-item routerLink="/employee-master" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'Employee Master' : null" matTooltipPosition="right">library_books</mat-icon>
             <span>Employee Master</span>
           </a>
-          <a mat-list-item routerLink="/location-master"
-            (click)="setActive($event)">
-            <mat-icon>library_books</mat-icon>
+          <a mat-list-item routerLink="/location-master" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'Location Master' : null" matTooltipPosition="right">library_books</mat-icon>
             <span>Location Master</span>
           </a>
-          <a mat-list-item routerLink="/internal-department-master"
-            (click)="setActive($event)">
-            <mat-icon>library_books</mat-icon>
+          <a mat-list-item routerLink="/internal-department-master" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'Department Master' : null" matTooltipPosition="right">library_books</mat-icon>
             <span>Department Master</span>
           </a>
-          <a mat-list-item routerLink="/candidate-master"
-            (click)="setActive($event)">
-            <mat-icon>library_books</mat-icon>
+          <a mat-list-item routerLink="/candidate-master" (click)="setActive($event)">
+            <mat-icon [matTooltip]="isCollapsed ? 'Candidate Master' : null" matTooltipPosition="right">library_books</mat-icon>
             <span>Candidate Master</span>
           </a>
         </mat-action-list>
       </mat-expansion-panel>
 
       <a mat-list-item routerLink="/settings" (click)="setActive($event)">
-        <mat-icon>settings</mat-icon> Settings
+        <mat-icon [matTooltip]="isCollapsed ? 'Settings' : null" matTooltipPosition="right">settings</mat-icon>
+        <span>Settings</span>
       </a>
     </mat-nav-list>
     <br>
@@ -132,31 +115,26 @@
         Docs
       </div>
       <br>
-      <a mat-list-item routerLink="/documents/job-descriptions"
-        (click)="setActive($event)">
-        <mat-icon>description</mat-icon> Job Descriptions
+      <a mat-list-item routerLink="/documents/job-descriptions" (click)="setActive($event)">
+        <mat-icon [matTooltip]="isCollapsed ? 'Job Descriptions' : null" matTooltipPosition="right">description</mat-icon>
+        <span>Job Descriptions</span>
       </a>
-      <a mat-list-item routerLink="/documents/profiles"
-        (click)="setActive($event)">
-        <mat-icon>description</mat-icon>
-        Profiles
+      <a mat-list-item routerLink="/documents/profiles" (click)="setActive($event)">
+        <mat-icon [matTooltip]="isCollapsed ? 'Profiles' : null" matTooltipPosition="right">description</mat-icon>
+        <span>Profiles</span>
       </a>
-      <a mat-list-item routerLink="/documents/sows"
-        (click)="setActive($event)">
-        <mat-icon>description</mat-icon>
-        SOWs
+      <a mat-list-item routerLink="/documents/sows" (click)="setActive($event)">
+        <mat-icon [matTooltip]="isCollapsed ? 'SOWs' : null" matTooltipPosition="right">description</mat-icon>
+        <span>SOWs</span>
       </a>
-      <a mat-list-item routerLink="/documents/rate-cards"
-        (click)="setActive($event)">
-        <mat-icon>description</mat-icon>
-        Rate Cards
+      <a mat-list-item routerLink="/documents/rate-cards" (click)="setActive($event)">
+        <mat-icon [matTooltip]="isCollapsed ? 'Rate Cards' : null" matTooltipPosition="right">description</mat-icon>
+        <span>Rate Cards</span>
       </a>
-      <a mat-list-item routerLink="/documents/others"
-        (click)="setActive($event)">
-        <mat-icon>description</mat-icon>
-        Others
+      <a mat-list-item routerLink="/documents/others" (click)="setActive($event)">
+        <mat-icon [matTooltip]="isCollapsed ? 'Others' : null" matTooltipPosition="right">description</mat-icon>
+        <span>Others</span>
       </a>
-
     </mat-nav-list>
   </mat-sidenav>
 </mat-sidenav-container>

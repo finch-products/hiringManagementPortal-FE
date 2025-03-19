@@ -13,6 +13,37 @@
     padding: 1%;
 }
 
+.chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .legend-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .legend-color-box {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  
+  .legend-text {
+    font-size: 14px;
+    color: #333;
+  }
+
 .dashboard-cards .card {
     width: 23%;
     padding: 2%;

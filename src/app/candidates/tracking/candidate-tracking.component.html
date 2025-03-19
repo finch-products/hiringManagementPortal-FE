@@ -4,10 +4,10 @@
         Candidate</button>
     <!-- Search Box -->
     <div class="custom-search-box">
-        <input type="text" (keyup)="applyFilter($event)"
-            placeholder="Search ..." placeholder="Enter name, skill, or ID" />
+        <input type="text" (keyup)="applyFilter($event)" placeholder="Search ..." placeholder="Enter name, skill, or ID" />
         <mat-icon class="search-icon">search</mat-icon>
-    </div>
+      </div>
+      
 </div>
 
 <!-- Status Tabs -->
@@ -24,10 +24,8 @@
 
 <mat-form-field class="status-filter">
     <mat-label>Filter by Status</mat-label>
-    <mat-select multiple [(value)]="selectedStatuses"
-        (selectionChange)="filterCandidates()">
-        <mat-option *ngFor="let status of candidateStatuses"
-            [value]="status">{{ status }}</mat-option>
+    <mat-select multiple [(ngModel)]="selectedStatuses" (selectionChange)="filterCandidates()">
+        <mat-option *ngFor="let status of candidateStatuses" [value]="status">{{ status }}</mat-option>
     </mat-select>
 </mat-form-field>
 

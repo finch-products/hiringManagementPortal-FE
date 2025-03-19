@@ -14,7 +14,6 @@ export class CandidateTrackingComponent {
   candidates: any[] = [];
   filteredCandidates = new MatTableDataSource<any>([]);
   selectedStatuses: string[] = [];
-  // selectedCandidates: any[] = [];
   candidateStatuses: any[] = [];
   selectedCandidates: Set<string> = new Set();
 
@@ -40,6 +39,7 @@ export class CandidateTrackingComponent {
   loadCandidates() {
     this.httpService.getCandidate().subscribe(
       (data) => {
+        this.candidates = data; 
         this.filteredCandidates.data = data;
       },
       (error) => {
@@ -50,41 +50,43 @@ export class CandidateTrackingComponent {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  
+    // Custom filter predicate to search across multiple columns
+    this.filteredCandidates.filterPredicate = (data: any, filter: string) => {
+      const columnsToSearch = ['cdm_name', 'cdm_location', 'candidate_status.csm_code']; // Add more columns if needed
+      return columnsToSearch.some(column => {
+        const columnValue = this.getNestedValue(data, column)?.toString().toLowerCase();
+        return columnValue?.includes(filter);
+      });
+    };
+  
     this.filteredCandidates.filter = filterValue;
+  }
+  
+  // Helper function to get nested object properties (e.g., candidate_status.csm_code)
+  getNestedValue(obj: any, path: string) {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
   }
 
  
   getStatusClass(status: string | null | undefined): string {
-    if (!status) return 'status-default'; // Handle null or undefined values
+    if (!status) return 'status-default';
     return `status-${status.replace(/\s+/g, '-').toLowerCase()}`;
   }
 
-
-  /**
-   * Navigate to Candidate History page when a row is clicked
-   */
   viewCandidateHistory(candidate: any) {
     this.router.navigate(['/candidate-history', candidate.id]);
   }
 
-  /**
-   * Open interview scheduling for a candidate
-   */
+
   scheduleInterview(candidate: any) {
     console.log('Scheduling interview for:', candidate);
-    // Add logic for scheduling interview
   }
 
-  /**
-   * Add a new candidate (Navigate to add candidate form)
-   */
   addCandidate() {
-    this.router.navigate(['/add-candidate']);
+    this.router.navigate(['/candidate-master']);
   }
 
-  /**
-   * Filter candidates based on selected tab
-   */
   filterCandidates() {
     if (!this.candidates || this.candidates.length === 0) {
       console.error("No candidates available for filtering! Data might not be loaded yet.");
@@ -96,7 +98,7 @@ export class CandidateTrackingComponent {
   
     this.filteredCandidates.data = this.candidates.filter(candidate => {
       if (!candidate.candidate_status || !candidate.candidate_status.csm_code) {
-        return false; // Skip candidates with null status
+        return false;
       }
   
       const candidateStatus = candidate.candidate_status.csm_code.trim().toLowerCase();
@@ -111,30 +113,9 @@ export class CandidateTrackingComponent {
   
   resetFilters() {
     this.selectedStatuses = [];
+    this.filteredCandidates.data = this.candidates;
     this.loadCandidates();
   }
-
-  /**
-   * Toggle Select All Candidates
-   */
-  // toggleSelectAll(event: any) {
-  //   if (event.checked) {
-  //     this.selectedCandidates = [...this.filteredCandidates.data];
-  //   } else {
-  //     this.selectedCandidates = [];
-  //   }
-  // }
-
-  /**
-   * Toggle selection of a single candidate
-   */
-  // toggleSelection(candidate: any, event: any) {
-  //   if (event.checked) {
-  //     this.selectedCandidates.push(candidate);
-  //   } else {
-  //     this.selectedCandidates = this.selectedCandidates.filter(c => c.id !== candidate.cdm_id);
-  //   }
-  // }
 
   toggleCandidateSelection(cdm_id: string) {
     if (this.selectedCandidates.has(cdm_id)) {
@@ -143,5 +124,4 @@ export class CandidateTrackingComponent {
       this.selectedCandidates.add(cdm_id);
     }
   }
-
 }
