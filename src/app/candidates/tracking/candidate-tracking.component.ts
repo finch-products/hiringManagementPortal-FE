@@ -68,7 +68,7 @@ export class CandidateTrackingComponent {
   }
 
   addCandidate() {
-    this.router.navigate(['/add-candidate']);
+    this.router.navigate(['/candidate-master']);
   }
 
   filterCandidates() {
