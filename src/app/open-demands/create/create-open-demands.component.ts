@@ -268,14 +268,14 @@ export class CreateOpenDemandComponent implements OnInit {
         next: (response) => {
           // console.log('Demand Updated Successfully:', response);
           // alert('Demand updated successfully!');
-          this.snackBar.open("✅ Demand Updated Successfully!", "Close", {
+          this.snackBar.open(" Demand Updated Successfully!", "✅", {
             duration: 3000,
             panelClass: ['success-snackbar']
           });
           this.router.navigate(['/list']);
         },
         error: (error) => {
-          this.snackBar.open("❌ Failed to update demand. Check console for details.", "Close", {
+          this.snackBar.open(" Failed to update demand. Check console for details.", "❌", {
             duration: 3000,
             panelClass: ['error-snackbar']
           });

@@ -23,8 +23,11 @@ export class AppComponent {
     this.router.events.subscribe(() => {
       // Show right sidebar only on the Dashboard
       this.showRightSidebar = this.router.url === '/dashboard';
-      this.isLoading = this.loaderService.loading$;
+      
     });
+  }
+  ngOnInit() {
+    this.isLoading = this.loaderService.loading$;
   }
 
 }

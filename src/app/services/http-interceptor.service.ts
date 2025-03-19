@@ -11,12 +11,12 @@ export class HttpInterceptorService  implements HttpInterceptor  {
   constructor(private loaderService: LoaderService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // console.log('Interceptor Triggered for API:', req.url); 
+    console.log('Interceptor Triggered for API:', req.url); 
     this.loaderService.show();
     return next.handle(req).pipe(
       finalize(() => {
         this.loaderService.hide(); 
-        // console.log('API Response Received:', req.url); 
+        console.log('API Response Received:', req.url); 
       })
     );
   }
