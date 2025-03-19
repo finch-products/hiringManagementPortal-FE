@@ -7,6 +7,7 @@ import { HttpService } from '../../services/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -28,15 +29,17 @@ export class CreateOpenDemandComponent implements OnInit {
   hiringManagerControl = new FormControl('');
   form!: FormGroup;
   minDate: Date;
-  
- 
-  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute,private router: Router,private snackBar:MatSnackBar) {
+  selectedEmail: string = '';  // To hold the selected email
+  isCustomManager: boolean = false;
+
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
     this.minDate = new Date();
     console.log(this.minDate)
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
-      dem_id:[''],
-      dem_updateby_id:[''],
+      dem_id: [''],
+      dem_updateby_id: [''],
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
@@ -58,7 +61,8 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_isactive: [true],
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
-      dem_mandatoryskill: ['']
+      dem_mandatoryskill: [''],
+      dem_position_location: [[]]
     });
   }
 
@@ -66,13 +70,13 @@ export class CreateOpenDemandComponent implements OnInit {
     // Initialize form
     this.form = this.fb.group({
       dem_clm_id: [null]
-    }); 
+    });
     this.route.paramMap.subscribe(params => {
       const demandId = params.get('id');
       if (demandId) {
         this.isEditMode = true;
         console.log("editmode", this.isEditMode)
-        this.loadData(demandId); // Load user details for editing
+        this.loadData(demandId);
       }
       this.loadClients();
       this.loadLocations();
@@ -83,23 +87,18 @@ export class CreateOpenDemandComponent implements OnInit {
       });
     })
   }
-  onHiringManagerChange(event: any) {
-    const selectedValue = event.value;
-  
-  if (selectedValue === 'custom') {
-    this.customEntryEnabled = true;
-    this.demandForm.get('clm_clientemail')?.disable() //setValue(''); // Clear email field for manual entry
-  } else {
-    this.customEntryEnabled = false;
-    
-    // Find selected manager and auto-fill email
-    const selectedManager = this.clients.find(client => client.clm_id === selectedValue);
-    // alert('selectedManager' + JSON.stringify(selectedManager))
-    if (selectedManager) {
-      this.demandForm.get('clm_clientemail')?.disable(); // Keep it disabled (readonly)  .setValue(selectedManager.clm_clientemail);
-      // alert('selectedManager' + this.demandForm.get('clm_clientemail')?.value())
+  onHiringManagerChange(event: MatSelectChange) {
+
+    const selectedId = event.value;
+
+    if (selectedId === 'custom') {
+      this.customEntryEnabled = true;
+      this.selectedEmail = '';
+    } else {
+      this.isCustomManager = false;
+      const selectedClient = this.clients.find(client => client.clm_id === selectedId);
+      this.selectedEmail = selectedClient ? selectedClient.clm_clientemail : '';
     }
-  }
   }
 
   // Add new client
@@ -108,19 +107,19 @@ export class CreateOpenDemandComponent implements OnInit {
       alert('Please enter valid details.');
       return;
     }
-  
+
     this.httpService.postaddClient(this.newClient).subscribe({
       next: (response: any) => {
         alert('Client added successfully!');
         const newClmId = response.clm_id;
-  
+
         // Add new client to the list
         this.clients.push({ clm_id: newClmId, clm_name: this.newClient.clm_name, clm_clientemail: this.newClient.clm_clientemail });
-  
+
         // Auto-select newly added client
         this.demandForm.get('dem_clm_id')?.setValue(newClmId);
         this.demandForm.get('clm_clientemail')?.setValue(this.newClient.clm_clientemail);
-  
+
         // Reset the input fields
         this.newClient = { clm_name: '', clm_clientemail: '' };
         this.customEntryEnabled = false;
@@ -136,11 +135,11 @@ export class CreateOpenDemandComponent implements OnInit {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
         this.demands = data;
-        console.log("demands",this.demands)
-        console.log("active",this.demands.dem_isactive)
+        console.log("demands", this.demands)
+        console.log("active", this.demands.dem_isactive)
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
-          dem_id:this.demands.dem_id,
+          dem_id: this.demands.dem_id,
           // dem_updateby_id:this.demands.updateby_id,
           dem_ctoolnumber: this.demands?.dem_ctoolnumber,
           dem_ctooldate: this.demands?.dem_ctooldate,
@@ -159,6 +158,9 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isreopened: this.demands?.dem_isreopened,
           dem_isactive: this.demands?.dem_isactive,
           dem_comment: this.demands?.dem_comment,
+          dem_position_location: this.demands?.dem_position_location 
+          ? JSON.parse(this.demands.dem_position_location) 
+          : []
         });
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
         //Ensure correct visibility for RR/JR fields
@@ -170,19 +172,19 @@ export class CreateOpenDemandComponent implements OnInit {
   }
 
   loadClients(selectedId?: number): void {
-  this.httpService.getClientDetails().subscribe((clients: any[]) => {
-    this.clients = clients; // Assuming 'clients' holds the client list used in form dropdown
+    this.httpService.getClientDetails().subscribe((clients: any[]) => {
+      this.clients = clients; // Assuming 'clients' holds the client list used in form dropdown
 
-    if (selectedId) {
-      const foundClient = clients.find(client => client.clm_id === selectedId);
-      if (foundClient) {
-        console.log("auto selecting :",foundClient)
-        this.form.get('dem_clm_id')?.setValue(selectedId); // Set form value only if found
+      if (selectedId) {
+        const foundClient = clients.find(client => client.clm_id === selectedId);
+        if (foundClient) {
+          console.log("auto selecting :", foundClient)
+          this.form.get('dem_clm_id')?.setValue(selectedId); // Set form value only if found
+        }
       }
-    }
-  });
-}
-  
+    });
+  }
+
 
   loadLocations(): void {
     this.httpService.getLocationDetails().subscribe({
@@ -241,15 +243,23 @@ export class CreateOpenDemandComponent implements OnInit {
   // }
 
   onSubmit() {
-
     const updatedFields: any = {};
     const formData = new FormData();
+  
     if (this.isEditMode) {
       updatedFields["dem_id"] = this.demandForm.value.dem_id;
-      updatedFields["dem_updateby_id"] ='emp_11022025_02';
+      updatedFields["dem_updateby_id"] = 'emp_11022025_02';
+  
       Object.keys(this.demandForm.controls).forEach((field) => {
         if (this.demandForm.controls[field].dirty) {
-          updatedFields[field] = this.demandForm.value[field];
+          let value = this.demandForm.value[field];
+  
+          // ✅ Convert multi-select field to JSON array
+          if (field === "dem_position_location" && Array.isArray(value)) {
+            value = JSON.stringify(value);
+          }
+  
+          updatedFields[field] = value;
         }
       });
   
@@ -258,16 +268,11 @@ export class CreateOpenDemandComponent implements OnInit {
         formData.append("job_description", this.selectedFile);
       }
   
-      console.log("Final Update Request Body:");
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      console.log("Final Update Request Body:", updatedFields);
   
       // 🔹 Update API Call
       this.httpService.updateDemand(updatedFields).subscribe({
         next: (response) => {
-          // console.log('Demand Updated Successfully:', response);
-          // alert('Demand updated successfully!');
           this.snackBar.open("✅ Demand Updated Successfully!", "Close", {
             duration: 3000,
             panelClass: ['success-snackbar']
@@ -290,6 +295,11 @@ export class CreateOpenDemandComponent implements OnInit {
         // Format date fields
         if (value instanceof Date) {
           value = this.formatDate(value);
+        }
+  
+        // ✅ Convert multi-select field to JSON array
+        if (key === "dem_position_location" && Array.isArray(value)) {
+          value = JSON.stringify(value);
         }
   
         if (value !== null && value !== undefined) {
@@ -326,7 +336,8 @@ export class CreateOpenDemandComponent implements OnInit {
         }
       });
     }
- }
+  }
+  
 
   formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -339,7 +350,7 @@ export class CreateOpenDemandComponent implements OnInit {
   navigateToClientMaster() {
     this.router.navigate(['client-master']);
   }
-  cancel(){
+  cancel() {
     this.router.navigate(['/dashboard']);
   }
 }
