@@ -57,21 +57,15 @@
   }
 
   .icons a {
-    // width: min-content;
-    // padding: 0px;
-    // background-color: #f4c542;
-    // padding: 10px;
-    // border-radius: 10px;
     cursor: pointer;
     background: linear-gradient(to right, #FFC107, #FFB300);
     /* Subtle gradient */
     color: #333;
     border: none;
-    padding: 10px 20px;
+    padding: 0px 10px ;
     font-size: 16px;
     font-weight: 600;
     border-radius: 20px;
-    /* Rounded corners */
     cursor: pointer;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -80,21 +74,12 @@
       transform: scale(1.05);  /* Slight scale effect */
     }
   }
-
   .icon {
-    // color: #555;
-    // font-size: 24px;
-    // transition: color 0.3s;
-    // display: flex;
-    // /* Ensures proper alignment */
-    // align-items: center;
-    // justify-content: center;
-    // width: min-content;
-
-    background: #FFC107;
+  background: #FFC107;
   border: none;
   border-radius: 50%;
-  padding: 10px;
+  padding: 20px;
+  //padding: 20px 20px ;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,13 +93,13 @@
     background: #FFB300;
     transform: scale(1.1);
   }
-}
 
-.icon mat-icon {
-  font-size: 20px;
-  color: #333;
+   mat-icon {
+    font-size: 25px;
+    color: #333;
+  }
+  
 }
-
 .mat-mdc-list-item{
   width: auto !important;
 }

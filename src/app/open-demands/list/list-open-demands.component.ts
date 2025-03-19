@@ -93,6 +93,14 @@ export class ListOpenDemandsComponent {
       error: (err) => console.error('Error fetching demand status', err)
     });
   }
+  fetchOpenDemands() {
+    this.httpService.getDemands().subscribe({
+      next: (data) => {
+        this.demandService.setInitialData(data);
+      },
+      error: (err) => console.error('Error fetching demands', err)
+    });
+  }
 
   onSubmit(){
     console.log("button clicked")
@@ -116,29 +124,30 @@ export class ListOpenDemandsComponent {
         next:(data)=>{
           // console.log('Form submission successful:', data);
           // alert('Demand updated successfully!');
-          this.snackBar.open("✅ Demand Added Successfully!", "Close", {
+          this.snackBar.open("✅ Demand updated Successfully!", "Close", {
             duration: 3000,
             panelClass: ['success-snackbar']
           });
           this.listForm.reset()
           this.fetchOpenDemands()
+          // Clear selection after the data is refreshed
+        this.selection.clear();
+        this.selectedRows = [];
+        // Force table refresh by reassigning dataSource
+        setTimeout(() => {
+          this.dataSource = new MatTableDataSource<OpenDemand>(this.dataSource.data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }, 0);
+        this.updateSaveButtonState();
         },
-        error: (err) =>  this.snackBar.open("❌Failed to add demand. Check console for details", "Close", {
+        error: (err) =>  this.snackBar.open("❌Failed to update demand. Check console for details", "Close", {
           duration: 3000,
           panelClass: ['error-snackbar']
         })
       })
     }
  
-  }
-
-  fetchOpenDemands() {
-    this.httpService.getDemands().subscribe({
-      next: (data) => {
-        this.demandService.setInitialData(data);
-      },
-      error: (err) => console.error('Error fetching demands', err)
-    });
   }
 
   applyFilter(event: Event) {
@@ -174,7 +183,8 @@ export class ListOpenDemandsComponent {
   }
 
   toggleSelection(row: any) {
-    this.selection.toggle(row);
+    this.selection.clear();  // Clear previous selection
+    this.selection.select(row); // Select only the clicked row
     this.selectedRows = this.selection.selected;
     this.isRowSelected = this.selectedRows.length > 0; // Update the flag
     this.updateSaveButtonState();
@@ -188,7 +198,7 @@ export class ListOpenDemandsComponent {
 }
 
 
-  isAllSelected() {
+ /* isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
@@ -203,7 +213,7 @@ export class ListOpenDemandsComponent {
     this.selectedRows = this.selection.selected;
     this.updateSaveButtonState();
   }
-
+*/
   
   updateSaveButtonState() {
     document.querySelector('.submit')?.toggleAttribute('disabled', this.isSaveDisabled());
