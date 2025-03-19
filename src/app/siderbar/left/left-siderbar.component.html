@@ -4,8 +4,10 @@
     <div class="sidebar-header">
       <!-- Show logo only when sidebar is expanded -->
       <div class="sidebar-logo" *ngIf="!isCollapsed">
-        <img
-          src="../../../assets/img/logo.jpg">
+        <a href="/dashboard">
+          <img
+            src="../../../assets/img/logo.jpg">
+        </a>
       </div>
 
       <!-- Toggle button at right -->
@@ -29,21 +31,13 @@
           <span>Candidates</span>
         </mat-expansion-panel-header>
         <mat-action-list class="view-action-list">
-          <a mat-list-item routerLink="/candidate/history" (click)="setActive($event)">
+          <a mat-list-item routerLink="/candidate-tracking" (click)="setActive($event)">
             <mat-icon [matTooltip]="isCollapsed ? 'History' : null" matTooltipPosition="right">assignment</mat-icon>
-            <span>History</span>
-          </a>
-          <a mat-list-item routerLink="/candidate/profile" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Profile' : null" matTooltipPosition="right">assignment</mat-icon>
-            <span>Profile</span>
-          </a>
-          <a mat-list-item routerLink="/candidate/report" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Report' : null" matTooltipPosition="right">assignment</mat-icon>
-            <span>Report</span>
+            <span>Tracking</span>
           </a>
           <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
             <mat-icon [matTooltip]="isCollapsed ? 'Candidate History' : null" matTooltipPosition="right">assignment</mat-icon>
-            <span>Candidate History</span>
+            <span>History</span>
           </a>
         </mat-action-list>
       </mat-expansion-panel>
