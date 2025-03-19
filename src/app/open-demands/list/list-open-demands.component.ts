@@ -119,6 +119,27 @@ isEditmode="false";
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  
+    this.dataSource.filterPredicate = (data: OpenDemand, filter: string) => {
+      // Extract and format all relevant data for filtering
+      const dataStr =
+        (data.dem_ctoolnumber || '').toLowerCase() + '◬' + // CTool
+        (data.dem_ctooldate ? new Date(data.dem_ctooldate).toLocaleDateString('en-GB') : '').toLowerCase() + '◬' + // Date
+        (data.dem_validtill ? new Date(data.dem_validtill).toLocaleDateString('en-GB') : '').toLowerCase() + '◬' + // Required By
+        (data.dem_position_name || '').toLowerCase() + '◬' + // Position
+        (data.location_details ? data.location_details.lcm_name || '' : '').toLowerCase() + '◬' + // Location
+        (data.dem_skillset || '').toLowerCase() + '◬' + // Skills
+        (data.dem_positions ? data.dem_positions.toString() : '').toLowerCase() + '◬' + // Positions
+        (data.status_details ? data.status_details.dsm_code || '' : '').toLowerCase(); // Status
+  
+      // Normalize the filter string to handle diacritics and case insensitivity
+      const transformedFilter = filter.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  
+      // Check if the filter string exists in the concatenated data string
+      return dataStr.indexOf(transformedFilter) !== -1;
+    };
+  
+    // Apply the filter
     this.dataSource.filter = filterValue;
   }
 

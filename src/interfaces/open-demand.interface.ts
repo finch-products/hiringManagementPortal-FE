@@ -26,4 +26,6 @@ export interface OpenDemand {
   dem_insertdate: string;
   dem_updatedate: string;
   lob_details: any;
+  dem_position_name: any;
+  status_details: any;
   }
