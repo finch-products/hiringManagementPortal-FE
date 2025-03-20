@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DemandComponent } from '../demand/demand.component';
-import { catchError } from 'rxjs/operators'; 
+import { catchError } from 'rxjs/operators'; // Import catchError
+import { HttpErrorResponse } from '@angular/common/http';
 interface Candidate {
   cdm_name: string;
   cdm_id: string;
@@ -50,7 +51,8 @@ export class CandidateComponent {
         this.loadData(demandId);
       }
     });
-
+  
+    // Load the global status list
     this.httpService.getCandidateStatuses().subscribe(
       (response) => {
         this.statusList = response;
@@ -60,6 +62,7 @@ export class CandidateComponent {
         console.error('Error fetching global candidate statuses:', error);
       }
     );
+  
     console.log("Demand ID on Init:", this.dem_id);
   }
 
@@ -179,7 +182,7 @@ export class CandidateComponent {
   
   loadCandidateStatusesById(cdm_id: string): Observable<any> {
     return this.httpService.getCandidateStatusesbyid(cdm_id).pipe(
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => { // Explicitly type the error
         console.error(`Error fetching statuses for candidate ${cdm_id}:`, error);
         // Fallback to get all statuses if the specific request fails
         return this.httpService.getCandidateStatuses();
