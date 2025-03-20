@@ -78,72 +78,59 @@ export class CreateOpenDemandComponent implements OnInit {
       const demandId = params.get('id');
       if (demandId) {
         this.isEditMode = true;
-        console.log("editmode", this.isEditMode)
+        // console.log("editmode", this.isEditMode)
         this.loadData(demandId);
       }
     })
-      this.loadClients();
-      this.loadLocations();
-      this.loadLOBs();
-      this.loadInternalDepts();
-      this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
-        this.isInternal = value === 'yes';
-      });
-      this.filteredClients = this.demandForm.get('dem_clm_id')!.valueChanges.pipe(
-        startWith(''), 
-        map(value => (typeof value === 'string' ? value : value?.clm_name || '')),
-        map(name => this._filter(name)),
-        map(filteredList => {
-          console.log('Filtered Clients:', filteredList); // Debugging
-          return filteredList;
-        })
-      );
+    this.loadClients();
+    this.loadLocations();
+    this.loadLOBs();
+    this.loadInternalDepts();
+    this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
+      this.isInternal = value === 'yes';
+    });
+    this.filteredClients = this.demandForm.get('dem_clm_id')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value?.clm_name || '')),
+      map(name => this._filter(name)),
+      map(filteredList => {
+        console.log('Filtered Clients:', filteredList); // Debugging
+        return filteredList;
+      })
+    );
   }
   private _filter(name: string): any[] {
     if (!name) return this.clients; // Return full list if input is empty
 
     const filterValue = name.toLowerCase();
-  
+
     return this.clients.filter(client => {
       // Ensure all values are strings before calling `toLowerCase()`
-      const clientId = client.clm_id?.toString().toLowerCase() || ''; 
+      const clientId = client.clm_id?.toString().toLowerCase() || '';
       const clientName = client.clm_name?.toLowerCase() || '';
       const managerName = client.clm_managername?.toLowerCase() || '';
-  
+
       return clientId.includes(filterValue) || clientName.includes(filterValue) || managerName.includes(filterValue);
     });
   }
   displayClient(client: any): string {
+    console.log("client received in displayClient:", client);
     if (!client) return '';
-  if (typeof client === 'string') return client; // If it's a string, return as is
-  return `${client.clm_clientid} - ${client.clm_name} (${client.clm_managername})`;
-  
+    if (typeof client === 'string') return client; // If it's a string, return as is
+    return `${client.clm_id} - ${client.clm_name} (${client.clm_managername})`;
+
   }
   onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
-    // const selectedClient = event.option.value;  // Directly get the selected object
-
-    // if (selectedClient === 'custom') {
-    //   this.customEntryEnabled = true;
-    //   this.selectedEmail = '';
-    //   this.demandForm.controls['clm_clientemail'].setValue(''); // Reset email
-    // } else {
-    //   this.isCustomManager = false;
-    //   this.demandForm.controls['dem_clm_id'].setValue(selectedClient.clm_id);
-    //   this.selectedEmail = selectedClient.clm_clientemail || ''; 
-    //   this.demandForm.controls['clm_clientemail'].setValue(this.selectedEmail); // Update email field
-    // }
-
-     const selectedClient = event.option.value;
-
-  if (selectedClient === 'custom') {
-    this.customEntryEnabled = true;
-    this.demandForm.controls['dem_clm_id'].setValue('Other (Enter New)');
-    this.selectedEmail = '';
-  } else {
-    this.isCustomManager = false;
-    this.demandForm.controls['dem_clm_id'].setValue(selectedClient); // Store the full object
-    this.selectedEmail = selectedClient.clm_clientemail || '';
-  }
+    const selectedClient = event.option.value;
+    if (selectedClient === 'custom') {
+      this.customEntryEnabled = true;
+      this.demandForm.controls['dem_clm_id'].setValue('Other (Enter New)');
+      this.selectedEmail = '';
+    } else {
+      this.isCustomManager = false;
+      this.demandForm.controls['dem_clm_id'].setValue(selectedClient); // Store the full object
+      this.selectedEmail = selectedClient.clm_clientemail || '';
+    }
   }
 
   // Add new client
@@ -182,13 +169,14 @@ export class CreateOpenDemandComponent implements OnInit {
         this.demands = data;
         console.log("demands", this.demands)
         console.log("active", this.demands.dem_isactive)
+        console.log("Client Details:", this.demands.client_details);
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
           dem_id: this.demands.dem_id,
           // dem_updateby_id:this.demands.updateby_id,
           dem_ctoolnumber: this.demands?.dem_ctoolnumber,
           dem_ctooldate: this.demands?.dem_ctooldate,
-          dem_clm_id: this.demands.client_details?.clm_id,
+          dem_clm_id: this.demands.client_details,
           dem_lcm_id: this.demands.location_details?.lcm_id,
           dem_validtill: this.demands?.dem_validtill,
           dem_skillset: this.demands?.dem_skillset,
@@ -203,9 +191,9 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isreopened: this.demands?.dem_isreopened,
           dem_isactive: this.demands?.dem_isactive,
           dem_comment: this.demands?.dem_comment,
-          dem_position_location: this.demands?.dem_position_location 
-          ? this.demands.dem_position_location
-          : []
+          dem_position_location: this.demands?.dem_position_location
+            ? this.demands.dem_position_location
+            : []
         });
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
         //Ensure correct visibility for RR/JR fields
@@ -223,7 +211,7 @@ export class CreateOpenDemandComponent implements OnInit {
       this.filteredClients = this.demandForm.get('dem_clm_id')!.valueChanges.pipe(
         startWith(''),
         map(value => (typeof value === 'string' ? value : value?.clm_name)),
-        map(name => name ? this._filter(name) : [...this.clients]) 
+        map(name => name ? this._filter(name) : [...this.clients])
       );
       if (selectedId) {
         const foundClient = clients.find(client => client.clm_id === selectedId);
@@ -323,14 +311,14 @@ export class CreateOpenDemandComponent implements OnInit {
         next: (response) => {
           // console.log('Demand Updated Successfully:', response);
           // alert('Demand updated successfully!');
-          this.snackBar.open(" Demand Updated Successfully!", "✅", {
+          this.snackBar.open("✅ Demand Updated Successfully!", "", {
             duration: 3000,
             panelClass: ['success-snackbar']
           });
           this.router.navigate(['/list']);
         },
         error: (error) => {
-          this.snackBar.open(" Failed to update demand. Check console for details.", "❌", {
+          this.snackBar.open("❌ Failed to update demand. Check console for details.", "", {
             duration: 3000,
             panelClass: ['error-snackbar']
           });
@@ -390,7 +378,7 @@ export class CreateOpenDemandComponent implements OnInit {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-    return' ${year}-${month}-${day}';
+    return ' ${year}-${month}-${day}';
   }
 
 
