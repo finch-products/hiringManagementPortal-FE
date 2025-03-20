@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectChange } from '@angular/material/select';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { map, Observable, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-create-open-demands',
@@ -31,6 +33,7 @@ export class CreateOpenDemandComponent implements OnInit {
   minDate: Date;
   selectedEmail: string = '';  // To hold the selected email
   isCustomManager: boolean = false;
+  filteredClients!: any;
 
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
@@ -78,6 +81,7 @@ export class CreateOpenDemandComponent implements OnInit {
         console.log("editmode", this.isEditMode)
         this.loadData(demandId);
       }
+    })
       this.loadClients();
       this.loadLocations();
       this.loadLOBs();
@@ -85,20 +89,61 @@ export class CreateOpenDemandComponent implements OnInit {
       this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
         this.isInternal = value === 'yes';
       });
-    })
+      this.filteredClients = this.demandForm.get('dem_clm_id')!.valueChanges.pipe(
+        startWith(''), 
+        map(value => (typeof value === 'string' ? value : value?.clm_name || '')),
+        map(name => this._filter(name)),
+        map(filteredList => {
+          console.log('Filtered Clients:', filteredList); // Debugging
+          return filteredList;
+        })
+      );
   }
-  onHiringManagerChange(event: MatSelectChange) {
+  private _filter(name: string): any[] {
+    if (!name) return this.clients; // Return full list if input is empty
 
-    const selectedId = event.value;
+    const filterValue = name.toLowerCase();
+  
+    return this.clients.filter(client => {
+      // Ensure all values are strings before calling `toLowerCase()`
+      const clientId = client.clm_id?.toString().toLowerCase() || ''; 
+      const clientName = client.clm_name?.toLowerCase() || '';
+      const managerName = client.clm_managername?.toLowerCase() || '';
+  
+      return clientId.includes(filterValue) || clientName.includes(filterValue) || managerName.includes(filterValue);
+    });
+  }
+  displayClient(client: any): string {
+    if (!client) return '';
+  if (typeof client === 'string') return client; // If it's a string, return as is
+  return `${client.clm_clientid} - ${client.clm_name} (${client.clm_managername})`;
+  
+  }
+  onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
+    // const selectedClient = event.option.value;  // Directly get the selected object
 
-    if (selectedId === 'custom') {
-      this.customEntryEnabled = true;
-      this.selectedEmail = '';
-    } else {
-      this.isCustomManager = false;
-      const selectedClient = this.clients.find(client => client.clm_id === selectedId);
-      this.selectedEmail = selectedClient ? selectedClient.clm_clientemail : '';
-    }
+    // if (selectedClient === 'custom') {
+    //   this.customEntryEnabled = true;
+    //   this.selectedEmail = '';
+    //   this.demandForm.controls['clm_clientemail'].setValue(''); // Reset email
+    // } else {
+    //   this.isCustomManager = false;
+    //   this.demandForm.controls['dem_clm_id'].setValue(selectedClient.clm_id);
+    //   this.selectedEmail = selectedClient.clm_clientemail || ''; 
+    //   this.demandForm.controls['clm_clientemail'].setValue(this.selectedEmail); // Update email field
+    // }
+
+     const selectedClient = event.option.value;
+
+  if (selectedClient === 'custom') {
+    this.customEntryEnabled = true;
+    this.demandForm.controls['dem_clm_id'].setValue('Other (Enter New)');
+    this.selectedEmail = '';
+  } else {
+    this.isCustomManager = false;
+    this.demandForm.controls['dem_clm_id'].setValue(selectedClient); // Store the full object
+    this.selectedEmail = selectedClient.clm_clientemail || '';
+  }
   }
 
   // Add new client
@@ -158,9 +203,9 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isreopened: this.demands?.dem_isreopened,
           dem_isactive: this.demands?.dem_isactive,
           dem_comment: this.demands?.dem_comment,
-          dem_position_location: this.demands?.dem_position_location 
-          ? JSON.parse(this.demands.dem_position_location) 
-          : []
+          dem_position_location: this.demands?.dem_position_location
+            ? JSON.parse(this.demands.dem_position_location)
+            : []
         });
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
         //Ensure correct visibility for RR/JR fields
@@ -175,6 +220,11 @@ export class CreateOpenDemandComponent implements OnInit {
     this.httpService.getClientDetails().subscribe((clients: any[]) => {
       this.clients = clients; // Assuming 'clients' holds the client list used in form dropdown
 
+      this.filteredClients = this.demandForm.get('dem_clm_id')!.valueChanges.pipe(
+        startWith(''),
+        map(value => (typeof value === 'string' ? value : value?.clm_name)),
+        map(name => name ? this._filter(name) : [...this.clients]) 
+      );
       if (selectedId) {
         const foundClient = clients.find(client => client.clm_id === selectedId);
         if (foundClient) {
@@ -245,31 +295,31 @@ export class CreateOpenDemandComponent implements OnInit {
   onSubmit() {
     const updatedFields: any = {};
     const formData = new FormData();
-  
+
     if (this.isEditMode) {
       updatedFields["dem_id"] = this.demandForm.value.dem_id;
       updatedFields["dem_updateby_id"] = 'emp_11022025_02';
-  
+
       Object.keys(this.demandForm.controls).forEach((field) => {
         if (this.demandForm.controls[field].dirty) {
           let value = this.demandForm.value[field];
-  
+
           // ✅ Convert multi-select field to JSON array
           if (field === "dem_position_location" && Array.isArray(value)) {
             value = JSON.stringify(value);
           }
-  
+
           updatedFields[field] = value;
         }
       });
-  
+
       // Append file only if changed
       if (this.selectedFile) {
         formData.append("job_description", this.selectedFile);
       }
-  
+
       console.log("Final Update Request Body:", updatedFields);
-  
+
       // 🔹 Update API Call
       this.httpService.updateDemand(updatedFields).subscribe({
         next: (response) => {
@@ -288,41 +338,41 @@ export class CreateOpenDemandComponent implements OnInit {
           });
         }
       });
-  
+
     } else {
       // 🟢 Create Mode: Send all fields
       Object.keys(this.demandForm.value).forEach(key => {
         let value = this.demandForm.value[key];
-  
+
         // Format date fields
         if (value instanceof Date) {
           value = this.formatDate(value);
         }
-  
+
         // ✅ Convert multi-select field to JSON array
         if (key === "dem_position_location" && Array.isArray(value)) {
           value = JSON.stringify(value);
         }
-  
+
         if (value !== null && value !== undefined) {
           formData.append(key, value);
         }
       });
-  
+
       // Append file if available
       if (this.selectedFile) {
         formData.append("job_description", this.selectedFile);
       }
-  
+
       console.log("Final Create Request Body:");
       formData.forEach((value, key) => {
         console.log(`${key}:`, value);
       });
-  
+
       // 🔹 Create API Call
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
-          this.snackBar.open("✅ Demand Added Successfully!", "Close", {
+          this.snackBar.open("✅ Demand Added Successfully!", "", {
             duration: 3000,
             panelClass: ['success-snackbar']
           });
@@ -331,7 +381,7 @@ export class CreateOpenDemandComponent implements OnInit {
           this.router.navigate(['/list']);
         },
         error: (error) => {
-          this.snackBar.open("❌Failed to add demand. Check console for details", "Close", {
+          this.snackBar.open("❌Failed to add demand. Check console for details", "", {
             duration: 3000,
             panelClass: ['error-snackbar']
           });
@@ -339,7 +389,7 @@ export class CreateOpenDemandComponent implements OnInit {
       });
     }
   }
-  
+
 
   formatDate(date: Date): string {
     const year = date.getFullYear();

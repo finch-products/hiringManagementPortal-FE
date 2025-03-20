@@ -1,4 +1,4 @@
-<app-loader [isLoading]="isLoading | async"></app-loader> 
+<app-loader [isLoading]="(isLoading | async) ?? false"></app-loader> 
 
 <div class="main-layout">
   <div class="grid-container">

@@ -20,6 +20,7 @@ export class AppComponent {
   title = 'Internal Hiring Tool';
   showRightSidebar = false;
   constructor(private router: Router,private loaderService: LoaderService) {
+    this.isLoading = this.loaderService.loading$;
     this.router.events.subscribe(() => {
       // Show right sidebar only on the Dashboard
       this.showRightSidebar = this.router.url === '/dashboard';
@@ -27,7 +28,7 @@ export class AppComponent {
     });
   }
   ngOnInit() {
-    this.isLoading = this.loaderService.loading$;
+    
   }
 
 }
