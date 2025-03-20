@@ -52,7 +52,7 @@
         </button>
     </div> -->
     <div>
-        <h1 class="mat-h3 header" style="margin-top: 2%; padding-top: 2%; margin-bottom: 2%; ">Candidate Details</h1>
+        <h1 class="mat-h3 header">Candidate Details</h1>
     </div>
     <div class="candidates-list">
         <div class="candidate-item"
@@ -69,22 +69,24 @@
                     <div class="candidate-info">
                         <h3 class="candidate-name">{{ candidate.name ||
                             candidate.cdm_name }}</h3>
-                        <p class="candidate-id"> {{ candidate.cdl_cdm_id ||
+                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id ||
                             candidate.cdm_id}}</p>
                         <p class="candidate-email">{{ candidate.email ||
                             candidate.cdm_email}}</p>
-                            <select class="status"
-                            [(ngModel)]="candidate.candidate_status.csm_code"
-                            [ngClass]="{'no-arrow': searchTerm?.trim()}"
-                            *ngIf="!searchTerm?.trim()">
-                            <option *ngFor="let status of statusList"
-                                [value]="status.csm_code">
-                                {{ status.csm_code }}
-                            </option>
-                        </select>
-                        <div *ngIf="searchTerm?.trim()" class="status"> Status : {{
-                            candidate.candidate_status.csm_code || 'N/A' }}</div>
                     </div>
+                    <div>
+                        <select class="status"
+                                [(ngModel)]="candidate.selectedStatus"
+                                [ngClass]="{'no-arrow': searchTerm?.trim()}"
+                                *ngIf="!searchTerm?.trim()"
+                                (change)="onStatusChange(candidate, $event)">
+                          <option *ngFor="let status of candidate.statusList"
+                                  [value]="status.csm_code">
+                            {{ status.csm_code }}
+                          </option>
+                        </select>
+                      </div>
+                      <div *ngIf="searchTerm?.trim()" class="status"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
                     </div>
 
                 <div class="skills">
