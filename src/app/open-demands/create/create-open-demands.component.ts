@@ -62,7 +62,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
       dem_mandatoryskill: [''],
-      dem_position_location: [[[]]]
+      dem_position_location: [[]]
     });
   }
 
@@ -252,6 +252,7 @@ export class CreateOpenDemandComponent implements OnInit {
   
       Object.keys(this.demandForm.controls).forEach((field) => {
         if (this.demandForm.controls[field].dirty) {
+          updatedFields[field] = this.demandForm.value[field];
           let value = this.demandForm.value[field];
   
           /* ✅ Convert multi-select field to JSON array
@@ -259,19 +260,14 @@ export class CreateOpenDemandComponent implements OnInit {
             value = JSON.stringify(value);
           }*/
              // Handle the dem_position_location specifically
+        // Handle the dem_position_location specifically
         if (field === "dem_position_location") {
-          if (typeof value === 'string') {
-            try {
-              value = JSON.parse(value);
-            } catch (e) {
-              console.error("Invalid JSON format for dem_position_location:", value);
-              value = [];
-            }
+          formData.append(field, JSON.stringify(value));
+          } else{
+        if (value !== null && value !== undefined) {
+          formData.append(field, value);
           }
-          if (!Array.isArray(value)) {
-            value = [];
-          }
-        }
+         }
           
   
           updatedFields[field] = value;
@@ -284,6 +280,9 @@ export class CreateOpenDemandComponent implements OnInit {
       }
   
       console.log("Final Update Request Body:", updatedFields);
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
   
       // 🔹 Update API Call
       this.httpService.updateDemand(updatedFields).subscribe({
@@ -333,7 +332,7 @@ export class CreateOpenDemandComponent implements OnInit {
   
       console.log("Final Create Request Body:");
       formData.forEach((value, key) => {
-        console.log('${key}:, value');
+        console.log(`${key}:`, value);
       });
   
       // 🔹 Create API Call
