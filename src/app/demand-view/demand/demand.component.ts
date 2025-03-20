@@ -60,9 +60,13 @@ public  loadData(demandId: any) {
       next: (data) => {
         this.demands = data;
     
-       this.candidates = data.candidates ? [...data.candidates].reverse() : [];
-  console.log("Updated candidates list:", this.candidates);
+        this.candidates = data.candidates ? [...data.candidates].reverse() : [];
+        console.log("Updated candidates list:", this.candidates);
+        const currentStatus = this.demands?.demand_details?.status_details?.dsm_code;
+        this.demandForm.patchValue({ status: currentStatus });
 
+        // Store the original status
+        this.originalStatus = currentStatus;
       }
     });
 
