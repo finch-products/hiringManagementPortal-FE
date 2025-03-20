@@ -117,7 +117,13 @@ export class CreateOpenDemandComponent implements OnInit {
     console.log("client received in displayClient:", client);
     if (!client) return '';
     if (typeof client === 'string') return client; // If it's a string, return as is
-    return `${client.clm_id} - ${client.clm_name} (${client.clm_managername})`;
+    // return `${client.clm_clientid} - ${client.clm_name} (${client.clm_managername})`;
+    
+  let clientId = client.clm_clientid ? client.clm_clientid + ' - ' : '';
+  let clientName = client.clm_name ? client.clm_name : '';
+  let managerName = client.clm_managername ? ' (' + client.clm_managername + ')' : '';
+
+  return `${clientId}${clientName}${managerName}`.trim();
 
   }
   onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
