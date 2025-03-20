@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LocationService } from '../../../app/services/location.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-location',
@@ -10,7 +11,13 @@ import { LocationService } from '../../../app/services/location.service';
 })
 export class CreateLocationComponent implements OnInit {
   locationForm: FormGroup;
-  constructor(private fb: FormBuilder, private http: HttpClient, private locationService: LocationService) {
+
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private locationService: LocationService,
+    private snackBar: MatSnackBar
+  ) {
     this.locationForm = this.fb.group({
       lcm_name: ['', Validators.required],
       lcm_state: ['', Validators.required],
@@ -18,18 +25,43 @@ export class CreateLocationComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  ngOnInit(): void { }
+
+  onSubmit(): void {
     if (this.locationForm.valid) {
       this.http.post('http://64.227.145.117/api/locations/', this.locationForm.value).subscribe({
         next: (response) => {
           console.log('Location added:', response);
           this.locationService.addLocation(response);
+          this.snackBar.open('✅ Location added successfully!', 'Close', {
+            duration: 4000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          });
           this.locationForm.reset();
         },
-        error: (error) => console.error('Error adding location:', error)
+        error: (error) => {
+          console.error('Error adding location:', error);
+          this.snackBar.open('❌ Failed to add location. Please try again.', 'Close', {
+            duration: 4000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          });
+        }
+      });
+    } else {
+      this.snackBar.open('⚠️ Please fill all required fields correctly.', 'Close', {
+        duration: 4000,
+        panelClass: ['error-snackbar'],
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom'
       });
     }
   }
 
-  ngOnInit() { }
+  onCancel(): void {
+    this.locationForm.reset({ lcm_isactive: true });
+  }
 }
