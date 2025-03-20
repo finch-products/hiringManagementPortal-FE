@@ -5,18 +5,20 @@
     <div class="form-row">
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Hiring Manager</mat-label>
-        <mat-select formControlName="dem_clm_id" (selectionChange)="onHiringManagerChange($event)" required>
-          <mat-option *ngFor="let client of clients" [value]="client.clm_id">
-            {{ client.clm_name }}
+        <input type="text" matInput formControlName="dem_clm_id" [matAutocomplete]="auto" required>
+      
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onHiringManagerChange($event)" [displayWith]="displayClient">
+          <mat-option *ngFor="let client of filteredClients | async" [value]="client">
+            {{ client.clm_id }} - {{ client.clm_name }} ({{ client.clm_managername }})
           </mat-option>
           <mat-option [value]="'custom'">Other (Enter New)</mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Manager Email</mat-label>
-        <input matInput [(ngModel)]="selectedEmail" [disabled]="!isCustomManager" [ngModelOptions]="{standalone: true}"
-          required>
+        <input matInput [(ngModel)]="selectedEmail" [disabled]="!isCustomManager"
+          [ngModelOptions]="{standalone: true}">
       </mat-form-field>
       <!-- 
       <mat-form-field appearance="fill" class="form-field">

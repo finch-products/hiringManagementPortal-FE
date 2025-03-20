@@ -124,7 +124,7 @@ export class ListOpenDemandsComponent {
         next:(data)=>{
           // console.log('Form submission successful:', data);
           // alert('Demand updated successfully!');
-          this.snackBar.open("✅ Demand updated Successfully!", "Close", {
+          this.snackBar.open(" Demand updated Successfully!", "✅", {
             duration: 3000,
             panelClass: ['success-snackbar']
           });
@@ -141,7 +141,7 @@ export class ListOpenDemandsComponent {
         }, 0);
         this.updateSaveButtonState();
         },
-        error: (err) =>  this.snackBar.open("❌Failed to update demand. Check console for details", "Close", {
+        error: (err) =>  this.snackBar.open("Failed to update demand. Check console for details","❌", {
           duration: 3000,
           panelClass: ['error-snackbar']
         })
