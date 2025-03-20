@@ -62,7 +62,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
       dem_mandatoryskill: [''],
-      dem_position_location: ['']
+      dem_position_location: [[[]]]
     });
   }
 
@@ -158,8 +158,9 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isreopened: this.demands?.dem_isreopened,
           dem_isactive: this.demands?.dem_isactive,
           dem_comment: this.demands?.dem_comment,
-          dem_position_location: this.demands?.dem_position_location,
-          
+          dem_position_location: this.demands?.dem_position_location 
+          ? this.demands.dem_position_location
+          : []
         });
         console.log("Set dem_clm_id to:", data.client_details.clm_id);
         //Ensure correct visibility for RR/JR fields
@@ -251,14 +252,31 @@ export class CreateOpenDemandComponent implements OnInit {
   
       Object.keys(this.demandForm.controls).forEach((field) => {
         if (this.demandForm.controls[field].dirty) {
-          updatedFields[field] = this.demandForm.value[field];
+          let value = this.demandForm.value[field];
+  
+          /* ✅ Convert multi-select field to JSON array
+          if (field === "dem_position_location" && Array.isArray(value)) {
+            value = JSON.stringify(value);
+          }*/
+             // Handle the dem_position_location specifically
+        if (field === "dem_position_location") {
+          if (typeof value === 'string') {
+            try {
+              value = JSON.parse(value);
+            } catch (e) {
+              console.error("Invalid JSON format for dem_position_location:", value);
+              value = [];
+            }
+          }
+          if (!Array.isArray(value)) {
+            value = [];
+          }
+        }
+          
+  
+          updatedFields[field] = value;
         }
       });
-  
-      // 🔹 Ensure `dem_position_location` is always an array
-      // updatedFields["dem_position_location"] = this.demandForm.value.dem_position_location?.length
-      //   ? this.demandForm.value.dem_position_location
-      //   : [];
   
       // Append file only if changed
       if (this.selectedFile) {
@@ -294,15 +312,19 @@ export class CreateOpenDemandComponent implements OnInit {
           value = this.formatDate(value);
         }
   
-        // 🔹 Ensure `dem_position_location` is always an array
-        // if (key === "dem_position_location") {
-        //   value = value?.length ? value : [];
-        // }
+        /* ✅ Convert multi-select field to JSON array
+        if (key === "dem_position_location" && Array.isArray(value)) {
+          value = JSON.stringify(value);
+        }*/
   
+   // Handle the dem_position_location specifically
+   if (key === "dem_position_location") {
+        formData.append(key, JSON.stringify(value));
+    } else{
         if (value !== null && value !== undefined) {
           formData.append(key, value);
         }
-      });
+      }});
   
       // Append file if available
       if (this.selectedFile) {
@@ -311,7 +333,7 @@ export class CreateOpenDemandComponent implements OnInit {
   
       console.log("Final Create Request Body:");
       formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
+        console.log('${key}:, value');
       });
   
       // 🔹 Create API Call
@@ -340,7 +362,7 @@ export class CreateOpenDemandComponent implements OnInit {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-    return `${year}-${month}-${day}`;
+    return' ${year}-${month}-${day}';
   }
 
 
@@ -351,4 +373,3 @@ export class CreateOpenDemandComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 }
-
