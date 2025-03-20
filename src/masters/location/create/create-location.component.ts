@@ -30,6 +30,10 @@ export class CreateLocationComponent implements OnInit {
       });
     }
   }
-
+  onCancel(): void {
+    this.locationForm.reset();
+    this.locationForm.markAsPristine(); // Mark the form as pristine
+    this.locationForm.markAsUntouched(); // Mark the form as untouched
+  }
   ngOnInit() { }
 }

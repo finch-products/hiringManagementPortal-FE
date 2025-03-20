@@ -82,5 +82,9 @@ export class CreateEmployeeComponent {
       alert('Please fill in all required fields correctly.');
     }
   }  
-  
+  onCancel(): void {
+    this.employeeForm.reset();
+    this.employeeForm.markAsPristine(); // Mark the form as pristine
+    this.employeeForm.markAsUntouched(); // Mark the form as untouched
+  }
 }

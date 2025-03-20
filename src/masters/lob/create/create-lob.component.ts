@@ -52,4 +52,10 @@ export class CreateLOBComponent implements OnInit {
       });
     }
   }
+  onCancel(): void {
+    this.lobForm.reset();
+    this.lobForm.markAsPristine(); // Mark the form as pristine
+    this.lobForm.markAsUntouched(); // Mark the form as untouched
+  }
+  
 }

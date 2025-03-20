@@ -117,5 +117,9 @@ export class CreateCandidateComponent implements OnInit {
     });
 }
 
-
+onCancel(): void {
+  this.candidateForm.reset();
+  this.candidateForm.markAsPristine(); // Mark the form as pristine
+  this.candidateForm.markAsUntouched(); // Mark the form as untouched
+}
 }

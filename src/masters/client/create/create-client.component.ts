@@ -92,5 +92,9 @@ export class CreateClientComponent implements OnInit {
       });
     }  
   }
-   
+  onCancel(): void {
+    this.clientForm.reset();
+    this.clientForm.markAsPristine(); // Mark the form as pristine
+    this.clientForm.markAsUntouched(); // Mark the form as untouched
+  }
 }

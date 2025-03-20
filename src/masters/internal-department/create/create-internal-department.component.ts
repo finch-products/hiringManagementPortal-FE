@@ -61,4 +61,9 @@ export class CreateInternalDepartmentComponent implements OnInit {
     }
 
   }
+  onCancel(): void {
+    this.deptForm.reset();
+    this.deptForm.markAsPristine(); // Mark the form as pristine
+    this.deptForm.markAsUntouched(); // Mark the form as untouched
+  }
 }
