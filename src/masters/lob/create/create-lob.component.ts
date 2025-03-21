@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LobService } from '../../../app/services/lob.service';
 import { HttpService } from '../../../app/services/http.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-lob',
@@ -11,10 +12,10 @@ import { HttpService } from '../../../app/services/http.service';
 })
 export class CreateLOBComponent implements OnInit {
   lobForm: FormGroup;
-  clientPartners: any[] = []; 
+  clientPartners: any[] = [];
   deliveryManagers: any[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService, private httpService: HttpService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService, private httpService: HttpService, private snackBar: MatSnackBar) {
     this.lobForm = this.fb.group({
       lob_name: ['', Validators.required],
       lob_description: [''],
@@ -42,13 +43,38 @@ export class CreateLOBComponent implements OnInit {
 
   onSubmit() {
     if (this.lobForm.valid) {
-      this.http.post('http://64.227.145.117/api/lobs/', this.lobForm.value).subscribe({
+      const formData = this.lobForm.value;
+
+      // Remove empty fields
+      Object.keys(formData).forEach(key => {
+        if (formData[key] === '' || formData[key] === null) {
+          delete formData[key];
+        }
+      });
+      this.httpService.postaddLOB(formData).subscribe({
         next: (response) => {
-          console.log('Client added:', response);
+          console.log('Lob added:', response);
           this.lobService.addLob(response);
+          this.snackBar.open('LOB added successfully!', 'Close', {
+            duration: 3000, // 3 seconds
+            verticalPosition: 'top' // Optional: top/bottom
+          });
           this.lobForm.reset();
         },
-        error: (error) => console.error('Error adding client:', error)
+        error: (error) => {
+          console.error('Error adding client:', error);
+          this.snackBar.open('Failed to add client. Try again.', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      });
+
+    } else {
+      console.warn('Form is invalid. Please check all fields.');
+      this.snackBar.open('Please fill all required fields correctly.', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top'
       });
     }
   }

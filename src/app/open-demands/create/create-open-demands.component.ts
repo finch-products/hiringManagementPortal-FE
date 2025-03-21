@@ -70,22 +70,18 @@ export class CreateOpenDemandComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Initialize form
-    this.form = this.fb.group({
-      dem_clm_id: [null]
-    });
+    this.loadClients();
+    this.loadLOBs();
+    this.loadLocations();
+    this.loadInternalDepts();
     this.route.paramMap.subscribe(params => {
       const demandId = params.get('id');
       if (demandId) {
         this.isEditMode = true;
-        // console.log("editmode", this.isEditMode)
         this.loadData(demandId);
       }
     })
-    this.loadClients();
-    this.loadLocations();
-    this.loadLOBs();
-    this.loadInternalDepts();
+   
     this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
       this.isInternal = value === 'yes';
     });
@@ -94,18 +90,17 @@ export class CreateOpenDemandComponent implements OnInit {
       map(value => (typeof value === 'string' ? value : value?.clm_name || '')),
       map(name => this._filter(name)),
       map(filteredList => {
-        console.log('Filtered Clients:', filteredList); // Debugging
+        console.log('Filtered Clients:', filteredList);
         return filteredList;
       })
     );
   }
   private _filter(name: string): any[] {
-    if (!name) return this.clients; // Return full list if input is empty
+    if (!name) return this.clients;
 
     const filterValue = name.toLowerCase();
 
     return this.clients.filter(client => {
-      // Ensure all values are strings before calling `toLowerCase()`
       const clientId = client.clm_id?.toString().toLowerCase() || '';
       const clientName = client.clm_name?.toLowerCase() || '';
       const managerName = client.clm_managername?.toLowerCase() || '';
@@ -116,7 +111,7 @@ export class CreateOpenDemandComponent implements OnInit {
   displayClient(client: any): string {
     console.log("client received in displayClient:", client);
     if (!client) return '';
-    if (typeof client === 'string') return client; // If it's a string, return as is
+    if (typeof client === 'string') return client;
     return `${client.clm_id} - ${client.clm_name} (${client.clm_managername})`;
 
   }
@@ -128,12 +123,11 @@ export class CreateOpenDemandComponent implements OnInit {
       this.selectedEmail = '';
     } else {
       this.isCustomManager = false;
-      this.demandForm.controls['dem_clm_id'].setValue(selectedClient); // Store the full object
+      this.demandForm.controls['dem_clm_id'].setValue(selectedClient);
       this.selectedEmail = selectedClient.clm_clientemail || '';
     }
   }
 
-  // Add new client
   addClient() {
     if (!this.newClient.clm_name || !this.newClient.clm_clientemail) {
       alert('Please enter valid details.');
@@ -145,7 +139,6 @@ export class CreateOpenDemandComponent implements OnInit {
         alert('Client added successfully!');
         const newClmId = response.clm_id;
 
-        // Add new client to the list
         this.clients.push({ clm_id: newClmId, clm_name: this.newClient.clm_name, clm_clientemail: this.newClient.clm_clientemail });
 
         // Auto-select newly added client
@@ -334,6 +327,11 @@ export class CreateOpenDemandComponent implements OnInit {
         if (value instanceof Date) {
           value = this.formatDate(value);
         }
+
+        if (key === "dem_clm_id" && typeof value === "object" && value !== null) {
+          value = value.clm_id; // Extract only the ID
+        }
+      
         // ✅ Convert multi-select field to JSON array
         if (key === "dem_position_location" && Array.isArray(value)) {
           value = JSON.stringify(value);
@@ -375,10 +373,11 @@ export class CreateOpenDemandComponent implements OnInit {
 
 
   formatDate(date: Date): string {
+    alert('date::' + date)
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-    return ' ${year}-${month}-${day}';
+    return `${year}-${month}-${day}T00:00:00Z`; 
   }
 
 

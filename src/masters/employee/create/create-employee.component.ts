@@ -18,12 +18,12 @@ export class CreateEmployeeComponent {
     this.employeeForm = this.fb.group({
       emp_uniqueid: [''],  
       emp_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
-      emp_email: ['', [Validators.required, Validators.email]],
+      emp_email: ['', Validators.email],
       emp_phone: ['', [Validators.required, Validators.pattern(this.validatorsService.phonePattern())]],
       emp_lcm_id: ['', Validators.required],  // Ensure required field
       emp_rlm_id: ['', Validators.required],  // Ensure required field
       emp_isactive: [true],
-      emp_keyword: ['', Validators.required], // Ensure required field
+      emp_keyword: [''], // Ensure required field
       emp_insertby: ['emp_10022025_01'],
       emp_updateby: ['emp_10022025_01'],
     });    
