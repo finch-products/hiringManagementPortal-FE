@@ -9,7 +9,9 @@
       
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onHiringManagerChange($event)" [displayWith]="displayClient">
           <mat-option *ngFor="let client of filteredClients | async" [value]="client">
-            {{ client.clm_id }} - {{ client.clm_name }} ({{ client.clm_managername }})
+            {{ client.clm_clientid ? client.clm_clientid + ' - ' : '' }}
+            {{ client.clm_name ? client.clm_name : '' }}
+            {{ client.clm_managername ? ' (' + client.clm_managername + ')' : '' }}
           </mat-option>
           <mat-option [value]="'custom'">Other (Enter New)</mat-option>
         </mat-autocomplete>
