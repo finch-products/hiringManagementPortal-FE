@@ -34,11 +34,6 @@ export class ListCandidateComponent {
     this.httpService.getCandidate().subscribe({
       next: (data) => {
         this.CandidateService.setInitialData(data);
-        /*this.candidates = data;
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        console.log('Candidates:', this.candidates);*/
       },
       error: (err) => console.error('Error fetching Candidates', err)
     });
