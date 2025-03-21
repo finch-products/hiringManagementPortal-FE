@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
+import { HttpService } from '../../../app/services/http.service';
 import { EmployeeService } from '../../../app/services/employee.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -66,8 +67,7 @@ export class CreateEmployeeComponent implements OnInit {
       this.httpService.addEmployee(this.employeeForm.value).subscribe({
         next: (response) => {
           console.log('Employee Added Successfully:', response);
-          this.employeeService.addEmployee(response); // Update list
-          alert('Employee added successfully!');  // Show success alert
+          this.employeeService.addEmployee(response);
           this.snackBar.open('✅ Employee added successfully!', 'Close', {
             duration: 4000,
             panelClass: ['error-snackbar'],
