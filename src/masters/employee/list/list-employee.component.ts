@@ -36,11 +36,6 @@ export class ListEmployeeComponent {
     this.httpService.getEmployee().subscribe({
       next: (data) => {
         this.employeeService.setInitialData(data);
-        /*this.employees = data;
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        console.log('Employees:', this.employees);*/
       },
       error: (err) => console.error('Error fetching employees', err)
     });
