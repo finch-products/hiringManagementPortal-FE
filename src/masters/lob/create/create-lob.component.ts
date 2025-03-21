@@ -35,9 +35,12 @@ export class CreateLOBComponent implements OnInit {
       next: (data) => {
         this.clientPartners = data.client_partner;
         this.deliveryManagers = data.delivery_manager;
-        console.log('Client Partners & Delivery Managers:' + JSON.stringify(data));
+        console.log('Client Partners & Delivery Managers:', data);
       },
-      error: (err) => console.error('Error fetching CP DM', err)
+      error: (err) => {
+        console.error('Error fetching CP & DM:', err);
+        this.showError('❌ Failed to fetch Client Partners and Delivery Managers.');
+      }
     });
   }
 
@@ -53,29 +56,39 @@ export class CreateLOBComponent implements OnInit {
       });
       this.httpService.postaddLOB(formData).subscribe({
         next: (response) => {
-          console.log('Lob added:', response);
+          console.log('LOB added successfully:', response);
           this.lobService.addLob(response);
-          this.snackBar.open('LOB added successfully!', 'Close', {
-            duration: 3000, // 3 seconds
-            verticalPosition: 'top' // Optional: top/bottom
+          this.snackBar.open('✅ LOB added successfully!', 'Close', {
+            duration: 4000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
           });
           this.lobForm.reset();
+          this.lobForm.patchValue({
+            lob_insertby: 'emp_10022025_01',
+            lob_updateby: 'emp_10022025_01'
+          });
         },
         error: (error) => {
-          console.error('Error adding client:', error);
-          this.snackBar.open('Failed to add client. Try again.', 'Close', {
-            duration: 3000,
-            verticalPosition: 'top'
-          });
+          console.error('Error adding LOB:', error);
+          this.showError(`❌ Failed to add LOB. ${error.message || 'Please try again.'}`);
         }
       });
-
     } else {
-      console.warn('Form is invalid. Please check all fields.');
-      this.snackBar.open('Please fill all required fields correctly.', 'Close', {
-        duration: 3000,
-        verticalPosition: 'top'
-      });
+      this.showError('⚠️ Please fill all required fields correctly.');
     }
+  }
+
+  private showError(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 4000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
+  }
+  onCancel(): void {
+    this.lobForm.reset();
   }
 }

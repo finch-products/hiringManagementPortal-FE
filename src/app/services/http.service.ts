@@ -101,8 +101,8 @@ export class HttpService {
     );
   }
 
-  getDemandStatusDetails(dem_id: string) {
-    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status/${dem_id}`, this.getHeaders()).pipe(
+  getDemandStatusDetails(dem_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -149,24 +149,25 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}demands/all`, this.getHeaders()).pipe(
       catchError(this.handleError));
   }
-
+  
   getCandidateIds():Observable<any>{
     return this.http.get<any>(`${this.baseUrl}candidates/`,this.getHeaders()).pipe(
       catchError(this.handleError))
   }
-
   updateDemand(form_data: any): Observable<any> {
     return this.http.patch<any>(`${this.baseUrl}demands/update-demand-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
-  
+
   DemandByCadidateId(candidateId:any): Observable<any> {
     console.log("payload=",candidateId)
     return this.http.get<any>(`${this.baseUrl}candidates/candidate-history/${candidateId}/`,this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
+
+
 
   getEmployees(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/employee-by-role/`, this.getHeaders()).pipe(
@@ -201,6 +202,7 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+
   getreportclientselection(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}reports/client-selection/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -246,30 +248,31 @@ export class HttpService {
       catchError(this.handleError));
   }
 
-  updateCandidateStatus(form_data: any): Observable<any> {
-    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
-      catchError(this.handleError) // Handle errors
+  getCandidateStatusesbyid(cdm_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidate-status/list/${cdm_id}/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
     );
   }
 
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Client-side error: ${error.error.message}`;
-    } else {
-      errorMessage = `Server-side error: ${error.status} - ${error.message}`;
+    if (error.error && error.error.error) {
+      // Extract the error message from the response
+      errorMessage = error.error.error;
+    } else if (error.error && error.error.message) {
+      errorMessage = error.error.message;
+    } else if (error.statusText) {
+      errorMessage = error.statusText;
     }
-    console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
   postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data);
   }
-
-  getCandidateStatusesbyid(cdm_id: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}candidate-status/list/${cdm_id}/`, this.getHeaders()).pipe(
-      catchError(this.handleError)
+  updateCandidateStatus(form_data: any): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
+      catchError(this.handleError) // Handle errors
     );
   }
 }
