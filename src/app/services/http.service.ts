@@ -101,11 +101,12 @@ export class HttpService {
     );
   }
 
-  getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
+  getDemandStatusDetails(dem_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status/${dem_id}`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
+
 
   getInternalDepartmentDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
@@ -260,6 +261,11 @@ export class HttpService {
   updateCandidateStatus(form_data: any): Observable<any> {
     return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
       catchError(this.handleError) // Handle errors
+    );
+  }
+  getCandidateStatusesbyid(cdm_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidate-status/list/${cdm_id}`, this.getHeaders()).pipe(
+      catchError(this.handleError)
     );
   }
 }

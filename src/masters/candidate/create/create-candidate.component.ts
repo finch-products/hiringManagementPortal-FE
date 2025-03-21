@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-candidate',
@@ -17,6 +18,8 @@ export class CreateCandidateComponent implements OnInit {
   locations: any[] = [];
   status: any[] = [];
   selectedFile: File | null = null;
+  filteredLocations!: Observable<any[]>;
+  locationFilterControl = new FormControl('');
 
   constructor(private fb: FormBuilder, private http: HttpClient, private snackBar: MatSnackBar, private validatorsService: ValidatorsService, private httpService: HttpService) {
     this.candidateForm = this.fb.group({
@@ -39,6 +42,10 @@ export class CreateCandidateComponent implements OnInit {
   ngOnInit(): void {
     this.loadLocations();
     this.loadCandidateStatus();
+    this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterLocations(value || ''))
+  );
   }
 
   loadLocations(): void {
@@ -46,10 +53,39 @@ export class CreateCandidateComponent implements OnInit {
       next: (data) => {
         this.locations = data;
         console.log('Locations:', this.locations);
+        this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterLocations(value || ''))
+      );
       },
       error: (err: any) => console.error('Error fetching locations', err)
     });
   }
+
+  private _filterLocations(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.locations.filter(location => location.lcm_name.toLowerCase().includes(filterValue));
+}
+
+onLocationSelected(event: any): void {
+    const selectedLocation = this.locations.find(loc => loc.lcm_name === event.option.value);
+    if (selectedLocation) {
+        // Set the selected location ID in the form control
+        this.candidateForm.patchValue({ cdm_location: selectedLocation.lcm_id });
+        // Update the filter control to display the selected location name
+        this.locationFilterControl.setValue(selectedLocation.lcm_name, { emitEvent: false });
+    }
+}
+
+onLocationBlur(): void {
+    // If the input value doesn't match any location, reset the field
+    const inputValue = this.locationFilterControl.value;
+    const selectedLocation = this.locations.find(loc => loc.lcm_name === inputValue);
+    if (!selectedLocation) {
+        this.locationFilterControl.setValue('');
+        this.candidateForm.patchValue({ cdm_location: '' });
+    }
+}
 
   loadCandidateStatus(): void {
     this.httpService.getRoles().subscribe({
@@ -130,3 +166,7 @@ export class CreateCandidateComponent implements OnInit {
     this.candidateForm.reset();
   }
 }
+
+
+
+

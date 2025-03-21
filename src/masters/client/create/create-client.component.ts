@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ClientService } from '../../../app/services/client.service';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 @Component({
   selector: 'app-create-client',
   templateUrl: './create-client.component.html',
@@ -14,7 +15,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CreateClientComponent implements OnInit {
   clientForm: FormGroup;
   locations: any[] = [];
-
+  filteredLocations!: Observable<any[]>;
+  locationFilterControl = new FormControl('');
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -38,19 +40,48 @@ export class CreateClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLocations();
+    this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
+      startWith(''), // Start with an empty string to show all locations
+      map(value => this._filterLocations(value || ''))
+    );
   }
 
   loadLocations(): void {
     this.httpService.getLocationDetails().subscribe({
       next: (data) => {
         this.locations = data;
-        console.log('Locations:', this.locations);
+        this.locationFilterControl.setValue('');
       },
       error: (err) => {
         console.error('Error fetching locations:', err);
         this.showError('❌ Failed to fetch locations.');
       }
     });
+  }
+
+  private _filterLocations(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.locations.filter(location => location.lcm_name.toLowerCase().includes(filterValue));
+  }
+
+  onLocationSelected(event: any): void {
+    const selectedLocation = this.locations.find(loc => loc.lcm_name === event.option.value);
+    if (selectedLocation) {
+      // Set the selected location ID in the form control
+      this.clientForm.patchValue({ clm_lcm_id: selectedLocation.lcm_id });
+      // Update the filter control to display the selected location name
+      this.locationFilterControl.setValue(selectedLocation.lcm_name, { emitEvent: false });
+    }
+  }
+
+  onLocationBlur(): void {
+    // If the input value doesn't match any location, reset the field
+    const inputValue = this.locationFilterControl.value;
+    const selectedLocation = this.locations.find(loc => loc.lcm_name === inputValue);
+    if (!selectedLocation) {
+      this.locationFilterControl.setValue('');
+      this.clientForm.patchValue({ clm_lcm_id: '' });
+    }
   }
 
   onSubmit(): void {
@@ -83,7 +114,9 @@ export class CreateClientComponent implements OnInit {
             clm_isactive: true,
             clm_insertby: 'emp_10022025_01'
           });
+          this.locationFilterControl.setValue('');
         },
+        
         error: (error) => {
           console.error('Error adding client:', error);
           this.showError(`❌ Failed to add client: ${error.message}`);
@@ -111,5 +144,6 @@ export class CreateClientComponent implements OnInit {
       clm_isactive: true,
       clm_insertby: 'emp_10022025_01'
     });
+    this.locationFilterControl.setValue(''); 
   }
 }
