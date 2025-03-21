@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
 import { CandidateService } from '../../../app/services/candidate.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-create-candidate',
@@ -18,6 +20,7 @@ export class CreateCandidateComponent implements OnInit {
   selectedFile: File | null = null;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private CandidateService: CandidateService) {
+
     this.candidateForm = this.fb.group({
       cdm_emp_id: [''],
       cdm_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
@@ -71,52 +74,64 @@ export class CreateCandidateComponent implements OnInit {
 
   onSubmit() {
     const formData = new FormData();
-
-    // Debug: Log form values before appending to FormData
     console.log("Form Values:", this.candidateForm.value);
 
     Object.keys(this.candidateForm.value).forEach(key => {
-      let value = this.candidateForm.value[key];
-
-      if (value) {
+      const value = this.candidateForm.value[key];
+      if (value !== null && value !== undefined && value !== '') {
         formData.append(key, value);
       } else {
         console.warn(`Skipping empty field: ${key}`);
       }
     });
 
-    // Debug: Log selected file before appending
     if (this.selectedFile) {
-      console.log("Selected File:", this.selectedFile);
       formData.append("profile", this.selectedFile);
-    } else {
-      console.warn("No file selected");
     }
 
-    // Submit form data
     this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
         console.log('Candidate Added Successfully:', response);
         this.CandidateService.addcandidate(response); // Update list
         alert('Candidate added successfully!'); // Success alert
+        this.snackBar.open('✅ Candidate added successfully!', 'Close', {
+          duration: 4000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+
+        });
         this.candidateForm.reset();
       },
       error: (error) => {
         console.error('Error adding Candidate:', error);
 
         if (error.status === 400 && error.error) {
-          // Handle validation errors from backend
           for (const field in error.error) {
             if (this.candidateForm.controls[field]) {
               this.candidateForm.controls[field].setErrors({ serverError: error.error[field][0] });
             }
           }
+          this.snackBar.open('❌ Validation Error: Please correct the highlighted fields.', 'Close', {
+            duration: 4000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+
+          });
         } else {
-          alert('Failed to add candidate. Check console for details.');
+          this.snackBar.open(`❌ Failed to add candidate: ${error.message}`, 'Close', {
+            duration: 4000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+
+          });
         }
       }
     });
-}
-
-
+  }
+  onCancel(): void {
+    this.candidateForm.reset();
+  }
 }

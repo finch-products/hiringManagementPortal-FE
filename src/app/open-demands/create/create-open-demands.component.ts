@@ -117,7 +117,13 @@ export class CreateOpenDemandComponent implements OnInit {
     console.log("client received in displayClient:", client);
     if (!client) return '';
     if (typeof client === 'string') return client; // If it's a string, return as is
-    return `${client.clm_id} - ${client.clm_name} (${client.clm_managername})`;
+    // return `${client.clm_clientid} - ${client.clm_name} (${client.clm_managername})`;
+    
+  let clientId = client.clm_clientid ? client.clm_clientid + ' - ' : '';
+  let clientName = client.clm_name ? client.clm_name : '';
+  let managerName = client.clm_managername ? ' (' + client.clm_managername + ')' : '';
+
+  return `${clientId}${clientName}${managerName}`.trim();
 
   }
   onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
@@ -355,19 +361,33 @@ export class CreateOpenDemandComponent implements OnInit {
       // 🔹 Create API Call
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
-          this.snackBar.open("✅ Demand Added Successfully!", "", {
-            duration: 3000,
-            panelClass: ['success-snackbar']
+          const demId = this.demandForm.get('dem_id')?.value || response?.dem_id || 'N/A';
+      
+          this.snackBar.open("✅ Demand ID: ${demId} Added Successfully!" , "Close", {
+            duration: 4000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'center',
+  verticalPosition: 'bottom'
+
           });
+      
           this.openDemandService.addDemand(response);
           this.demandForm.reset();
           this.router.navigate(['/list']);
         },
+
         error: (error) => {
-          this.snackBar.open("❌Failed to add demand. Check console for details", "", {
-            duration: 3000,
-            panelClass: ['error-snackbar']
+          const errorMessage = error?.error?.message || error.message || 'Something went wrong';
+          console.error("Create Demand Error:", error);
+        
+          this.snackBar.open("❌ Failed to add demand: ${errorMessage", "Close", {
+            duration: 5000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',
+  verticalPosition: 'bottom'
+
           });
+
         }
       });
     }
@@ -378,7 +398,8 @@ export class CreateOpenDemandComponent implements OnInit {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-    return ' ${year}-${month}-${day}';
+    return `${year}-${month}-${day}`;
+
   }
 
 
@@ -386,6 +407,6 @@ export class CreateOpenDemandComponent implements OnInit {
     this.router.navigate(['client-master']);
   }
   cancel() {
-    this.router.navigate(['/dashboard']);
+    this.demandForm.reset();
   }
 }

@@ -249,8 +249,6 @@ export class HttpService {
           catchError(this.handleError) // Handle errors
         );
       }
-  
-  
 
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
@@ -269,4 +267,9 @@ export class HttpService {
     return this.http.post(url, data);
   }
 
+  updateCandidateStatus(form_data: any): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
+      catchError(this.handleError) // Handle errors
+    );
+  }
 }
