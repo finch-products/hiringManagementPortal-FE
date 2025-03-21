@@ -92,8 +92,7 @@ export class CreateCandidateComponent implements OnInit {
     this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
         console.log('Candidate Added Successfully:', response);
-        this.CandidateService.addcandidate(response); // Update list
-        alert('Candidate added successfully!'); // Success alert
+        this.CandidateService.addcandidate(response);
         this.snackBar.open('✅ Candidate added successfully!', 'Close', {
           duration: 4000,
           panelClass: ['success-snackbar'],
