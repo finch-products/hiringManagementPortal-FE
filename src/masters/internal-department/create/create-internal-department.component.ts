@@ -51,6 +51,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
         next: (response) => {
           console.log('Department Added Successfully:', response);
           this.httpService.addDemand(response);
+          this.internalDeptService.addInternalDept(response);
           this.deptForm.reset();
         },
         error: (error) => {

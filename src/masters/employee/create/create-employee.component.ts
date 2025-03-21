@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
+import { EmployeeService } from '../../../app/services/employee.service';
 
 @Component({
   selector: 'app-create-employee',
@@ -14,7 +15,7 @@ export class CreateEmployeeComponent {
   locations: any[] = [];
   roles: any[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private employeeService: EmployeeService) {
     this.employeeForm = this.fb.group({
       emp_uniqueid: [''],  
       emp_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
@@ -59,6 +60,7 @@ export class CreateEmployeeComponent {
       this.httpService.addEmployee(this.employeeForm.value).subscribe({
         next: (response) => {
           console.log('Employee Added Successfully:', response);
+          this.employeeService.addEmployee(response); // Update list
           alert('Employee added successfully!');  // Show success alert
           this.employeeForm.reset();
         },
