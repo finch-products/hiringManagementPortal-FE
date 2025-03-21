@@ -361,19 +361,33 @@ export class CreateOpenDemandComponent implements OnInit {
       // 🔹 Create API Call
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
-          this.snackBar.open("✅ Demand Added Successfully!", "", {
-            duration: 3000,
-            panelClass: ['success-snackbar']
+          const demId = this.demandForm.get('dem_id')?.value || response?.dem_id || 'N/A';
+      
+          this.snackBar.open("✅ Demand ID: ${demId} Added Successfully!" , "Close", {
+            duration: 4000,
+            panelClass: ['success-snackbar'],
+            horizontalPosition: 'center',
+  verticalPosition: 'bottom'
+
           });
+      
           this.openDemandService.addDemand(response);
           this.demandForm.reset();
           this.router.navigate(['/list']);
         },
+
         error: (error) => {
-          this.snackBar.open("❌Failed to add demand. Check console for details", "", {
-            duration: 3000,
-            panelClass: ['error-snackbar']
+          const errorMessage = error?.error?.message || error.message || 'Something went wrong';
+          console.error("Create Demand Error:", error);
+        
+          this.snackBar.open("❌ Failed to add demand: ${errorMessage", "Close", {
+            duration: 5000,
+            panelClass: ['error-snackbar'],
+            horizontalPosition: 'center',
+  verticalPosition: 'bottom'
+
           });
+
         }
       });
     }
@@ -393,6 +407,6 @@ export class CreateOpenDemandComponent implements OnInit {
     this.router.navigate(['client-master']);
   }
   cancel() {
-    this.router.navigate(['/dashboard']);
+    this.demandForm.reset();
   }
 }
