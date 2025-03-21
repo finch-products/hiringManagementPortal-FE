@@ -266,10 +266,4 @@ export class HttpService {
   postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data);
   }
-
-  updateCandidateStatus(form_data: any): Observable<any> {
-    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
-      catchError(this.handleError) // Handle errors
-    );
-  }
 }
