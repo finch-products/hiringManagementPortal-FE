@@ -53,11 +53,18 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Location</mat-label>
-                <mat-select formControlName="clm_lcm_id">
-                    <mat-option *ngFor="let location of locations" [value]="location.lcm_id">
-                        {{ location.lcm_name}}
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="locationFilterControl"
+                    [matAutocomplete]="auto"
+                    (blur)="onLocationBlur()"
+                >
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLocationSelected($event)">
+                    <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
+                        {{ location.lcm_name }}
                     </mat-option>
-                </mat-select>
+                </mat-autocomplete>
             </mat-form-field>
 
             <mat-radio-group formControlName="clm_isactive" appearance="fill" class="form-field">

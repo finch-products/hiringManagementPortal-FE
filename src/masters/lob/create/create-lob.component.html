@@ -14,22 +14,34 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Delivery Manager</mat-label>
-                <mat-select formControlName="lob_deliverymanager">
-                    <mat-option *ngFor="let dm of deliveryManagers"
-                        [value]="dm.emp_id">
-                        {{ dm.emp_name}}
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="deliveryManagerFilterControl"
+                    [matAutocomplete]="dmAuto"
+                    (blur)="onDeliveryManagerBlur()"
+                >
+                <mat-autocomplete #dmAuto="matAutocomplete" (optionSelected)="onDeliveryManagerSelected($event)">
+                    <mat-option *ngFor="let dm of filteredDeliveryManagers | async" [value]="dm.emp_name">
+                        {{ dm.emp_name }}
                     </mat-option>
-                </mat-select>
+                </mat-autocomplete>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Partner</mat-label>
-                <mat-select formControlName="lob_clientpartner">
-                    <mat-option *ngFor="let cp of clientPartners"
-                        [value]="cp.emp_id">
-                        {{ cp.emp_name}}
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="clientPartnerFilterControl"
+                    [matAutocomplete]="cpAuto"
+                    (blur)="onClientPartnerBlur()"
+                >
+                <mat-autocomplete #cpAuto="matAutocomplete" (optionSelected)="onClientPartnerSelected($event)">
+                    <mat-option *ngFor="let cp of filteredClientPartners | async" [value]="cp.emp_name">
+                        {{ cp.emp_name }}
                     </mat-option>
-                </mat-select>
+                </mat-autocomplete>
             </mat-form-field>
         </div>
 

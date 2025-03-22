@@ -107,6 +107,7 @@ export class HttpService {
     );
   }
 
+
   getInternalDepartmentDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -149,9 +150,9 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}demands/all`, this.getHeaders()).pipe(
       catchError(this.handleError));
   }
-  
-  getCandidateIds():Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}candidates/`,this.getHeaders()).pipe(
+
+  getCandidateIds(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidates/`, this.getHeaders()).pipe(
       catchError(this.handleError))
   }
   updateDemand(form_data: any): Observable<any> {
@@ -160,9 +161,9 @@ export class HttpService {
     );
   }
 
-  DemandByCadidateId(candidateId:any): Observable<any> {
-    console.log("payload=",candidateId)
-    return this.http.get<any>(`${this.baseUrl}candidates/candidate-history/${candidateId}/`,this.getHeaders()).pipe(
+  DemandByCadidateId(candidateId: any): Observable<any> {
+    console.log("payload=", candidateId)
+    return this.http.get<any>(`${this.baseUrl}candidates/candidate-history/${candidateId}/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -247,10 +248,14 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}reports/candidate-selection/?year=${year}&month=${month}&reportType=weekly`, this.getHeaders()).pipe(
       catchError(this.handleError));
   }
-
   getCandidateStatusesbyid(cdm_id: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}candidate-status/list/${cdm_id}/`, this.getHeaders()).pipe(
-      catchError(this.handleError)
+      catchError(this.handleError));
+  }
+
+  updateCandidateStatus(form_data: any): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
+      catchError(this.handleError) // Handle errors
     );
   }
 
@@ -269,10 +274,5 @@ export class HttpService {
   }
   postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data);
-  }
-  updateCandidateStatus(form_data: any): Observable<any> {
-    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
-      catchError(this.handleError) // Handle errors
-    );
   }
 }

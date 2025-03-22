@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
+import { EmployeeService } from '../../../app/services/employee.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-employee',
@@ -14,14 +17,12 @@ export class CreateEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
   locations: any[] = [];
   roles: any[] = [];
+  filteredLocations!: Observable<any[]>;
+  filteredRoles!: Observable<any[]>;
+  locationFilterControl = new FormControl('');
+  roleFilterControl = new FormControl('');
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private validatorsService: ValidatorsService,
-    private httpService: HttpService,
-    private snackBar: MatSnackBar
-  ) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private employeeService: EmployeeService, private snackBar: MatSnackBar) {
     this.employeeForm = this.fb.group({
       emp_uniqueid: [''],
       emp_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
@@ -39,6 +40,15 @@ export class CreateEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.loadLocations();
     this.loadRoles();
+    this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterLocations(value || ''))
+    );
+
+    this.filteredRoles = this.roleFilterControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterRoles(value || ''))
+    );
   }
 
   loadLocations(): void {
@@ -46,6 +56,10 @@ export class CreateEmployeeComponent implements OnInit {
       next: (data) => {
         this.locations = data;
         console.log('Locations:', this.locations);
+        this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterLocations(value || ''))
+        );
       },
       error: (err) => {
         console.error('Error fetching locations', err);
@@ -59,6 +73,10 @@ export class CreateEmployeeComponent implements OnInit {
       next: (data) => {
         this.roles = data;
         console.log('Roles:', this.roles);
+        this.filteredRoles = this.roleFilterControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterRoles(value || ''))
+        );
       },
       error: (err) => {
         console.error('Error fetching roles', err);
@@ -67,11 +85,57 @@ export class CreateEmployeeComponent implements OnInit {
     });
   }
 
+  private _filterLocations(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.locations.filter(location => location.lcm_name.toLowerCase().includes(filterValue));
+  }
+
+  private _filterRoles(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.roles.filter(role => role.rlm_name.toLowerCase().includes(filterValue));
+  }
+
+  onLocationSelected(event: any): void {
+    const selectedLocation = this.locations.find(loc => loc.lcm_name === event.option.value);
+    if (selectedLocation) {
+      this.employeeForm.patchValue({ emp_lcm_id: selectedLocation.lcm_id });
+      this.locationFilterControl.setValue(selectedLocation.lcm_name, { emitEvent: false });
+    }
+  }
+
+  onRoleSelected(event: any): void {
+    const selectedRole = this.roles.find(role => role.rlm_name === event.option.value);
+    if (selectedRole) {
+      this.employeeForm.patchValue({ emp_rlm_id: selectedRole.rlm_id });
+      this.roleFilterControl.setValue(selectedRole.rlm_name, { emitEvent: false });
+    }
+  }
+
+  onLocationBlur(): void {
+    const inputValue = this.locationFilterControl.value;
+    const selectedLocation = this.locations.find(loc => loc.lcm_name === inputValue);
+    if (!selectedLocation) {
+      this.locationFilterControl.setValue('');
+      this.employeeForm.patchValue({ emp_lcm_id: '' });
+    }
+  }
+
+  onRoleBlur(): void {
+    const inputValue = this.roleFilterControl.value;
+    const selectedRole = this.roles.find(role => role.rlm_name === inputValue);
+    if (!selectedRole) {
+      this.roleFilterControl.setValue('');
+      this.employeeForm.patchValue({ emp_rlm_id: '' });
+    }
+  }
+
+
   onSubmit(): void {
     if (this.employeeForm.valid) {
       this.httpService.addEmployee(this.employeeForm.value).subscribe({
         next: (response) => {
           console.log('Employee Added Successfully:', response);
+          this.employeeService.addEmployee(response);
           this.snackBar.open('✅ Employee added successfully!', 'Close', {
             duration: 4000,
             panelClass: ['error-snackbar'],

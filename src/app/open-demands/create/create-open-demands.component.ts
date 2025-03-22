@@ -7,12 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { map, startWith } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 @Component({
   selector: 'app-create-open-demands',
   templateUrl: './create-open-demands.component.html',
   styleUrls: ['./create-open-demands.component.scss']
 })
+
 export class CreateOpenDemandComponent implements OnInit {
 
   clients: any[] = [];
@@ -27,9 +28,11 @@ export class CreateOpenDemandComponent implements OnInit {
   selectedFile: File | null = null;
   newClient = { clm_name: '', clm_clientemail: '' };
   demands: any;
-  filteredClients!: any;
   selectedEmail: string = '';
   minDate: Date;
+  filteredClients!: any;
+  filteredLOBs!: Observable<any[]>;
+  filteredDepts!: Observable<any[]>;
 
   isInternal: boolean = true;
   isEditMode: boolean = false;
@@ -38,6 +41,7 @@ export class CreateOpenDemandComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService,
     private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
+
 
     this.minDate = new Date();
 
@@ -91,8 +95,21 @@ export class CreateOpenDemandComponent implements OnInit {
         return filteredList;
       })
     );
+    this.filteredLOBs = this.demandForm.get('dem_lob_id')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value?.lob_name || '')),
+      map(name => this._filterLOBs(name))
+    );
+
+    this.filteredDepts = this.demandForm.get('dem_idm_id')!.valueChanges.pipe(
+      startWith(''),
+      map(value => (typeof value === 'string' ? value : value?.idm_unitname || '')),
+      map(name => this._filterDepts(name))
+    );
+
+
   }
-  
+
   private _filter(name: string): any[] {
     if (!name) return this.clients;
 
@@ -107,6 +124,18 @@ export class CreateOpenDemandComponent implements OnInit {
     });
   }
 
+  private _filterLOBs(name: string): any[] {
+    if (!name) return this.lobs; 
+    const filterValue = name.toLowerCase();
+    return this.lobs.filter(lob => lob.lob_name.toLowerCase().includes(filterValue));
+  }
+
+  private _filterDepts(name: string): any[] {
+    if (!name) return this.depts;
+    const filterValue = name.toLowerCase();
+    return this.depts.filter(dept => dept.idm_unitname.toLowerCase().includes(filterValue));
+  }
+
   displayClient(client: any): string {
     if (!client) return '';
     if (typeof client === 'string') return client;
@@ -116,6 +145,14 @@ export class CreateOpenDemandComponent implements OnInit {
 
     return `${clientId}${clientName}${managerName}`.trim();
 
+  }
+
+  displayLOB(lob: any): string {
+    return lob && lob.lob_name ? lob.lob_name : '';
+  }
+
+  displayDept(dept: any): string {
+    return dept && dept.idm_unitname ? dept.idm_unitname : '';
   }
 
   onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
@@ -129,6 +166,15 @@ export class CreateOpenDemandComponent implements OnInit {
       this.demandForm.controls['dem_clm_id'].setValue(selectedClient);
       this.selectedEmail = selectedClient.clm_clientemail || '';
     }
+  }
+  onLOBChange(event: any): void {
+    const selectedLOB = event.option.value;
+    this.demandForm.controls['dem_lob_id'].setValue(selectedLOB);
+  }
+
+  onDeptChange(event: any): void {
+    const selectedDept = event.option.value;
+    this.demandForm.controls['dem_idm_id'].setValue(selectedDept);
   }
 
   addClient() {
@@ -161,9 +207,9 @@ export class CreateOpenDemandComponent implements OnInit {
   loadData(demandId: string) {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
-        
+
         this.demands = data;
-       
+
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
           dem_id: this.demands.dem_id,
@@ -227,6 +273,11 @@ export class CreateOpenDemandComponent implements OnInit {
       next: (data) => {
         this.lobs = data;
         console.log('LOBs:', this.lobs);
+        this.filteredLOBs = this.demandForm.get('dem_lob_id')!.valueChanges.pipe(
+          startWith(''), // Initialize with empty string
+          map(value => (typeof value === 'string' ? value : value?.lob_name || '')),
+          map(name => this._filterLOBs(name))
+        );
       },
       error: (err) => console.error('Error fetching lobs', err)
     });
@@ -237,12 +288,39 @@ export class CreateOpenDemandComponent implements OnInit {
       next: (data) => {
         this.depts = data;
         console.log('Departments:', this.depts);
+        this.filteredDepts = this.demandForm.get('dem_idm_id')!.valueChanges.pipe(
+          startWith(''), // Initialize with empty string
+          map(value => (typeof value === 'string' ? value : value?.idm_unitname || '')),
+          map(name => this._filterDepts(name))
+        );
       },
       error: (err) => console.error('Error fetching departments', err)
     });
   }
 
+  onBlur(controlName: string) {
+    const control = this.demandForm.get(controlName);
+    if (control) {
+      const currentValue = control.value;
+      let isValid = false;
 
+      switch (controlName) {
+        case 'dem_clm_id':
+          isValid = this.clients.some(client => this.displayClient(client) === currentValue);
+          break;
+        case 'dem_lob_id':
+          isValid = this.lobs.some(lob => this.displayLOB(lob) === currentValue);
+          break;
+        case 'dem_idm_id':
+          isValid = this.depts.some(dept => this.displayDept(dept) === currentValue);
+          break;
+      }
+
+      if (!isValid) {
+        control.setValue(null);
+      }
+    }
+  }
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -369,6 +447,6 @@ export class CreateOpenDemandComponent implements OnInit {
   }
 
   cancel() {
-     this.router.navigate(['entry']);
+    this.router.navigate(['entry']);
   }
 }

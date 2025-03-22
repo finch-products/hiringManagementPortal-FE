@@ -31,11 +31,12 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>LOB</mat-label>
-        <mat-select formControlName="dem_lob_id" required>
-          <mat-option *ngFor="let lob of lobs" [value]="lob.lob_id">
+        <input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" required (blur)="onBlur('dem_lob_id')">
+        <mat-autocomplete #lobAuto="matAutocomplete" (optionSelected)="onLOBChange($event)" [displayWith]="displayLOB">
+          <mat-option *ngFor="let lob of filteredLOBs | async" [value]="lob">
             {{ lob.lob_name }}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -86,11 +87,12 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Internal Department</mat-label>
-        <mat-select formControlName="dem_idm_id">
-          <mat-option *ngFor="let dept of depts" [value]="dept.idm_id">
-            {{ dept.idm_unitname}}
+        <input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto" required (blur)="onBlur('dem_idm_id')">
+        <mat-autocomplete #deptAuto="matAutocomplete" (optionSelected)="onDeptChange($event)" [displayWith]="displayDept">
+          <mat-option *ngFor="let dept of filteredDepts | async" [value]="dept">
+            {{ dept.idm_unitname }}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">

@@ -24,20 +24,34 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>SPOC</mat-label>
-        <mat-select formControlName="idm_spoc_id">
-          <mat-option *ngFor="let emp of spoc" [value]="emp.emp_id">
+        <input
+          type="text"
+          matInput
+          [formControl]="spocFilterControl"
+          [matAutocomplete]="autoSpoc"
+          (blur)="onSpocBlur()"
+        >
+        <mat-autocomplete #autoSpoc="matAutocomplete" (optionSelected)="onSpocSelected($event)">
+          <mat-option *ngFor="let emp of filteredSpocs | async" [value]="emp.emp_name">
             {{ emp.emp_name }}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Delivery Manager</mat-label>
-        <mat-select formControlName="idm_deliverymanager_id">
-          <mat-option *ngFor="let emp of deliveryManagers" [value]="emp.emp_id">
+        <input
+          type="text"
+          matInput
+          [formControl]="deliveryManagerFilterControl"
+          [matAutocomplete]="autoDeliveryManager"
+          (blur)="onDeliveryManagerBlur()"
+        >
+        <mat-autocomplete #autoDeliveryManager="matAutocomplete" (optionSelected)="onDeliveryManagerSelected($event)">
+          <mat-option *ngFor="let emp of filteredDeliveryManagers | async" [value]="emp.emp_name">
             {{ emp.emp_name }}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
 
       <mat-radio-group formControlName="idm_isactive" appearance="fill" class="form-field">
