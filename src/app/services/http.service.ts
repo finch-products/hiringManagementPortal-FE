@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpService {
   private baseUrl = 'http://64.227.145.117/api/';
-  // private baseUrl = 'http://localhost:8000/api/';
+  //private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -101,8 +101,8 @@ export class HttpService {
     );
   }
 
-  getDemandStatusDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
+  getDemandStatusDetails(dem_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status/${dem_id}`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -240,6 +240,15 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}reports/candidate-selection/?year=${year}&month=${month}&reportType=weekly`, this.getHeaders()).pipe(
       catchError(this.handleError));
   }
+  getCandidateStatusesbyid(cdm_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}candidate-status/list/${cdm_id}/`, this.getHeaders()).pipe(
+      catchError(this.handleError));}
+      
+  updateCandidateStatus(form_data: any): Observable<any> {
+        return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
+          catchError(this.handleError) // Handle errors
+        );
+      }
 
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
@@ -256,10 +265,5 @@ export class HttpService {
   }
   postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data);
-  }
-  updateCandidateStatus(form_data: any): Observable<any> {
-    return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
-      catchError(this.handleError) // Handle errors
-    );
   }
 }

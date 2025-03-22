@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
+import { CandidateService } from '../../../app/services/candidate.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -18,7 +19,8 @@ export class CreateCandidateComponent implements OnInit {
   status: any[] = [];
   selectedFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private snackBar: MatSnackBar, private validatorsService: ValidatorsService, private httpService: HttpService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private CandidateService: CandidateService) {
+
     this.candidateForm = this.fb.group({
       cdm_emp_id: [''],
       cdm_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
@@ -89,6 +91,8 @@ export class CreateCandidateComponent implements OnInit {
 
     this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
+        console.log('Candidate Added Successfully:', response);
+        this.CandidateService.addcandidate(response);
         this.snackBar.open('✅ Candidate added successfully!', 'Close', {
           duration: 4000,
           panelClass: ['success-snackbar'],
