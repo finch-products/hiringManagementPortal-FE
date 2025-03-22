@@ -50,20 +50,34 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Location</mat-label>
-                <mat-select formControlName="emp_lcm_id">
-                    <mat-option *ngFor="let location of locations" [value]="location.lcm_id">
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="locationFilterControl"
+                    [matAutocomplete]="autoLocation"
+                    (blur)="onLocationBlur()"
+                >
+                <mat-autocomplete #autoLocation="matAutocomplete" (optionSelected)="onLocationSelected($event)">
+                    <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
                         {{ location.lcm_name }}
                     </mat-option>
-                </mat-select>
+                </mat-autocomplete>
             </mat-form-field>
-
+            
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Role</mat-label>
-                <mat-select formControlName="emp_rlm_id">
-                    <mat-option *ngFor="let role of roles" [value]="role.rlm_id">
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="roleFilterControl"
+                    [matAutocomplete]="autoRole"
+                    (blur)="onRoleBlur()"
+                >
+                <mat-autocomplete #autoRole="matAutocomplete" (optionSelected)="onRoleSelected($event)">
+                    <mat-option *ngFor="let role of filteredRoles | async" [value]="role.rlm_name">
                         {{ role.rlm_name }}
                     </mat-option>
-                </mat-select>
+                </mat-autocomplete>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">

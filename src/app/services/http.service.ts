@@ -107,6 +107,7 @@ export class HttpService {
     );
   }
 
+
   getInternalDepartmentDetails(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
