@@ -115,7 +115,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
       this.httpService.postDepartment(this.deptForm.value).subscribe({
         next: (response) => {
           console.log('Department Added Successfully:', response);
-          this.httpService.addDemand(response); // You might want to change this to addDepartment if available
+          this.internalDeptService.addInternalDept(response);
           this.snackBar.open('✅ Department added successfully!', 'Close', {
             duration: 4000,
             panelClass: ['error-snackbar'],

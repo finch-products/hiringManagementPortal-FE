@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
+import { EmployeeService } from '../../../app/services/employee.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -21,13 +22,7 @@ export class CreateEmployeeComponent implements OnInit {
   locationFilterControl = new FormControl('');
   roleFilterControl = new FormControl('');
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private validatorsService: ValidatorsService,
-    private httpService: HttpService,
-    private snackBar: MatSnackBar
-  ) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private employeeService: EmployeeService) {
     this.employeeForm = this.fb.group({
       emp_uniqueid: [''],
       emp_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
@@ -140,6 +135,7 @@ export class CreateEmployeeComponent implements OnInit {
       this.httpService.addEmployee(this.employeeForm.value).subscribe({
         next: (response) => {
           console.log('Employee Added Successfully:', response);
+          this.employeeService.addEmployee(response);
           this.snackBar.open('✅ Employee added successfully!', 'Close', {
             duration: 4000,
             panelClass: ['error-snackbar'],

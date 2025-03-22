@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Employee } from '../../../interfaces/employee.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { EmployeeService } from '../../../app/services/employee.service';
 
 @Component({
   selector: 'app-list-employee',
@@ -20,25 +21,21 @@ export class ListEmployeeComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, private httpService: HttpService) { }
+  constructor(private http: HttpClient, private httpService: HttpService,private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.fetchEmployees();
-    // this.clientService.clients$.subscribe(client => {
-    //   this.dataSource.data = client;
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
+    this.employeeService.employees$.subscribe(employees => {
+      this.dataSource.data = employees;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   fetchEmployees(): void {
     this.httpService.getEmployee().subscribe({
       next: (data) => {
-        this.employees = data;
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        console.log('Employees:', this.employees);
+        this.employeeService.setInitialData(data);
       },
       error: (err) => console.error('Error fetching employees', err)
     });

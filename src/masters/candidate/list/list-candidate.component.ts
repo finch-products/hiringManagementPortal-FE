@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from '../../../app/services/http.service';
 import { Candidate } from '../../../interfaces/candidate.interface';
-
+import { CandidateService } from '../../../app/services/candidate.service';
 @Component({
   selector: 'app-list-candidate',
   templateUrl: './list-candidate.component.html',
@@ -19,25 +19,21 @@ export class ListCandidateComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, private httpService: HttpService) { }
+  constructor(private http: HttpClient, private httpService: HttpService,private CandidateService: CandidateService) { }
 
   ngOnInit() {
     this.fetchCandidates();
-    // this.clientService.clients$.subscribe(client => {
-    //   this.dataSource.data = client;
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
+    this.CandidateService.candidates$.subscribe(candidates => {
+      this.dataSource.data = candidates;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   fetchCandidates(): void {
     this.httpService.getCandidate().subscribe({
       next: (data) => {
-        this.candidates = data;
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        console.log('Candidates:', this.candidates);
+        this.CandidateService.setInitialData(data);
       },
       error: (err) => console.error('Error fetching Candidates', err)
     });
