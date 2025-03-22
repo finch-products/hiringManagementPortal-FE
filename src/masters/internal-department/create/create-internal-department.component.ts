@@ -53,6 +53,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
 
   onSubmit(): void {
     if (this.deptForm.valid) {
+      alert(JSON.stringify(this.deptForm.value));
       this.httpService.postDepartment(this.deptForm.value).subscribe({
         next: (response) => {
           console.log('Department Added Successfully:', response);

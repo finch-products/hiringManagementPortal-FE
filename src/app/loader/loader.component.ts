@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loader',
@@ -6,7 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './loader.component.scss'
 })
 export class LoaderComponent {
-  
-  @Input() isLoading: boolean = false; 
+
+  @Input() isLoading!: Observable<boolean>;
 
 }

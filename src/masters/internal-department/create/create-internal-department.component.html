@@ -25,7 +25,7 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>SPOC</mat-label>
         <mat-select formControlName="idm_spoc_id">
-          <mat-option *ngFor="let emp of deliveryManagers" [value]="emp.emp_id">
+          <mat-option *ngFor="let emp of spoc" [value]="emp.emp_id">
             {{ emp.emp_name }}
           </mat-option>
         </mat-select>
@@ -34,7 +34,7 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Delivery Manager</mat-label>
         <mat-select formControlName="idm_deliverymanager_id">
-          <mat-option *ngFor="let emp of spoc" [value]="emp.emp_id">
+          <mat-option *ngFor="let emp of deliveryManagers" [value]="emp.emp_id">
             {{ emp.emp_name }}
           </mat-option>
         </mat-select>

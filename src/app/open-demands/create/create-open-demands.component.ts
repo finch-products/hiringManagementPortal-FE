@@ -1,44 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { OpenDemandService } from '../../services/open.demand.service';
 import { HttpService } from '../../services/http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSelectChange } from '@angular/material/select';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { map, Observable, startWith } from 'rxjs';
-
+import { map, startWith } from 'rxjs';
 @Component({
   selector: 'app-create-open-demands',
   templateUrl: './create-open-demands.component.html',
   styleUrls: ['./create-open-demands.component.scss']
 })
 export class CreateOpenDemandComponent implements OnInit {
-  demandForm: FormGroup;
+
   clients: any[] = [];
   locations: any[] = [];
   lobs: any[] = [];
   depts: any[] = [];
-  selectedFile: File | null = null;
-  isInternal = true;
-  isEditMode: boolean = false;
-  demands: any;
-  customEntryEnabled = false;
-  newClient = { clm_name: '', clm_clientemail: '' };
+
+  demandForm: FormGroup;
   hiringManagerControl = new FormControl('');
   form!: FormGroup;
-  minDate: Date;
-  selectedEmail: string = '';  // To hold the selected email
-  isCustomManager: boolean = false;
+
+  selectedFile: File | null = null;
+  newClient = { clm_name: '', clm_clientemail: '' };
+  demands: any;
   filteredClients!: any;
+  selectedEmail: string = '';
+  minDate: Date;
 
+  isInternal: boolean = true;
+  isEditMode: boolean = false;
+  customEntryEnabled: boolean = false;
+  isCustomManager: boolean = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService, private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService,
+    private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
+
     this.minDate = new Date();
-    console.log(this.minDate)
+
     this.demandForm = this.fb.group({
       isInternal: ['yes'],
       dem_id: [''],
@@ -60,7 +62,6 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_gcblevel: [''],
       dem_jd: [''],
       dem_comment: [''],
-      // dem_isreopened: ['no'],
       dem_isactive: [true],
       dem_insertby: ['emp_10022025_01'],
       dem_updateby: ['emp_10022025_01'],
@@ -81,20 +82,17 @@ export class CreateOpenDemandComponent implements OnInit {
         this.loadData(demandId);
       }
     })
-   
-    this.demandForm.get('isInternal')?.valueChanges.subscribe(value => {
-      this.isInternal = value === 'yes';
-    });
+
     this.filteredClients = this.demandForm.get('dem_clm_id')!.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value?.clm_name || '')),
       map(name => this._filter(name)),
       map(filteredList => {
-        console.log('Filtered Clients:', filteredList);
         return filteredList;
       })
     );
   }
+  
   private _filter(name: string): any[] {
     if (!name) return this.clients;
 
@@ -108,19 +106,18 @@ export class CreateOpenDemandComponent implements OnInit {
       return clientId.includes(filterValue) || clientName.includes(filterValue) || managerName.includes(filterValue);
     });
   }
-  displayClient(client: any): string {
-    console.log("client received in displayClient:", client);
-    if (!client) return '';
-    if (typeof client === 'string') return client; // If it's a string, return as is
-    // return `${client.clm_clientid} - ${client.clm_name} (${client.clm_managername})`;
-    
-  let clientId = client.clm_clientid ? client.clm_clientid + ' - ' : '';
-  let clientName = client.clm_name ? client.clm_name : '';
-  let managerName = client.clm_managername ? ' (' + client.clm_managername + ')' : '';
 
-  return `${clientId}${clientName}${managerName}`.trim();
+  displayClient(client: any): string {
+    if (!client) return '';
+    if (typeof client === 'string') return client;
+    let clientId = client.clm_clientid ? client.clm_clientid + ' - ' : '';
+    let clientName = client.clm_name ? client.clm_name : '';
+    let managerName = client.clm_managername ? ' (' + client.clm_managername + ')' : '';
+
+    return `${clientId}${clientName}${managerName}`.trim();
 
   }
+
   onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
     const selectedClient = event.option.value;
     if (selectedClient === 'custom') {
@@ -136,7 +133,6 @@ export class CreateOpenDemandComponent implements OnInit {
 
   addClient() {
     if (!this.newClient.clm_name || !this.newClient.clm_clientemail) {
-      alert('Please enter valid details.');
       return;
     }
 
@@ -165,14 +161,12 @@ export class CreateOpenDemandComponent implements OnInit {
   loadData(demandId: string) {
     this.httpService.getSingleDemandDetail(demandId).subscribe({
       next: (data) => {
+        
         this.demands = data;
-        console.log("demands", this.demands)
-        console.log("active", this.demands.dem_isactive)
-        console.log("Client Details:", this.demands.client_details);
+       
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
           dem_id: this.demands.dem_id,
-          // dem_updateby_id:this.demands.updateby_id,
           dem_ctoolnumber: this.demands?.dem_ctoolnumber,
           dem_ctooldate: this.demands?.dem_ctooldate,
           dem_clm_id: this.demands.client_details,
@@ -194,10 +188,6 @@ export class CreateOpenDemandComponent implements OnInit {
             ? this.demands.dem_position_location
             : []
         });
-        console.log("Set dem_clm_id to:", data.client_details.clm_id);
-        //Ensure correct visibility for RR/JR fields
-        this.isInternal = data.isInternal === 'yes';
-        console.log("Clients list after setting value:", this.demands);
       },
       error: (err) => console.error('Error fetching a sinlge demand', err)
     })
@@ -205,7 +195,7 @@ export class CreateOpenDemandComponent implements OnInit {
 
   loadClients(selectedId?: number): void {
     this.httpService.getClientDetails().subscribe((clients: any[]) => {
-      this.clients = clients; // Assuming 'clients' holds the client list used in form dropdown
+      this.clients = clients;
 
       this.filteredClients = this.demandForm.get('dem_clm_id')!.valueChanges.pipe(
         startWith(''),
@@ -215,8 +205,7 @@ export class CreateOpenDemandComponent implements OnInit {
       if (selectedId) {
         const foundClient = clients.find(client => client.clm_id === selectedId);
         if (foundClient) {
-          console.log("auto selecting :", foundClient)
-          this.form.get('dem_clm_id')?.setValue(selectedId); // Set form value only if found
+          this.form.get('dem_clm_id')?.setValue(selectedId);
         }
       }
     });
@@ -255,29 +244,11 @@ export class CreateOpenDemandComponent implements OnInit {
 
 
   onFileSelected(event: any) {
-    // this.selectedFile = event.target.files[0];
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
     }
   }
-
-  // onSubmit() {
-  //   const formData = new FormData();
-  //   console.log("Form Values:", this.demandForm.value);
-  //   Object.keys(this.demandForm.value).forEach(key => {
-  //     formData.append(key, this.demandForm.value[key]);
-  //   });
-
-  //   if (this.selectedFile) {
-  //     formData.append("job_description", this.selectedFile);
-  //   }
-
-  //   console.log(JSON.stringify(formData));
-  //   this.http.post('http://64.227.145.117/api/open-demands/', formData).subscribe(response => {
-  //     console.log('Success:', response);
-  //   });
-  // }
 
   onSubmit() {
     const updatedFields: any = {};
@@ -291,7 +262,6 @@ export class CreateOpenDemandComponent implements OnInit {
         if (this.demandForm.controls[field].dirty) {
           updatedFields[field] = this.demandForm.value[field];
           let value = this.demandForm.value[field];
-          // ✅ Convert multi-select field to JSON array
           if (field === "dem_position_location" && Array.isArray(value)) {
             value = JSON.stringify(value);
           }
@@ -299,17 +269,13 @@ export class CreateOpenDemandComponent implements OnInit {
         }
       });
 
-      // Append file only if changed
       if (this.selectedFile) {
         formData.append("job_description", this.selectedFile);
       }
 
       console.log("Final Update Request Body:", updatedFields);
-      // 🔹 Update API Call
       this.httpService.updateDemand(updatedFields).subscribe({
         next: (response) => {
-          // console.log('Demand Updated Successfully:', response);
-          // alert('Demand updated successfully!');
           this.snackBar.open("✅ Demand Updated Successfully!", "", {
             duration: 3000,
             panelClass: ['success-snackbar']
@@ -337,7 +303,7 @@ export class CreateOpenDemandComponent implements OnInit {
         if (key === "dem_clm_id" && typeof value === "object" && value !== null) {
           value = value.clm_id; // Extract only the ID
         }
-      
+
         // ✅ Convert multi-select field to JSON array
         if (key === "dem_position_location" && Array.isArray(value)) {
           value = JSON.stringify(value);
@@ -356,19 +322,17 @@ export class CreateOpenDemandComponent implements OnInit {
         console.log(`${key}:`, value);
       });
 
-      // 🔹 Create API Call
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
-          const demId = this.demandForm.get('dem_id')?.value || response?.dem_id || 'N/A';
-      
-          this.snackBar.open("✅ Demand ID: ${demId} Added Successfully!" , "Close", {
+          const demId = response.dem_id;
+          this.snackBar.open(`✅ Demand ${demId} Added Successfully!`, "Close", {
             duration: 4000,
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
-  verticalPosition: 'bottom'
+            verticalPosition: 'bottom'
 
           });
-      
+
           this.openDemandService.addDemand(response);
           this.demandForm.reset();
           this.router.navigate(['/list']);
@@ -377,12 +341,12 @@ export class CreateOpenDemandComponent implements OnInit {
         error: (error) => {
           const errorMessage = error?.error?.message || error.message || 'Something went wrong';
           console.error("Create Demand Error:", error);
-        
+
           this.snackBar.open("❌ Failed to add demand: ${errorMessage", "Close", {
             duration: 5000,
             panelClass: ['error-snackbar'],
             horizontalPosition: 'center',
-  verticalPosition: 'bottom'
+            verticalPosition: 'bottom'
 
           });
 
@@ -393,18 +357,18 @@ export class CreateOpenDemandComponent implements OnInit {
 
 
   formatDate(date: Date): string {
-    alert('date::' + date)
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
     const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-    return `${year}-${month}-${day}T00:00:00Z`; 
+    return `${year}-${month}-${day}T00:00:00Z`;
   }
 
 
   navigateToClientMaster() {
     this.router.navigate(['client-master']);
   }
+
   cancel() {
-    this.demandForm.reset();
+     this.router.navigate(['entry']);
   }
 }

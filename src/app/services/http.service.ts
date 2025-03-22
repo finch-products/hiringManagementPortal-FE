@@ -102,7 +102,7 @@ export class HttpService {
   }
 
   getDemandStatusDetails(dem_id: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}demand-status/demand-status/${dem_id}`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
