@@ -12,14 +12,18 @@ import { startWith, map } from 'rxjs/operators';
   templateUrl: './create-lob.component.html',
   styleUrls: ['./create-lob.component.scss']
 })
+
 export class CreateLOBComponent implements OnInit {
   lobForm: FormGroup;
-  clientPartners: any[] = [];
-  deliveryManagers: any[] = [];
-  filteredClientPartners!: Observable<any[]>;
-  filteredDeliveryManagers!: Observable<any[]>;
   clientPartnerFilterControl = new FormControl('');
   deliveryManagerFilterControl = new FormControl('');
+
+  clientPartners: any[] = [];
+  deliveryManagers: any[] = [];
+
+  filteredClientPartners!: Observable<any[]>;
+  filteredDeliveryManagers!: Observable<any[]>;
+ 
 
   constructor(private fb: FormBuilder, private http: HttpClient, private lobService: LobService, private httpService: HttpService, private snackBar: MatSnackBar) {
     this.lobForm = this.fb.group({
@@ -47,9 +51,10 @@ export class CreateLOBComponent implements OnInit {
   loadEmpByRoles(): void {
     this.httpService.getEmployeeByRolesDetails().subscribe({
       next: (data) => {
+
         this.clientPartners = data.client_partner;
         this.deliveryManagers = data.delivery_manager;
-        console.log('Client Partners & Delivery Managers:', data);
+
         this.filteredClientPartners = this.clientPartnerFilterControl.valueChanges.pipe(
           startWith(''),
           map(value => this._filterClientPartners(value || ''))
@@ -114,7 +119,6 @@ export class CreateLOBComponent implements OnInit {
     if (this.lobForm.valid) {
       const formData = this.lobForm.value;
 
-      // Remove empty fields
       Object.keys(formData).forEach(key => {
         if (formData[key] === '' || formData[key] === null) {
           delete formData[key];
@@ -122,7 +126,6 @@ export class CreateLOBComponent implements OnInit {
       });
       this.httpService.postaddLOB(formData).subscribe({
         next: (response) => {
-          console.log('LOB added successfully:', response);
           this.lobService.addLob(response);
           this.snackBar.open('✅ LOB added successfully!', 'Close', {
             duration: 4000,

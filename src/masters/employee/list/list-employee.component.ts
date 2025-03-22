@@ -14,10 +14,11 @@ import { EmployeeService } from '../../../app/services/employee.service';
   styleUrl: './list-employee.component.scss'
 })
 export class ListEmployeeComponent {
+
   employees: any[] = [];
+
   displayedColumns: string[] = ['emp_uniqueid', 'emp_name', 'emp_email', 'emp_phone', 'emp_lcm_id', 'emp_rlm_id', 'emp_keyword'];
   dataSource = new MatTableDataSource<Employee>([]);
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 

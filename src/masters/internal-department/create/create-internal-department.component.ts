@@ -11,15 +11,21 @@ import { startWith, map } from 'rxjs/operators';
   templateUrl: './create-internal-department.component.html',
   styleUrls: ['./create-internal-department.component.scss']
 })
+
 export class CreateInternalDepartmentComponent implements OnInit {
+
   activeStatus: string = 'yes';
+
   deptForm: FormGroup;
-  spoc: any[] = [];
-  deliveryManagers: any[] = [];
-  filteredSpocs!: Observable<any[]>;
-  filteredDeliveryManagers!: Observable<any[]>;
   spocFilterControl = new FormControl('');
   deliveryManagerFilterControl = new FormControl('');
+
+  spoc: any[] = [];
+  deliveryManagers: any[] = [];
+
+  filteredSpocs!: Observable<any[]>;
+  filteredDeliveryManagers!: Observable<any[]>;
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -27,6 +33,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
     private httpService: HttpService,
     private snackBar: MatSnackBar
   ) {
+
     this.deptForm = this.fb.group({
       idm_unitname: ['', Validators.required],
       idm_unitsales: ['', Validators.required],
@@ -38,6 +45,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
       idm_insertby: ['emp_10022025_01'],
       idm_updateby: ['emp_10022025_01']
     });
+
   }
 
   ngOnInit(): void {
@@ -57,7 +65,6 @@ export class CreateInternalDepartmentComponent implements OnInit {
       next: (data) => {
         this.spoc = data.spoc;
         this.deliveryManagers = data.delivery_manager;
-        console.log('SPOCs & Delivery Managers:', JSON.stringify(data));
         this.filteredSpocs = this.spocFilterControl.valueChanges.pipe(
           startWith(''),
           map(value => this._filterEmployees(value || '', this.spoc))
@@ -115,7 +122,6 @@ export class CreateInternalDepartmentComponent implements OnInit {
       alert(JSON.stringify(this.deptForm.value));
       this.httpService.postDepartment(this.deptForm.value).subscribe({
         next: (response) => {
-          console.log('Department Added Successfully:', response);
           this.internalDeptService.addInternalDept(response);
           this.snackBar.open('✅ Department added successfully!', 'Close', {
             duration: 4000,
@@ -145,10 +151,12 @@ export class CreateInternalDepartmentComponent implements OnInit {
       });
     }
   }
+
   onCancel(): void {
     this.deptForm.reset();
     this.deptForm.patchValue({
       idm_isactive: true
     });
   }
+
 }

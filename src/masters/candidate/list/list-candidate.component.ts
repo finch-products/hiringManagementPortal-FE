@@ -12,10 +12,11 @@ import { CandidateService } from '../../../app/services/candidate.service';
   styleUrl: './list-candidate.component.scss'
 })
 export class ListCandidateComponent {
+
   candidates: any[] = [];
   displayedColumns: string[] = ['cdm_emp_id', 'cdm_name', 'cdm_email', 'cdm_phone', 'cdm_location', 'cdm_profile', 'cdm_keywords'];
+  
   dataSource = new MatTableDataSource<Candidate>([]);
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LocationService } from '../../../app/services/location.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpService } from 'app/services/http.service';
 
 @Component({
   selector: 'app-create-location',
@@ -16,7 +17,8 @@ export class CreateLocationComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private locationService: LocationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private httpService: HttpService
   ) {
     this.locationForm = this.fb.group({
       lcm_name: ['', Validators.required],
@@ -29,7 +31,8 @@ export class CreateLocationComponent implements OnInit {
 
   onSubmit(): void {
     if (this.locationForm.valid) {
-      this.http.post('http://64.227.145.117/api/locations/', this.locationForm.value).subscribe({
+      const formData = this.locationForm.value;
+      this.httpService.postaddLocation(formData).subscribe({
         next: (response) => {
           console.log('Location added:', response);
           this.locationService.addLocation(response);

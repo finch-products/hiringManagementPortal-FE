@@ -7,8 +7,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HttpService {
-  // private baseUrl = 'http://64.227.145.117/api/';
-  private baseUrl = 'http://localhost:8000/api/';
+  private baseUrl = 'http://64.227.145.117/api/';
+  // private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -168,8 +168,6 @@ export class HttpService {
     );
   }
 
-
-
   getEmployees(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}departments/employee-by-role/`, this.getHeaders()).pipe(
       catchError(this.handleError)
@@ -231,6 +229,13 @@ export class HttpService {
   postaddLOB(lobData: any): Observable<any> {
     console.log("Lob data", lobData)
     return this.http.post<any>(`${this.baseUrl}lobs/`, lobData, { headers: { 'Content-Type': 'application/json' } }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  postaddLocation(LocationsData: any): Observable<any> {
+    console.log("Lob data", LocationsData)
+    return this.http.post<any>(`${this.baseUrl}locations/`, LocationsData, { headers: { 'Content-Type': 'application/json' } }).pipe(
       catchError(this.handleError)
     );
   }

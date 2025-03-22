@@ -13,10 +13,13 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./create-client.component.scss']
 })
 export class CreateClientComponent implements OnInit {
+
   clientForm: FormGroup;
+  locationFilterControl = new FormControl('');
+
   locations: any[] = [];
   filteredLocations!: Observable<any[]>;
-  locationFilterControl = new FormControl('');
+ 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -25,6 +28,7 @@ export class CreateClientComponent implements OnInit {
     private httpService: HttpService,
     private snackBar: MatSnackBar
   ) {
+
     this.clientForm = this.fb.group({
       clm_clientid: [''],
       clm_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
@@ -36,12 +40,13 @@ export class CreateClientComponent implements OnInit {
       clm_isactive: [true],
       clm_insertby: ['emp_10022025_01']
     });
+
   }
 
   ngOnInit(): void {
     this.loadLocations();
     this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
-      startWith(''), // Start with an empty string to show all locations
+      startWith(''),
       map(value => this._filterLocations(value || ''))
     );
   }
@@ -95,11 +100,8 @@ export class CreateClientComponent implements OnInit {
         }
       });
 
-      console.log('Sending cleaned formData:', formData);
-
       this.httpService.postaddClient(formData).subscribe({
         next: (response) => {
-          console.log('Client added successfully:', response);
           this.clientService.addClient(response);
 
           this.snackBar.open('✅ Client added successfully!', 'Close', {
@@ -146,4 +148,5 @@ export class CreateClientComponent implements OnInit {
     });
     this.locationFilterControl.setValue(''); 
   }
+  
 }

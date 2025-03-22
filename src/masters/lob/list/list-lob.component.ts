@@ -14,6 +14,7 @@ import { HttpService } from '../../../app/services/http.service';
   styleUrl: './list-lob.component.scss'
 })
 export class ListLOBComponent {
+  
   displayedColumns: string[] = ['lob_name', 'lob_description', 'lob_clientpartner', 'lob_deliverymanager', 'lob_insertby', 'lob_updateby'];
   dataSource = new MatTableDataSource<LOB>([]);
 

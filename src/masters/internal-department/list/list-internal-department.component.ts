@@ -13,6 +13,7 @@ import { HttpService } from '../../../app/services/http.service';
   styleUrl: './list-internal-department.component.scss'
 })
 export class ListInternalDepartmentComponent {
+
   displayedColumns: string[] = ['idm_id', 'idm_unitname', 'idm_unitsales', 'idm_unitdelivery', 'idm_unitsolution', 'idm_spoc_id', 'idm_deliverymanager_id', 'idm_isactive'];
   dataSource = new MatTableDataSource<InternalDept>([]);
 
@@ -38,16 +39,6 @@ export class ListInternalDepartmentComponent {
       error: (err) => console.error('Error fetching departments', err)
     });
   }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes['newRecord'] && changes['newRecord'].currentValue) {
-  //     this.addNewPracticeUnit(changes['newRecord'].currentValue);
-  //   }
-  // }
-
-  // addNewPracticeUnit(newRecord: InternalDept) {
-  //   this.dataSource.data = [...this.dataSource.data, newRecord]; // Append new record
-  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();

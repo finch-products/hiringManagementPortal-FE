@@ -137,24 +137,33 @@ export class ListOpenDemandsComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
 
-    this.dataSource.filterPredicate = (data: OpenDemand, filter: string) => {
-      const dataStr =
-        (data.dem_ctoolnumber || '').toLowerCase() + '◬' + 
-        (data.dem_ctooldate ? new Date(data.dem_ctooldate).toLocaleDateString('en-GB') : '').toLowerCase() + '◬' +
-        (data.dem_validtill ? new Date(data.dem_validtill).toLocaleDateString('en-GB') : '').toLowerCase() + '◬' + 
-        (data.dem_position_name || '').toLowerCase() + '◬' +
-        (data.location_details ? data.location_details.lcm_name || '' : '').toLowerCase() + '◬' + 
-        (data.dem_skillset || '').toLowerCase() + '◬' +
-        (data.dem_positions ? data.dem_positions.toString() : '').toLowerCase() + '◬' + 
-        (data.status_details ? data.status_details.dsm_code || '' : '').toLowerCase();
-
-      const transformedFilter = filter.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-      return dataStr.indexOf(transformedFilter) !== -1;
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      const dataStr = this.flattenObjectToString(data).toLowerCase();
+      return dataStr.includes(filter);
     };
 
     this.dataSource.filter = filterValue;
   }
+
+  /**
+   * Converts an object into a searchable string, including nested objects.
+   */
+  private flattenObjectToString(obj: any): string {
+    let result = '';
+
+    Object.keys(obj).forEach(key => {
+      const value = obj[key];
+
+      if (typeof value === 'object' && value !== null) {
+        result += this.flattenObjectToString(value) + ' ';
+      } else if (value !== undefined && value !== null) {
+        result += value.toString() + ' ';
+      }
+    });
+
+    return result.trim();
+  }
+
 
   editRow(element: any) {
     this.isEditmode = "true";
@@ -199,5 +208,4 @@ export class ListOpenDemandsComponent {
       this.router.navigate([`/demand-view/${row.dem_id}`]);
     }
   }
-
 }

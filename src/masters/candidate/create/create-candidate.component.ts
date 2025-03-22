@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
 import { CandidateService } from '../../../app/services/candidate.service';
@@ -16,13 +16,16 @@ import { startWith, map } from 'rxjs/operators';
 
 export class CreateCandidateComponent implements OnInit {
   candidateForm: FormGroup;
-  locations: any[] = [];
-  status: any[] = [];
-  selectedFile: File | null = null;
-  filteredLocations!: Observable<any[]>;
   locationFilterControl = new FormControl('');
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private CandidateService: CandidateService, private snackBar: MatSnackBar) {
+  locations: any[] = [];
+  status: any[] = [];
+
+  selectedFile: File | null = null;
+  filteredLocations!: Observable<any[]>;
+
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService, private CandidateService: CandidateService, private snackBar: MatSnackBar) {
 
     this.candidateForm = this.fb.group({
       cdm_emp_id: [''],
@@ -47,18 +50,17 @@ export class CreateCandidateComponent implements OnInit {
     this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterLocations(value || ''))
-  );
+    );
   }
 
   loadLocations(): void {
     this.httpService.getLocations().subscribe({
       next: (data) => {
         this.locations = data;
-        console.log('Locations:', this.locations);
         this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
           startWith(''),
           map(value => this._filterLocations(value || ''))
-      );
+        );
       },
       error: (err: any) => console.error('Error fetching locations', err)
     });
@@ -67,27 +69,27 @@ export class CreateCandidateComponent implements OnInit {
   private _filterLocations(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.locations.filter(location => location.lcm_name.toLowerCase().includes(filterValue));
-}
+  }
 
-onLocationSelected(event: any): void {
+  onLocationSelected(event: any): void {
     const selectedLocation = this.locations.find(loc => loc.lcm_name === event.option.value);
     if (selectedLocation) {
-        // Set the selected location ID in the form control
-        this.candidateForm.patchValue({ cdm_location: selectedLocation.lcm_id });
-        // Update the filter control to display the selected location name
-        this.locationFilterControl.setValue(selectedLocation.lcm_name, { emitEvent: false });
+      // Set the selected location ID in the form control
+      this.candidateForm.patchValue({ cdm_location: selectedLocation.lcm_id });
+      // Update the filter control to display the selected location name
+      this.locationFilterControl.setValue(selectedLocation.lcm_name, { emitEvent: false });
     }
-}
+  }
 
-onLocationBlur(): void {
+  onLocationBlur(): void {
     // If the input value doesn't match any location, reset the field
     const inputValue = this.locationFilterControl.value;
     const selectedLocation = this.locations.find(loc => loc.lcm_name === inputValue);
     if (!selectedLocation) {
-        this.locationFilterControl.setValue('');
-        this.candidateForm.patchValue({ cdm_location: '' });
+      this.locationFilterControl.setValue('');
+      this.candidateForm.patchValue({ cdm_location: '' });
     }
-}
+  }
 
   loadCandidateStatus(): void {
     this.httpService.getRoles().subscribe({
@@ -101,7 +103,6 @@ onLocationBlur(): void {
 
 
   onFileSelected(event: any) {
-    // this.selectedFile = event.target.files[0];
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
@@ -110,7 +111,6 @@ onLocationBlur(): void {
 
   onSubmit() {
     const formData = new FormData();
-    console.log("Form Values:", this.candidateForm.value);
 
     Object.keys(this.candidateForm.value).forEach(key => {
       const value = this.candidateForm.value[key];
@@ -127,7 +127,6 @@ onLocationBlur(): void {
 
     this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
-        console.log('Candidate Added Successfully:', response);
         this.CandidateService.addcandidate(response);
         this.snackBar.open('✅ Candidate added successfully!', 'Close', {
           duration: 4000,
@@ -166,9 +165,11 @@ onLocationBlur(): void {
       }
     });
   }
+
   onCancel(): void {
     this.candidateForm.reset();
   }
+
 }
 
 

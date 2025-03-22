@@ -31,7 +31,7 @@ export class CreateEmployeeComponent implements OnInit {
       emp_lcm_id: ['', Validators.required],
       emp_rlm_id: ['', Validators.required],
       emp_isactive: [true],
-      emp_keyword: [''], // Ensure required field
+      emp_keyword: [''],
       emp_insertby: ['emp_10022025_01'],
       emp_updateby: ['emp_10022025_01'],
     });
