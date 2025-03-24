@@ -42,8 +42,8 @@ export class CreateInternalDepartmentComponent implements OnInit {
       idm_spoc_id: [''],
       idm_deliverymanager_id: [''],
       idm_isactive: [true],
-      idm_insertby: ['emp_10022025_01'],
-      idm_updateby: ['emp_10022025_01']
+      idm_insertby: ['emp_22032025_1'],
+      idm_updateby: ['emp_22032025_1']
     });
 
   }
@@ -130,7 +130,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
             verticalPosition: 'bottom'
           });
           this.deptForm.reset();
-          this.deptForm.patchValue({ idm_isactive: true, idm_insertby: 'emp_10022025_01', idm_updateby: 'emp_10022025_01' });
+          this.deptForm.patchValue({ idm_isactive: true, idm_insertby: 'emp_22032025_1', idm_updateby: 'emp_22032025_1' });
         },
         error: (error) => {
           console.error('Error adding department:', error);

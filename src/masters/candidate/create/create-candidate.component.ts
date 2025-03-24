@@ -39,8 +39,8 @@ export class CreateCandidateComponent implements OnInit {
       cdm_keywords: [],
       cdm_isinternal: [true],
       cdm_isactive: [true],
-      cdm_insertby: ['emp_10022025_01'],
-      cdm_updateby: ['emp_10022025_01']
+      cdm_insertby: ['emp_22032025_1'],
+      cdm_updateby: ['emp_22032025_1']
     });
   }
 
