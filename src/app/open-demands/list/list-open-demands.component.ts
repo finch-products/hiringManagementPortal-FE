@@ -31,8 +31,8 @@ export class ListOpenDemandsComponent {
   selection = new SelectionModel<OpenDemand>(true, []);
 
   displayedColumns: string[] = [
-    'select', 'dem_ctoolnumber', 'dem_ctooldate', 'dem_validtill', 'dem_position_name',
-    'dem_lcm_id', 'dem_skillset', 'dem_positions', 'dem_dsm_id', 'action'];
+    'select', 'dem_id','dem_ctoolnumber', 'dem_ctooldate' ,'dem_validtill', 'dem_position_name',
+    'dem_lcm_id', 'dem_skillset', 'dem_positions', 'dem_dsm_id','action'];
 
   dataSource = new MatTableDataSource<OpenDemand>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
