@@ -31,8 +31,8 @@ export class CreateLOBComponent implements OnInit {
       lob_description: [''],
       lob_clientpartner: ['', Validators.required],
       lob_deliverymanager: ['', Validators.required],
-      lob_insertby: ['emp_10022025_01'],
-      lob_updateby: ['emp_10022025_01']
+      lob_insertby: ['emp_22032025_1'],
+      lob_updateby: ['emp_22032025_1']
     });
   }
 
@@ -135,8 +135,8 @@ export class CreateLOBComponent implements OnInit {
           });
           this.lobForm.reset();
           this.lobForm.patchValue({
-            lob_insertby: 'emp_10022025_01',
-            lob_updateby: 'emp_10022025_01'
+            lob_insertby: 'emp_22032025_1',
+            lob_updateby: 'emp_22032025_1'
           });
           this.clientPartnerFilterControl.setValue('');
           this.deliveryManagerFilterControl.setValue('');

@@ -67,8 +67,8 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_jd: [''],
       dem_comment: [''],
       dem_isactive: [true],
-      dem_insertby: ['emp_10022025_01'],
-      dem_updateby: ['emp_10022025_01'],
+      dem_insertby: ['emp_22032025_1'],
+      dem_updateby: ['emp_22032025_1'],
       dem_mandatoryskill: [''],
       dem_position_location: [[]]
     });
@@ -148,11 +148,13 @@ export class CreateOpenDemandComponent implements OnInit {
   }
 
   displayLOB(lob: any): string {
-    return lob && lob.lob_name ? lob.lob_name : '';
+    if (!lob) return '';
+    return typeof lob === 'object' ? lob.lob_name : lob; // Handle both object and ID
   }
-
+  
   displayDept(dept: any): string {
-    return dept && dept.idm_unitname ? dept.idm_unitname : '';
+    if (!dept) return '';
+    return typeof dept === 'object' ? dept.idm_unitname : dept; // Handle both object and ID
   }
 
   onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
@@ -171,6 +173,7 @@ export class CreateOpenDemandComponent implements OnInit {
   onLOBChange(event: any): void {
     const selectedLOB = event.option.value;
     this.demandForm.controls['dem_lob_id'].setValue(selectedLOB);
+    
   }
 
   onDeptChange(event: any): void {
@@ -329,19 +332,23 @@ export class CreateOpenDemandComponent implements OnInit {
     if (control) {
       const currentValue = control.value;
       let isValid = false;
-
+  
       switch (controlName) {
         case 'dem_clm_id':
-          isValid = this.clients.some(client => this.displayClient(client) === currentValue);
+          // Compare display value of the selected client with the list of clients
+          isValid = this.clients.some(client => this.displayClient(client) === this.displayClient(currentValue));
           break;
         case 'dem_lob_id':
-          isValid = this.lobs.some(lob => this.displayLOB(lob) === currentValue);
+          // Compare display value of the selected LOB with the list of LOBs
+          isValid = this.lobs.some(lob => this.displayLOB(lob) === this.displayLOB(currentValue));
           break;
         case 'dem_idm_id':
-          isValid = this.depts.some(dept => this.displayDept(dept) === currentValue);
+          // Compare display value of the selected department with the list of departments
+          isValid = this.depts.some(dept => this.displayDept(dept) === this.displayDept(currentValue));
           break;
       }
-
+  
+      // If the value is not valid, reset the control to null
       if (!isValid) {
         control.setValue(null);
       }
@@ -366,6 +373,14 @@ export class CreateOpenDemandComponent implements OnInit {
         if (this.demandForm.controls[field].dirty) {
           updatedFields[field] = this.demandForm.value[field];
           let value = this.demandForm.value[field];
+
+          if (field === "dem_lob_id" && typeof value === "object") {
+            value = value.lob_id;
+          }
+          if (field === "dem_idm_id" && typeof value === "object") {
+            value = value.idm_id;
+          }
+
           if (field === "dem_position_location" && Array.isArray(value)) {
             value = JSON.stringify(value);
           }
@@ -402,6 +417,13 @@ export class CreateOpenDemandComponent implements OnInit {
         // Format date fields
         if (value instanceof Date) {
           value = this.formatDate(value);
+        }
+
+        if (key === "dem_lob_id" && typeof value === "object") {
+          value = value.lob_id;
+        }
+        if (key === "dem_idm_id" && typeof value === "object") {
+          value = value.idm_id;
         }
 
         if (key === "dem_clm_id" && typeof value === "object" && value !== null) {

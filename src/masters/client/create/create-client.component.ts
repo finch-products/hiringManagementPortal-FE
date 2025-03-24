@@ -38,7 +38,7 @@ export class CreateClientComponent implements OnInit {
       clm_address: ['', [Validators.pattern(this.validatorsService.detailPattern())]],
       clm_lcm_id: [''],
       clm_isactive: [true],
-      clm_insertby: ['emp_10022025_01']
+      clm_insertby: ['emp_22032025_1']
     });
 
   }
@@ -114,7 +114,7 @@ export class CreateClientComponent implements OnInit {
           this.clientForm.reset();
           this.clientForm.patchValue({
             clm_isactive: true,
-            clm_insertby: 'emp_10022025_01'
+            clm_insertby: 'emp_22032025_1'
           });
           this.locationFilterControl.setValue('');
         },
@@ -144,7 +144,7 @@ export class CreateClientComponent implements OnInit {
     this.clientForm.reset();
     this.clientForm.patchValue({
       clm_isactive: true,
-      clm_insertby: 'emp_10022025_01'
+      clm_insertby: 'emp_22032025_1'
     });
     this.locationFilterControl.setValue(''); 
   }

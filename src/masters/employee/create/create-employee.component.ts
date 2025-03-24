@@ -32,8 +32,8 @@ export class CreateEmployeeComponent implements OnInit {
       emp_rlm_id: ['', Validators.required],
       emp_isactive: [true],
       emp_keyword: [''],
-      emp_insertby: ['emp_10022025_01'],
-      emp_updateby: ['emp_10022025_01'],
+      emp_insertby: ['emp_22032025_1'],
+      emp_updateby: ['emp_22032025_1'],
     });
   }
 
@@ -145,8 +145,8 @@ export class CreateEmployeeComponent implements OnInit {
           this.employeeForm.reset();
           this.employeeForm.patchValue({
             emp_isactive: true,
-            emp_insertby: 'emp_10022025_01',
-            emp_updateby: 'emp_10022025_01'
+            emp_insertby: 'emp_22032025_1',
+            emp_updateby: 'emp_22032025_1'
           });
         },
         error: (error) => {
