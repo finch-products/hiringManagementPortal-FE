@@ -162,6 +162,7 @@ export class CreateOpenDemandComponent implements OnInit {
     if (selectedClient === 'custom') {
       this.customEntryEnabled = true;
       this.demandForm.controls['dem_clm_id'].setValue('Other (Enter New)');
+      this.demandForm.get('clm_clientemail')?.enable();
       this.selectedEmail = '';
     } else {
       this.isCustomManager = false;
@@ -179,21 +180,42 @@ export class CreateOpenDemandComponent implements OnInit {
     const selectedDept = event.option.value;
     this.demandForm.controls['dem_idm_id'].setValue(selectedDept);
   }
+  checkCustomEntry() {
+    if (this.customEntryEnabled) {
+      this.demandForm.get('dem_clm_id')?.setValue('');
+      this.demandForm.get('clm_clientemail')?.setValue(null); 
+    }
+  }
 
   addClient() {
-    if (!this.newClient.clm_name || !this.newClient.clm_clientemail) {
+    const clientName = this.demandForm.get('dem_clm_id')?.value;
+    const clientEmail = this.demandForm.get('clm_clientemail')?.value;
+    console.log("newClient",this.newClient)
+    if (!clientName) {
+      this.snackBar.open("Please enter valid details", "", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+
       return;
     }
-
+     this.newClient = {
+      clm_name: clientName,
+      clm_clientemail: clientEmail
+    };
+    console.log("Submitting client data:",this.newClient)
     this.httpService.postaddClient(this.newClient).subscribe({
       next: (response: any) => {
-        alert('Client added successfully!');
+        this.snackBar.open("Client added successfully!", "", {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
         const newClmId = response.clm_id;
-
+        console.log("response",response)
         this.clients.push({ clm_id: newClmId, clm_name: this.newClient.clm_name, clm_clientemail: this.newClient.clm_clientemail });
 
         // Auto-select newly added client
-        this.demandForm.get('dem_clm_id')?.setValue(newClmId);
+        this.demandForm.get('dem_clm_id')?.setValue(clientName);
         this.demandForm.get('clm_clientemail')?.setValue(this.newClient.clm_clientemail);
 
         // Reset the input fields
@@ -202,6 +224,10 @@ export class CreateOpenDemandComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error adding client:', error);
+        this.snackBar.open("❌Failed to add client.", "", {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
         alert('Failed to add client.');
       }
     });
