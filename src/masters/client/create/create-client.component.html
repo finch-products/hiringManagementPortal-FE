@@ -1,6 +1,6 @@
 <h2 class="page-title">Client Master Entry</h2>
 <mat-card class="form-container">
-    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+    <form #form="ngForm" [formGroup]="clientForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Client Id</mat-label>

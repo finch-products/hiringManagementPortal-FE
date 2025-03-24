@@ -1,6 +1,6 @@
 <h2 class="page-title">Internal Department Master Entry</h2>
 <mat-card class="form-container">
-  <form [formGroup]="deptForm" (ngSubmit)="onSubmit()">
+  <form #form="ngForm" [formGroup]="deptForm" (ngSubmit)="onSubmit(form)">
     <div class="form-row">
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Unit Name</mat-label>

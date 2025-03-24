@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LocationService } from '../../../app/services/location.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,7 +29,7 @@ export class CreateLocationComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onSubmit(): void {
+  onSubmit(form: FormGroupDirective): void {
     if (this.locationForm.valid) {
       const formData = this.locationForm.value;
       this.httpService.postaddLocation(formData).subscribe({
@@ -43,6 +43,7 @@ export class CreateLocationComponent implements OnInit {
             verticalPosition: 'bottom'
           });
           this.locationForm.reset();
+          form.resetForm();
         },
         error: (error) => {
           console.error('Error adding location:', error);

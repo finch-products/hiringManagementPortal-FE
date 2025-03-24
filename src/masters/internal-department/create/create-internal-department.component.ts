@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InternalDeptService } from '../../../app/services/internal.department.service';
 import { HttpService } from '../../../app/services/http.service';
@@ -117,7 +117,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onSubmit(form: FormGroupDirective): void {
     if (this.deptForm.valid) {
       this.httpService.postDepartment(this.deptForm.value).subscribe({
         next: (response) => {
@@ -129,6 +129,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
             verticalPosition: 'bottom'
           });
           this.deptForm.reset();
+          form.resetForm();
           this.deptForm.patchValue({ idm_isactive: true, idm_insertby: 'emp_22032025_1', idm_updateby: 'emp_22032025_1' });
         },
         error: (error) => {

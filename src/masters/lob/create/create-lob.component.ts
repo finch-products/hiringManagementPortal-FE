@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LobService } from '../../../app/services/lob.service';
 import { HttpService } from '../../../app/services/http.service';
@@ -115,7 +115,7 @@ export class CreateLOBComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(form: FormGroupDirective) {
     if (this.lobForm.valid) {
       const formData = this.lobForm.value;
 
@@ -134,6 +134,7 @@ export class CreateLOBComponent implements OnInit {
             verticalPosition: 'bottom'
           });
           this.lobForm.reset();
+          form.resetForm();
           this.lobForm.patchValue({
             lob_insertby: 'emp_22032025_1',
             lob_updateby: 'emp_22032025_1'

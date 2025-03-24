@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl  } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
 import { EmployeeService } from '../../../app/services/employee.service';
@@ -24,12 +24,12 @@ export class CreateEmployeeComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private employeeService: EmployeeService, private snackBar: MatSnackBar) {
     this.employeeForm = this.fb.group({
-      emp_uniqueid: [''],
+      emp_uniqueid: ['', Validators.required],
       emp_name: ['', [Validators.required, Validators.pattern(this.validatorsService.namePattern())]],
-      emp_email: ['', Validators.email],
-      emp_phone: ['', [Validators.required, Validators.pattern(this.validatorsService.phonePattern())]],
-      emp_lcm_id: ['', Validators.required],
-      emp_rlm_id: ['', Validators.required],
+      emp_email: ['', [Validators.required, Validators.email]],
+      emp_phone: ['', Validators.pattern(this.validatorsService.phonePattern())],
+      emp_lcm_id: [''],
+      emp_rlm_id: [''],
       emp_isactive: [true],
       emp_keyword: [''],
       emp_insertby: ['emp_22032025_1'],
@@ -130,7 +130,7 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
 
-  onSubmit(): void {
+  onSubmit(form: FormGroupDirective): void {
     if (this.employeeForm.valid) {
       this.httpService.addEmployee(this.employeeForm.value).subscribe({
         next: (response) => {
@@ -143,6 +143,7 @@ export class CreateEmployeeComponent implements OnInit {
             verticalPosition: 'bottom'
           });
           this.employeeForm.reset();
+          form.resetForm();
           this.employeeForm.patchValue({
             emp_isactive: true,
             emp_insertby: 'emp_22032025_1',

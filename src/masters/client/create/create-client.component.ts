@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , FormControl, FormGroupDirective} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ClientService } from '../../../app/services/client.service';
 import { ValidatorsService } from '../../../app/services/validators.service';
@@ -89,7 +89,7 @@ export class CreateClientComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onSubmit(form: FormGroupDirective): void {
     if (this.clientForm.valid) {
       const formData = { ...this.clientForm.value };
 
@@ -111,7 +111,7 @@ export class CreateClientComponent implements OnInit {
             horizontalPosition: 'center',
           });
 
-          this.clientForm.reset();
+          form.resetForm();
           this.clientForm.patchValue({
             clm_isactive: true,
             clm_insertby: 'emp_22032025_1'
@@ -146,7 +146,8 @@ export class CreateClientComponent implements OnInit {
       clm_isactive: true,
       clm_insertby: 'emp_22032025_1'
     });
-    this.locationFilterControl.setValue(''); 
+    this.clientForm.markAsPristine(); // Mark the form as pristine
+    this.clientForm.markAsUntouched();
   }
   
 }

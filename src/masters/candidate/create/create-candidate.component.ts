@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
 import { CandidateService } from '../../../app/services/candidate.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-
 @Component({
   selector: 'app-create-candidate',
   templateUrl: './create-candidate.component.html',
@@ -109,7 +108,7 @@ export class CreateCandidateComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(form: FormGroupDirective) {
     const formData = new FormData();
 
     Object.keys(this.candidateForm.value).forEach(key => {
@@ -136,6 +135,7 @@ export class CreateCandidateComponent implements OnInit {
 
         });
         this.candidateForm.reset();
+        form.resetForm();
       },
       error: (error) => {
         console.error('Error adding Candidate:', error);
