@@ -32,7 +32,7 @@ export class ListLocationComponent {
   }
 
   fetchLocations() {
-    this.httpService.getLocationDetails().subscribe({
+    this.httpService.getLocations().subscribe({
       next: (data) => {
         this.locationService.setInitialData(data);
       },
