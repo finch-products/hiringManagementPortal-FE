@@ -13,6 +13,13 @@
           *ngIf="customEntryEnabled"
           required>
 
+          <mat-error *ngIf="demandForm.controls['dem_clm_id'].hasError('required')">
+            Hiring Manager is required
+          </mat-error>
+          
+          <mat-error *ngIf="demandForm.controls['dem_clm_id'].hasError('serverError')">
+            {{ demandForm.controls['dem_clm_id'].errors?.['serverError'] }}
+        </mat-error>
         <mat-autocomplete #auto="matAutocomplete"
           (optionSelected)="onHiringManagerChange($event)"
           [displayWith]="displayClient">
@@ -45,16 +52,35 @@
             {{ lob.lob_name }}
           </mat-option>
         </mat-autocomplete>
+
+        <mat-error *ngIf="demandForm.controls['dem_lob_id'].hasError('required')">
+          LOB is required
+        </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Position Name</mat-label>
         <input matInput formControlName="dem_position_name">
+
+        <mat-error *ngIf="demandForm.controls['dem_position_name'].hasError('serverError')">
+          {{ demandForm.controls['dem_position_name'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>No Of Positions</mat-label>
         <input matInput formControlName="dem_positions" required>
+
+        <mat-error *ngIf="demandForm.controls['dem_positions'].hasError('required')">
+          Number of positions is required
+        </mat-error>
+
+        <mat-error *ngIf="demandForm.controls['dem_positions'].hasError('serverError')">
+          {{ demandForm.controls['dem_positions'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -70,6 +96,11 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>GCB Level</mat-label>
         <input matInput formControlName="dem_gcblevel">
+
+        <mat-error *ngIf="demandForm.controls['dem_gcblevel'].hasError('serverError')">
+          {{ demandForm.controls['dem_gcblevel'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field"
@@ -81,6 +112,11 @@
         <mat-datepicker-toggle matSuffix
           [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
+        
+        <mat-error *ngIf="demandForm.controls['dem_validtill'].hasError('serverError')">
+          {{ demandForm.controls['dem_validtill'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -95,7 +131,7 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Internal Department</mat-label>
-        <input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto" required (blur)="onBlur('dem_idm_id')">
+        <input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto"  (blur)="onBlur('dem_idm_id')">
         <mat-autocomplete #deptAuto="matAutocomplete" (optionSelected)="onDeptChange($event)" [displayWith]="displayDept">
           <mat-option *ngFor="let dept of filteredDepts | async" [value]="dept">
             {{ dept.idm_unitname }}
@@ -106,6 +142,11 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>RR Number</mat-label>
         <input matInput formControlName="dem_rrnumber">
+
+        <mat-error *ngIf="demandForm.controls['dem_rrnumber'].hasError('serverError')">
+          {{ demandForm.controls['dem_rrnumber'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -116,6 +157,11 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>JR Number</mat-label>
         <input matInput formControlName="dem_jrnumber">
+
+        <mat-error *ngIf="demandForm.controls['dem_jrnumber'].hasError('serverError')">
+          {{ demandForm.controls['dem_jrnumber'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -130,6 +176,11 @@
           (keydown)="$event.preventDefault()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+
+        <mat-error *ngIf="demandForm.controls['dem_ctooldate'].hasError('serverError')">
+          {{ demandForm.controls['dem_ctooldate'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -141,6 +192,11 @@
         <label for="job_description">JD attachment</label>
         <input type="file" id="dem_jd" (change)="onFileSelected($event)">
       </div>
+
+      <mat-error *ngIf="demandForm.controls['dem_jd'].hasError('serverError')">
+        {{ demandForm.controls['dem_jd'].errors?.['serverError'] }}
+    </mat-error>
+
     </div>
 
     <div class="submit-container">

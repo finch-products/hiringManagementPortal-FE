@@ -129,7 +129,7 @@ export class CreateLOBComponent implements OnInit {
           this.lobService.addLob(response);
           this.snackBar.open('✅ LOB added successfully!', 'Close', {
             duration: 4000,
-            panelClass: ['error-snackbar'],
+            panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
             verticalPosition: 'bottom'
           });

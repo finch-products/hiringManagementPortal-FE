@@ -585,7 +585,10 @@ mat-radio-button.mat-accent {
   margin: 12px auto;
   color: #1b1818 !important; 
   animation: fadeInUp 0.5s ease-out;
-  position: relative;
+  position: fixed !important;
+  bottom: 10px !important; /* Adjust vertical position */
+  left: 40% !important;
+  //transform: translateX(-50%) !important;
   overflow: hidden;
 }
 

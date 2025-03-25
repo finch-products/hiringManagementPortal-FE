@@ -463,19 +463,18 @@ export class CreateOpenDemandComponent implements OnInit {
           this.demandForm.reset();
           this.router.navigate(['/list']);
         },
-
         error: (error) => {
-          const errorMessage = error?.error?.message || error.message || 'Something went wrong';
-          console.error("Create Demand Error:", error);
-
-          this.snackBar.open("❌ Failed to add demand: ${errorMessage", "Close", {
-            duration: 5000,
-            panelClass: ['error-snackbar'],
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom'
-
-          });
-
+          console.error('Error adding demand:', error);
+          if (error.status === 400 && error.error) {
+            for (const field in error.error) {
+              if (this.demandForm.controls[field]) {
+                this.demandForm.controls[field].setErrors({ serverError: error.error[field][0] });
+              }
+            }
+            this.showError('⚠ Please correct the highlighted fields.');
+          } else {
+            this.showError('❌ Failed to add demand. Please try again.');
+          }
         }
       });
     }
@@ -496,5 +495,14 @@ export class CreateOpenDemandComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['entry']);
+  }
+
+  private showError(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 4000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
   }
 }

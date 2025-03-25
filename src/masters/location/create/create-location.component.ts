@@ -38,7 +38,7 @@ export class CreateLocationComponent implements OnInit {
           this.locationService.addLocation(response);
           this.snackBar.open('✅ Location added successfully!', 'Close', {
             duration: 4000,
-            panelClass: ['error-snackbar'],
+            panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
             verticalPosition: 'bottom'
           });
