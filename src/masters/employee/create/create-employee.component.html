@@ -1,14 +1,13 @@
 <h2 class="page-title">Employee Master Entry</h2>
 <mat-card class="form-container">
-    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <form #form="ngForm"  [formGroup]="employeeForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Emp Id</mat-label>
-                <input matInput formControlName="emp_uniqueid">
-                <!-- <mat-error>
-                    <app-form-error
-                        [errors]="employeeForm.controls['clm_clientid'].errors"></app-form-error>
-                </mat-error> -->
+                <input matInput formControlName="emp_uniqueid" required>
+                <mat-error *ngIf="employeeForm.controls['emp_uniqueid'].hasError('required')">
+                    Employee ID is required
+                </mat-error>
                 <mat-error *ngIf="employeeForm.controls['emp_uniqueid'].hasError('serverError')">
                     {{ employeeForm.controls['emp_uniqueid'].errors?.['serverError'] }}
                 </mat-error>
@@ -17,10 +16,12 @@
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Name</mat-label>
                 <input matInput formControlName="emp_name" required>
-                <!-- <mat-error>
-                    <app-form-error
-                        [errors]="employeeForm.controls['emp_name'].errors"></app-form-error>
-                </mat-error> -->
+                <mat-error *ngIf="employeeForm.controls['emp_name'].hasError('required')">
+                    Name is required
+                </mat-error>
+                <mat-error *ngIf="employeeForm.controls['emp_name'].hasError('pattern')">
+                    Please enter a valid name
+                </mat-error>
                 <mat-error *ngIf="employeeForm.controls['emp_name'].hasError('serverError')">
                     {{ employeeForm.controls['emp_name'].errors?.['serverError'] }}
                 </mat-error>
@@ -28,18 +29,21 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="emp_email" type="email">
-                <mat-error>
-                    <app-form-error [errors]="employeeForm.controls['emp_email'].errors"></app-form-error>
+                <input matInput formControlName="emp_email" type="email" required>
+                <mat-error *ngIf="employeeForm.controls['emp_email'].hasError('required')">
+                    Email is required
                 </mat-error>
-                <!-- <mat-error *ngIf="employeeForm.controls['emp_email'].hasError('serverError')">
+                <mat-error *ngIf="employeeForm.controls['emp_email'].hasError('email')">
+                    Please enter a valid email
+                </mat-error>
+                <mat-error *ngIf="employeeForm.controls['emp_email'].hasError('serverError')">
                     {{ employeeForm.controls['emp_email'].errors?.['serverError'] }}
-                </mat-error> -->
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Phone</mat-label>
-                <input matInput formControlName="emp_phone" type="text" required>
+                <input matInput formControlName="emp_phone" type="text" >
                 <mat-error>
                     <app-form-error [errors]="employeeForm.controls['emp_phone'].errors"></app-form-error>
                 </mat-error>
@@ -55,7 +59,7 @@
                     matInput
                     [formControl]="locationFilterControl"
                     [matAutocomplete]="autoLocation"
-                    (blur)="onLocationBlur()"
+                    (blur)="onLocationBlur()" 
                 >
                 <mat-autocomplete #autoLocation="matAutocomplete" (optionSelected)="onLocationSelected($event)">
                     <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
@@ -71,7 +75,7 @@
                     matInput
                     [formControl]="roleFilterControl"
                     [matAutocomplete]="autoRole"
-                    (blur)="onRoleBlur()"
+                    (blur)="onRoleBlur()" 
                 >
                 <mat-autocomplete #autoRole="matAutocomplete" (optionSelected)="onRoleSelected($event)">
                     <mat-option *ngFor="let role of filteredRoles | async" [value]="role.rlm_name">
@@ -82,14 +86,9 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Keywords</mat-label>
-                <input matInput formControlName="emp_keyword" required>
-                <mat-error>
-                    <app-form-error [errors]="employeeForm.controls['emp_keyword'].errors"></app-form-error>
-                </mat-error>
-                <!-- <mat-error *ngIf="employeeForm.controls['emp_keyword'].hasError('serverError')">
-                    {{ employeeForm.controls['emp_keyword'].errors?.['serverError'] }}
-                </mat-error> -->
+                <input matInput formControlName="emp_keyword">
             </mat-form-field>
+            
 
             <mat-radio-group formControlName="emp_isactive" appearance="fill" class="form-field">
                 <mat-label>Active?</mat-label>

@@ -1,6 +1,6 @@
 <h2 class="page-title">Location Master</h2>
 <mat-card class="form-container">
-    <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+    <form #form="ngForm" [formGroup]="locationForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Location Name</mat-label>

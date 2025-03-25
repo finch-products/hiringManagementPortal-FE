@@ -1,6 +1,6 @@
 <h2 class="page-title">Candidate Master Entry</h2>
 <mat-card class="form-container">
-  <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+  <form #form="ngForm" [formGroup]="candidateForm" (ngSubmit)="onSubmit(form)">
     <div class="form-row">
 
       <mat-form-field appearance="fill" class="form-field">
@@ -21,7 +21,7 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="cdm_email" type="email">
+        <input matInput formControlName="cdm_email" type="email" required>
         <mat-error>
           <app-form-error [errors]="candidateForm.controls['cdm_email'].errors"></app-form-error>
         </mat-error>

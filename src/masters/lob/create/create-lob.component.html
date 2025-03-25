@@ -1,6 +1,6 @@
 <h2 class="page-title">LOB Master</h2>
 <mat-card class="form-container">
-    <form [formGroup]="lobForm" (ngSubmit)="onSubmit()">
+    <form #form="ngForm" [formGroup]="lobForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Name</mat-label>
@@ -19,7 +19,7 @@
                     matInput
                     [formControl]="deliveryManagerFilterControl"
                     [matAutocomplete]="dmAuto"
-                    (blur)="onDeliveryManagerBlur()"
+                    (blur)="onDeliveryManagerBlur()" required
                 >
                 <mat-autocomplete #dmAuto="matAutocomplete" (optionSelected)="onDeliveryManagerSelected($event)">
                     <mat-option *ngFor="let dm of filteredDeliveryManagers | async" [value]="dm.emp_name">
@@ -35,7 +35,7 @@
                     matInput
                     [formControl]="clientPartnerFilterControl"
                     [matAutocomplete]="cpAuto"
-                    (blur)="onClientPartnerBlur()"
+                    (blur)="onClientPartnerBlur()" required
                 >
                 <mat-autocomplete #cpAuto="matAutocomplete" (optionSelected)="onClientPartnerSelected($event)">
                     <mat-option *ngFor="let cp of filteredClientPartners | async" [value]="cp.emp_name">
