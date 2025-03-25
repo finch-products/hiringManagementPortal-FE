@@ -107,7 +107,7 @@ export class ListOpenDemandsComponent {
         dem_id: this.selectedRows[0].dem_id,
         dem_dsm_id: this.listForm.get('dem_dsm_id')?.value,
         dem_comment: this.listForm.get('dem_comment')?.value,
-        dem_updateby_id: 'emp_11022025_02'
+        dem_updateby_id: 'emp_22032025_1'
       };
       this.httpService.updateDemand(requestBody).subscribe({
         next: (data) => {

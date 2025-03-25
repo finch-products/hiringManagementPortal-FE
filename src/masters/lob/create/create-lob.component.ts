@@ -135,12 +135,12 @@ export class CreateLOBComponent implements OnInit {
           });
           this.lobForm.reset();
           form.resetForm();
+          this.clientPartnerFilterControl.reset();
+          this.deliveryManagerFilterControl.reset();
           this.lobForm.patchValue({
             lob_insertby: 'emp_22032025_1',
             lob_updateby: 'emp_22032025_1'
           });
-          this.clientPartnerFilterControl.setValue('');
-          this.deliveryManagerFilterControl.setValue('');
         },
         error: (error) => {
           console.error('Error adding LOB:', error);

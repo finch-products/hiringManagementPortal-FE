@@ -1,28 +1,25 @@
 <app-loader [isLoading]="isLoading$"></app-loader>
 
-
 <div class="main-layout">
-  <div class="grid-container">
+  <!-- Full-Width Header (moved outside grid-container) -->
+  <app-header class="app-header"></app-header>
 
+  <div class="grid-container">
     <!-- Left Sidebar -->
-    <div class="left-sidebar" [class.collapsed]="isCollapsed">
+    <div class="left-sidebar" [class.collapsed]="isCollapsed" class="app-sidebar">
       <app-left-siderbar (collapseChange)="togglesidenav($event)"></app-left-siderbar>
     </div>
 
     <!-- Main Content Section -->
     <div class="content-area" [ngClass]="{ 'expanded': isCollapsed }">
-
-
-      <!-- Full-Width Header -->
-      <app-header></app-header>
-
-      <!-- Main Content & Reports Sidebar -->
+      <!-- Content Wrapper -->
       <div class="content-wrapper">
         <div class="page-content">
+          <main class="app-main">
           <router-outlet></router-outlet>
+        </main>
         </div>
       </div>
-
     </div>
   </div>
 </div>
