@@ -16,7 +16,7 @@ export class RateCardsComponent {
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.jdForm = this.fb.group({
       role: ['', Validators.required],
-      jd: ['', Validators.required],
+      // jd: ['', Validators.required],
 
     });
   }

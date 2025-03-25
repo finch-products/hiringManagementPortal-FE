@@ -24,7 +24,7 @@
                 Cancel
               </button>
             <button mat-raised-button color="primary"
-                type="submit" class="submit">Submit</button>
+                type="submit" class="submit" [disabled]="locationForm.invalid">Submit</button>
         </div>
     </form>
 </mat-card>

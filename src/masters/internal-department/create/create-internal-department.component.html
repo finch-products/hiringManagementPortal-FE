@@ -65,7 +65,7 @@
       <button mat-raised-button color="primary" type="button" class="cancel" (click)="onCancel()">
         Cancel
       </button>
-      <button mat-raised-button color="primary" type="submit" class="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit" class="submit" [disabled]="deptForm.invalid">Submit</button>
     </div>
   </form>
 </mat-card>
