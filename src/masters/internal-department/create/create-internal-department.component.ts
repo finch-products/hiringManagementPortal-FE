@@ -124,7 +124,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
           this.internalDeptService.addInternalDept(response);
           this.snackBar.open('✅ Department added successfully!', 'Close', {
             duration: 4000,
-            panelClass: ['error-snackbar'],
+            panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
             verticalPosition: 'bottom'
           });
