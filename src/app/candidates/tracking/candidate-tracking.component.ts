@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 
@@ -17,11 +18,17 @@ export class CandidateTrackingComponent {
   candidateStatuses: any[] = [];
   selectedCandidates: Set<string> = new Set();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(private router: Router, private httpService: HttpService) {}
 
   ngOnInit() {
     this.loadCandidateStatuses();
     this.loadCandidates();
+  }
+
+  ngAfterViewInit() {
+    this.filteredCandidates.paginator = this.paginator;  // Assign paginator after view initialization
   }
 
   loadCandidateStatuses() {
@@ -39,8 +46,12 @@ export class CandidateTrackingComponent {
   loadCandidates() {
     this.httpService.getCandidate().subscribe(
       (data) => {
-        this.candidates = data; 
+        this.candidates = data;
         this.filteredCandidates.data = data;
+
+        if (this.paginator) {
+          this.filteredCandidates.paginator = this.paginator;  // Ensure paginator updates
+        }
       },
       (error) => {
         console.error('Error fetching candidates:', error);
