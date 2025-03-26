@@ -103,7 +103,6 @@ export class CreateClientComponent implements OnInit {
       this.httpService.postaddClient(formData).subscribe({
         next: (response) => {
           this.clientService.addClient(response);
-
           this.snackBar.open('✅ Client added successfully!', 'Close', {
             duration: 3000,
             verticalPosition: 'top',
@@ -148,6 +147,7 @@ export class CreateClientComponent implements OnInit {
     });
     this.clientForm.markAsPristine(); // Mark the form as pristine
     this.clientForm.markAsUntouched();
+    this.locationFilterControl.setValue('');
   }
   
 }
