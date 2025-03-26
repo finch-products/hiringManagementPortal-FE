@@ -129,18 +129,18 @@ export class CreateLOBComponent implements OnInit {
           this.lobService.addLob(response);
           this.snackBar.open('✅ LOB added successfully!', 'Close', {
             duration: 4000,
-            panelClass: ['error-snackbar'],
+            panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
             verticalPosition: 'bottom'
           });
           this.lobForm.reset();
           form.resetForm();
+          this.clientPartnerFilterControl.reset();
+          this.deliveryManagerFilterControl.reset();
           this.lobForm.patchValue({
             lob_insertby: 'emp_22032025_1',
             lob_updateby: 'emp_22032025_1'
           });
-          this.clientPartnerFilterControl.setValue('');
-          this.deliveryManagerFilterControl.setValue('');
         },
         error: (error) => {
           console.error('Error adding LOB:', error);

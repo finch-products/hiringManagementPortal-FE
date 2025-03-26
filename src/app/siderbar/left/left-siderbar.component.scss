@@ -1,10 +1,14 @@
 .sidenav-container {
-  height: 100vh;
-  width: 21.2%;
+  height: 100%;
+  position: fixed;
+  width: auto;
   background-color: #F6F5F1;
+  overflow-y: auto;
+  z-index: 100;
   color: #333;
+  margin: 0; 
+  padding: 0;
   border-right: 1px solid #E0E0E0;
-  width: 100%;
   .sidebar-logo img {
     width: 100%;
     // height:80px;
@@ -13,13 +17,15 @@
 }
 
 .sidenav {
-  width: 100%;
   background-color: #F6F5F1;
   font-size: 16px;
   color: #4C4C4B;
   font-weight: 600;
   border-right: none;
-
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .sidenav.collapsed mat-expansion-panel {
@@ -28,6 +34,11 @@
 
 mat-nav-list {
   padding: 2px;
+}
+.sidenav-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 90px; /* Add some padding at the bottom */
 }
 
 mat-nav-list .mat-list-item {
@@ -160,14 +171,16 @@ mat-expansion-panel-header {
 .sidebar-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   /* Push items to edges */
-  padding: 10px;
+  padding: 0px; 
 }
 
 .toggle-icon {
   cursor: pointer;
   margin-left: auto;
+  position: relative;
+  bottom: -26px;
 }
 
 

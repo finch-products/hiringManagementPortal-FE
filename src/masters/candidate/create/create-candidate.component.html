@@ -36,23 +36,19 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Location</mat-label>
-        <input
-            type="text"
-            matInput
-            [formControl]="locationFilterControl"
-            [matAutocomplete]="auto"
-            (blur)="onLocationBlur()" 
-        >
+        <mat-label>Location <span class="required"></span></mat-label>
+        <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="auto"
+          (blur)="onLocationBlur()" required>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLocationSelected($event)">
-            <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
-                {{ location.lcm_name }}
-            </mat-option>
+          <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
+            {{ location.lcm_name }}
+          </mat-option>
         </mat-autocomplete>
         <mat-error *ngIf="candidateForm.controls['cdm_location'].hasError('required')">
-            Location is required.
+          Location is required.
         </mat-error>
-    </mat-form-field>
+      </mat-form-field>
+
 
       <div class="file-input-container">
         <label for="cdm_profile">Upload Profile</label>
@@ -91,7 +87,8 @@
 
     <div class="submit-container">
       <button mat-raised-button color="primary" type="button" class="cancel" (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="primary" type="submit" class="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit" class="submit"
+        [disabled]="candidateForm.invalid">Submit</button>
     </div>
   </form>
 </mat-card>

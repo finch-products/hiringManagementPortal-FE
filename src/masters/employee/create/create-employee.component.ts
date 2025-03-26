@@ -138,7 +138,7 @@ export class CreateEmployeeComponent implements OnInit {
           this.employeeService.addEmployee(response);
           this.snackBar.open('✅ Employee added successfully!', 'Close', {
             duration: 4000,
-            panelClass: ['error-snackbar'],
+            panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
             verticalPosition: 'bottom'
           });

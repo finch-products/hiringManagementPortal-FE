@@ -58,17 +58,25 @@
           <mat-icon>account_circle</mat-icon>
         </div>
         <div class="client-details">
-          <p> Client: {{demands?.demand_details?.client_details.clm_name}}
+          <p> Client: {{demands?.demand_details?.client_details.clm_name || 'N/A'}}
             <br />Client Manager:
-            <b>{{demands?.demand_details?.client_details.clm_managername}}</b></p>
+            <b>{{demands?.demand_details?.client_details.clm_managername || 'N/A'}}</b></p>
         </div>
       </div>
       <div class="dates">
         <span class="date-item">
-          <p>Open Date : <b>{{demands?.demand_details?.dem_ctooldate | date:'dd-MMM-yy'}}</b></p>
+          <p>Open Date : 
+            <b [class.no-data]="!demands?.demand_details?.dem_ctooldate">
+              {{demands?.demand_details?.dem_ctooldate ? (demands.demand_details.dem_ctooldate | date:'dd-MMM-yy') : 'N/A'}}
+            </b>
+          </p>
         </span>
         <span class="date-item">
-          <p>Valid Till : <b>{{demands?.demand_details?.dem_validtill | date:'dd-MMM-yy'}}</b></p>
+          <p>Valid Till : 
+            <b [class.no-data]="!demands?.demand_details?.dem_validtill">
+              {{demands?.demand_details?.dem_validtill ? (demands.demand_details.dem_validtill | date:'dd-MMM-yy') : 'N/A'}}
+            </b>
+          </p>
         </span>
       </div>
       
@@ -79,33 +87,38 @@
   <div class="details-header">
     <div class="detail-box">
       <span>Position</span>
-      <b>{{demands?.demand_details?.dem_position_name}}</b>
+      <b>{{demands?.demand_details?.dem_position_name || 'N/A'}}</b>
     </div>
     <div class="detail-box">
       <span>Number of Positions</span>
-      <b class="position-count">{{demands?.demand_details?.dem_positions}}</b>
+      <b class="position-count">{{demands?.demand_details?.dem_positions || 'N/A'}}</b>
     </div>
     <div class="detail-box">
       <span>RR / JR number</span>
-      <b>{{demands?.demand_details?.dem_rrnumber}}/{{demands?.demand_details?.dem_jrnumber}}</b>
+      <b>
+        <ng-container *ngIf="demands?.demand_details?.dem_rrnumber || demands?.demand_details?.dem_jrnumber; else naBoth">
+          {{demands?.demand_details?.dem_rrnumber || 'N/A'}}/{{demands?.demand_details?.dem_jrnumber || 'N/A'}}
+        </ng-container>
+        <ng-template #naBoth>N/A</ng-template>
+      </b>
     </div>
   </div>
 
   <!-- Skills Section -->
   <div class="skills">
     <span>Skills</span>
-    <b class="skill">{{ demands?.demand_details?.dem_skillset }}</b>
+    <b class="skill">{{ demands?.demand_details?.dem_skillset || 'N/A' }}</b>
   </div>
 
   <!-- Manager & Job Description -->
   <div class="footer-section">
     <div class="detail-box">
       <span>LOB</span>
-      <b>{{demands?.demand_details?.lob_details.lob_name}}</b>
+      <b>{{demands?.demand_details?.lob_details.lob_name || 'N/A'}}</b>
     </div>
     <div class="detail-box">
       <span>Delivery Manager</span>
-      <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name}}</b>
+      <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name || 'N/A'}}</b>
     </div>
     <div class="detail-box">
       <span>Job Description</span>
