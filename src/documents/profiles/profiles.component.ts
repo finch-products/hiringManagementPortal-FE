@@ -19,7 +19,7 @@ export class ProfilesComponent {
         phone: ['', Validators.required],
         email: ['', Validators.required],
         location: ['', Validators.required],
-        profile: ['', Validators.required],
+        // profile: ['', Validators.required],
   
       });
     }
