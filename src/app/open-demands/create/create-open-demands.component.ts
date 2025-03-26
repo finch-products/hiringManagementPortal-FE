@@ -28,7 +28,8 @@ export class CreateOpenDemandComponent implements OnInit {
   selectedFile: File | null = null;
   newClient = { clm_name: '', clm_clientemail: '' };
   demands: any;
-  selectedEmail: string = '';
+  matchFound: any;
+  typedValue: any;
   minDate: Date;
   filteredClients!: any;
   filteredLOBs!: Observable<any[]>;
@@ -38,6 +39,7 @@ export class CreateOpenDemandComponent implements OnInit {
   isEditMode: boolean = false;
   customEntryEnabled: boolean = false;
   isCustomManager: boolean = false;
+ 
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService,
     private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
@@ -91,9 +93,9 @@ export class CreateOpenDemandComponent implements OnInit {
       startWith(''),
       map(value => (typeof value === 'string' ? value : value?.clm_name || '')),
       map(name => this._filter(name)),
-      map(filteredList => {
-        return filteredList;
-      })
+      // map(filteredList => {
+      //   return filteredList;
+      // })
     );
     this.filteredLOBs = this.demandForm.get('dem_lob_id')!.valueChanges.pipe(
       startWith(''),
@@ -161,36 +163,31 @@ export class CreateOpenDemandComponent implements OnInit {
     const selectedClient = event.option.value;
     if (selectedClient === 'custom') {
       this.customEntryEnabled = true;
-      this.demandForm.controls['dem_clm_id'].setValue('Other (Enter New)');
+      this.demandForm.controls['dem_clm_id'].setValue(this.typedValue);
       this.demandForm.get('clm_clientemail')?.enable();
-      this.selectedEmail = '';
+      this.demandForm.get('clm_clientemail')?.setValue(null); 
     } else {
       this.isCustomManager = false;
       this.demandForm.controls['dem_clm_id'].setValue(selectedClient);
-      this.selectedEmail = selectedClient.clm_clientemail || '';
+      this.demandForm.get('clm_clientemail')?.setValue(selectedClient.clm_clientemail || '');
     }
   }
   onLOBChange(event: any): void {
     const selectedLOB = event.option.value;
     this.demandForm.controls['dem_lob_id'].setValue(selectedLOB);
-    
   }
 
   onDeptChange(event: any): void {
     const selectedDept = event.option.value;
     this.demandForm.controls['dem_idm_id'].setValue(selectedDept);
   }
-  checkCustomEntry() {
-    if (this.customEntryEnabled) {
-      this.demandForm.get('dem_clm_id')?.setValue('');
-      this.demandForm.get('clm_clientemail')?.setValue(null); 
-    }
+  onInputChange(event: any) {
+    const inputValue = event.target.value.trim(); 
+    this.typedValue = inputValue; 
   }
-
   addClient() {
     const clientName = this.demandForm.get('dem_clm_id')?.value;
     const clientEmail = this.demandForm.get('clm_clientemail')?.value;
-    console.log("newClient",this.newClient)
     if (!clientName) {
       this.snackBar.open("Please enter valid details", "", {
         duration: 3000,
@@ -203,7 +200,6 @@ export class CreateOpenDemandComponent implements OnInit {
       clm_name: clientName,
       clm_clientemail: clientEmail
     };
-    console.log("Submitting client data:",this.newClient)
     this.httpService.postaddClient(this.newClient).subscribe({
       next: (response: any) => {
         this.snackBar.open("Client added successfully!", "", {
@@ -211,24 +207,22 @@ export class CreateOpenDemandComponent implements OnInit {
           panelClass: ['success-snackbar']
         });
         const newClmId = response.clm_id;
-        console.log("response",response)
-        this.clients.push({ clm_id: newClmId, clm_name: this.newClient.clm_name, clm_clientemail: this.newClient.clm_clientemail });
-
-        // Auto-select newly added client
-        this.demandForm.get('dem_clm_id')?.setValue(clientName);
-        this.demandForm.get('clm_clientemail')?.setValue(this.newClient.clm_clientemail);
-
+        const newClientObject = {
+          clm_id: newClmId,
+          clm_name: this.newClient.clm_name,
+          clm_clientemail: this.newClient.clm_clientemail
+        };
+        this.clients.push(newClientObject);
+        this.demandForm.get('dem_clm_id')?.setValue(newClientObject);
         // Reset the input fields
         this.newClient = { clm_name: '', clm_clientemail: '' };
         this.customEntryEnabled = false;
       },
       error: (error: any) => {
-        console.error('Error adding client:', error);
         this.snackBar.open("❌Failed to add client.", "", {
           duration: 3000,
           panelClass: ['error-snackbar']
         });
-        alert('Failed to add client.');
       }
     });
   }
@@ -301,7 +295,6 @@ export class CreateOpenDemandComponent implements OnInit {
     this.httpService.getLOBDetails().subscribe({
       next: (data) => {
         this.lobs = data;
-        console.log('LOBs:', this.lobs);
         this.filteredLOBs = this.demandForm.get('dem_lob_id')!.valueChanges.pipe(
           startWith(''), // Initialize with empty string
           map(value => (typeof value === 'string' ? value : value?.lob_name || '')),
@@ -316,7 +309,6 @@ export class CreateOpenDemandComponent implements OnInit {
     this.httpService.getDeptsDetails().subscribe({
       next: (data) => {
         this.depts = data;
-        console.log('Departments:', this.depts);
         this.filteredDepts = this.demandForm.get('dem_idm_id')!.valueChanges.pipe(
           startWith(''), // Initialize with empty string
           map(value => (typeof value === 'string' ? value : value?.idm_unitname || '')),
@@ -364,6 +356,7 @@ export class CreateOpenDemandComponent implements OnInit {
   onSubmit() {
     const updatedFields: any = {};
     const formData = new FormData();
+    
 
     if (this.isEditMode) {
       updatedFields["dem_id"] = this.demandForm.value.dem_id;
@@ -392,7 +385,6 @@ export class CreateOpenDemandComponent implements OnInit {
         formData.append("job_description", this.selectedFile);
       }
 
-      console.log("Final Update Request Body:", updatedFields);
       this.httpService.updateDemand(updatedFields).subscribe({
         next: (response) => {
           this.snackBar.open("✅ Demand Updated Successfully!", "", {
@@ -402,7 +394,8 @@ export class CreateOpenDemandComponent implements OnInit {
           this.router.navigate(['/list']);
         },
         error: (error) => {
-          this.snackBar.open("❌ Failed to update demand. Check console for details.", "", {
+          const errorMessage = error?.error?.message || error.message || 'Something went wrong';
+          this.snackBar.open(`❌ Failed to update demand. ${errorMessage}`, "", {
             duration: 3000,
             panelClass: ['error-snackbar']
           });
@@ -443,15 +436,14 @@ export class CreateOpenDemandComponent implements OnInit {
         formData.append("job_description", this.selectedFile);
       }
 
-      console.log("Final Create Request Body:");
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      // formData.forEach((value, key) => {
+      //   console.log(`${key}:`, value);
+      // });
 
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
           const demId = response.dem_id;
-          this.snackBar.open(`✅ Demand ${demId} Added Successfully!`, "Close", {
+          this.snackBar.open(`✅ Demand ${demId} Added Successfully!`, "", {
             duration: 4000,
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',

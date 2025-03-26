@@ -5,48 +5,34 @@
     <div class="form-row">
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Hiring Manager</mat-label>
-        <input type="text" matInput formControlName="dem_clm_id"
-          [matAutocomplete]="auto" (focus)="checkCustomEntry()"  *ngIf="!customEntryEnabled" required>
-          <input type="text"
-          matInput
-          formControlName="dem_clm_id" (focus)="checkCustomEntry()"
-          *ngIf="customEntryEnabled"
-          required>
-
-          <mat-error *ngIf="demandForm.controls['dem_clm_id'].hasError('required')">
-            Hiring Manager is required
-          </mat-error>
-          
-          <mat-error *ngIf="demandForm.controls['dem_clm_id'].hasError('serverError')">
-            {{ demandForm.controls['dem_clm_id'].errors?.['serverError'] }}
-        </mat-error>
-        <mat-autocomplete #auto="matAutocomplete"
-          (optionSelected)="onHiringManagerChange($event)"
+        <input type="text" matInput formControlName="dem_clm_id" [matAutocomplete]="auto"
+          (input)="onInputChange($event)" required>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onHiringManagerChange($event)"
           [displayWith]="displayClient">
-          <mat-option *ngFor="let client of filteredClients | async"
-            [value]="client">
+          <mat-option *ngFor="let client of filteredClients | async" [value]="client">
             {{ client.clm_clientid ? client.clm_clientid + ' - ' : '' }}
             {{ client.clm_name ? client.clm_name : '' }}
             {{ client.clm_managername ? ' (' + client.clm_managername + ')' : ''
             }}
           </mat-option>
-          <mat-option  [value]="'custom'">Other (Enter New)</mat-option>
+          <mat-option *ngIf="!matchFound && typedValue" [value]="'custom'" >
+            {{ typedValue }} (Add New)
+          </mat-option>
         </mat-autocomplete>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Manager Email</mat-label>
-        <input matInput [(ngModel)]="selectedEmail"
-          [disabled]="!isCustomManager"
-          formControlName="clm_clientemail">
-          <button mat-button color="primary" (click)="addClient()" matSuffix *ngIf="customEntryEnabled" type="button">
-            Save
-          </button>
+        <input matInput formControlName="clm_clientemail">
+        <button mat-button color="primary" (click)="addClient()" matSuffix *ngIf="customEntryEnabled" type="button">
+          Save
+        </button>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>LOB</mat-label>
-        <input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" required (blur)="onBlur('dem_lob_id')">
+        <input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" required
+          (blur)="onBlur('dem_lob_id')">
         <mat-autocomplete #lobAuto="matAutocomplete" (optionSelected)="onLOBChange($event)" [displayWith]="displayLOB">
           <mat-option *ngFor="let lob of filteredLOBs | async" [value]="lob">
             {{ lob.lob_name }}
@@ -86,8 +72,7 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Position Location</mat-label>
         <mat-select formControlName="dem_position_location" multiple>
-          <mat-option *ngFor="let location of locations"
-            [value]="location.lcm_id">
+          <mat-option *ngFor="let location of locations" [value]="location.lcm_id">
             {{ location.lcm_name }}
           </mat-option>
         </mat-select>
@@ -103,14 +88,11 @@
 
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field"
-        (click)="datePicker.open()">
+      <mat-form-field appearance="fill" class="form-field" (click)="datePicker.open()">
         <mat-label>Required By</mat-label>
-        <input matInput [matDatepicker]="datePicker"
-          formControlName="dem_validtill" [min]="minDate"
+        <input matInput [matDatepicker]="datePicker" formControlName="dem_validtill" [min]="minDate"
           (keydown)="$event.preventDefault()">
-        <mat-datepicker-toggle matSuffix
-          [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
         
         <mat-error *ngIf="demandForm.controls['dem_validtill'].hasError('serverError')">
@@ -169,11 +151,9 @@
         <input matInput formControlName="dem_ctoolnumber">
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field"
-        (click)="picker.open()">
+      <mat-form-field appearance="fill" class="form-field" (click)="picker.open()">
         <mat-label>CTool Date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dem_ctooldate"
-          (keydown)="$event.preventDefault()">
+        <input matInput [matDatepicker]="picker" formControlName="dem_ctooldate" (keydown)="$event.preventDefault()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
 
@@ -200,9 +180,9 @@
     </div>
 
     <div class="submit-container">
-      <button mat-raised-button color="primary" type="button" class="cancel"
+    <button mat-raised-button color="primary" type="button" class="cancel"
         (click)=cancel()>Cancel</button>
-      <button mat-raised-button color="primary" type="submit" class="submit"  [disabled]="demandForm.invalid"> {{
+      <button mat-raised-button color="primary" type="submit" class="submit"> {{
         isEditMode ? 'Update' : 'Submit'
         }}</button>
     </div>
