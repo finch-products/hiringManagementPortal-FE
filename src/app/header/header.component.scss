@@ -3,8 +3,26 @@
   align-items: center;
   justify-content: space-between;
   background-color: #f8e9a1;
-  padding: 20px 8px;
-  border-radius: 15px;
+  padding: 10px 20px;
+  width: calc(100% - 20px); /* Account for left/right positioning */
+  box-sizing: border-box;
+  border-radius: 20px; /* Increased from 20px for more rounding */
+  position: fixed;
+  left: 10px; /* Consistent 10px on both sides */
+  right: 10px; /* Consistent 10px on both sides */
+  height: var(--header-height);
+  z-index: 1000;
+  overflow: hidden;
+  margin: 0 auto; 
+
+  .logo-container {
+    width: 120px; /* Adjust as needed */
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
 
   .search-container {
     display: flex;
