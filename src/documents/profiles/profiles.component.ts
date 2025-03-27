@@ -86,4 +86,14 @@ export class ProfilesComponent {
       const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
+
+    onCancel(): void {
+      this.profileForm.reset(); // Reset form fields
+    
+      // Clear file input manually
+      const fileInput = document.getElementById('profiledetails') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
+    }
 }

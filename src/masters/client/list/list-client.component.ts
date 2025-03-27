@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { OpenDemand } from '../../../interfaces/open-demand.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,12 +21,13 @@ export class ListClientComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient, private clientService: ClientService, private httpService: HttpService) { }
+  constructor(private http: HttpClient, private changeDetectorRefs: ChangeDetectorRef,private clientService: ClientService, private httpService: HttpService) { }
 
   ngOnInit() {
     this.fetchClients();
     this.clientService.clients$.subscribe(client => {
-      this.dataSource.data = client;
+      this.dataSource.data = [...client];  // Create a new array reference
+      this.changeDetectorRefs.detectChanges();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });

@@ -47,4 +47,12 @@ export class OthersComponent {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  onCancel(): void {
+    this.jdForm.reset();
+    const fileInput = document.getElementById('jd') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
 }
