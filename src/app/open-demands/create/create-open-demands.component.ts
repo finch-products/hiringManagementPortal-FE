@@ -255,6 +255,7 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isreopened: this.demands?.dem_isreopened,
           dem_isactive: this.demands?.dem_isactive,
           dem_comment: this.demands?.dem_comment,
+          dem_mandatoryskill: this.demands?.dem_mandatoryskill,
           dem_position_location: this.demands?.dem_position_location
             ? this.demands.dem_position_location
             : []
@@ -362,7 +363,7 @@ export class CreateOpenDemandComponent implements OnInit {
 
     if (this.isEditMode) {
       updatedFields["dem_id"] = this.demandForm.value.dem_id;
-      updatedFields["dem_updateby_id"] = 'emp_11022025_02';
+      updatedFields["dem_updateby_id"] = 'emp_22032025_1';
 
       Object.keys(this.demandForm.controls).forEach((field) => {
         if (this.demandForm.controls[field].dirty) {

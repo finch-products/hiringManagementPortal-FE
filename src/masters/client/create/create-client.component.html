@@ -9,46 +9,60 @@
                     <app-form-error
                         [errors]="clientForm.controls['clm_clientid'].errors"></app-form-error>
                 </mat-error> -->
+                <mat-error *ngIf="clientForm.controls['clm_name'].hasError('serverError')">
+                    {{ clientForm.controls['clm_name'].getError('serverError') }}
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Name</mat-label>
                 <input matInput formControlName="clm_name" required>
-                <mat-error>
-                    <app-form-error [errors]="clientForm.controls['clm_name'].errors"></app-form-error>
-                </mat-error>
+                <mat-error *ngIf="clientForm.controls['clm_name'].hasError('required')">
+                    Name is required.
+                  </mat-error>
+                  <mat-error *ngIf="clientForm.controls['clm_name'].hasError('serverError')">
+                    {{ clientForm.controls['clm_name'].getError('serverError') }}
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Manager Name</mat-label>
                 <input matInput formControlName="clm_managername">
-                <mat-error>
-                    <app-form-error [errors]="clientForm.controls['clm_managername'].errors"></app-form-error>
-                </mat-error>
+                
+                <mat-error *ngIf="clientForm.controls['clm_managername'].hasError('serverError')">
+                    {{ clientForm.controls['clm_managername'].getError('serverError') }}
+                </mat-error> 
+
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Email</mat-label>
                 <input matInput formControlName="clm_clientemail" type="email">
-                <mat-error>
-                    <app-form-error [errors]="clientForm.controls['clm_clientemail'].errors"></app-form-error>
-                </mat-error>
+
+                <mat-error *ngIf="clientForm.controls['clm_clientemail'].hasError('serverError')">
+                    {{ clientForm.controls['clm_clientemail'].getError('serverError') }}
+                </mat-error> 
+
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Phone</mat-label>
                 <input matInput formControlName="clm_clientphone">
-                <mat-error>
-                    <app-form-error [errors]="clientForm.controls['clm_clientphone'].errors"></app-form-error>
-                </mat-error>
+
+                <mat-error *ngIf="clientForm.controls['clm_clientphone'].hasError('serverError')">
+                    {{ clientForm.controls['clm_clientphone'].getError('serverError') }}
+                </mat-error> 
+
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Address</mat-label>
                 <input matInput formControlName="clm_address">
-                <mat-error>
-                    <app-form-error [errors]="clientForm.controls['clm_address'].errors"></app-form-error>
-                </mat-error>
+
+                <mat-error *ngIf="clientForm.controls['clm_address'].hasError('serverError')">
+                    {{ clientForm.controls['clm_address'].getError('serverError') }}
+                </mat-error> 
+
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">

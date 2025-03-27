@@ -120,7 +120,7 @@ export class CreateClientComponent implements OnInit {
         
         error: (error) => {
           console.error('Error adding client:', error);
-          this.showError(`❌ Failed to add client: ${error.message}`);
+          this.handleFieldErrors(error);
         }
       });
     } else {
@@ -149,5 +149,29 @@ export class CreateClientComponent implements OnInit {
     this.clientForm.markAsUntouched();
     this.locationFilterControl.setValue('');
   }
-  
+  private handleFieldErrors(error: any): void {
+    console.log("Full error object:", error);
+
+    if (error && typeof error === 'object') {
+        Object.keys(error).forEach(field => {
+            const fieldErrors = error[field];
+
+            if (this.clientForm.controls[field] && Array.isArray(fieldErrors) && fieldErrors.length > 0) {
+                const errorMessage = fieldErrors[0];
+                
+                // Ensure setErrors is setting a string, not an object
+                this.clientForm.controls[field].setErrors({ serverError: errorMessage });
+
+                console.log(`Set error for ${field}:`, errorMessage);
+                console.log(`Final error for ${field}:`, typeof errorMessage, errorMessage);
+
+            } else {
+                console.warn(`Field not found in form or no valid errors: ${field}`);
+            }
+        });
+    } else {
+        this.showError('❌ Failed to add client: An unknown error occurred.');
+    }
+}
+
 }
