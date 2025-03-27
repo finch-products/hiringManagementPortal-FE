@@ -168,8 +168,15 @@ export class CreateCandidateComponent implements OnInit {
 
   onCancel(): void {
     this.candidateForm.reset();
+    this.candidateForm.patchValue({
+      cdm_isinternal: true,
+      cdm_isactive: true,
+      cdm_insertby: 'emp_22032025_1',
+      cdm_updateby: 'emp_22032025_1'
+    });
+    this.locationFilterControl.setValue('');
+    this.selectedFile = null;
   }
-
 }
 
 

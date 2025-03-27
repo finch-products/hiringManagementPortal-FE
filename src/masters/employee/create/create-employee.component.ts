@@ -177,10 +177,17 @@ export class CreateEmployeeComponent implements OnInit {
       verticalPosition: 'bottom'
     });
   }
-  onCancel(): void {
+  onCancel(formDirective: FormGroupDirective): void {
+    formDirective.resetForm();  // Resets the form completely
     this.employeeForm.reset();
     this.employeeForm.patchValue({
-      emp_isactive: true
+      emp_isactive: true,
+      emp_insertby: 'emp_22032025_1',
+      emp_updateby: 'emp_22032025_1'
     });
+  
+    // Clear autocomplete fields explicitly
+    this.locationFilterControl.setValue('');
+    this.roleFilterControl.setValue('');
   }
 }

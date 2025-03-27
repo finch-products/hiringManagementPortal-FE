@@ -155,8 +155,16 @@ export class CreateInternalDepartmentComponent implements OnInit {
   onCancel(): void {
     this.deptForm.reset();
     this.deptForm.patchValue({
-      idm_isactive: true
+      idm_isactive: true,
+      idm_insertby: 'emp_22032025_1',
+      idm_updateby: 'emp_22032025_1'
     });
+  
+    this.deptForm.markAsPristine();
+    this.deptForm.markAsUntouched();
+  
+    this.spocFilterControl.setValue('');
+    this.deliveryManagerFilterControl.setValue('');
   }
 
 }
