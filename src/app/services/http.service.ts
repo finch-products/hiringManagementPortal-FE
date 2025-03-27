@@ -7,8 +7,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl = 'http://64.227.145.117/api/';
-  // private baseUrl = 'http://localhost:8000/api/';
+  //private baseUrl = 'http://64.227.145.117/api/';
+   private baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -266,17 +266,14 @@ export class HttpService {
 
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred!';
-    if (error.error && error.error.error) {
-      // Extract the error message from the response
-      errorMessage = error.error.error;
-    } else if (error.error && error.error.message) {
-      errorMessage = error.error.message;
-    } else if (error.statusText) {
-      errorMessage = error.statusText;
-    }
-    return throwError(() => new Error(errorMessage));
+    let errorResponse = error.error;
+
+  if (!errorResponse || typeof errorResponse !== 'object') {
+    errorResponse = { general: ['An unknown error occurred!'] };
   }
+
+  return throwError(() => errorResponse); 
+}
   postData(url: string, data: any): Observable<any> {
     return this.http.post(url, data);
   }
