@@ -122,7 +122,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
       this.httpService.postDepartment(this.deptForm.value).subscribe({
         next: (response) => {
           this.internalDeptService.addInternalDept(response);
-          this.snackBar.open('✅ Department added successfully!', 'Close', {
+          this.snackBar.open('✅ Department added successfully!', '', {
             duration: 4000,
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
@@ -134,7 +134,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error adding department:', error);
-          this.snackBar.open('❌ Failed to add department. Please try again.', 'Close', {
+          this.snackBar.open('❌ Failed to add department. Please try again.', '', {
             duration: 4000,
             panelClass: ['error-snackbar'],
             horizontalPosition: 'center',
@@ -143,7 +143,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
         }
       });
     } else {
-      this.snackBar.open('⚠️ Please fill all required fields correctly.', 'Close', {
+      this.snackBar.open('⚠️ Please fill all required fields correctly.', '', {
         duration: 4000,
         panelClass: ['error-snackbar'],
         horizontalPosition: 'center',

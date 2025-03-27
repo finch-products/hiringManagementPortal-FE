@@ -36,7 +36,7 @@ export class CreateLocationComponent implements OnInit {
         next: (response) => {
           console.log('Location added:', response);
           this.locationService.addLocation(response);
-          this.snackBar.open('✅ Location added successfully!', 'Close', {
+          this.snackBar.open('✅ Location added successfully!', '', {
             duration: 4000,
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
@@ -47,7 +47,7 @@ export class CreateLocationComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error adding location:', error);
-          this.snackBar.open('❌ Failed to add location. Please try again.', 'Close', {
+          this.snackBar.open('❌ Failed to add location. Please try again.', '', {
             duration: 4000,
             panelClass: ['error-snackbar'],
             horizontalPosition: 'center',
@@ -56,7 +56,7 @@ export class CreateLocationComponent implements OnInit {
         }
       });
     } else {
-      this.snackBar.open('⚠️ Please fill all required fields correctly.', 'Close', {
+      this.snackBar.open('⚠️ Please fill all required fields correctly.', '', {
         duration: 4000,
         panelClass: ['error-snackbar'],
         horizontalPosition: 'center',

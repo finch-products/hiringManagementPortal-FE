@@ -136,7 +136,7 @@ export class CreateEmployeeComponent implements OnInit {
         next: (response) => {
           console.log('Employee Added Successfully:', response);
           this.employeeService.addEmployee(response);
-          this.snackBar.open('✅ Employee added successfully!', 'Close', {
+          this.snackBar.open('✅ Employee added successfully!', '', {
             duration: 4000,
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
@@ -170,7 +170,7 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   private showError(message: string): void {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, '', {
       duration: 4000,
       panelClass: ['error-snackbar'],
       horizontalPosition: 'center',

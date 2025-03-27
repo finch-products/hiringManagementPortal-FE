@@ -103,9 +103,9 @@ export class CreateClientComponent implements OnInit {
       this.httpService.postaddClient(formData).subscribe({
         next: (response) => {
           this.clientService.addClient(response);
-          this.snackBar.open('✅ Client added successfully!', 'Close', {
+          this.snackBar.open('✅ Client added successfully!', '', {
             duration: 3000,
-            verticalPosition: 'top',
+            verticalPosition: 'bottom',
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
           });
@@ -130,7 +130,7 @@ export class CreateClientComponent implements OnInit {
   }
 
   private showError(message: string): void {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, '', {
       duration: 4000,
       panelClass: ['error-snackbar'],
       horizontalPosition: 'center',

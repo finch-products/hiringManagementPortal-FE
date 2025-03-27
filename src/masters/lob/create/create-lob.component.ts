@@ -127,7 +127,7 @@ export class CreateLOBComponent implements OnInit {
       this.httpService.postaddLOB(formData).subscribe({
         next: (response) => {
           this.lobService.addLob(response);
-          this.snackBar.open('✅ LOB added successfully!', 'Close', {
+          this.snackBar.open('✅ LOB added successfully!', '', {
             duration: 4000,
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
@@ -153,7 +153,7 @@ export class CreateLOBComponent implements OnInit {
   }
 
   private showError(message: string): void {
-    this.snackBar.open(message, 'Close', {
+    this.snackBar.open(message, '', {
       duration: 4000,
       panelClass: ['error-snackbar'],
       horizontalPosition: 'center',

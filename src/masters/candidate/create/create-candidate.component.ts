@@ -127,7 +127,7 @@ export class CreateCandidateComponent implements OnInit {
     this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
         this.CandidateService.addcandidate(response);
-        this.snackBar.open('✅ Candidate added successfully!', 'Close', {
+        this.snackBar.open('✅ Candidate added successfully!', '', {
           duration: 4000,
           panelClass: ['success-snackbar'],
           horizontalPosition: 'center',
@@ -146,7 +146,7 @@ export class CreateCandidateComponent implements OnInit {
               this.candidateForm.controls[field].setErrors({ serverError: error.error[field][0] });
             }
           }
-          this.snackBar.open('❌ Validation Error: Please correct the highlighted fields.', 'Close', {
+          this.snackBar.open('❌ Validation Error: Please correct the highlighted fields.', '', {
             duration: 4000,
             panelClass: ['error-snackbar'],
             horizontalPosition: 'center',
@@ -154,7 +154,7 @@ export class CreateCandidateComponent implements OnInit {
 
           });
         } else {
-          this.snackBar.open(`❌ Failed to add candidate: ${error.message}`, 'Close', {
+          this.snackBar.open(`❌ Failed to add candidate: ${error.message}`, '', {
             duration: 4000,
             panelClass: ['error-snackbar'],
             horizontalPosition: 'center',
