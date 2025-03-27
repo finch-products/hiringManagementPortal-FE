@@ -255,7 +255,6 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_isreopened: this.demands?.dem_isreopened,
           dem_isactive: this.demands?.dem_isactive,
           dem_comment: this.demands?.dem_comment,
-          dem_mandatoryskill: this.demands?.dem_mandatoryskill,
           dem_position_location: this.demands?.dem_position_location
             ? this.demands.dem_position_location
             : []
