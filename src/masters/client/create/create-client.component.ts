@@ -72,10 +72,23 @@ export class CreateClientComponent implements OnInit {
   onLocationSelected(event: any): void {
     const selectedLocation = this.locations.find(loc => loc.lcm_name === event.option.value);
     if (selectedLocation) {
-      // Set the selected location ID in the form control
       this.clientForm.patchValue({ clm_lcm_id: selectedLocation.lcm_id });
-      // Update the filter control to display the selected location name
       this.locationFilterControl.setValue(selectedLocation.lcm_name, { emitEvent: false });
+  
+      // Prevent typing extra characters after selection
+      this.locationFilterControl.disable();
+      
+      // Re-enable when dropdown is opened again
+      setTimeout(() => this.locationFilterControl.enable(), 0);
+    }
+  }
+  
+  onLocationInput(event: any): void {
+    const selectedValue = this.locationFilterControl.value;
+    const isValidSelection = this.locations.some(loc => loc.lcm_name === selectedValue);
+  
+    if (!isValidSelection) {
+      this.locationFilterControl.setValue('');
     }
   }
 

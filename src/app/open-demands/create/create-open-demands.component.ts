@@ -54,7 +54,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_ctoolnumber: [''],
       dem_ctooldate: [''],
       dem_clm_id: [''],
-      clm_clientemail: [{ value: '', disabled: true }], // Initially disabled
+      clm_clientemail: [{ value: '', disabled: true }], 
       dem_lcm_id: [''],
       dem_validtill: [''],
       dem_skillset: [''],
@@ -93,9 +93,6 @@ export class CreateOpenDemandComponent implements OnInit {
       startWith(''),
       map(value => (typeof value === 'string' ? value : value?.clm_name || '')),
       map(name => this._filter(name)),
-      // map(filteredList => {
-      //   return filteredList;
-      // })
     );
     this.filteredLOBs = this.demandForm.get('dem_lob_id')!.valueChanges.pipe(
       startWith(''),
@@ -151,12 +148,12 @@ export class CreateOpenDemandComponent implements OnInit {
 
   displayLOB(lob: any): string {
     if (!lob) return '';
-    return typeof lob === 'object' ? lob.lob_name : lob; // Handle both object and ID
+    return typeof lob === 'object' ? lob.lob_name : lob; 
   }
   
   displayDept(dept: any): string {
     if (!dept) return '';
-    return typeof dept === 'object' ? dept.idm_unitname : dept; // Handle both object and ID
+    return typeof dept === 'object' ? dept.idm_unitname : dept; 
   }
 
   onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
@@ -214,7 +211,6 @@ export class CreateOpenDemandComponent implements OnInit {
         };
         this.clients.push(newClientObject);
         this.demandForm.get('dem_clm_id')?.setValue(newClientObject);
-        // Reset the input fields
         this.newClient = { clm_name: '', clm_clientemail: '' };
         this.customEntryEnabled = false;
       },
@@ -298,7 +294,7 @@ export class CreateOpenDemandComponent implements OnInit {
       next: (data) => {
         this.lobs = data;
         this.filteredLOBs = this.demandForm.get('dem_lob_id')!.valueChanges.pipe(
-          startWith(''), // Initialize with empty string
+          startWith(''), 
           map(value => (typeof value === 'string' ? value : value?.lob_name || '')),
           map(name => this._filterLOBs(name))
         );
@@ -312,7 +308,7 @@ export class CreateOpenDemandComponent implements OnInit {
       next: (data) => {
         this.depts = data;
         this.filteredDepts = this.demandForm.get('dem_idm_id')!.valueChanges.pipe(
-          startWith(''), // Initialize with empty string
+          startWith(''), 
           map(value => (typeof value === 'string' ? value : value?.idm_unitname || '')),
           map(name => this._filterDepts(name))
         );
@@ -329,20 +325,16 @@ export class CreateOpenDemandComponent implements OnInit {
   
       switch (controlName) {
         case 'dem_clm_id':
-          // Compare display value of the selected client with the list of clients
           isValid = this.clients.some(client => this.displayClient(client) === this.displayClient(currentValue));
           break;
         case 'dem_lob_id':
-          // Compare display value of the selected LOB with the list of LOBs
           isValid = this.lobs.some(lob => this.displayLOB(lob) === this.displayLOB(currentValue));
           break;
         case 'dem_idm_id':
-          // Compare display value of the selected department with the list of departments
           isValid = this.depts.some(dept => this.displayDept(dept) === this.displayDept(currentValue));
           break;
       }
   
-      // If the value is not valid, reset the control to null
       if (!isValid) {
         control.setValue(null);
       }
@@ -405,11 +397,9 @@ export class CreateOpenDemandComponent implements OnInit {
       });
 
     } else {
-      // 🟢 Create Mode: Send all fields
       Object.keys(this.demandForm.value).forEach(key => {
         let value = this.demandForm.value[key];
 
-        // Format date fields
         if (value instanceof Date) {
           value = this.formatDate(value);
         }
@@ -422,10 +412,9 @@ export class CreateOpenDemandComponent implements OnInit {
         }
 
         if (key === "dem_clm_id" && typeof value === "object" && value !== null) {
-          value = value.clm_id; // Extract only the ID
+          value = value.clm_id; 
         }
 
-        // ✅ Convert multi-select field to JSON array
         if (key === "dem_position_location" && Array.isArray(value)) {
           value = JSON.stringify(value);
         }
@@ -433,14 +422,10 @@ export class CreateOpenDemandComponent implements OnInit {
           formData.append(key, value);
         }
       });
-      // Append file if available
       if (this.selectedFile) {
         formData.append("job_description", this.selectedFile);
       }
 
-      // formData.forEach((value, key) => {
-      //   console.log(`${key}:`, value);
-      // });
 
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
@@ -477,8 +462,8 @@ export class CreateOpenDemandComponent implements OnInit {
 
   formatDate(date: Date): string {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
-    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0'); 
     return `${year}-${month}-${day}T00:00:00Z`;
   }
 
@@ -488,7 +473,8 @@ export class CreateOpenDemandComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['entry']);
+    this.demandForm.reset(); // Clears all fields
+    this.router.navigate(['entry']); // Navigates to 'entry' page
   }
 
   private showError(message: string): void {
