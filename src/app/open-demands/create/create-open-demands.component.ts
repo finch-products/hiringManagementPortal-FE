@@ -219,7 +219,8 @@ export class CreateOpenDemandComponent implements OnInit {
         this.customEntryEnabled = false;
       },
       error: (error: any) => {
-        this.snackBar.open("❌Failed to add client.", "", {
+        const error1=JSON.stringify(error)
+        this.snackBar.open(`❌Failed to add client ${error1}.`, "", {
           duration: 3000,
           panelClass: ['error-snackbar']
         });
@@ -245,7 +246,7 @@ export class CreateOpenDemandComponent implements OnInit {
           dem_skillset: this.demands?.dem_skillset,
           dem_mandatoryskill:this.demands?.dem_mandatoryskill,
           dem_lob_id: this.demands.lob_details?.lob_name,
-          dem_idm_id: this.demands.department_details?.idm_id,
+          dem_idm_id: this.demands.department_details?.idm_unitname,
           dem_position_name: this.demands?.dem_position_name,
           dem_positions: this.demands?.dem_positions,
           dem_rrnumber: this.demands?.dem_rrnumber,
@@ -396,7 +397,7 @@ export class CreateOpenDemandComponent implements OnInit {
           this.router.navigate(['/list']);
         },
         error: (error) => {
-          const errorMessage = error?.error?.message || error.message || 'Something went wrong';
+          const errorMessage = error?.error?.message || error.message || JSON.stringify(error)||'Something went wrong';
           this.snackBar.open(`❌ Failed to update demand. ${errorMessage}`, "", {
             duration: 3000,
             panelClass: ['error-snackbar']
@@ -489,6 +490,13 @@ export class CreateOpenDemandComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['entry']);
+    this.demandForm.reset();
+
+    this.demandForm.controls['isInternal'].setValue('yes');
+    this.demandForm.controls['clm_clientemail'].disable(); // Since it's initially disabled
+    this.demandForm.controls['dem_isactive'].setValue(true);
+    this.demandForm.controls['dem_insertby'].setValue('emp_22032025_1');
+    this.demandForm.controls['dem_updateby'].setValue('emp_22032025_1');
   }
 
   private showError(message: string): void {
