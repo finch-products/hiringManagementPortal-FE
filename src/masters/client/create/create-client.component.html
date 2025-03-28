@@ -75,6 +75,7 @@
                     [formControl]="locationFilterControl"
                     [matAutocomplete]="auto"
                     (blur)="onLocationBlur()"
+                    (input)="onLocationInput($event)"
                 >
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLocationSelected($event)">
                     <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
