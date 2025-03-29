@@ -3,22 +3,21 @@ import { Component, Input, OnChanges } from '@angular/core';
 @Component({
   selector: 'app-form-error',
   templateUrl: './form-error.component.html',
-  styleUrl: './form-error.component.scss'
+  styleUrls: ['./form-error.component.scss']
 })
-export class FormErrorComponent implements OnChanges  {
+export class FormErrorComponent implements OnChanges {
   @Input() errors: any;
   @Input() fieldType: string = '';
   
   message: string = "";
+
   ngOnChanges(): void {
-    if (!this.errors) {
+    if (!this.errors || Object.keys(this.errors).length === 0) {
       this.message = "";
       return;
-      alert(this.errors)
     }
 
     if (this.fieldType === 'phone') {
-      alert(this.fieldType)
       this.handlePhoneNumberErrors();
     } else {
       this.handleGeneralErrors();
@@ -29,9 +28,11 @@ export class FormErrorComponent implements OnChanges  {
     if (this.errors.required) {
       this.message = "This field is required.";
     } else if (this.errors.pattern) {
-      this.message = "Enter valid phone number.";
+      this.message = "Enter a valid phone number.";
+    } else if (this.errors.serverError) {
+      this.message = this.errors.serverError; // Display server error
     } else {
-      this.message = this.errors;
+      this.message = JSON.stringify(this.errors); // Convert unknown errors to readable format
     }
   }
 
@@ -39,13 +40,13 @@ export class FormErrorComponent implements OnChanges  {
     if (this.errors.required) {
       this.message = "This field is required.";
     } else if (this.errors.email) {
-      this.message = "Invalid email.";
+      this.message = "Invalid email format.";
     } else if (this.errors.pattern) {
       this.message = "Invalid format.";
+    } else if (this.errors.serverError) {
+      this.message = this.errors.serverError; // Display server error
     } else {
-      this.message = this.errors;
+      this.message = JSON.stringify(this.errors); // Convert unknown errors to readable format
     }
   }
 }
-
-
