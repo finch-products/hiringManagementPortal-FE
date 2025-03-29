@@ -77,7 +77,7 @@
                     <div>
                         <select class="status"
                                 [(ngModel)]="candidate.selectedStatus"
-                                [ngClass]="{'no-arrow': searchTerm?.trim()}"
+                                [ngClass]="getStatusClasses(candidate, !!searchTerm?.trim())"
                                 *ngIf="!searchTerm?.trim()"
                                 (change)="onStatusChange(candidate, $event)">
                           <option *ngFor="let status of candidate.statusList"
@@ -86,7 +86,7 @@
                           </option>
                         </select>
                       </div>
-                      <div *ngIf="searchTerm?.trim()" class="status"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
+                      <div *ngIf="searchTerm?.trim()" class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
                     </div>
 
                 <div class="skills">
