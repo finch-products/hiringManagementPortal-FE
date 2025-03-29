@@ -260,7 +260,13 @@ export class HttpService {
 
   updateCandidateStatus(form_data: any): Observable<any> {
     return this.http.patch<any>(`${this.baseUrl}candidates/update-candidate-status/`, form_data, this.getHeaders()).pipe(
-      catchError(this.handleError) // Handle errors
+      catchError(this.handleError)
+    );
+  }
+
+  postCandidateDemand(candidateDemandData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}candidate-demand/`, candidateDemandData, { headers: { 'Content-Type': 'application/json' } }).pipe(
+      catchError(this.handleError)
     );
   }
 
@@ -268,13 +274,11 @@ export class HttpService {
   private handleError(error: HttpErrorResponse) {
     let errorResponse = error.error;
 
-  if (!errorResponse || typeof errorResponse !== 'object') {
-    errorResponse = { general: ['An unknown error occurred!'] };
+    if (!errorResponse || typeof errorResponse !== 'object') {
+      errorResponse = { general: ['An unknown error occurred!'] };
+    }
+
+    return throwError(() => errorResponse);
   }
 
-  return throwError(() => errorResponse); 
-}
-  postData(url: string, data: any): Observable<any> {
-    return this.http.post(url, data);
-  }
 }

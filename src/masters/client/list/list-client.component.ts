@@ -26,7 +26,7 @@ export class ListClientComponent {
   ngOnInit() {
     this.fetchClients();
     this.clientService.clients$.subscribe(client => {
-      this.dataSource.data = [...client];  // Create a new array reference
+      this.dataSource.data = [...client];
       this.changeDetectorRefs.detectChanges();
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

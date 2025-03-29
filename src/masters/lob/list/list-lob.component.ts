@@ -35,7 +35,7 @@ export class ListLOBComponent {
   fetchLOB() {
     this.httpService.getLOBDetails().subscribe({
       next: (data) => {
-        this.lobService.setInitialData(data.reverse()); // Reverse to show latest first
+        this.lobService.setInitialData(data.reverse());
       },
       error: (err) => console.error('Error fetching LOBs', err)
     });
