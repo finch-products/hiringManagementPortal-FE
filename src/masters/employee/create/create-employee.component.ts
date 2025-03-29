@@ -44,6 +44,9 @@ export class CreateEmployeeComponent implements OnInit {
       startWith(''),
       map(value => this._filterLocations(value || ''))
     );
+    this.employeeForm.valueChanges.subscribe(() => {
+      console.log('Email Errors:', this.employeeForm.controls['emp_email'].errors);
+    });
 
     this.filteredRoles = this.roleFilterControl.valueChanges.pipe(
       startWith(''),

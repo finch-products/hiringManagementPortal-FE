@@ -36,9 +36,9 @@ export class ListClientComponent {
   fetchClients() {
     this.httpService.getClientDetails().subscribe({
       next: (data) => {
-        this.clientService.setInitialData(data);
+        this.clientService.setInitialData(data.reverse());
       },
-      error: (err) => console.error('Error fetching demands', err)
+      error: (err) => console.error('Error fetching clients', err)
     });
   }
 
