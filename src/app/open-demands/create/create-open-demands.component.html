@@ -19,6 +19,9 @@
             {{ typedValue }} (Add New)
           </mat-option>
         </mat-autocomplete>
+        <mat-error *ngIf="demandForm.controls['dem_clm_id'].hasError('serverError')">
+          {{ demandForm.controls['dem_clm_id'].errors?.['serverError'] }}
+      </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -27,6 +30,9 @@
         <button mat-button color="primary" (click)="addClient()" matSuffix *ngIf="customEntryEnabled" type="button">
           Save
         </button>
+        <mat-error *ngIf="demandForm.controls['clm_clientemail'].hasError('serverError')">
+          {{ demandForm.controls['clm_clientemail'].errors?.['serverError'] }}
+      </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -43,6 +49,9 @@
           LOB is required
         </mat-error>
 
+        <mat-error *ngIf="demandForm.controls['dem_lob_id'].hasError('serverError')">
+          {{ demandForm.controls['dem_lob_id'].errors?.['serverError'] }}
+      </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -104,11 +113,21 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>MUST HAVE Skills</mat-label>
         <textarea matInput formControlName="dem_skillset"></textarea>
+
+        <mat-error *ngIf="demandForm.controls['dem_skillset'].hasError('serverError')">
+          {{ demandForm.controls['dem_skillset'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Nice to have Skills</mat-label>
         <textarea matInput formControlName="dem_mandatoryskill"></textarea>
+
+        <mat-error *ngIf="demandForm.controls['dem_mandatoryskill'].hasError('serverError')">
+          {{ demandForm.controls['dem_mandatoryskill'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -119,6 +138,11 @@
             {{ dept.idm_unitname }}
           </mat-option>
         </mat-autocomplete>
+
+        <mat-error *ngIf="demandForm.controls['dem_idm_id'].hasError('serverError')">
+          {{ demandForm.controls['dem_idm_id'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -134,6 +158,11 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Maximum grade/level of the profile</mat-label>
         <input matInput formControlName="dem_rrgade">
+
+        <mat-error *ngIf="demandForm.controls['dem_rrgade'].hasError('serverError')">
+          {{ demandForm.controls['dem_rrgade'].errors?.['serverError'] }}
+      </mat-error>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field">
@@ -149,6 +178,11 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>CTool Number</mat-label>
         <input matInput formControlName="dem_ctoolnumber">
+
+        <mat-error *ngIf="demandForm.controls['dem_ctoolnumber'].hasError('serverError')">
+          {{ demandForm.controls['dem_ctoolnumber'].errors?.['serverError'] }}
+      </mat-error>
+      
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-field" (click)="picker.open()">

@@ -199,9 +199,10 @@ export class ReportComponent implements OnInit {
           client_details:{
             clm_managername: demand.client_details.clm_managername},
           dem_skillset: demand.dem_skillset,
-          location_details: {
-            lcm_name: demand.location_details.lcm_name
-          },
+          location_details: demand.dem_position_location?.map((loc: any) => ({
+            lcm_id: loc.lcm_id,
+            lcm_name: loc.lcm_name
+          })) || [], 
           lob_details: {
             delivery_manager: {
               emp_name: demand.lob_details.delivery_manager.emp_name
@@ -233,5 +234,12 @@ export class ReportComponent implements OnInit {
   //   const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
   //   this.dataSource.filter = filterValue;
   // }
+
+  getLocationNames(locations: { lcm_id: number, lcm_name: string }[] | undefined): string {
+    if (!locations || locations.length === 0) {
+      return ''; 
+    }
+    return locations.map(loc => loc.lcm_name).join(', ');
+  }  
 
 }

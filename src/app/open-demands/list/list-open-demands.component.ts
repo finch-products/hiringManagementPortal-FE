@@ -90,7 +90,16 @@ export class ListOpenDemandsComponent {
   fetchOpenDemands() {
     this.httpService.getDemands().subscribe({
       next: (data) => {
-        this.demandService.setInitialData(data);
+        console.log("API Response:", data);
+       
+        data.forEach((demand:any) => {
+          if (!Array.isArray(demand.dem_location_position)) {
+            console.warn(`Invalid location data for demand ${demand.dem_id}:`, demand.dem_location_position);
+            demand.dem_location_position = [];
+          }
+        });
+  
+      this.demandService.setInitialData(data);
       },
       error: (err) => console.error('Error fetching demands', err)
     });
@@ -208,4 +217,12 @@ export class ListOpenDemandsComponent {
       this.router.navigate([`/demand-view/${row.dem_id}`]);
     }
   }
+
+  getLocationNames(locations: { lcm_id: number, lcm_name: string }[] | undefined): string {
+    if (!locations || locations.length === 0) {
+      return ''; 
+    }
+    return locations.map(loc => loc.lcm_name).join(', ');
+  }  
+  
 }
