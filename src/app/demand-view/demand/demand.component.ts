@@ -28,7 +28,7 @@ export class DemandComponent implements OnInit {
   selectedStatus: string = '';
   originalStatus: string | null = null;
   dem_comment: string = '';
-  readonly dem_updateby_id = 'emp_10022025_01';
+  readonly dem_updateby_id = 'emp_22032025_1';
   constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar) {
 
   }
@@ -64,7 +64,7 @@ public  loadData(demandId: any) {
         console.log("Updated candidates list:", this.candidates);
         const currentStatus = this.demands?.demand_details?.status_details?.dsm_code;
         this.demandForm.patchValue({ status: currentStatus });
-
+        this.selectedStatus = this.demands?.demand_details?.status_details?.dsm_code || '';
         // Store the original status
         this.originalStatus = currentStatus;
       }
@@ -150,5 +150,10 @@ public  loadData(demandId: any) {
         this.demandForm.patchValue({ status: this.originalStatus ?? null });
       }
     });
+  }
+
+  openStatusPopup() {
+    this.selectedStatus = this.demands?.demand_details?.status_details?.dsm_code || '';
+    this.showPopup = true;
   }
 }

@@ -119,7 +119,11 @@
 
     <ng-container matColumnDef="location">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
-      <td mat-cell *matCellDef="let demand"> {{ demand.location_details.lcm_name }} </td>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.dem_location_position?.length > 0;">
+            {{ getLocationNames(element.dem_location_position) }}
+        </ng-container>
+    </td>
     </ng-container>
 
     <ng-container matColumnDef="delivery_manager">

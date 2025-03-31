@@ -159,22 +159,72 @@ body, html {
     margin-bottom: 10px;
 }
 
-/* Specific Status Colors */
-.status.Selected {
-    background-color: #D1FADF;
-    color: #027A48;
-}
-
-.status.Rejected {
-    background-color: #FEE4E2;
-    color: #B42318;
-}
-
-.status.Pending {
-    background-color: #FEF0C7;
-    color: #B54708;
-}
-
+/* Specific status colors - Light background with darker text */
+.status.Applied {
+    background-color: #f0f0f0 !important; /* Very light gray */
+    color: #606060 !important; /* Darker gray text */
+  }
+  
+  .status.Screening {
+    background-color: #fff4e6 !important; /* Very light orange */
+    color: #cc8400 !important; /* Darker orange text */
+  }
+  
+  .status.Shortlisted {
+    background-color: #fff9e6 !important; /* Very light gold */
+    color: #ccac00 !important; /* Darker gold text */
+  }
+  
+  .status.Interview_Scheduled {
+    background-color: #e6f7ff !important; /* Very light sky blue */
+    color: #5aa5cb !important; /* Darker sky blue text */
+  }
+  
+  .status.L1_Scheduled {
+    background-color: #e6f0f7 !important; /* Very light steel blue */
+    color: #36648b !important; /* Darker steel blue text */
+  }
+  
+  .status.L1_Rejected {
+    background-color: #ffebee !important; /* Very light red */
+    color: #cc4f39 !important; /* Darker tomato red text */
+  }
+  
+  .status.Sent_to_Client {
+    background-color: #f3e6ff !important; /* Very light purple */
+    color: #7a5cb2 !important; /* Darker medium purple text */
+  }
+  
+  .status.Client_Evaluation_Pending {
+    background-color: #fff5e6 !important; /* Very light peach */
+    color: #ccaf94 !important; /* Darker peach text */
+  }
+  
+  .status.Client_Interview_Scheduled {
+    background-color: #e6fffa !important; /* Very light turquoise */
+    color: #33b2a6 !important; /* Darker turquoise text */
+  }
+  
+  .status.Selected_by_Client {
+    background-color: #e6ffe6 !important; /* Very light green */
+    color: #28a428 !important; /* Darker lime green text */
+  }
+  
+  .status.Rejected_by_Client {
+    background-color: #ffebee !important; /* Very light red */
+    color: #cc0000 !important; /* Darker red text */
+  }
+  
+  .status.On_Hold {
+    background-color: #ffffe6 !important; /* Very light yellow */
+    color: #cccc00 !important; /* Darker yellow text */
+  }
+  
+  .status.Client_Feedback_Provided {
+    background-color: #e6f7f7 !important; /* Very light teal */
+    color: #006666 !important; /* Darker teal text */
+  }
+  
  /*Floating Style (Optional if you want to move it to top-right)*/ 
 .floating-status {
     top: 10px;

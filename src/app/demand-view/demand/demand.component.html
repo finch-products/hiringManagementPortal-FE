@@ -8,7 +8,7 @@
       <!-- Status Dropdown -->
       <div class="form-group">
         <label for="status">Status</label>
-        <select id="status" [(ngModel)]="selectedStatus" name="status">
+        <select id="status" [(ngModel)]="selectedStatus" name="status" required>
           <option *ngFor="let status of stat" [value]="status.dsm_code">
             {{ status.dsm_code }}
           </option>
@@ -23,7 +23,7 @@
       </div>
 
       <!-- Submit Button -->
-      <button type="submit">Submit</button>
+      <button type="submit">Update Status</button>
     </form>
   </div>
 </div>
@@ -36,16 +36,10 @@
       <div>{{demands?.cdl_dem_id}}<span *ngIf="demands?.demand_details?.dem_ctoolnumber">/{{ demands?.demand_details?.dem_ctoolnumber }}</span></div>
       <div fxLayout="row" fxLayoutGap="10px">
         <!-- <button mat-button color="primary">Set Status</button> -->
-        <form [formGroup]="demandForm">
-          <mat-form-field appearance="fill" class="mat-drop">
-            <mat-label>Status</mat-label>
-            <mat-select formControlName="status" (selectionChange)="onStatusChange($event.value)">
-              <mat-option *ngFor="let status of stat" [value]="status.dsm_code">
-                {{ status?.dsm_code }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </form>
+        <div class="status-display">
+          <span class="current-status">{{demands?.demand_details?.status_details?.dsm_code || 'N/A'}}</span>
+          <span class="edit-icon" (click)="openStatusPopup()">✏️</span>
+        </div>
 
         <!-- <mat-icon>history</mat-icon>
           <mat-icon>share</mat-icon> -->

@@ -35,9 +35,9 @@ export class ListLOBComponent {
   fetchLOB() {
     this.httpService.getLOBDetails().subscribe({
       next: (data) => {
-        this.lobService.setInitialData(data);
+        this.lobService.setInitialData(data.reverse());
       },
-      error: (err) => console.error('Error fetching demands', err)
+      error: (err) => console.error('Error fetching LOBs', err)
     });
   }
 

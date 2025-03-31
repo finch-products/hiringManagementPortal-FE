@@ -1,82 +1,55 @@
 <h2 class="page-title">Employee Master Entry</h2>
 <mat-card class="form-container">
-    <form #form="ngForm"  [formGroup]="employeeForm" (ngSubmit)="onSubmit(form)">
+    <form #form="ngForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Emp Id</mat-label>
                 <input matInput formControlName="emp_uniqueid" required>
-                <mat-error *ngIf="employeeForm.controls['emp_uniqueid'].hasError('required')">
-                    Employee ID is required
-                </mat-error>
-                <mat-error *ngIf="employeeForm.controls['emp_uniqueid'].hasError('serverError')">
-                    {{ employeeForm.controls['emp_uniqueid'].errors?.['serverError'] }}
+                <mat-error>
+                    <app-form-error [errors]="employeeForm.controls['emp_uniqueid'].errors"></app-form-error>
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Name</mat-label>
                 <input matInput formControlName="emp_name" required>
-                <mat-error *ngIf="employeeForm.controls['emp_name'].hasError('required')">
-                    Name is required
-                </mat-error>
-                <mat-error *ngIf="employeeForm.controls['emp_name'].hasError('pattern')">
-                    Please enter a valid name
-                </mat-error>
-                <mat-error *ngIf="employeeForm.controls['emp_name'].hasError('serverError')">
-                    {{ employeeForm.controls['emp_name'].errors?.['serverError'] }}
+                <mat-error>
+                    <app-form-error [errors]="employeeForm.controls['emp_name'].errors"></app-form-error>
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Email</mat-label>
                 <input matInput formControlName="emp_email" type="email" required>
-                <mat-error *ngIf="employeeForm.controls['emp_email'].hasError('required')">
-                    Email is required
-                </mat-error>
-                <mat-error *ngIf="employeeForm.controls['emp_email'].hasError('email')">
-                    Please enter a valid email
-                </mat-error>
-                <mat-error *ngIf="employeeForm.controls['emp_email'].hasError('serverError')">
-                    {{ employeeForm.controls['emp_email'].errors?.['serverError'] }}
-                </mat-error>
+                <mat-error *ngIf="employeeForm.controls['emp_email'].invalid">
+                    <app-form-error [errors]="employeeForm.controls['emp_email'].errors"></app-form-error>
+                  </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Phone</mat-label>
-                <input matInput formControlName="emp_phone" type="text" >
+                <input matInput formControlName="emp_phone" type="text">
                 <mat-error>
                     <app-form-error [errors]="employeeForm.controls['emp_phone'].errors"></app-form-error>
                 </mat-error>
-                <!-- <mat-error *ngIf="employeeForm.controls['emp_phone'].hasError('serverError')">
-                    {{ employeeForm.controls['emp_phone'].errors?.['serverError'] }}
-                </mat-error> -->
             </mat-form-field>
+
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Location</mat-label>
-                <input
-                    type="text"
-                    matInput
-                    [formControl]="locationFilterControl"
-                    [matAutocomplete]="autoLocation"
-                    (blur)="onLocationBlur()" 
-                >
+                <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="autoLocation"
+                    (blur)="onLocationBlur()">
                 <mat-autocomplete #autoLocation="matAutocomplete" (optionSelected)="onLocationSelected($event)">
                     <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
                         {{ location.lcm_name }}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-            
+
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Role</mat-label>
-                <input
-                    type="text"
-                    matInput
-                    [formControl]="roleFilterControl"
-                    [matAutocomplete]="autoRole"
-                    (blur)="onRoleBlur()" 
-                >
+                <input type="text" matInput [formControl]="roleFilterControl" [matAutocomplete]="autoRole"
+                    (blur)="onRoleBlur()">
                 <mat-autocomplete #autoRole="matAutocomplete" (optionSelected)="onRoleSelected($event)">
                     <mat-option *ngFor="let role of filteredRoles | async" [value]="role.rlm_name">
                         {{ role.rlm_name }}
@@ -88,7 +61,7 @@
                 <mat-label>Keywords</mat-label>
                 <input matInput formControlName="emp_keyword">
             </mat-form-field>
-            
+
 
             <mat-radio-group formControlName="emp_isactive" appearance="fill" class="form-field">
                 <mat-label>Active?</mat-label>
@@ -98,9 +71,11 @@
         </div>
 
         <div class="submit-container">
-            <button mat-raised-button color="primary" type="button" class="cancel" (click)="onCancel(form)">Cancel</button>
+            <button mat-raised-button color="primary" type="button" class="cancel"
+                (click)="onCancel(form)">Cancel</button>
 
-            <button mat-raised-button color="primary" type="submit" class="submit"  [disabled]="employeeForm.invalid">Submit</button>
+            <button mat-raised-button color="primary" type="submit" class="submit"
+                [disabled]="employeeForm.invalid">Submit</button>
         </div>
     </form>
 </mat-card>

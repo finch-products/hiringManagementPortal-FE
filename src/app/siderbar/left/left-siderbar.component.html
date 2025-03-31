@@ -1,6 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" [style.collapsed]="isCollapsed ? 70 : 290"
     [class.collapsed]="isCollapsed" opened position="start" class="sidenav">
+    
     <div class="sidebar-header">
       <!-- Toggle button at right -->
       <mat-icon class="toggle-icon" (click)="togglesidenav()">
@@ -8,125 +9,247 @@
       </mat-icon>
     </div>
 
-    <!-- <span *ngIf="!isCollapsed">Brainwave</span> -->
     <br>
+    
     <div class="sidenav-content">
-    <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard">
-        <mat-icon [matTooltip]="isCollapsed ? 'Dashboard' : null" matTooltipPosition="right" >dashboard</mat-icon>
-        <span>Dashboard</span>
-      </a>
+      <mat-nav-list>
+        <!-- Dashboard -->
+        <a mat-list-item routerLink="/dashboard" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>dashboard</mat-icon>
+          <span *ngIf="!isCollapsed">Dashboard</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/dashboard')">
+            Dashboard
+          </div>
+        </a>
 
-        <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-icon [matTooltip]="isCollapsed ? 'Candidates' : null" matTooltipPosition="right">library_books</mat-icon>
-          <span>Candidates</span>
-        </mat-expansion-panel-header>
-        <mat-action-list class="view-action-list">
-          <a mat-list-item routerLink="/candidate-tracking" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'History' : null" matTooltipPosition="right">assignment</mat-icon>
-            <span>Tracking</span>
-          </a>
-          <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Candidate History' : null" matTooltipPosition="right">assignment</mat-icon>
-            <span>History</span>
-          </a>
-        </mat-action-list>
-      </mat-expansion-panel>
+        <!-- Candidates Panel -->
+        <div class="expansion-panel-container" (mouseenter)="showTooltip('candidates')" (mouseenter)="positionTooltip($event)">
+          <mat-expansion-panel class="expansion-panel" [expanded]="expandedPanels.candidates" 
+              (opened)="expandedPanels.candidates = true" (closed)="expandedPanels.candidates = false">
+            <mat-expansion-panel-header (click)="togglePanel('candidates');" (mouseenter)="positionTooltip($event)">
+              <mat-icon>library_books</mat-icon>
+              <span *ngIf="!isCollapsed">Candidates</span>
+            </mat-expansion-panel-header>
+            
+            <mat-action-list class="view-action-list">
+              <a mat-list-item routerLink="/candidate-tracking" (click)="setActive($event)" 
+                 (mouseenter)="showTooltip('candidates_tracking'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>assignment</mat-icon>
+                <span>Tracking</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'candidates_tracking'">
+                  <span>Tracking</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/candidate-history" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('candidates_history'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>history</mat-icon>
+                <span>History</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'candidates_history'">
+                  <span>History</span>
+                </div>
+              </a>
+            </mat-action-list>
+          </mat-expansion-panel>
+          
+          <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'candidates'">
+            <span>Candidates</span>
+          </div>
+        </div>
 
-      <mat-expansion-panel class="view_panel">
-        <mat-expansion-panel-header>
-          <mat-icon [matTooltip]="isCollapsed ? 'Other Views' : null" matTooltipPosition="right">view_in_ar</mat-icon>
-          <span>Other Views</span>
-        </mat-expansion-panel-header>
-        <mat-action-list class="view-action-list">
-          <a mat-list-item routerLink="/other-view2" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'View 1' : null" matTooltipPosition="right">folder</mat-icon>
-            <span>View 1</span>
-          </a>
-          <a mat-list-item routerLink="/other-view4" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'View 2' : null" matTooltipPosition="right">folder</mat-icon>
-            <span>View 2</span>
-          </a>
-          <a mat-list-item routerLink="/other-view5" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'View 5' : null" matTooltipPosition="right">folder</mat-icon>
-            <span>View 5</span>
-          </a>
-        </mat-action-list>
-      </mat-expansion-panel>
+        <!-- Other Views Panel -->
+        <div class="expansion-panel-container" (mouseenter)="showTooltip('views')" (mouseenter)="positionTooltip($event)">
+          <mat-expansion-panel class="expansion-panel" 
+              [expanded]="expandedPanels.views" (opened)="expandedPanels.views = true" (closed)="expandedPanels.views = false">
+            <mat-expansion-panel-header (click)="togglePanel('views'); $event.stopPropagation()">
+              <mat-icon>view_in_ar</mat-icon>
+              <span *ngIf="!isCollapsed">Other Views</span>
+            </mat-expansion-panel-header>
 
-      <a mat-list-item routerLink="/reports" (click)="setActive($event)">
-        <mat-icon [matTooltip]="isCollapsed ? 'Reports' : null" matTooltipPosition="right">widgets</mat-icon>
-        <span>Reports</span>
-      </a>
+            <mat-action-list class="view-action-list">
+              <a mat-list-item routerLink="/other-view2" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('view_1'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>folder</mat-icon>
+                <span>View 1</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'view_1'">
+                  <span>View 1</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/other-view4" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('view_2'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>folder</mat-icon>
+                <span>View 2</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'view_2'">
+                  <span>View 2</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/other-view5" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('view_5'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>folder</mat-icon>
+                <span>View 5</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'view_5'">
+                  <span>View 5</span>
+                </div>
+              </a>
+            </mat-action-list>
+          </mat-expansion-panel>
 
-      <!-- Masters (Expandable) -->
-      <mat-expansion-panel class="masters-panel">
-        <mat-expansion-panel-header>
-          <mat-icon [matTooltip]="isCollapsed ? 'Masters' : null" matTooltipPosition="right">auto_stories</mat-icon>
-          <span>Masters</span>
-        </mat-expansion-panel-header>
+          <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'views'">
+            <span>Other Views</span>
+          </div>
+        </div>
 
-        <mat-action-list class="master-list">
-          <a mat-list-item routerLink="/client-master" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Client Master' : null" matTooltipPosition="right">library_books</mat-icon>
-            <span>Client Master</span>
-          </a>
-          <a mat-list-item routerLink="/lob-master" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Lob Master' : null" matTooltipPosition="right">library_books</mat-icon>
-            <span>Lob Master</span>
-          </a>
-          <a mat-list-item routerLink="/employee-master" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Employee Master' : null" matTooltipPosition="right">library_books</mat-icon>
-            <span>Employee Master</span>
-          </a>
-          <a mat-list-item routerLink="/location-master" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Location Master' : null" matTooltipPosition="right">library_books</mat-icon>
-            <span>Location Master</span>
-          </a>
-          <a mat-list-item routerLink="/internal-department-master" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Department Master' : null" matTooltipPosition="right">library_books</mat-icon>
-            <span>Department Master</span>
-          </a>
-          <a mat-list-item routerLink="/candidate-master" (click)="setActive($event)">
-            <mat-icon [matTooltip]="isCollapsed ? 'Candidate Master' : null" matTooltipPosition="right">library_books</mat-icon>
-            <span>Candidate Master</span>
-          </a>
-        </mat-action-list>
-      </mat-expansion-panel>
+        <!-- Reports -->
+        <a mat-list-item routerLink="/reports" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>widgets</mat-icon>
+          <span *ngIf="!isCollapsed">Reports</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/reports')">
+            Reports
+          </div>
+        </a>
 
-      <a mat-list-item routerLink="/settings" (click)="setActive($event)">
-        <mat-icon [matTooltip]="isCollapsed ? 'Settings' : null" matTooltipPosition="right">settings</mat-icon>
-        <span>Settings</span>
-      </a>
-    </mat-nav-list>
-    <hr style="border: none; border-top: 1px solid #ccc; margin: 10px 0;">
-    <mat-nav-list>
-      <div class="documents-title">
-        Docs
-      </div>
-      <br>
-      <a mat-list-item routerLink="/documents/job-descriptions" (click)="setActive($event)">
-        <mat-icon [matTooltip]="isCollapsed ? 'Job Descriptions' : null" matTooltipPosition="right">description</mat-icon>
-        <span>Job Descriptions</span>
-      </a>
-      <a mat-list-item routerLink="/documents/profiles" (click)="setActive($event)">
-        <mat-icon [matTooltip]="isCollapsed ? 'Profiles' : null" matTooltipPosition="right">description</mat-icon>
-        <span>Profiles</span>
-      </a>
-      <a mat-list-item routerLink="/documents/sows" (click)="setActive($event)">
-        <mat-icon [matTooltip]="isCollapsed ? 'SOWs' : null" matTooltipPosition="right">description</mat-icon>
-        <span>SOWs</span>
-      </a>
-      <a mat-list-item routerLink="/documents/rate-cards" (click)="setActive($event)">
-        <mat-icon [matTooltip]="isCollapsed ? 'Rate Cards' : null" matTooltipPosition="right">description</mat-icon>
-        <span>Rate Cards</span>
-      </a>
-      <a mat-list-item routerLink="/documents/others" (click)="setActive($event)">
-        <mat-icon [matTooltip]="isCollapsed ? 'Others' : null" matTooltipPosition="right">description</mat-icon>
-        <span>Others</span>
-      </a>
-    </mat-nav-list>
-  </div>
+        <!-- Masters Panel -->
+        <div class="expansion-panel-container" (mouseenter)="showTooltip('masters')" (mouseenter)="positionTooltip($event)">
+          <mat-expansion-panel class="expansion-panel" [expanded]="expandedPanels.masters" 
+              (opened)="expandedPanels.masters = true" (closed)="expandedPanels.masters = false" (mouseenter)="positionTooltip($event)">
+            <mat-expansion-panel-header (click)="togglePanel('masters'); $event.stopPropagation()">
+              <mat-icon>auto_stories</mat-icon>
+              <span *ngIf="!isCollapsed">Masters</span>
+            </mat-expansion-panel-header>
+            
+            <mat-action-list class="master-list">
+              <a mat-list-item routerLink="/client-master" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('client-master'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>library_books</mat-icon>
+                <span>Client Master</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'client-master'">
+                  <span>Client Master</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/lob-master" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('lob-master'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>library_books</mat-icon>
+                <span>Lob Master</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'lob-master'">
+                  <span>Lob Master</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/employee-master" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('employee-master'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>library_books</mat-icon>
+                <span>Employee Master</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'employee-master'">
+                  <span>Employee Master</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/location-master" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('location-master'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>library_books</mat-icon>
+                <span>Location Master</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'location-master'">
+                  <span>Location Master</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/internal-department-master" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('department-master'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>library_books</mat-icon>
+                <span>Department Master</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'department-master'">
+                  <span>Department Master</span>
+                </div>
+              </a>
+              
+              <a mat-list-item routerLink="/candidate-master" (click)="setActive($event)"
+                 (mouseenter)="showTooltip('candidate-master'); positionTooltip($event)"
+                 (mouseleave)="hideTooltip()">
+                <mat-icon>library_books</mat-icon>
+                <span>Candidate Master</span>
+                <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'candidate-master'">
+                  <span>Candidate Master</span>
+                </div>
+              </a>
+            </mat-action-list>
+          </mat-expansion-panel>
+          
+          <div class="custom-tooltip" *ngIf="isCollapsed && activeTooltip === 'masters'">
+            <span>Masters</span>
+          </div>
+        </div>
+
+        <!-- Settings -->
+        <a mat-list-item routerLink="/settings" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>settings</mat-icon>
+          <span *ngIf="!isCollapsed">Settings</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/settings')">
+            Settings
+          </div>
+        </a>
+      </mat-nav-list>
+      
+      <hr style="border: none; border-top: 1px solid #ccc; margin: 10px 0;">
+      
+      <mat-nav-list>
+        <div class="documents-title">
+          Docs
+        </div>
+        <br>
+        
+        <a mat-list-item routerLink="/documents/job-descriptions" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>description</mat-icon>
+          <span *ngIf="!isCollapsed">Job Descriptions</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/documents/job-descriptions')">
+            Job Descriptions
+          </div>
+        </a>
+        
+        <a mat-list-item routerLink="/documents/profiles" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>description</mat-icon>
+          <span *ngIf="!isCollapsed">Profiles</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/documents/profiles')">
+            Profiles
+          </div>
+        </a>
+        
+        <a mat-list-item routerLink="/documents/sows" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>description</mat-icon>
+          <span *ngIf="!isCollapsed">SOWs</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/documents/sows')">
+            SOWs
+          </div>
+        </a>
+        
+        <a mat-list-item routerLink="/documents/rate-cards" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>description</mat-icon>
+          <span *ngIf="!isCollapsed">Rate Cards</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/documents/rate-cards')">
+            Rate Cards
+          </div>
+        </a>
+        
+        <a mat-list-item routerLink="/documents/others" class="menu-item" (click)="setActive($event)" (mouseenter)="positionTooltip($event)">
+          <mat-icon>description</mat-icon>
+          <span *ngIf="!isCollapsed">Others</span>
+          <div class="custom-tooltip" *ngIf="isCollapsed" (click)="navigateTo('/documents/others')">
+            Others
+          </div>
+        </a>
+      </mat-nav-list>
+    </div>
   </mat-sidenav>
 </mat-sidenav-container>

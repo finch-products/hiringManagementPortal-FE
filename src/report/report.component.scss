@@ -1,107 +1,99 @@
 .report-container {
- h2 {
-        background-color: #F6F5F1;
-        width: 50%;
-        border-radius: 10px;
-        padding: 10px;
-    }
+  h2 {
+    background-color: #F6F5F1;
+    width: 50%;
+    border-radius: 10px;
+    padding: 10px;
+  }
 }
 
 .tables {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .table-wrapper {
-    flex: 1;
-    background: #ffffff;
-    padding: 5px;
-    border-radius: 20px;
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  flex: 1;
+  background: #ffffff;
+  padding: 5px;
+  border-radius: 20px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .mat-elevation-z8 {
-    border-radius: 10px !important;
-    /* Apply border-radius to Material table */
-    overflow: hidden;
-    /* Ensures the corners remain rounded */
+  border-radius: 10px !important;
+  overflow: hidden;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
-    margin-bottom: 40px;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+  margin-bottom: 40px;
 }
 
 th,
 td {
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
 }
 
 td {
-    word-wrap: break-word;
-    font-weight: normal;
+  word-wrap: break-word;
+  font-weight: normal;
 }
 
 .filters {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin: 20px;
-    text-align: center;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px;
+  text-align: center;
 }
 
 .filter_buttons {
-    background-color: #f4f4f4;
-    border-radius: 20px;
-    height: 65px;
-    width: 180px;
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  height: 65px;
+  width: 180px;
 }
 
 .mat-form-field-underline {
-    display: none;
+  display: none;
 }
 
 
 .filters {
-    display: flex;
-    // flex-wrap: wrap;
-    gap: 15px; /* Spacing between filters */
-    align-items: center;
-    margin: 20px 0;
-    text-align: center;
-  }
-  
-  .filter-chip {
-    display: inline-flex; /* Ensures filters stay inline */
-    align-items: center;
-    // min-width: 180px; /* Adjust width as needed */
-    background: #f5f5f5 !important; /* Light gray background */
-    border-radius: 20px !important; /* Rounded edges */
-    padding: 5px 12px !important;
-  }
-  
-  /* Remove extra padding inside the field */
-  ::ng-deep .mat-form-field-wrapper {
-    padding: 5px 0 !important;
-  }
-  
-  /* Hide the default border */
-  ::ng-deep .mat-form-field-outline {
-    display: none !important;
-  }
-  
-  /* Reduce input height */
-  ::ng-deep .mat-input-element {
-    text-align: center; /* Align text center */
-    font-weight: bold;
-  }
-  
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 20px 0;
+  text-align: center;
+}
 
-  ::ng-deep .mat-form-field-underline {
-    display: none !important;
-  }
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  background: #f5f5f5 !important;
+  border-radius: 20px !important;
+  padding: 5px 12px !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding: 5px 0 !important;
+}
+
+::ng-deep .mat-form-field-outline {
+  display: none !important;
+}
+
+::ng-deep .mat-input-element {
+  text-align: center;
+  font-weight: bold;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none !important;
+}

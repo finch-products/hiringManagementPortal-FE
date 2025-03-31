@@ -15,12 +15,13 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class CreateEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
+  locationFilterControl = new FormControl('');
+  roleFilterControl = new FormControl('');
+
   locations: any[] = [];
   roles: any[] = [];
   filteredLocations!: Observable<any[]>;
   filteredRoles!: Observable<any[]>;
-  locationFilterControl = new FormControl('');
-  roleFilterControl = new FormControl('');
 
   constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService,private employeeService: EmployeeService, private snackBar: MatSnackBar) {
     this.employeeForm = this.fb.group({
@@ -44,6 +45,9 @@ export class CreateEmployeeComponent implements OnInit {
       startWith(''),
       map(value => this._filterLocations(value || ''))
     );
+    this.employeeForm.valueChanges.subscribe(() => {
+      console.log('Email Errors:', this.employeeForm.controls['emp_email'].errors);
+    });
 
     this.filteredRoles = this.roleFilterControl.valueChanges.pipe(
       startWith(''),
@@ -134,7 +138,6 @@ export class CreateEmployeeComponent implements OnInit {
     if (this.employeeForm.valid) {
       this.httpService.addEmployee(this.employeeForm.value).subscribe({
         next: (response) => {
-          console.log('Employee Added Successfully:', response);
           this.employeeService.addEmployee(response);
           this.snackBar.open('✅ Employee added successfully!', '', {
             duration: 4000,
@@ -177,6 +180,7 @@ export class CreateEmployeeComponent implements OnInit {
       verticalPosition: 'bottom'
     });
   }
+
   onCancel(formDirective: FormGroupDirective): void {
     formDirective.resetForm();  // Resets the form completely
     this.employeeForm.reset();

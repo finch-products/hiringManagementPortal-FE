@@ -27,12 +27,15 @@ export class CreateLocationComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.locationForm.valueChanges.subscribe(() => {
+      console.log('Location Form Errors:', this.locationForm.errors);
+    });
+  }
 
   onSubmit(form: FormGroupDirective): void {
     if (this.locationForm.valid) {
-      const formData = this.locationForm.value;
-      this.httpService.postaddLocation(formData).subscribe({
+      this.httpService.postaddLocation(this.locationForm.value).subscribe({
         next: (response) => {
           console.log('Location added:', response);
           this.locationService.addLocation(response);
@@ -47,22 +50,30 @@ export class CreateLocationComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error adding location:', error);
-          this.snackBar.open('❌ Failed to add location. Please try again.', '', {
-            duration: 4000,
-            panelClass: ['error-snackbar'],
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom'
-          });
+          if (error.status === 400 && error.error) {
+            for (const field in error.error) {
+              if (this.locationForm.controls[field]) {
+                this.locationForm.controls[field].setErrors({ serverError: error.error[field][0] });
+              }
+            }
+            this.showError('⚠️ Please correct the highlighted fields.');
+          } else {
+            this.showError('❌ Failed to add location. Please try again.');
+          }
         }
       });
     } else {
-      this.snackBar.open('⚠️ Please fill all required fields correctly.', '', {
-        duration: 4000,
-        panelClass: ['error-snackbar'],
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      });
+      this.showError('⚠️ Please fill all required fields correctly.');
     }
+  }
+
+  private showError(message: string): void {
+    this.snackBar.open(message, '', {
+      duration: 4000,
+      panelClass: ['error-snackbar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    });
   }
 
   onCancel(): void {

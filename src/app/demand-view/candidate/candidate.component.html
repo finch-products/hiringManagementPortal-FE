@@ -96,7 +96,7 @@
                     <div>
                         <select class="status"
                                 [(ngModel)]="candidate.selectedStatus"
-                                [ngClass]="{'no-arrow': searchTerm?.trim()}"
+                                [ngClass]="getStatusClasses(candidate, !!searchTerm?.trim())"
                                 *ngIf="!searchTerm?.trim()"
                                 (change)="onStatusChange(candidate, $event)">
                           <option *ngFor="let status of candidate.statusList"
@@ -105,9 +105,8 @@
                           </option>
                         </select>
                       </div>
-                      <div *ngIf="searchTerm?.trim()" class="status"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
-
-                    <!-- Three dots menu -->
+                      <div *ngIf="searchTerm?.trim()" class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
+                                  <!-- Three dots menu -->
 <div class="menu-container">
     <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
@@ -118,7 +117,6 @@
         <button mat-menu-item (click)="openPdf('assets/chatboat.pdf')">Schedule Interview</button>
     </mat-menu>
 </div>
-
 
                     </div>
 

@@ -163,7 +163,7 @@ export class CreateLOBComponent implements OnInit {
 
   onCancel(): void {
     this.lobForm.reset();
-    this.clientPartnerFilterControl.setValue('');
-    this.deliveryManagerFilterControl.setValue('');
+    this.clientPartnerFilterControl.reset();
+    this.deliveryManagerFilterControl.reset();
   }
 }

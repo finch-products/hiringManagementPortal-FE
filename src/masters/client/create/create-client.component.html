@@ -9,9 +9,11 @@
                     <app-form-error
                         [errors]="clientForm.controls['clm_clientid'].errors"></app-form-error>
                 </mat-error> -->
-                <mat-error *ngIf="clientForm.controls['clm_name'].hasError('serverError')">
-                    {{ clientForm.controls['clm_name'].getError('serverError') }}
+
+                <mat-error *ngIf="clientForm.controls['clm_clientid'].hasError('serverError')">
+                    {{ clientForm.controls['clm_clientid'].getError('serverError') }}
                   </mat-error>
+                  
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">

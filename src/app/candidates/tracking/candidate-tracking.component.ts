@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class CandidateTrackingComponent {
   }
 
   ngAfterViewInit() {
-    this.filteredCandidates.paginator = this.paginator;  // Assign paginator after view initialization
+    this.filteredCandidates.paginator = this.paginator;
   }
 
   loadCandidateStatuses() {
@@ -50,7 +50,7 @@ export class CandidateTrackingComponent {
         this.filteredCandidates.data = data;
 
         if (this.paginator) {
-          this.filteredCandidates.paginator = this.paginator;  // Ensure paginator updates
+          this.filteredCandidates.paginator = this.paginator;
         }
       },
       (error) => {
@@ -62,7 +62,6 @@ export class CandidateTrackingComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
   
-    // Custom filter predicate to search across multiple columns
     this.filteredCandidates.filterPredicate = (data: any, filter: string) => {
       const columnsToSearch = ['cdm_name', 'cdm_location', 'candidate_status.csm_code']; // Add more columns if needed
       return columnsToSearch.some(column => {
@@ -74,7 +73,6 @@ export class CandidateTrackingComponent {
     this.filteredCandidates.filter = filterValue;
   }
   
-  // Helper function to get nested object properties (e.g., candidate_status.csm_code)
   getNestedValue(obj: any, path: string) {
     return path.split('.').reduce((acc, part) => acc && acc[part], obj);
   }
