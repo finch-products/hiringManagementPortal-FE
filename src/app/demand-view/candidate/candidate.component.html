@@ -27,49 +27,68 @@
 </div>
 
 <div class="candidates-container">
-    <!-- Search Bar -->
-    <div class="search-bar">
-        <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()"
-            placeholder="Search..." />
-        <button mat-icon-button (click)="openFilter()">
-            <mat-icon>filter_list</mat-icon>
-        </button>
-        <button mat-icon-button (click)="submitSelectedCandidates() ">
-            <mat-icon>group_add</mat-icon>
-        </button>
-    </div>
 
-    <!-- <div class="candidateheading">
-        <span>Candidates</span>
+    <div class="candidateheading">
+        <h1>candidate Details </h1>
         <button mat-raised-button color="primary"
             type="button" class="linking" 
             style="background-color: #f8a1a1;"
             [disabled]="selectedCandidates.length === 0"
             onmouseover="this.style.backgroundColor='#d9534f'"
-            onmouseout="this.style.backgroundColor='#f8a1a1'">
-            (click)="submitSelectedCandidates()" 
-            Update
-        </button>
-    </div> -->
-    <div>
-        <h1 class="mat-h3 header">Candidate Details</h1>
-    </div>
-    <div class="candidates-list">
-        <div class="candidate-item"
-            *ngFor="let candidate of searchTerm?.trim() ? filteredCandidates : candidates">
+            onmouseout="this.style.backgroundColor='#f8a1a1'"
+            (click)="submitSelectedCandidates()" >Link</button>
+    </div> 
 
-            <input *ngIf="searchTerm?.trim()" type="checkbox"
-                (change)="toggleSelection(candidate)"
-                [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />
+
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search candidates..." />
+            <button mat-icon-button (click)="openFilter()">
+                <mat-icon>filter_list</mat-icon>
+            </button>
+            <button mat-icon-button (click)="redirectToAddCandidates()">
+                <mat-icon>group_add</mat-icon>
+            </button>
+        </div>
+    
+        <!-- Filtered Candidates (Appears Above Full List When Searching) -->
+        <div class="filtered-candidates-list" *ngIf="searchTerm?.trim()">
+            <div class="filtered-candidate-item" *ngFor="let candidate of filteredCandidates; trackBy: trackByFn">
+                <input type="checkbox"
+                    (change)="toggleSelection(candidate)"
+                    [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />
+                <div class="filtered-candidate-card">
+                    <div class="filtered-candidate-header">
+                        <div class="avatar-container">
+                            <mat-icon>person_outline</mat-icon>
+                        </div>
+                        <div class="candidate-info">
+                            <h3 class="candidate-name">{{ candidate.cdm_name || 'Unknown' }}</h3>
+                            <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id }}</p>
+                            <div class="status">Status: {{ candidate?.candidate_status?.csm_code || 'N/A' }}</div>
+                        </div>
+                        <div class="detail-box">
+                            <span>Profile : </span>
+                            <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">profile.pdf</a>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="candidates-list"  >
+        <div class="candidate-item"
+            *ngFor="let candidate of  candidates">
             <div class="candidate-card">
                 <div class="candidate-header">
                     <div class="avatar-container">
                         <mat-icon>person_outline</mat-icon>
                     </div>
-                    <div class="candidate-info">
+                    <div class="candidate-info" (click)="redirectTocandidateHistory()">
                         <h3 class="candidate-name">{{ candidate.name ||
                             candidate.cdm_name }}</h3>
-                        <p class="candidate-id">ID: {{ candidate.cdl_cdm_id ||
+                        <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id ||
                             candidate.cdm_id}}</p>
                         <p class="candidate-email">{{ candidate.email ||
                             candidate.cdm_email}}</p>
@@ -87,6 +106,18 @@
                         </select>
                       </div>
                       <div *ngIf="searchTerm?.trim()" class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
+                                  <!-- Three dots menu -->
+<div class="menu-container">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item >Status Edit</button>
+        <button mat-menu-item (click)="openPdf('assets/chatboat.pdf')">Schedule Interview</button>
+    </mat-menu>
+</div>
+
                     </div>
 
                 <div class="skills">

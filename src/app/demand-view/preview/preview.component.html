@@ -1,7 +1,12 @@
 <ng-container *ngIf="pdfUrl">
+
+  <div class="pdf-viewer-container">
+    <button class="close-btn" (click)="closePreview()"> X </button>
     <ngx-extended-pdf-viewer 
-      [src]="pdfUrl"
-      useBrowserLocale="true"
-      width="100%">
+      [src]="pdfUrl" 
+      useBrowserLocale="true" 
+      [textLayer]="true">
     </ngx-extended-pdf-viewer>
+  </div>
+  
   </ng-container>

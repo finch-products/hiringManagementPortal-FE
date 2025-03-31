@@ -88,7 +88,7 @@ public  loadData(demandId: any) {
   }
   openPdf(pdfUrl: string) {
     this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
-    console.log("pdfUrl", pdfUrl)
+    console.log("PDF selected in DemandComponent:", pdfUrl);
   }
 
   onStatusChange(newStatus: string) {

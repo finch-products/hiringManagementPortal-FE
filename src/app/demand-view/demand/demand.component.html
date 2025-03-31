@@ -33,7 +33,7 @@
       <h1 class="mat-h3 header" style="margin-top: 1%; padding-top: 1%; margin-bottom: 2%; text-align: left;">Demand Details</h1>
   </div>
     <div class="demand-head">
-      <div>{{demands?.cdl_dem_id}}/{{demands?.demand_details?.dem_ctoolnumber}}</div>
+      <div>{{demands?.cdl_dem_id}}<span *ngIf="demands?.demand_details?.dem_ctoolnumber">/{{ demands?.demand_details?.dem_ctoolnumber }}</span></div>
       <div fxLayout="row" fxLayoutGap="10px">
         <!-- <button mat-button color="primary">Set Status</button> -->
         <div class="status-display">
@@ -60,8 +60,8 @@
       <div class="dates">
         <span class="date-item">
           <p>Open Date : 
-            <b [class.no-data]="!demands?.demand_details?.dem_ctooldate">
-              {{demands?.demand_details?.dem_ctooldate ? (demands.demand_details.dem_ctooldate | date:'dd-MMM-yy') : 'N/A'}}
+            <b [class.no-data]="!demands?.demand_details?.dem_insertdate">
+              {{demands?.demand_details?.dem_insertdate ? (demands.demand_details.dem_insertdate | date:'dd-MMM-yy') : 'N/A'}}
             </b>
           </p>
         </span>
@@ -97,13 +97,6 @@
       </b>
     </div>
   </div>
-
-  <!-- Skills Section -->
-  <div class="skills">
-    <span>Skills</span>
-    <b class="skill">{{ demands?.demand_details?.dem_skillset || 'N/A' }}</b>
-  </div>
-
   <!-- Manager & Job Description -->
   <div class="footer-section">
     <div class="detail-box">
@@ -119,7 +112,17 @@
       <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
     </div>
   </div>
+
+  
+  <!-- Skills Section -->
+  <div class="skills">
+    <span>Skills</span>
+    <b class="skill">{{ demands?.demand_details?.dem_skillset || 'N/A' }}</b>
+  </div>
+
 </div>
+
+
   </mat-card>
 
   <!-- <mat-card *ngFor="let candidate of candidates" class="demand-container">

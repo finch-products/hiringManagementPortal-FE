@@ -8,12 +8,13 @@ import { DemandComponent } from './demand/demand.component';
 })
 export class DemandViewComponent {
   @ViewChild(DemandComponent) demandComponent!: DemandComponent;
-  selectedPdfUrl!: string 
+  selectedPdfUrl!: string ;
   constructor(private route:ActivatedRoute){
   
     }
 
   handlePdfSelection(pdfUrl: string) {
+    console.log("Received PDF URL:", pdfUrl);
     this.selectedPdfUrl = pdfUrl;
 
 }
