@@ -1,6 +1,6 @@
 body, html {
     overflow-x: hidden;
-    width: 100%;
+    width:100%;
     margin: 0;
     padding: 0;
 }
@@ -9,11 +9,16 @@ body, html {
     background: #F8F9FA;
     padding: 10px;
     border-radius: 10px;
-    width: calc(100% - 250px); /* Adjust width dynamically based on sidebar */
-    min-width: 420px; /* Prevent squeezing too much */
-    transition: width 0.3s ease-in-out; /* Smooth transition when sidebar opens/closes */
+    /*width: calc(100% - 250px);  Adjust width dynamically based on sidebar */
+   /* min-width: 420px;  Prevent squeezing too much */
+    width: 53vw!important;
+    height: 72vh;
+    transition: width 0.3s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
+    border: 5px solid #ddd; 
+    resize: horizontal;
+    overflow-y:hidden;
+    position: fixed;
 }
-
 .no-arrow {
     appearance: none;  /* Hides default dropdown arrow */
     -webkit-appearance: none;
@@ -22,57 +27,79 @@ body, html {
 }
 
 .search-bar input {
-    width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    margin-bottom: 10px;
+    width:55vw !important;
+    margin-bottom: 0%;
+    font-size: 16px;
 }
 .search-bar {
     display: flex;
     align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 700px; /* Adjust based on design */
+    margin: 0 auto;
 }
 
 .search-bar button {
     margin-left: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 /* Align checkbox properly */
 .candidate-item input[type="checkbox"] {
-    margin-right: 10px; /* Add space between checkbox and candidate card */
+    margin-right: 5px; /* Add space between checkbox and candidate card */
     margin-left: 5px; /* Optional: space from left edge */
     align-self: flex-start; /* Align to top */
+    left:0;
 }
 
-.candidates-list {
+.candidate-item{
+    width: 23vw !important;
     display: flex;
     flex-direction: column;
+    margin-right: 0%;
+}
+.candidates-list {
+    overflow-y: auto !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
-    min-width: 100%;
+    max-width: 105% !important;
+    height: 70vh;
+    margin-top: 8px;
 }
 .candidate-card {
     background: #ffffff;
-    padding: 12px;
+    padding: 10px;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    min-height: 80px; 
+    gap: 5px;
     border: 1px solid #ddd;
     position: relative;
+    width: 23vw !important;
+    margin: 0% !important;
 }
+
 .candidate-header {
     display: flex;
     min-height: 80px; 
     align-items: center;
     gap: 10px; /* Proper space between items */
-    padding: 5px 10px; /* Space inside */
+    padding: 5px 5px; /* Space inside */
     box-sizing: border-box; /* Prevent size issues */
     justify-content: space-between;
+    border-radius: 10px;
+    background: #ECECEC;
 }
-
 .avatar-container {
     width: 40px;
     height: 40px;
@@ -125,7 +152,7 @@ body, html {
     white-space: nowrap;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     margin: 5px 0 0 0; /* Adjust margin to separate from text */
-    min-width: max-content;
+    min-width: min-content;
     max-width: 140px;
     width: 100%; /* So it adjusts inside its space */
     box-sizing: border-box; 
@@ -187,17 +214,6 @@ body, html {
     margin-bottom: -12px;
     margin-right: -8px;
 }
-.candidate-header{
-    padding: 5px 5px;
-    border-radius: 10px;
-    background: #ECECEC;
-
-}
-.candidates-list {
-    max-height: 600px;
-    overflow-y: auto;
-    padding-right: 5px;
-}
 
 .status-label {
     display: inline-block;
@@ -241,7 +257,7 @@ body, html {
 }
 
 .linking {
-    padding: 8px 10px;
+    padding: 8px ;
     border: none;
     border-radius: 5px;
     background-color: #f8a1a1;
@@ -361,4 +377,92 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #e64c4c;
+}
+
+.filtered-candidates-list .candidate-item:last-child {
+    margin-bottom: 0; /* Remove margin from last item */
+    border-bottom: none;
+}
+.serachbox_with_candidates{
+    background-color: #ddd;
+    z-index: index 1;
+    position: relative;
+    height:100%;
+
+}
+.filtered-candidate-item{
+     padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    background: white;
+    width: 30vw !important;
+}
+
+/* Fixed Search Bar */
+.search-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    z-index: 1000;
+    border-radius: 5px;
+    margin:0;
+}
+
+/* Filtered Candidates List */
+.filtered-candidates-list {
+    position: absolute;
+    top: 44px; /* Places the list directly below search input */
+    left: 41.5%;
+    transform: translateX(-50%);
+    width: 73%;
+    max-width: 600px; /* Same as input field */
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 5px 5px;
+    height: 40vh;
+    overflow-y: auto;
+    z-index: 1001; /* Above everything */
+    margin:0;
+}
+.filtered-candidate-header{
+    display: flex;
+    min-height: 80px; 
+    width:100%;
+    align-items: center;
+    gap: 8px; /* Proper space between items */
+    padding: 5px 3px; /* Space inside */
+    box-sizing: border-box; /* Prevent size issues */
+    justify-content: space-between;
+    border-radius: 10px;
+    background: #ECECEC;
+
+}
+.filtered-candidate-card{
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 70px; 
+    border: 1px solid #ddd;
+    position: relative;
+    width: 50vw !important;
+    margin-right: 0%;
+}
+.menu-container {
+    position: absolute;
+    top: 10px;  /* Adjust to align properly */
+    right: 10px; /* Adjust to align properly */
+}
+
+.menu-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
 }

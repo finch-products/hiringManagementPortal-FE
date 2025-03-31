@@ -71,6 +71,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { LoaderComponent } from './loader/loader.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { CandidateTrackingComponent } from './candidates/tracking/candidate-tracking.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -143,7 +144,8 @@ import { CandidateTrackingComponent } from './candidates/tracking/candidate-trac
     MatCheckboxModule,
     MatTooltipModule,
     NgxExtendedPdfViewerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule 
   ],
   exports: [MatSidenavModule, MatExpansionModule],
   providers: [

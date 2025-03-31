@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 interface Candidate {
   cdm_name: string;
   cdm_id: string;
+  cdl_cdm_id: string;
   cdm_keywords: string[];
   cdm_profile: string;
   avatar?: string;
@@ -44,6 +45,7 @@ export class CandidateComponent {
   constructor(private httpService: HttpService,private cdr: ChangeDetectorRef, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
+    this.filteredCandidates = [...this.candidates]; // Ensure it loads with all candidates initially
     this.route.paramMap.subscribe(params => {
       const demandId = params.get('id');
       if (demandId) {
@@ -194,6 +196,7 @@ export class CandidateComponent {
     return {
       cdm_name: candidate.cdm_name || 'Not Provided',
       cdm_id: candidate.cdm_id || 'Not Provided',
+      cdl_cdm_id:candidate.cdl_cdm_id,
       candidate_status: {
         csm_id: candidate?.candidate_status?.csm_id ?? null,
         csm_code: candidate.candidate_status ? candidate.candidate_status.csm_code : 'Unknown'
@@ -205,8 +208,8 @@ export class CandidateComponent {
 
   filterCandidates(): void {
     if (!this.dem_id) {
-      this.filteredCandidates = [...this.candidates];
-      console.log("No demand ID provided. Showing all candidates.");
+      this.filteredCandidates = [];
+      console.log("No demand ID provided.");
       return;
     }
   
@@ -214,17 +217,16 @@ export class CandidateComponent {
   
     this.httpService.getNotAddedCandidatesBySearch(requestBody).subscribe({
       next: (data) => {
-        console.log("Full API Response:", data);
+        console.log("API Response:", data);
         const allCandidates: Candidate[] = data?.candidates_not_added || [];
   
-        if (this.searchTerm?.trim()) {
-          const term = this.searchTerm.trim().toLowerCase();
-          this.filteredCandidates = allCandidates.filter(candidate =>
-            (candidate?.cdm_name || '').toLowerCase().includes(term)
-          );
-        } else {
-          this.filteredCandidates = [...allCandidates];
-        }
+        // Filter candidates based on search input
+        const term = this.searchTerm.trim().toLowerCase();
+        this.filteredCandidates = term
+          ? allCandidates.filter(candidate =>
+              (candidate?.cdm_name || '').toLowerCase().includes(term)
+            )
+          : allCandidates;
   
         console.log("Filtered Candidates:", this.filteredCandidates);
       },
@@ -233,25 +235,27 @@ export class CandidateComponent {
         this.filteredCandidates = [];
       }
     });
-  }
+  }  
   
   getSafeValue(value: any): string {
     return value && value.trim() ? value : 'Not Provided';
   }
 
   openFilter() {
-    // alert('Filter feature coming soon!');
-    this.snackBar.open("Filter feature coming soon!!", "Close", {
+    this.router.navigate(['candidate-tracking']);
+    /*this.snackBar.open("Filter feature coming soon!!", "Close", {
       duration: 3000,
       panelClass: ['success-snackbar']
-    });
+    });*/
   }
 
-  /*redirectToAddCandidates() {
-    // Change this URL if needed
-    window.location.href = 'http://64.227.145.117/candidate-master';
-  }*/
+  redirectToAddCandidates() {
+    this.router.navigate(['candidate-master']);
+  }
 
+  redirectTocandidateHistory(){
+    this.router.navigate(['candidate-history']);
+  }
 
   toggleSelection(candidate: Candidate) {
     const index = this.selectedCandidates.indexOf(candidate);
@@ -317,6 +321,13 @@ export class CandidateComponent {
 
   openPdf(pdfUrl: string) {
     this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
-    console.log("pdfUrl", pdfUrl)
+    console.log("PDF selected in CandidateComponent:", pdfUrl);
   }
+
+  trackByFn(index: number, candidate: any) {
+    return candidate.id; // Uses a unique ID to avoid re-rendering
 }
+
+}
+
+

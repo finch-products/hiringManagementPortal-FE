@@ -12,4 +12,9 @@ export class PreviewComponent {
       console.log("PDF URL from Preview Component:", this.pdfUrl);
     }
   }
+
+  closePreview() {
+   this.pdfUrl = '';  // Hides the PDF
+  }
+  
 }
