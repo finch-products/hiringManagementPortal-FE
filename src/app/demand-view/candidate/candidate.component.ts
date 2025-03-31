@@ -76,7 +76,7 @@ export class CandidateComponent {
 
   onStatusChange(candidate: any, event: any) {
     const newStatus = event.target.value;
-
+    candidate.selectedStatus = newStatus;
     if (!candidate.candidate_status) {
       console.error('Candidate status is undefined');
       return;
@@ -291,5 +291,24 @@ export class CandidateComponent {
   openPdf(pdfUrl: string) {
     this.pdfSelected.emit(pdfUrl);
     console.log("pdfUrl", pdfUrl)
+  }
+
+  getStatusClass(statusCode: string): string {
+    if (!statusCode) return '';
+    return statusCode.replace(/\s+/g, '_');
+  }
+  
+  getStatusClasses(candidate: any, isSearchMode: boolean): { [key: string]: boolean } {
+    const classes: { [key: string]: boolean } = {
+      'no-arrow': isSearchMode,
+      'status': true
+    };
+    
+    const statusClass = this.getStatusClass(candidate.selectedStatus);
+    if (statusClass) {
+      classes[statusClass] = true;
+    }
+    
+    return classes;
   }
 }

@@ -470,3 +470,32 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #e64c4c;
 }
+
+.status-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.current-status {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  padding: 4px 8px;
+  background-color: #E0FBFC;
+  border-radius: 4px;
+}
+
+.edit-icon {
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  line-height: 1;
+  padding: 2px;
+  margin-left: 2px;
+}
+
+.edit-icon:hover {
+  background-color: #ff666635;
+  border-radius: 10px;
+}
