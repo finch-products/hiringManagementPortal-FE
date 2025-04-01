@@ -37,6 +37,7 @@ selectedCandidateForInterview: any = null;
 
 
   showPopup: boolean = false;
+  statusedit: boolean = false; 
   demands: any;
   selectedCandidate: any = null;
   selectedStatus: string = '';
@@ -349,6 +350,10 @@ selectedCandidateForInterview: any = null;
   
   closeInterviewForm() {
     this.showInterviewForm = false;
-    this.selectedCandidateForInterview = null;
+    this.selectedCandidateForInterview = null;}
+    
+  toggleStatusEdit() {
+    this.statusedit = !this.statusedit; 
+    console.log("Status Edit Clicked: ", this.statusedit);
   }
 }

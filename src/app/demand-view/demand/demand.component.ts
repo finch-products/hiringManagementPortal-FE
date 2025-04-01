@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,7 +29,7 @@ export class DemandComponent implements OnInit {
   originalStatus: string | null = null;
   dem_comment: string = '';
   readonly dem_updateby_id = 'emp_22032025_1';
-  constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar) {
+  constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar,private router: Router) {
 
   }
 
@@ -155,5 +155,9 @@ public  loadData(demandId: any) {
   openStatusPopup() {
     this.selectedStatus = this.demands?.demand_details?.status_details?.dsm_code || '';
     this.showPopup = true;
+  }
+
+  redirectTodemand_history(){
+    this.router.navigate(['history']);
   }
 }

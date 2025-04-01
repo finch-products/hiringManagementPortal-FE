@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input,Output, EventEmitter, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-preview',
@@ -7,14 +7,17 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 })
 export class PreviewComponent {
   @Input() pdfUrl!: string ;
+  @Output() close = new EventEmitter<void>(); // Emit event to parent
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['pdfUrl'] && changes['pdfUrl'].currentValue) {
       console.log("PDF URL from Preview Component:", this.pdfUrl);
     }
   }
 
-  closePreview() {
-   this.pdfUrl = '';  // Hides the PDF
+  PreviewClose() {
+    console.log("Close button clicked - Emitting event to parent"); 
+    this.close.emit(); // Notify parent
   }
   
 }
