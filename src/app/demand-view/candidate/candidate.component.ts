@@ -33,6 +33,8 @@ export class CandidateComponent {
   searchTerm: string = '';
   selectedCandidates: any[] = [];
   statusList: any[] = [];
+  showInterviewForm: boolean = false;
+selectedCandidateForInterview: any = null;
 
 
   showPopup: boolean = false;
@@ -85,8 +87,10 @@ export class CandidateComponent {
       console.error('Candidate status is undefined');
       return;
     }
-
+  
     if (newStatus !== candidate.candidate_status.csm_code) {
+      // Store the original status before showing popup
+      candidate.originalStatus = candidate.candidate_status.csm_code;
       this.selectedCandidate = candidate;
       this.selectedStatus = newStatus;
       this.csm_code = newStatus;
@@ -96,6 +100,12 @@ export class CandidateComponent {
   }
 
   onPopupClose() {
+    if (this.selectedCandidate) {
+      // Reset to original status
+      this.selectedCandidate.selectedStatus = this.selectedCandidate.originalStatus;
+      delete this.selectedCandidate.originalStatus;
+    }
+    
     this.showPopup = false;
     this.selectedCandidate = null;
     this.selectedStatus = '';
@@ -139,6 +149,10 @@ export class CandidateComponent {
         this.loadData(this.dem_id);
       },
       error: (error) => {
+        if (this.selectedCandidate?.originalStatus) {
+          this.selectedCandidate.selectedStatus = this.selectedCandidate.originalStatus;
+          delete this.selectedCandidate.originalStatus;
+        }
         this.snackBar.open(` ${error.message}`, "❌", {
           duration: 5000,
           panelClass: ['error-snackbar']
@@ -330,8 +344,58 @@ export class CandidateComponent {
     return classes;
   }
 
+  openInterviewForm(candidate: any) {
+    this.selectedCandidateForInterview = candidate;
+    this.showInterviewForm = true;
+  }
+  
+  closeInterviewForm() {
+    this.showInterviewForm = false;
+    this.selectedCandidateForInterview = null;}
+    
   toggleStatusEdit() {
     this.statusedit = !this.statusedit; 
     console.log("Status Edit Clicked: ", this.statusedit);
+  }
+
+  updateCandidateStatusToInterviewScheduled(candidateId: string) {
+    // Find the candidate in your list
+    const candidate = this.candidates.find(c => c.cdl_cdm_id === candidateId);
+    if (!candidate) return;
+  
+    // Find the "INTERVIEW_SCHEDULED" status in your status list
+    const interviewScheduledStatus = this.statusList.find(status => 
+      status.csm_code === 'Interview Scheduled');
+    
+    if (!interviewScheduledStatus) {
+      console.error('Interview Scheduled status not found');
+      return;
+    }
+  
+    // Prepare payload for status update
+    const payload = {
+      cdm_id: candidateId,
+      csm_id: interviewScheduledStatus.csm_id,
+      cdm_comment: 'Status updated automatically after scheduling interview',
+      cdm_updateby_id: this.cdm_updateby_id
+    };
+  
+    // Update the status
+    this.httpService.updateCandidateStatus(payload).subscribe({
+      next: (response) => {
+        this.snackBar.open("✅ Candidate status updated to INTERVIEW_SCHEDULED!", "Close", {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+        // Refresh the candidate list
+        this.loadData(this.dem_id);
+      },
+      error: (error) => {
+        this.snackBar.open(`Failed to update status: ${error.message}`, "❌", {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+      }
+    });
   }
 }

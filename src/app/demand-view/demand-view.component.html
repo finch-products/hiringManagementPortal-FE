@@ -9,4 +9,11 @@
     </app-candidate>
 
     <app-preview fxFlex="30" [pdfUrl]="selectedPdfUrl" (close)="onPreviewClose()"></app-preview>
+    <app-interview-schedule fxFlex="30" *ngIf="candidateComponent?.showInterviewForm"
+    [candidateId]="candidateComponent?.selectedCandidateForInterview?.cdl_cdm_id"
+    [demandId]="demandId"
+    [candidateName]="candidateComponent?.selectedCandidateForInterview?.name"
+    (closeForm)="candidateComponent?.closeInterviewForm()"
+    (interviewScheduled)="onInterviewScheduled($event)">
+</app-interview-schedule>
 </div>
