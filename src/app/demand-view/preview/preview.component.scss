@@ -1,17 +1,18 @@
 .pdf-viewer-container {
-    z-index: 1100;  /* Higher than the search bar */
-    border-radius: 8px;
-    top:0px;
-    left: 0px;
-    margin: 0px;
+    width:20vw;
+    height:80vh;
+    margin:0;
+    right: 0%;
+    position: absolute;
   }
 
 .close-btn {
     transform: scale(0.8);
-    position: absolute;
+    position: fixed;
     margin-left: 18%;
+    margin-top: 2%;
+    z-index: 1001;
     padding: 1%;
     top: 7.5%;
-    z-index: 1200;
     border-radius:50%;
 }

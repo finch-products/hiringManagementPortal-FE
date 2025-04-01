@@ -63,7 +63,7 @@ body, html {
     display: flex;
     flex-direction: column;
     margin: 0%;
-    gap:10px;
+    gap:6px;
 }
 .candidates-list {
     display: flex;
@@ -71,7 +71,7 @@ body, html {
     flex-wrap: wrap;
     gap: 10px;
     max-width: 100% !important;
-    max-height: 70vh;
+    height: 60vh;
     margin-top: 8px;
     overflow-y: auto !important;
 }
@@ -332,31 +332,6 @@ body, html {
     gap: 8px; /* Space between "Status:" and the status label */
     flex-wrap: wrap; /* Prevents overflow issues */
 }
-
-/* Popup Overlay */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  /* Popup Content */
-  .popup-content {
-    background: #fdfdfd;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    text-align: center;
-  }
   
   /* Close Button */
   .close-button {
@@ -438,7 +413,6 @@ button[type="submit"]:hover {
 }
 .serachbox_with_candidates{
     background-color: #ddd;
-    z-index: index 1;
     position: relative;
     height:100%;
 
@@ -449,7 +423,7 @@ button[type="submit"]:hover {
     display: flex;
     align-items: center;
     background: white;
-    width: 30vw !important;
+    width: 25vw;
 }
 
 /* Fixed Search Bar */
@@ -459,7 +433,6 @@ button[type="submit"]:hover {
     left: 0;
     width: 100%;
     background: white;
-    z-index: 1000;
     border-radius: 5px;
     margin:0;
 }
@@ -482,7 +455,7 @@ button[type="submit"]:hover {
     z-index: 1001; 
     margin:0;
 }
-.filtered-candidate-header{
+.filtered-candidate-header{  
     display: flex;
     min-height: 80px; 
     width:100%;
@@ -505,7 +478,8 @@ button[type="submit"]:hover {
     min-height: 70px; 
     border: 1px solid #ddd;
     position: relative;
-    width: 50vw !important;
+    width: 50vw;
+    min-width:25vw;
     margin-right: 0%;
 }
 .menu-container {
@@ -521,5 +495,42 @@ button[type="submit"]:hover {
 }
 
 .detail-box{
-    margin-right:8px;
+    margin-right:6px;
 }
+/* Add this class for when preview is open */
+.candidates-container.preview-open {
+    margin-left:3%;
+    width: 28vw!important; 
+
+    .filtered-candidates-list{
+    left: 35%;
+    width: 70%;
+
+    }
+}
+.candidates-container.preview-open .filtered-candidate-card{
+    width: 20vw !important;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1300 !important;}
+
+  /* Popup Content */
+.popup-content {
+    background: #fdfdfd;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-align: center;
+  }
