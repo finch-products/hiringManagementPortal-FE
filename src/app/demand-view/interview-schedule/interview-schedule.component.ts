@@ -25,9 +25,10 @@ interface Interviewer {
 })
 export class InterviewScheduleComponent implements OnInit {
   @Input() candidateId: string = '';
+  @Input() candidateName: string = ''; 
   @Input() demandId: string = '';
   @Output() closeForm = new EventEmitter<void>();
-
+  @Output() interviewScheduled = new EventEmitter<string>();
   interviewForm: FormGroup;
   isLoading: boolean = false;
   cdlId: number | null = null;
@@ -169,6 +170,7 @@ export class InterviewScheduleComponent implements OnInit {
     this.httpService.scheduleInterview(payload).subscribe({
       next: (response) => {
         this.showSnackbar('Interview scheduled successfully!', 'success');
+        this.interviewScheduled.emit(this.candidateId);
         this.closeForm.emit();
       },
       error: (error) => {

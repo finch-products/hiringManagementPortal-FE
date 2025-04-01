@@ -31,4 +31,10 @@ onPreviewClose() {
   console.log("Close event received from PreviewComponent - Hiding PDF");
   this.selectedPdfUrl = '';
 }
+
+onInterviewScheduled(candidateId: string) {
+  if (this.candidateComponent) {
+    this.candidateComponent.updateCandidateStatusToInterviewScheduled(candidateId);
+  }
+}
 }
