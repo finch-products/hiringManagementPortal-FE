@@ -29,7 +29,7 @@
 <div class="candidates-container">
 
     <div class="candidateheading">
-        <h1>candidate Details </h1>
+        <h1>Candidate Details </h1>
         <button mat-raised-button color="primary"
             type="button" class="linking" 
             style="background-color: #f8a1a1;"
@@ -69,7 +69,7 @@
                         </div>
                         <div class="detail-box">
                             <span>Profile : </span>
-                            <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">profile.pdf</a>
+                            <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
                           </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                         <select class="status"
                                 [(ngModel)]="candidate.selectedStatus"
                                 [ngClass]="getStatusClasses(candidate, !!searchTerm?.trim())"
-                                *ngIf="!searchTerm?.trim()"
+                                *ngIf="statusedit"
                                 (change)="onStatusChange(candidate, $event)">
                           <option *ngFor="let status of candidate.statusList"
                                   [value]="status.csm_code">
@@ -105,7 +105,7 @@
                           </option>
                         </select>
                       </div>
-                      <div *ngIf="searchTerm?.trim()" class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
+                      <div  class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"  *ngIf="!statusedit"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
                                   <!-- Three dots menu -->
 <div class="menu-container">
     <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -113,7 +113,7 @@
     </button>
     
     <mat-menu #menu="matMenu">
-        <button mat-menu-item >Status Edit</button>
+        <button mat-menu-item (click)="toggleStatusEdit()">Status Edit</button>
         <button mat-menu-item (click)="openPdf('assets/chatboat.pdf')">Schedule Interview</button>
     </mat-menu>
 </div>

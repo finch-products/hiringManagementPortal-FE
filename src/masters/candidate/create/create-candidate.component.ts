@@ -174,7 +174,7 @@ export class CreateCandidateComponent implements OnInit {
       cdm_insertby: 'emp_22032025_1',
       cdm_updateby: 'emp_22032025_1'
     });
-    this.locationFilterControl.setValue('');
+    this.locationFilterControl.reset();
     this.selectedFile = null;
   }
 }
