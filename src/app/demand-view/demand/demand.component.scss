@@ -1,13 +1,16 @@
 .demand-container{
     background-color:#F5F5F4;
     padding:10px;
-    width:100%;
+    width:27vw;
+    height: 80vh;
     border-radius: 8px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     // margin-top: 20px;
     display: flex;
     gap: 10px;
     border: 5px solid #ddd; 
+    overflow-y: auto !important;
+    position:relative;
 }
 
 .demand-head{
@@ -499,4 +502,10 @@ button[type="submit"]:hover {
 .edit-icon:hover {
   background-color: #ff666635;
   border-radius: 10px;
+}
+
+.demand-header{
+  display:flex;
+  flex-direction: row;
+  gap:35%;
 }

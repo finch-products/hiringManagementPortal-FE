@@ -11,13 +11,12 @@ body, html {
     border-radius: 10px;
     /*width: calc(100% - 250px);  Adjust width dynamically based on sidebar */
    /* min-width: 420px;  Prevent squeezing too much */
-    width: 53vw!important;
-    height: 72vh;
+    width: 49vw!important; 
+    height: 80vh;
     transition: width 0.3s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
     border: 5px solid #ddd; 
     resize: horizontal;
-    overflow-y:hidden;
-    position: fixed;
+    position: relative;
 }
 .no-arrow {
     appearance: none;  /* Hides default dropdown arrow */
@@ -63,18 +62,20 @@ body, html {
     width: 23vw !important;
     display: flex;
     flex-direction: column;
-    margin-right: 0%;
+    margin: 0%;
+    gap:10px;
 }
 .candidates-list {
-    overflow-y: auto !important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
-    max-width: 105% !important;
-    height: 70vh;
+    max-width: 100% !important;
+    max-height: 70vh;
     margin-top: 8px;
+    overflow-y: auto !important;
 }
+
 .candidate-card {
     background: #ffffff;
     padding: 10px;
@@ -86,6 +87,8 @@ body, html {
     border: 1px solid #ddd;
     position: relative;
     width: 23vw !important;
+    height:100%;
+    box-sizing: border-box;
     margin: 0% !important;
 }
 
@@ -464,18 +467,19 @@ button[type="submit"]:hover {
 /* Filtered Candidates List */
 .filtered-candidates-list {
     position: absolute;
-    top: 44px; /* Places the list directly below search input */
-    left: 41.5%;
+    top: 44px; 
+    left: 41%;
     transform: translateX(-50%);
-    width: 73%;
-    max-width: 600px; /* Same as input field */
+    width: 79%;
+    max-width: 600px;
     background: white;
-    border: 1px solid #ccc;
+    border: 2px solid #242323;
+    border-top: none;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 0px 0px 5px 5px;
+    border-radius:  5px 5px;
     height: 40vh;
     overflow-y: auto;
-    z-index: 1001; /* Above everything */
+    z-index: 1001; 
     margin:0;
 }
 .filtered-candidate-header{
@@ -483,13 +487,12 @@ button[type="submit"]:hover {
     min-height: 80px; 
     width:100%;
     align-items: center;
-    gap: 8px; /* Proper space between items */
-    padding: 5px 3px; /* Space inside */
-    box-sizing: border-box; /* Prevent size issues */
+    gap: 8px; 
+    padding: 5px 3px;
+    box-sizing: border-box; 
     justify-content: space-between;
     border-radius: 10px;
     background: #ECECEC;
-
 }
 .filtered-candidate-card{
     background: #ffffff;
@@ -515,4 +518,8 @@ button[type="submit"]:hover {
     background: none;
     border: none;
     cursor: pointer;
+}
+
+.detail-box{
+    margin-right:8px;
 }

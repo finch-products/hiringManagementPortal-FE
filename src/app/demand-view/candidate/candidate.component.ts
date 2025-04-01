@@ -35,6 +35,7 @@ export class CandidateComponent {
 
 
   showPopup: boolean = false;
+  statusedit: boolean = false; 
   demands: any;
   selectedCandidate: any = null;
   selectedStatus: string = '';
@@ -326,5 +327,10 @@ export class CandidateComponent {
     }
     
     return classes;
+  }
+
+  toggleStatusEdit() {
+    this.statusedit = !this.statusedit; 
+    console.log("Status Edit Clicked: ", this.statusedit);
   }
 }

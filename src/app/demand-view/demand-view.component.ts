@@ -22,4 +22,8 @@ onCandidatesLinked(): void {
   const demandId = this.route.snapshot.paramMap.get('id');
   this.demandComponent.loadData(demandId);
 }
+onPreviewClose() {
+  console.log("Close event received from PreviewComponent - Hiding PDF");
+  this.selectedPdfUrl = '';
+}
 }
