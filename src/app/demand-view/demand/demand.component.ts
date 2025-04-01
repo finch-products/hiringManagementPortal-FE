@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute , Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,6 +21,7 @@ export class DemandComponent implements OnInit {
   });
 
   demands: any;
+  demandId: any;
   stat: any;
   candidates: any;
   statusList: any[] = [];
@@ -29,15 +30,15 @@ export class DemandComponent implements OnInit {
   originalStatus: string | null = null;
   dem_comment: string = '';
   readonly dem_updateby_id = 'emp_22032025_1';
-  constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar,private router: Router) {
+  constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar, private router: Router) {
 
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const demandId = params.get('id') ?? '';
-      this.loadData(demandId);
-      this.loadStatus(demandId); 
+      this.demandId = params.get('id') ?? '';
+      this.loadData(this.demandId);
+      this.loadStatus(this.demandId);
       this.loadCandidateStatuses();
     });
   }
@@ -53,13 +54,13 @@ export class DemandComponent implements OnInit {
     );
   }
 
-public  loadData(demandId: any) {
+  public loadData(demandId: any) {
     const payload = { dem_id: demandId };
-  
+
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data) => {
         this.demands = data;
-    
+
         this.candidates = data.candidates ? [...data.candidates].reverse() : [];
         console.log("Updated candidates list:", this.candidates);
         const currentStatus = this.demands?.demand_details?.status_details?.dsm_code;
@@ -78,7 +79,7 @@ public  loadData(demandId: any) {
       console.error('No demand ID provided');
       return;
     }
-  
+
     this.httpService.getDemandStatusDetails(dem_id).subscribe({
       next: (data) => {
         this.stat = data;
@@ -157,7 +158,7 @@ public  loadData(demandId: any) {
     this.showPopup = true;
   }
 
-  redirectTodemand_history(demand_id:string){
-    this.router.navigate(['history',demand_id]);
+  redirectTodemand_history() {
+    this.router.navigate(['history', this.demandId]);
   }
 }
