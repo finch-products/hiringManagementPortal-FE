@@ -9,6 +9,8 @@ import { DemandComponent } from './demand/demand.component';
 export class DemandViewComponent {
   @ViewChild(DemandComponent) demandComponent!: DemandComponent;
   selectedPdfUrl!: string ;
+  isPreviewOpen: boolean = false;
+
   constructor(private route:ActivatedRoute){
   
     }
@@ -16,6 +18,7 @@ export class DemandViewComponent {
   handlePdfSelection(pdfUrl: string) {
     console.log("Received PDF URL:", pdfUrl);
     this.selectedPdfUrl = pdfUrl;
+    this.isPreviewOpen = !!pdfUrl;
 
 }
 onCandidatesLinked(): void {
@@ -25,5 +28,6 @@ onCandidatesLinked(): void {
 onPreviewClose() {
   console.log("Close event received from PreviewComponent - Hiding PDF");
   this.selectedPdfUrl = '';
+  this.isPreviewOpen = false;
 }
 }

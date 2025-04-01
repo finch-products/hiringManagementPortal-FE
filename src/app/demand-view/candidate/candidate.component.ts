@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef,Input } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,6 +26,7 @@ export class CandidateComponent {
 
   @Output() candidatesLinked = new EventEmitter<void>();
   @Output() pdfSelected = new EventEmitter<string>();
+  @Input() isPreviewOpen = false;
 
   candidates: any[] = [];
   filteredCandidates: Candidate[] = [];
@@ -242,8 +243,8 @@ export class CandidateComponent {
     this.router.navigate(['candidate-master']);
   }
 
-  redirectTocandidateHistory(){
-    this.router.navigate(['candidate-history']);
+  redirectTocandidateHistory(candidateId:string){
+    this.router.navigate(['candidate-history',candidateId]);
   }
 
   toggleSelection(candidate: Candidate) {

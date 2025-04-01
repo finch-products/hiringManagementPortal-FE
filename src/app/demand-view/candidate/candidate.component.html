@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<div class="candidates-container">
+<div class="candidates-container"  [ngClass]="{'preview-open': isPreviewOpen}">
 
     <div class="candidateheading">
         <h1>Candidate Details </h1>
@@ -85,7 +85,7 @@
                     <div class="avatar-container">
                         <mat-icon>person_outline</mat-icon>
                     </div>
-                    <div class="candidate-info" (click)="redirectTocandidateHistory()">
+                    <div class="candidate-info" (click)="redirectTocandidateHistory( candidate?.cdl_cdm_id )">
                         <h3 class="candidate-name">{{ candidate.name ||
                             candidate.cdm_name }}</h3>
                         <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id ||

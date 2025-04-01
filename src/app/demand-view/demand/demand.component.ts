@@ -157,7 +157,7 @@ public  loadData(demandId: any) {
     this.showPopup = true;
   }
 
-  redirectTodemand_history(){
-    this.router.navigate(['history']);
+  redirectTodemand_history(demand_id:string){
+    this.router.navigate(['history',demand_id]);
   }
 }
