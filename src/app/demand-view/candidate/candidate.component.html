@@ -107,16 +107,16 @@
                       </div>
                       <div *ngIf="searchTerm?.trim()" class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
                                   <!-- Three dots menu -->
-<div class="menu-container">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-    
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item >Status Edit</button>
-        <button mat-menu-item (click)="openPdf('assets/chatboat.pdf')">Schedule Interview</button>
-    </mat-menu>
-</div>
+                        <div class="menu-container">
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item >Status Edit</button>
+                                <button mat-menu-item (click)="openInterviewForm(candidate)">Schedule Interview</button>
+                            </mat-menu>
+                        </div>
 
                     </div>
 

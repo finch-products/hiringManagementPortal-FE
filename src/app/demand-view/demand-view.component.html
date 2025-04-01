@@ -2,4 +2,9 @@
     <app-demand fxFlex="40" (pdfSelected)="handlePdfSelection($event)"></app-demand>
     <app-candidate fxFlex="40" (candidatesLinked)="onCandidatesLinked()" (pdfSelected)="handlePdfSelection($event)"></app-candidate>
     <app-preview fxFlex="30" [pdfUrl]="selectedPdfUrl"></app-preview>
+    <app-interview-schedule fxFlex="30" *ngIf="candidateComponent?.showInterviewForm"
+      [candidateId]="candidateComponent?.selectedCandidateForInterview?.cdl_cdm_id"
+      [demandId]="demandId"
+      (closeForm)="candidateComponent?.closeInterviewForm()">
+    </app-interview-schedule>
 </div>

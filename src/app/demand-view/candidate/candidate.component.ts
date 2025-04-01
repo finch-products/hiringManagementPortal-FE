@@ -32,6 +32,8 @@ export class CandidateComponent {
   searchTerm: string = '';
   selectedCandidates: any[] = [];
   statusList: any[] = [];
+  showInterviewForm: boolean = false;
+selectedCandidateForInterview: any = null;
 
 
   showPopup: boolean = false;
@@ -83,8 +85,10 @@ export class CandidateComponent {
       console.error('Candidate status is undefined');
       return;
     }
-
+  
     if (newStatus !== candidate.candidate_status.csm_code) {
+      // Store the original status before showing popup
+      candidate.originalStatus = candidate.candidate_status.csm_code;
       this.selectedCandidate = candidate;
       this.selectedStatus = newStatus;
       this.csm_code = newStatus;
@@ -94,6 +98,12 @@ export class CandidateComponent {
   }
 
   onPopupClose() {
+    if (this.selectedCandidate) {
+      // Reset to original status
+      this.selectedCandidate.selectedStatus = this.selectedCandidate.originalStatus;
+      delete this.selectedCandidate.originalStatus;
+    }
+    
     this.showPopup = false;
     this.selectedCandidate = null;
     this.selectedStatus = '';
@@ -137,6 +147,10 @@ export class CandidateComponent {
         this.loadData(this.dem_id);
       },
       error: (error) => {
+        if (this.selectedCandidate?.originalStatus) {
+          this.selectedCandidate.selectedStatus = this.selectedCandidate.originalStatus;
+          delete this.selectedCandidate.originalStatus;
+        }
         this.snackBar.open(` ${error.message}`, "❌", {
           duration: 5000,
           panelClass: ['error-snackbar']
@@ -326,5 +340,15 @@ export class CandidateComponent {
     }
     
     return classes;
+  }
+
+  openInterviewForm(candidate: any) {
+    this.selectedCandidateForInterview = candidate;
+    this.showInterviewForm = true;
+  }
+  
+  closeInterviewForm() {
+    this.showInterviewForm = false;
+    this.selectedCandidateForInterview = null;
   }
 }

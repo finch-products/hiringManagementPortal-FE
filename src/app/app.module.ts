@@ -72,7 +72,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { CandidateTrackingComponent } from './candidates/tracking/candidate-tracking.component';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { InterviewScheduleComponent } from './demand-view/interview-schedule/interview-schedule.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,7 +105,8 @@ import { MatMenuModule } from '@angular/material/menu';
     Otherview4Component,
     Otherview5Component,
     LoaderComponent,
-    CandidateTrackingComponent
+    CandidateTrackingComponent,
+    InterviewScheduleComponent
   ],
   imports: [
     MatRadioModule,

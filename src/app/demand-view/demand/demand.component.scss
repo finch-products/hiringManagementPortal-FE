@@ -436,6 +436,8 @@ label {
 
 /* Input Fields */
 select {
+  width: 200px; /* Adjust this value as needed */
+  min-width: 100%; 
   background-color: white;
   padding: 8px;
   border: 1px solid #aaa;

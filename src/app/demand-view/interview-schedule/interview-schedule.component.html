@@ -1,0 +1,118 @@
+<div class="interview-form-container">
+    <button class="close-btn" (click)="onCancel()"> ❌ </button>
+    <h2>Schedule Interview</h2>
+    
+    <form [formGroup]="interviewForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="interviewDate">Interview Date <span class="required">*</span></label>
+            <input type="date" id="interviewDate" formControlName="interviewDate" [min]="getMinDate()" required>
+            <div *ngIf="interviewForm.get('interviewDate')?.invalid && (interviewForm.get('interviewDate')?.dirty || interviewForm.get('interviewDate')?.touched)" class="error-message">
+              <div *ngIf="interviewForm.get('interviewDate')?.errors?.['required']">Interview date is required</div>
+              <div *ngIf="interviewForm.get('interviewDate')?.errors?.['pastDate']">Please select a future date</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="interviewStartTime">Interview Start Time <span class="required">*</span></label>
+            <input type="time" id="interviewStartTime" formControlName="interviewStartTime" required>
+            <div *ngIf="interviewForm.get('interviewStartTime')?.invalid && (interviewForm.get('interviewStartTime')?.dirty || interviewForm.get('interviewStartTime')?.touched)" class="error-message">
+              <div *ngIf="interviewForm.get('interviewStartTime')?.errors?.['required']">Start time is required</div>
+              <div *ngIf="interviewForm.get('interviewStartTime')?.errors?.['pastTime']">Please select a future time</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="interviewEndTime">Interview End Time <span class="required">*</span></label>
+            <input type="time" id="interviewEndTime" formControlName="interviewEndTime" required>
+            <div *ngIf="interviewForm.get('interviewEndTime')?.invalid && (interviewForm.get('interviewEndTime')?.dirty || interviewForm.get('interviewEndTime')?.touched)" class="error-message">
+              <div *ngIf="interviewForm.get('interviewEndTime')?.errors?.['required']">End time is required</div>
+              <div *ngIf="interviewForm.get('interviewEndTime')?.errors?.['pastTime']">Please select a future time</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="timezone">Timezone <span class="required">*</span></label>
+            <select id="timezone" formControlName="timezone" required>
+              <option *ngFor="let tz of timezones" [value]="tz">{{ tz }}</option>
+            </select>
+            <div *ngIf="interviewForm.get('timezone')?.invalid && (interviewForm.get('timezone')?.dirty || interviewForm.get('timezone')?.touched)" class="error-message">
+              Timezone is required
+            </div>
+          </div>
+  
+      <div class="form-group">
+        <label for="interviewType">Interview Type <span class="required">*</span></label>
+        <select id="interviewType" formControlName="interviewType" required>
+          <option value="">Select Interview Type</option>
+          <option *ngFor="let type of interviewTypeOptions" [value]="type.value">
+            {{ type.label }}
+          </option>
+        </select>
+        <div *ngIf="interviewForm.get('interviewType')?.invalid && (interviewForm.get('interviewType')?.dirty || interviewForm.get('interviewType')?.touched)" class="error-message">
+          Interview type is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="meetingDetails">Meeting Details (URL /Phone. No /Location) <span class="required">*</span></label>
+        <input type="url" id="meetingDetails" formControlName="meetingDetails" required>
+        <div *ngIf="interviewForm.get('meetingDetails')?.invalid && (interviewForm.get('meetingDetails')?.dirty || interviewForm.get('meetingDetails')?.touched)" class="error-message">
+          <div *ngIf="interviewForm.get('meetingDetails')?.errors?.['required']">Meeting details are required</div>
+          <div *ngIf="interviewForm.get('meetingDetails')?.errors?.['url']">Please enter a valid URL</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="interviewRound">Interview Round <span class="required">*</span></label>
+        <input type="number" id="interviewRound" formControlName="interviewRound" min="1" required>
+        <div *ngIf="interviewForm.get('interviewRound')?.invalid && (interviewForm.get('interviewRound')?.dirty || interviewForm.get('interviewRound')?.touched)" class="error-message">
+          <div *ngIf="interviewForm.get('interviewRound')?.errors?.['required']">Interview round is required</div>
+          <div *ngIf="interviewForm.get('interviewRound')?.errors?.['min']">Round must be at least 1</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="interviewStatus">Interview Status <span class="required">*</span></label>
+        <select id="interviewStatus" formControlName="interviewStatus" required>
+          <option value="">Select Interview Status</option>
+          <option *ngFor="let status of interviewStatusOptions" [value]="status.value">
+            {{ status.label }}
+          </option>
+        </select>
+        <div *ngIf="interviewForm.get('interviewStatus')?.invalid && (interviewForm.get('interviewStatus')?.dirty || interviewForm.get('interviewStatus')?.touched)" class="error-message">
+          Interview status is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Interviewers <span class="required">*</span></label>
+        <div formArrayName="interviewers">
+          <div *ngFor="let interviewer of interviewers.controls; let i = index" [formGroupName]="i" class="interviewer-group">
+            <input type="text" formControlName="name" placeholder="Name" required>
+            <input type="email" formControlName="email" placeholder="Email" required>
+            <button type="button" (click)="removeInterviewer(i)" class="remove-btn"><mat-icon>close</mat-icon></button>
+            <div *ngIf="interviewer.get('name')?.invalid && (interviewer.get('name')?.dirty || interviewer.get('name')?.touched)" class="error-message">
+              Name is required
+            </div>
+            <div *ngIf="interviewer.get('email')?.invalid && (interviewer.get('email')?.dirty || interviewer.get('email')?.touched)" class="error-message">
+              <div *ngIf="interviewer.get('email')?.errors?.['required']">Email is required</div>
+              <div *ngIf="interviewer.get('email')?.errors?.['email']">Please enter a valid email</div>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="addInterviewer()" class="add-btn">+ Add Interviewer</button>
+      </div>
+  
+      <div class="form-group">
+        <label for="remarks">Remarks</label>
+        <textarea id="remarks" formControlName="remarks" rows="3"></textarea>
+      </div>
+  
+      <div class="form-actions" class="submit-container">
+        <button mat-raised-button color="primary" type="button" class="cancel" (click)="onreset()">Reset</button>
+        <button mat-raised-button color="primary" type="submit" class="submit" [disabled]="interviewForm.invalid || isLoading">
+          {{ isLoading ? 'Scheduling...' : 'Schedule' }}
+        </button>
+      </div>
+    </form>
+  </div>

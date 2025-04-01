@@ -281,4 +281,37 @@ export class HttpService {
     return throwError(() => errorResponse);
   }
 
+  getCdlId(candidateId: string, demandId: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}interview-scheduling/get-cdl-id/`, {
+      candidate_id: candidateId,
+      demand_id: demandId
+    }, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  scheduleInterview(interviewData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}interview-scheduling/`, interviewData, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getInterviewStatuses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}interview-scheduling/interview-status-dropdown/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getInterviewTypes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}interview-scheduling/interview-type-dropdown/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getTimezones(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}interview-scheduling/timezone-dropdown/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }
