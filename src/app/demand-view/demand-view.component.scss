@@ -3,8 +3,19 @@
     width: 100vw;
     height: 100vh;
     position: relative; 
+    overflow-x: hidden;
+    width: 100%;
+    transition: all 0.3s ease;
 }
 .app-preview{
     z-index:1000;
     position: fixed;
+    margin:2%;
+    right: 0;
 }
+.reduced-width {
+    background-color: black;
+    .candidates-conatiner{
+        width:30vw;
+    }
+  }

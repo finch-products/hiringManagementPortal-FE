@@ -12,6 +12,7 @@ export class DemandViewComponent {
   @ViewChild(CandidateComponent) candidateComponent!: CandidateComponent;
   selectedPdfUrl!: string ;
   demandId: string = '';
+  isPreviewOpen: boolean = false;
   constructor(private route: ActivatedRoute) {
     // Get the demand ID in the constructor and store it as a public property
     const id = this.route.snapshot.paramMap.get('id');
@@ -21,6 +22,7 @@ export class DemandViewComponent {
   handlePdfSelection(pdfUrl: string) {
     console.log("Received PDF URL:", pdfUrl);
     this.selectedPdfUrl = pdfUrl;
+    this.isPreviewOpen = !!pdfUrl;
 
 }
 onCandidatesLinked(): void {
@@ -30,6 +32,7 @@ onCandidatesLinked(): void {
 onPreviewClose() {
   console.log("Close event received from PreviewComponent - Hiding PDF");
   this.selectedPdfUrl = '';
+  this.isPreviewOpen = false;
 }
 
 onInterviewScheduled(candidateId: string) {

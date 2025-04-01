@@ -88,7 +88,25 @@ export class DemandHistoryComponent implements OnInit {
       console.log("type",this.type)
       this.loadData();
     });
-   
+
+    this.route.paramMap.subscribe(params => {
+      const demandId = params.get('demandId');
+      const candidateId = params.get('candidateId');
+  
+      if (demandId) {
+        this.selectedDemand = null; // Reset previous data
+        this.candidates = [];
+        this.selectedDemandId = null;
+        this.fetchCandidateByDemandId(demandId); // Fetch new data
+      }
+  
+      if (candidateId) {
+        this.selectedCandidate = null;
+        this.demands = [];
+        this.selectedCandidateId = null;
+        this.fetchDemandByCandidateId(candidateId);
+      }
+    });
   }
 
   loadData(){
@@ -141,45 +159,57 @@ export class DemandHistoryComponent implements OnInit {
     ) || [];
   }
 
-// candidate history
 
-  fetchCandidateIds(){
-    this.httpService.getCandidateIds().subscribe({
-      next:(data:any)=>{
-        console.log("candidateIDs",data)
-        this.candidateIds = data;
-        if (this.candidateIds.length > 0) {
-          this.selectCandidate(this.candidateIds[0].cdm_id); 
+fetchCandidateIds() {
+  this.httpService.getCandidateIds().subscribe({
+    next: (data: any) => {
+      console.log("candidateIDs", data);
+      this.candidateIds = data;
+
+      // Check if a candidateId exists in the URL
+      const candidateIdFromUrl = this.route.snapshot.paramMap.get('candidateId');
+
+      if (this.candidateIds.length > 0) {
+        if (candidateIdFromUrl) {
+          // Select the candidate from the URL if present
+          this.selectCandidate(candidateIdFromUrl);
+        } else {
+          // Otherwise, select the first one
+          this.selectCandidate(this.candidateIds[0].cdm_id);
         }
       }
-    })
-  }
+    },
+    error: (err: any) => console.error('Error fetching candidate IDs', err)
+  });
+}
+
   selectCandidate(candidateId: string) {
     this.selectedCandidate = null;
     this.demands = [];     
     this.fetchDemandByCandidateId(candidateId);
   }
 
-  fetchDemandByCandidateId(candidateId?:string){
+  fetchDemandByCandidateId(candidateId?: string) {
     if (!candidateId) {
       console.error('Candidate ID is required');
       return;
-  }
-  console.log("candidate Id",candidateId)
-  this.httpService.DemandByCadidateId(candidateId).subscribe({
-    next: (data) => {
-      if (data) {
-        // this.selectedCandidate = { ...data.candidate };
-        this.selectedCandidate = data
-         this.demands = data.demands|| [];
-         this.demandStatus = this.demands.flatMap(demand => demand.demand_status_history || []);
-         this.candidateStatus = this.demands.flatMap(demand => demand.candidate_status_history || []);
-        this.selectedCandidateId = candidateId; // Highlight the selected demand
-      }
-    },
-    error: (err: any) => console.error('Error fetching demand and candidate details', err)
-  });
-  }
+    }
+    
+    console.log("candidate Id", candidateId);
+    this.httpService.DemandByCadidateId(candidateId).subscribe({
+      next: (data) => {
+        if (data) {
+          this.selectedCandidate = data;
+          this.demands = data.demands || [];
+          this.demandStatus = this.demands.flatMap(demand => demand.demand_status_history || []);
+          this.candidateStatus = this.demands.flatMap(demand => demand.candidate_status_history || []);
+          this.selectedCandidateId = candidateId; // Ensure the selected candidate is highlighted
+        }
+      },
+      error: (err: any) => console.error('Error fetching demand and candidate details', err)
+    });
+  }  
+  
 
   filteredCandidates() {
     return this.candidateIds?.filter((candidate:{ cdm_id: string }) =>

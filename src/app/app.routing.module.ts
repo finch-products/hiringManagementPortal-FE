@@ -48,7 +48,8 @@ const routes: Routes = [
   { path: 'demand-view/:id', component: DemandViewComponent },
   { path: 'history', component: DemandHistoryComponent ,data: { type: 'demand'}},
   { path: 'candidate-tracking', component: CandidateTrackingComponent ,data: { type: 'candidate'}},
-
+  { path: 'history/:demandId', component: DemandHistoryComponent,data: { type: 'demand'} },
+  { path: 'candidate-history/:candidateId', component: DemandHistoryComponent,data: { type: 'candidate'} },
   { path: '', component: DashboardComponent },
 ];
 
