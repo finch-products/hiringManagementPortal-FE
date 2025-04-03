@@ -134,7 +134,7 @@ export class InterviewScheduleComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching CDL ID:', error);
-        this.snackBar.open('Error getting CDL ID', 'Close', {
+        this.snackBar.open('Error getting CDL ID', '❌', {
           duration: 5000
         });
       }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective , AbstractControl, ValidationErrors} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LocationService } from '../../../app/services/location.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,12 +21,19 @@ export class CreateLocationComponent implements OnInit {
     private httpService: HttpService
   ) {
     this.locationForm = this.fb.group({
-      lcm_name: ['', Validators.required],
-      lcm_state: ['', Validators.required],
-      lcm_country: ['', Validators.required],
-    });
+      lcm_name: ['', [Validators.required, this.stringOnlyValidator]],
+      lcm_state: ['', [Validators.required, this.stringOnlyValidator]],
+      lcm_country: ['', [Validators.required, this.stringOnlyValidator]],
+    });  
   }
-
+  
+  stringOnlyValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (typeof value !== 'string' || /\d/.test(value)) {
+      return { stringOnly: true }; 
+    }
+    return null;
+  }
   ngOnInit(): void {
     this.locationForm.valueChanges.subscribe(() => {
       console.log('Location Form Errors:', this.locationForm.errors);
@@ -50,16 +57,7 @@ export class CreateLocationComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error adding location:', error);
-          if (error.status === 400 && error.error) {
-            for (const field in error.error) {
-              if (this.locationForm.controls[field]) {
-                this.locationForm.controls[field].setErrors({ serverError: error.error[field][0] });
-              }
-            }
-            this.showError('⚠️ Please correct the highlighted fields.');
-          } else {
-            this.showError('❌ Failed to add location. Please try again.');
-          }
+          this.handleFieldErrors(error);
         }
       });
     } else {
@@ -79,4 +77,29 @@ export class CreateLocationComponent implements OnInit {
   onCancel(): void {
     this.locationForm.reset({ lcm_isactive: true });
   }
+
+  private handleFieldErrors(error: any): void {
+    console.log("Full error object:", error);
+
+    if (error && typeof error === 'object') {
+        Object.keys(error).forEach(field => {
+            const fieldErrors = error[field];
+
+            if (this.locationForm.controls[field] && Array.isArray(fieldErrors) && fieldErrors.length > 0) {
+                const errorMessage = fieldErrors[0];
+                
+                // Ensure setErrors is setting a string, not an object
+                this.locationForm.controls[field].setErrors({ serverError: errorMessage });
+
+                console.log(`Set error for ${field}:`, errorMessage);
+                console.log(`Final error for ${field}:`, typeof errorMessage, errorMessage);
+
+            } else {
+                console.warn(`Field not found in form or no valid errors: ${field}`);
+            }
+        });
+    } else {
+        this.showError('❌ Failed to add location: An unknown error occurred.');
+    }
+}
 }

@@ -121,13 +121,24 @@ export class DemandHistoryComponent implements OnInit {
     this.httpService.getDemandIds().subscribe({
       next: (data: any) => {
         this.demandIds = data;
+        
+        // Get demandId from URL if available
+        const demandIdFromUrl = this.route.snapshot.paramMap.get('demandId');
+  
         if (this.demandIds.length > 0) {
-          this.selectDemand(this.demandIds[0].dem_id); // Auto-select first demand
+          if (demandIdFromUrl) {
+            // Select demand from URL if present
+            this.selectDemand(demandIdFromUrl);
+          } else if (!this.selectedDemandId) {
+            // Otherwise, auto-select only if no demand is already selected
+            this.selectDemand(this.demandIds[0].dem_id);
+          }
         }
       },
       error: (err: any) => console.error('Error fetching demands', err)
     });
   }
+  
 
   selectDemand(demandId: string) {
     this.selectedDemand = null; // Reset selected demand

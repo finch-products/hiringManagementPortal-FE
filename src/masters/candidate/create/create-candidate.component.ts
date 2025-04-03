@@ -136,6 +136,14 @@ export class CreateCandidateComponent implements OnInit {
         });
         this.candidateForm.reset();
         form.resetForm();
+        this.candidateForm.patchValue({
+          cdm_isinternal: true,
+          cdm_isactive: true,
+          cdm_insertby: 'emp_22032025_1',
+          cdm_updateby: 'emp_22032025_1'
+        });
+        this.locationFilterControl.reset();
+        this.selectedFile = null;
       },
       error: (error) => {
         console.error('Error adding Candidate:', error);

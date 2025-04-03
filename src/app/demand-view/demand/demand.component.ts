@@ -134,7 +134,7 @@ export class DemandComponent implements OnInit {
     this.onCancel();
     this.httpService.updateDemand(payload).subscribe({
       next: (response) => {
-        this.snackBar.open("✅ Demand status updated successfully!", "Close", {
+        this.snackBar.open("✅ Demand status updated successfully!", "", {
           duration: 3000,
           panelClass: ['success-snackbar']
         });

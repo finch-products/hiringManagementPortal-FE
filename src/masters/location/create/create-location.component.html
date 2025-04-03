@@ -4,18 +4,42 @@
         <div class="form-row">
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Location Name</mat-label>
-                <input matInput formControlName="lcm_name" required>
+                <input matInput formControlName="lcm_name" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed"  required>
+
+                <mat-error *ngIf="locationForm.controls['lcm_name'].hasError('required')">
+                    Location Name is required.
+                  </mat-error>
+                  <mat-error *ngIf="locationForm.controls['lcm_name'].hasError('serverError')">
+                    {{ locationForm.controls['lcm_name'].getError('serverError') }}
+                  </mat-error>
+
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>State</mat-label>
-                <input matInput formControlName="lcm_state" required>
+                <input matInput formControlName="lcm_state" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed" required>
+
+                <mat-error *ngIf="locationForm.controls['lcm_state'].hasError('required')">
+                    State is required.
+                  </mat-error>
+                  <mat-error *ngIf="locationForm.controls['lcm_state'].hasError('serverError')">
+                    {{ locationForm.controls['lcm_state'].getError('serverError') }}
+                  </mat-error>
+
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Country</mat-label>
-                <input matInput formControlName="lcm_country"
+                <input matInput formControlName="lcm_country" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed" 
                     required>
+
+                    <mat-error *ngIf="locationForm.controls['lcm_country'].hasError('required')">
+                        Country Name is required.
+                      </mat-error>
+                      <mat-error *ngIf="locationForm.controls['lcm_country'].hasError('serverError')">
+                        {{ locationForm.controls['lcm_country'].getError('serverError') }}
+                      </mat-error>
+
             </mat-form-field>
         </div>
 
