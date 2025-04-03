@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<div class="candidates-container"  [ngClass]="{'preview-open': isPreviewOpen}">
+<div class="candidates-container"  [ngClass]="{'preview-open': isPreviewOpen}" [ngClass]="{'form-open': showInterviewForm}"  (mousedown)="startDrag($event)">
 
     <div class="candidateheading">
         <h1>Candidate Details </h1>
@@ -42,7 +42,7 @@
 
     <div class="search-container">
         <div class="search-bar">
-            <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search candidates..." />
+<input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search Candidate to Link" />
             
             <div class="filter-overlay" *ngIf="showFilter" (click)="closeFilter($event)"></div>
             <div class="filter-container" *ngIf="showFilter" (click)="$event.stopPropagation()">
@@ -109,8 +109,7 @@
                         </div>
                         <div class="candidate-info">
                             <h3 class="candidate-name">{{ candidate.cdm_name || 'Unknown' }}</h3>
-                            <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id }}</p>
-                            <div class="status">Status: {{ candidate?.candidate_status?.csm_code || 'N/A' }}</div>
+                            <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id }}</p>  
                         </div>
                         <div class="detail-box">
                             <span>Profile : </span>
@@ -151,7 +150,7 @@
                         </select>
                       </div>
                       <div  class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"  *ngIf="!statusedit"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
-                                  <!-- Three dots menu -->
+                        <!-- Three dots menu -->
                         <div class="menu-container">
                             <button mat-icon-button [matMenuTriggerFor]="menu">
                                 <mat-icon>more_vert</mat-icon>
@@ -166,6 +165,7 @@
                     </div>
 
                 <div class="skills">
+                    Skills:
                     <ng-container *ngIf="candidate.keywords; else noKeywords">
                         <span
                             *ngFor="let keyword of candidate.keywords.split(',')"
