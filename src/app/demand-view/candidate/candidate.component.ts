@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef,Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef,Input, HostListener, ElementRef, Renderer2  } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,7 +34,12 @@ export class CandidateComponent {
   selectedCandidates: any[] = [];
   statusList: any[] = [];
   showInterviewForm: boolean = false;
-selectedCandidateForInterview: any = null;
+  selectedCandidateForInterview: any = null;
+  isDragging = false;
+  startX = 0;
+  startWidth = 0;
+  widthSteps = [49, 39, 29, 24]; 
+  currentStepIndex = 0; 
 
 
   showPopup: boolean = false;
@@ -48,7 +53,7 @@ selectedCandidateForInterview: any = null;
 
   readonly cdm_updateby_id = 'emp_22032025_1';
 
-  constructor(private httpService: HttpService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private httpService: HttpService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router,private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.filteredCandidates = [...this.candidates]; // Ensure it loads with all candidates initially
@@ -397,5 +402,45 @@ selectedCandidateForInterview: any = null;
         });
       }
     });
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (!this.isDragging) return;
+
+    const newWidth = this.startWidth + (event.clientX - this.startX);
+    const viewportWidth = window.innerWidth;
+    const newWidthVW = (newWidth / viewportWidth) * 100;
+
+    // Find the closest step to the current width
+    let closestStep = this.widthSteps[0];
+    let closestIndex = 0;
+
+    for (let i = 0; i < this.widthSteps.length; i++) {
+      if (Math.abs(newWidthVW - this.widthSteps[i]) < Math.abs(newWidthVW - closestStep)) {
+        closestStep = this.widthSteps[i];
+        closestIndex = i;
+      }
+    }
+
+    // Apply the closest step width
+    this.currentStepIndex = closestIndex;
+    this.renderer.setStyle(this.el.nativeElement.querySelector('.candidates-container'), 'width', `${closestStep}vw`);
+
+    // Apply preview-open class if width reduces below a threshold
+    this.isPreviewOpen = closestStep <= 28;
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp() {
+    this.isDragging = false;
+    document.body.style.cursor = "default";
+  }
+
+  startDrag(event: MouseEvent) {
+    this.isDragging = true;
+    this.startX = event.clientX;
+    this.startWidth = this.el.nativeElement.querySelector('.candidates-container').offsetWidth;
+    document.body.style.cursor = "ew-resize";
   }
 }
