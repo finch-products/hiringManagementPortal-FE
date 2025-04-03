@@ -43,7 +43,52 @@
     <div class="search-container">
         <div class="search-bar">
             <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search candidates..." />
-            <button mat-icon-button (click)="openFilter()">
+            
+            <div class="filter-overlay" *ngIf="showFilter" (click)="closeFilter($event)"></div>
+            <div class="filter-container" *ngIf="showFilter" (click)="$event.stopPropagation()">
+                <div class="filter-box">
+                    <div class="filter-row">
+
+                        <div class="filter-group">
+                            <input type="text" [(ngModel)]="nameFilter" 
+                                (input)="applyFilters()"
+                                placeholder="Name"
+                                class="filter-input">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <input type="text" [(ngModel)]="emailFilter" 
+                                (input)="applyFilters()"
+                                placeholder="Email"
+                                class="filter-input">
+                        </div>
+
+                        <div class="filter-group">
+                            <mat-select multiple [(ngModel)]="selectedStatusFilters" 
+                                    (selectionChange)="applyFilters()"
+                                    class="filter-select" 
+                                    panelClass="filter-select-panel"
+                                    placeholder="Status">
+                                <mat-option *ngFor="let status of statusList" [value]="status.csm_code">
+                                    {{status.csm_code}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <input type="text" [(ngModel)]="skillsFilter" 
+                                (input)="applyFilters()"
+                                placeholder="Skills (comma sep)"
+                                class="filter-input">
+                        </div>
+                        
+                        <button mat-button class="reset-button" (click)="resetFilters()"><span>Reset</span></button>
+                    </div>
+                </div>
+                <div class="filter-arrow"></div> <!-- Arrow pointing to the filter icon -->
+            </div>
+            
+            <button mat-icon-button (click)="toggleFilter($event)">
                 <mat-icon>filter_list</mat-icon>
             </button>
             <button mat-icon-button (click)="redirectToAddCandidates()">

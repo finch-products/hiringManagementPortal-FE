@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef,Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef,Input, HostListener } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,8 +34,13 @@ export class CandidateComponent {
   selectedCandidates: any[] = [];
   statusList: any[] = [];
   showInterviewForm: boolean = false;
-selectedCandidateForInterview: any = null;
-
+  selectedCandidateForInterview: any = null;
+  showFilter: boolean = false;
+  selectedStatusFilters: string[] = [];
+  skillsFilter: string = '';
+  originalCandidates: any[] = [];
+  nameFilter: string = '';
+  emailFilter: string = '';
 
   showPopup: boolean = false;
   statusedit: boolean = false; 
@@ -171,7 +176,7 @@ selectedCandidateForInterview: any = null;
       next: (data) => {
         this.demands = data;
         this.candidates = data.candidates ? [...data.candidates].reverse() : [];
-
+        this.originalCandidates = [...this.candidates]; 
         this.candidates.forEach(candidate => {
           this.loadCandidateStatusesById(candidate.cdl_cdm_id).subscribe(
             (statuses) => {
@@ -246,11 +251,6 @@ selectedCandidateForInterview: any = null;
   }
 
   openFilter() {
-    this.router.navigate(['candidate-tracking']);
-    /*this.snackBar.open("Filter feature coming soon!!", "Close", {
-      duration: 3000,
-      panelClass: ['success-snackbar']
-    });*/
   }
 
   redirectToAddCandidates() {
@@ -398,4 +398,71 @@ selectedCandidateForInterview: any = null;
       }
     });
   }
+
+  @HostListener('document:click', ['$event'])
+handleClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    const clickedOnFilterIcon = target.closest('.search-bar button:first-child');
+    const clickedInsideFilter = target.closest('.filter-container');
+    
+    if (this.showFilter && !clickedOnFilterIcon && !clickedInsideFilter) {
+        this.closeFilter();
+    }
+}
+  
+  // Modify your filter methods
+  closeFilter(event?: Event): void {
+      if (event) {
+          event.stopPropagation();
+      }
+      this.showFilter = false;
+  }
+  
+  toggleFilter(event: Event): void {
+    event.stopPropagation();
+    this.showFilter = !this.showFilter;
+    if (!this.showFilter) {
+        this.resetFilters();
+    }
+  }
+
+// Modify the applyFilters method
+applyFilters(): void {
+    // Only show candidates that match ALL active filters
+    this.candidates = this.originalCandidates.filter(candidate => {
+        // Name filter - case insensitive partial match
+        const nameMatch = !this.nameFilter || 
+            (candidate.name && candidate.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
+        
+        // Email filter - case insensitive partial match
+        const emailMatch = !this.emailFilter || 
+            (candidate.email && candidate.email.toLowerCase().includes(this.emailFilter.toLowerCase()));
+        
+        // Status filter - must match if status filters are selected
+        const statusMatch = this.selectedStatusFilters.length === 0 || 
+            this.selectedStatusFilters.includes(candidate.candidate_status?.csm_code);
+        
+        // Skills filter - must match if skills are specified
+        let skillsMatch = true;
+        if (this.skillsFilter.trim()) {
+          const searchSkills = this.skillsFilter.split(',').map(s => s.trim().toLowerCase());
+          const candidateSkills = (candidate.keywords || '').toLowerCase();
+          skillsMatch = searchSkills.every(skill => 
+              candidateSkills.includes(skill)
+          );
+        }
+        
+        return nameMatch && emailMatch && statusMatch && skillsMatch;
+    });
+}
+
+// Update resetFilters to clear the new filters
+resetFilters(): void {
+    this.selectedStatusFilters = [];
+    this.skillsFilter = '';
+    this.nameFilter = '';
+    this.emailFilter = '';
+    this.candidates = [...this.originalCandidates];
+    this.closeFilter();
+}
 }
