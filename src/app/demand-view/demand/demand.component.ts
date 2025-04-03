@@ -140,6 +140,7 @@ export class DemandComponent implements OnInit {
         });
         this.onCancel();
         this.loadData(this.demands.cdl_dem_id); // Reload data to reflect changes
+        this.loadStatus(this.demands.cdl_dem_id);
       },
       error: (error) => {
         this.snackBar.open(`${error.message}`, "❌", {

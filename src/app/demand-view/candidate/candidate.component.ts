@@ -46,6 +46,10 @@ export class CandidateComponent {
   startWidth = 0;
   widthSteps = [49, 39, 29, 24]; 
   currentStepIndex = 0; 
+  nameFilterExpanded = false;
+  emailFilterExpanded = false;
+  statusFilterExpanded = false;
+  skillsFilterExpanded = false;
 
 
   showPopup: boolean = false;
@@ -158,6 +162,7 @@ export class CandidateComponent {
         });
         this.onPopupClose();
         this.loadData(this.dem_id);
+        this.loadCandidateStatusesById(this.selectedCandidate.cdl_cdm_id)
       },
       error: (error) => {
         if (this.selectedCandidate?.originalStatus) {
@@ -201,6 +206,7 @@ export class CandidateComponent {
 
   loadCandidateStatusesById(cdm_id: string): Observable<any> {
     return this.httpService.getCandidateStatusesbyid(cdm_id).pipe(
+      
       catchError((error: HttpErrorResponse) => {
         console.error(`Error fetching statuses for candidate ${cdm_id}:`, error);
         return this.httpService.getCandidateStatuses();
@@ -432,6 +438,7 @@ handleClickOutside(event: Event) {
     }
   }
 
+
 // Modify the applyFilters method
 applyFilters(): void {
     // Only show candidates that match ALL active filters
@@ -471,6 +478,71 @@ resetFilters(): void {
     this.candidates = [...this.originalCandidates];
     this.closeFilter();
 }
+
+// Add these methods
+toggleFilterExpansion(filterType: string, event?: Event) {
+  if (event) {
+    event.stopPropagation(); // Prevent the click from reaching document
+  }
+    switch(filterType) {
+        case 'name':
+            this.nameFilterExpanded = !this.nameFilterExpanded;
+            this.emailFilterExpanded = false;
+            this.statusFilterExpanded = false;
+            this.skillsFilterExpanded = false;
+            break;
+        case 'email':
+            this.emailFilterExpanded = !this.emailFilterExpanded;
+            this.nameFilterExpanded = false;
+            this.statusFilterExpanded = false;
+            this.skillsFilterExpanded = false;
+            break;
+        case 'status':
+            this.statusFilterExpanded = !this.statusFilterExpanded;
+            this.nameFilterExpanded = false;
+            this.emailFilterExpanded = false;
+            this.skillsFilterExpanded = false;
+            break;
+        case 'skills':
+            this.skillsFilterExpanded = !this.skillsFilterExpanded;
+            this.nameFilterExpanded = false;
+            this.emailFilterExpanded = false;
+            this.statusFilterExpanded = false;
+            break;
+    }
+}
+
+hasActiveFilters(): boolean {
+    return !!this.nameFilter || !!this.emailFilter || 
+           this.selectedStatusFilters.length > 0 || !!this.skillsFilter;
+}
+
+getActiveFilters(): any[] {
+    const filters = [];
+    
+    if (this.nameFilter) {
+        filters.push({ type: 'name', label: 'Name', value: this.nameFilter });
+    }
+    
+    if (this.emailFilter) {
+        filters.push({ type: 'email', label: 'Email', value: this.emailFilter });
+    }
+    
+    if (this.selectedStatusFilters.length > 0) {
+        filters.push({ 
+            type: 'status', 
+            label: 'Status', 
+            value: this.selectedStatusFilters.join(', ') 
+        });
+    }
+    
+    if (this.skillsFilter) {
+        filters.push({ type: 'skills', label: 'Skills', value: this.skillsFilter });
+    }
+    
+    return filters;
+}
+
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     if (!this.isDragging) return;
@@ -509,5 +581,26 @@ resetFilters(): void {
     this.startX = event.clientX;
     this.startWidth = this.el.nativeElement.querySelector('.candidates-container').offsetWidth;
     document.body.style.cursor = "ew-resize";
+  }
+
+  toggleStatusSelection(statusCode: string): void {
+    const index = this.selectedStatusFilters.indexOf(statusCode);
+    if (index > -1) {
+      this.selectedStatusFilters.splice(index, 1);
+    } else {
+      this.selectedStatusFilters.push(statusCode);
+    }
+    this.applyFilters();
+  }
+  @HostListener('document:click', ['$event'])
+  handleClickOutside1(event: MouseEvent) {
+    // Check if the click was outside the status filter
+    const statusFilterElement = this.el.nativeElement.querySelector('.filter-control.status-filter');
+    const clickedInsideStatusFilter = statusFilterElement?.contains(event.target as Node);
+    
+    if (this.statusFilterExpanded && !clickedInsideStatusFilter) {
+      this.statusFilterExpanded = false;
+      this.cdr.detectChanges(); // Trigger change detection if needed
+    }
   }
 }
