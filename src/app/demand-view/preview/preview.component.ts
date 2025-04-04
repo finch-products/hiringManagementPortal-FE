@@ -8,6 +8,7 @@ import { Component, Input,Output, EventEmitter, SimpleChanges} from '@angular/co
 export class PreviewComponent {
   @Input() pdfUrl!: string ;
   @Output() close = new EventEmitter<void>(); // Emit event to parent
+  isFullscreen = false;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['pdfUrl'] && changes['pdfUrl'].currentValue) {
@@ -19,5 +20,9 @@ export class PreviewComponent {
     console.log("Close button clicked - Emitting event to parent"); 
     this.close.emit(); // Notify parent
   }
-  
+
+  toggleFullscreen() {
+  this.isFullscreen = !this.isFullscreen;
+}
+
 }
