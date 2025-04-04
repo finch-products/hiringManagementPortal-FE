@@ -35,11 +35,21 @@ export class CandidateComponent {
   statusList: any[] = [];
   showInterviewForm: boolean = false;
   selectedCandidateForInterview: any = null;
+  showFilter: boolean = false;
+  selectedStatusFilters: string[] = [];
+  skillsFilter: string = '';
+  originalCandidates: any[] = [];
+  nameFilter: string = '';
+  emailFilter: string = '';
   isDragging = false;
   startX = 0;
   startWidth = 0;
   widthSteps = [49, 39, 29, 24]; 
   currentStepIndex = 0; 
+  nameFilterExpanded = false;
+  emailFilterExpanded = false;
+  statusFilterExpanded = false;
+  skillsFilterExpanded = false;
 
 
   showPopup: boolean = false;
@@ -152,6 +162,7 @@ export class CandidateComponent {
         });
         this.onPopupClose();
         this.loadData(this.dem_id);
+        this.loadCandidateStatusesById(this.selectedCandidate.cdl_cdm_id)
       },
       error: (error) => {
         if (this.selectedCandidate?.originalStatus) {
@@ -176,7 +187,7 @@ export class CandidateComponent {
       next: (data) => {
         this.demands = data;
         this.candidates = data.candidates ? [...data.candidates].reverse() : [];
-
+        this.originalCandidates = [...this.candidates]; 
         this.candidates.forEach(candidate => {
           this.loadCandidateStatusesById(candidate.cdl_cdm_id).subscribe(
             (statuses) => {
@@ -195,6 +206,7 @@ export class CandidateComponent {
 
   loadCandidateStatusesById(cdm_id: string): Observable<any> {
     return this.httpService.getCandidateStatusesbyid(cdm_id).pipe(
+      
       catchError((error: HttpErrorResponse) => {
         console.error(`Error fetching statuses for candidate ${cdm_id}:`, error);
         return this.httpService.getCandidateStatuses();
@@ -251,11 +263,6 @@ export class CandidateComponent {
   }
 
   openFilter() {
-    this.router.navigate(['candidate-tracking']);
-    /*this.snackBar.open("Filter feature coming soon!!", "", {
-      duration: 3000,
-      panelClass: ['success-snackbar']
-    });*/
   }
 
   redirectToAddCandidates() {
@@ -404,6 +411,138 @@ export class CandidateComponent {
     });
   }
 
+  @HostListener('document:click', ['$event'])
+handleClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    const clickedOnFilterIcon = target.closest('.search-bar button:first-child');
+    const clickedInsideFilter = target.closest('.filter-container');
+    
+    if (this.showFilter && !clickedOnFilterIcon && !clickedInsideFilter) {
+        this.closeFilter();
+    }
+}
+  
+  // Modify your filter methods
+  closeFilter(event?: Event): void {
+      if (event) {
+          event.stopPropagation();
+      }
+      this.showFilter = false;
+  }
+  
+  toggleFilter(event: Event): void {
+    event.stopPropagation();
+    this.showFilter = !this.showFilter;
+    if (!this.showFilter) {
+        this.resetFilters();
+    }
+  }
+
+
+// Modify the applyFilters method
+applyFilters(): void {
+    // Only show candidates that match ALL active filters
+    this.candidates = this.originalCandidates.filter(candidate => {
+        // Name filter - case insensitive partial match
+        const nameMatch = !this.nameFilter || 
+            (candidate.name && candidate.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
+        
+        // Email filter - case insensitive partial match
+        const emailMatch = !this.emailFilter || 
+            (candidate.email && candidate.email.toLowerCase().includes(this.emailFilter.toLowerCase()));
+        
+        // Status filter - must match if status filters are selected
+        const statusMatch = this.selectedStatusFilters.length === 0 || 
+            this.selectedStatusFilters.includes(candidate.candidate_status?.csm_code);
+        
+        // Skills filter - must match if skills are specified
+        let skillsMatch = true;
+        if (this.skillsFilter.trim()) {
+          const searchSkills = this.skillsFilter.split(',').map(s => s.trim().toLowerCase());
+          const candidateSkills = (candidate.keywords || '').toLowerCase();
+          skillsMatch = searchSkills.every(skill => 
+              candidateSkills.includes(skill)
+          );
+        }
+        
+        return nameMatch && emailMatch && statusMatch && skillsMatch;
+    });
+}
+
+// Update resetFilters to clear the new filters
+resetFilters(): void {
+    this.selectedStatusFilters = [];
+    this.skillsFilter = '';
+    this.nameFilter = '';
+    this.emailFilter = '';
+    this.candidates = [...this.originalCandidates];
+    this.closeFilter();
+}
+
+// Add these methods
+toggleFilterExpansion(filterType: string, event?: Event) {
+  if (event) {
+    event.stopPropagation(); // Prevent the click from reaching document
+  }
+    switch(filterType) {
+        case 'name':
+            this.nameFilterExpanded = !this.nameFilterExpanded;
+            this.emailFilterExpanded = false;
+            this.statusFilterExpanded = false;
+            this.skillsFilterExpanded = false;
+            break;
+        case 'email':
+            this.emailFilterExpanded = !this.emailFilterExpanded;
+            this.nameFilterExpanded = false;
+            this.statusFilterExpanded = false;
+            this.skillsFilterExpanded = false;
+            break;
+        case 'status':
+            this.statusFilterExpanded = !this.statusFilterExpanded;
+            this.nameFilterExpanded = false;
+            this.emailFilterExpanded = false;
+            this.skillsFilterExpanded = false;
+            break;
+        case 'skills':
+            this.skillsFilterExpanded = !this.skillsFilterExpanded;
+            this.nameFilterExpanded = false;
+            this.emailFilterExpanded = false;
+            this.statusFilterExpanded = false;
+            break;
+    }
+}
+
+hasActiveFilters(): boolean {
+    return !!this.nameFilter || !!this.emailFilter || 
+           this.selectedStatusFilters.length > 0 || !!this.skillsFilter;
+}
+
+getActiveFilters(): any[] {
+    const filters = [];
+    
+    if (this.nameFilter) {
+        filters.push({ type: 'name', label: 'Name', value: this.nameFilter });
+    }
+    
+    if (this.emailFilter) {
+        filters.push({ type: 'email', label: 'Email', value: this.emailFilter });
+    }
+    
+    if (this.selectedStatusFilters.length > 0) {
+        filters.push({ 
+            type: 'status', 
+            label: 'Status', 
+            value: this.selectedStatusFilters.join(', ') 
+        });
+    }
+    
+    if (this.skillsFilter) {
+        filters.push({ type: 'skills', label: 'Skills', value: this.skillsFilter });
+    }
+    
+    return filters;
+}
+
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     if (!this.isDragging) return;
@@ -442,5 +581,26 @@ export class CandidateComponent {
     this.startX = event.clientX;
     this.startWidth = this.el.nativeElement.querySelector('.candidates-container').offsetWidth;
     document.body.style.cursor = "ew-resize";
+  }
+
+  toggleStatusSelection(statusCode: string): void {
+    const index = this.selectedStatusFilters.indexOf(statusCode);
+    if (index > -1) {
+      this.selectedStatusFilters.splice(index, 1);
+    } else {
+      this.selectedStatusFilters.push(statusCode);
+    }
+    this.applyFilters();
+  }
+  @HostListener('document:click', ['$event'])
+  handleClickOutside1(event: MouseEvent) {
+    // Check if the click was outside the status filter
+    const statusFilterElement = this.el.nativeElement.querySelector('.filter-control.status-filter');
+    const clickedInsideStatusFilter = statusFilterElement?.contains(event.target as Node);
+    
+    if (this.statusFilterExpanded && !clickedInsideStatusFilter) {
+      this.statusFilterExpanded = false;
+      this.cdr.detectChanges(); // Trigger change detection if needed
+    }
   }
 }
