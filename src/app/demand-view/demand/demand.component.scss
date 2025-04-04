@@ -1,5 +1,5 @@
 .demand-container{
-    background-color:#F5F5F4;
+    background-color:#F8F9FA;
     padding:10px;
     width:27vw;
     height: 80vh;
@@ -8,7 +8,7 @@
     // margin-top: 20px;
     display: flex;
     gap: 10px;
-    border: 5px solid #ddd; 
+    border: 2px solid #ddd; 
     overflow-y: auto !important;
     position:relative;
 }
@@ -511,4 +511,61 @@ button[type="submit"]:hover {
   display:flex;
   flex-direction: row;
   gap:35%;
+}
+
+/* Make all labels bold */
+.detail-box span,
+.skills span,
+.date-item p,
+.client-details p,
+.detail-box > span,
+.client-details span{
+  font-weight: 550 !important;
+  color: #0f0f0f; /* Dark grey for labels */
+}
+
+/* Make all values normal weight and grey */
+.detail-box b,
+.skills b,
+.date-item b,
+.client-details b,
+.detail-box > b {
+  font-weight: normal !important;
+  color: #424040 !important; /* Medium grey for values */
+  background-color: transparent !important; /* Remove any background */
+}
+
+/* Specific adjustments for certain elements */
+.client-details p {
+  font-weight: normal !important; /* Client info should remain normal */
+}
+
+.client-details p b {
+  font-weight: bold !important; /* Client manager name should be bold */
+  color: #333 !important; /* Keep client manager name dark */
+}
+
+.position-count {
+  font-weight: normal !important;
+  color: #666 !important;
+  background-color: #ffe5e5 !important; /* Keep background for position count */
+}
+
+.skill {
+  font-weight: normal !important;
+  color: #666 !important;
+  background-color: #E8E8D7 !important; /* Keep background for skills */
+}
+
+/* Status display adjustments */
+.current-status {
+  font-weight: 500 !important; /* Slightly bold for status */
+  color: #333 !important; /* Dark color for status */
+}
+
+/* Date values */
+.date-item b {
+  font-weight: normal !important;
+  color: #666 !important;
+  background-color: #cbcaca !important; /* Keep date background */
 }

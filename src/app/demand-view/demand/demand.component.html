@@ -68,9 +68,9 @@
           <mat-icon>account_circle</mat-icon>
         </div>
         <div class="client-details">
-          <p> Client: {{demands?.demand_details?.client_details.clm_name || 'N/A'}}
-            <br />Client Manager:
-            <b>{{demands?.demand_details?.client_details.clm_managername || 'N/A'}}</b></p>
+          <p> <span>Client:</span> {{demands?.demand_details?.client_details.clm_name || 'N/A'}}
+            <br /><span>Client Manager:</span>
+            {{demands?.demand_details?.client_details.clm_managername || 'N/A'}}</p>
         </div>
       </div>
       <div class="dates">

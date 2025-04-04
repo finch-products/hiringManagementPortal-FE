@@ -32,7 +32,7 @@ export class ListInternalDepartmentComponent {
   }
 
   loadDepts() {
-    this.httpService.getDeptsDetails().subscribe({
+    this.httpService.getInternalDepartmentDetails().subscribe({
       next: (data) => {
         this.internalDeptService.setInitialData(data);
       },
