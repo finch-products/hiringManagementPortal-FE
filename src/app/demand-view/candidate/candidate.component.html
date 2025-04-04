@@ -145,8 +145,7 @@
                     </div>
                     <div>
                         <select class="status"
-                                [(ngModel)]="candidate.selectedStatus"
-                                [ngClass]="getStatusClasses(candidate, !!searchTerm.trim())"
+                                [ngClass]="getStatusClasses(candidate, !!searchTerm.trim())" 
                                 *ngIf="statusedit"
                                 (change)="onStatusChange(candidate, $event)">
                           <option *ngFor="let status of candidate.statusList"

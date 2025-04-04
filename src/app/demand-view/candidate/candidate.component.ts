@@ -156,7 +156,7 @@ export class CandidateComponent {
     this.onCancel();
     this.httpService.updateCandidateStatus(payload).subscribe({
       next: (response) => {
-        this.snackBar.open("✅ Candidate status updated successfully!", "Close", {
+        this.snackBar.open("✅ Candidate status updated successfully!", "", {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
@@ -285,7 +285,7 @@ export class CandidateComponent {
 
   submitSelectedCandidates() {
     if (this.selectedCandidates.length === 0) {
-      this.snackBar.open("No candidates selected..!", "Close", {
+      this.snackBar.open("No candidates selected..!", "❌", {
         duration: 3000,
         panelClass: ['error-snackbar']
       });
@@ -300,16 +300,16 @@ export class CandidateComponent {
 
     console.log('payload for linking :', payload);
     if (payload.length === 0) {
-      this.snackBar.open("No candidates with valid status selected.!", "Close", {
+      this.snackBar.open("No candidates with valid status selected.!", "❌", {
         duration: 3000,
         panelClass: ['error-snackbar']
       });
       return;
     }
 
-    this.httpService.postCandidateByDemandId(payload).subscribe({
+    this.httpService.postCandidateDemand(payload).subscribe({
       next: (data) => {
-        this.snackBar.open("✅ Candidates linked successfully!", "Close", {
+        this.snackBar.open("✅ Candidates linked successfully!", "", {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
@@ -317,7 +317,7 @@ export class CandidateComponent {
 
       },
       error: (error) => {
-        this.snackBar.open("❌ Failed to link candidates. Try again.", "Close", {
+        this.snackBar.open("❌ Failed to link candidates. Try again.", "❌", {
           duration: 3000,
           panelClass: ['error-snackbar']
         });
@@ -395,7 +395,7 @@ export class CandidateComponent {
     // Update the status
     this.httpService.updateCandidateStatus(payload).subscribe({
       next: (response) => {
-        this.snackBar.open("✅ Candidate status updated to INTERVIEW_SCHEDULED!", "Close", {
+        this.snackBar.open("✅ Candidate status updated to INTERVIEW_SCHEDULED!", "", {
           duration: 3000,
           panelClass: ['success-snackbar']
         });

@@ -112,12 +112,18 @@ export class ListOpenDemandsComponent {
 
       this.loadStatus(selectedDemId);
 
-      const requestBody = {
+       let requestBody: { [key: string]: any } = {
         dem_id: this.selectedRows[0].dem_id,
         dem_dsm_id: this.listForm.get('dem_dsm_id')?.value,
-        dem_comment: this.listForm.get('dem_comment')?.value,
         dem_updateby_id: 'emp_22032025_1'
-      };
+    };
+
+    // Only include dem_comment if it's not empty or null
+    const demComment = this.listForm.get('dem_comment')?.value;
+    if (demComment && demComment.trim() !== '') {
+        requestBody['dem_comment'] = demComment;
+    }
+
       this.httpService.updateDemand(requestBody).subscribe({
         next: (data) => {
           this.snackBar.open(" Demand updated Successfully!", "✅", {

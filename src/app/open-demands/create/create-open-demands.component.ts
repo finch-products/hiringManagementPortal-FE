@@ -372,6 +372,9 @@ export class CreateOpenDemandComponent implements OnInit {
           if (field === "dem_position_location" && Array.isArray(value)) {
             value = JSON.stringify(value);
           }
+          if (field === "dem_clm_id" && typeof value === "object" && value !== null) {
+            value = value.clm_id; 
+          }
           updatedFields[field] = value;
         }
       });

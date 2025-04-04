@@ -17,6 +17,6 @@ export class ClientService {
 
   addClient(client: Client) {
     const currentClients = this.clientsSubject.value;
-    this.clientsSubject.next([...currentClients, client]);  // Ensuring list updates
+    this.clientsSubject.next([client, ...currentClients]);  // Ensuring list updates
   }
 }

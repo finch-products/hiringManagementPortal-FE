@@ -124,10 +124,11 @@ mat-select {
   .detail-box {
     display: flex;
     flex-direction: column;
-    height:80px;
+    height:55px;
     align-items: center; /* Center align text */
     text-align: center;
-    padding-top: 3px;
+    padding-top: 2px;
+    margin:4%;
     min-width: 120px; /* Prevent squeezing */
   }
   
