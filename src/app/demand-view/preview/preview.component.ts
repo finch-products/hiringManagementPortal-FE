@@ -17,6 +17,7 @@ export class PreviewComponent {
   }
 
   PreviewClose() {
+    this.isFullscreen = false;
     console.log("Close button clicked - Emitting event to parent"); 
     this.close.emit(); // Notify parent
   }
