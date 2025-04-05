@@ -14,7 +14,7 @@ body, html {
     width: 49vw!important; 
     height: 80vh;
     transition: width 0.8s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
-    border: 5px solid #ddd; 
+    border: 2px solid #ddd; 
     resize: horizontal;
     position: relative;
     cursor: ew-resize;
@@ -882,4 +882,8 @@ button[type="submit"]:hover {
 .active-filters-row {
     position: relative;
     z-index: 5;
+}
+
+.filter-control.expanded[_ngcontent-ng-c1537318716] + .active-filters-row[_ngcontent-ng-c1537318716], .filter-control.expanded[_ngcontent-ng-c1537318716] ~ .candidates-list[_ngcontent-ng-c1537318716] {
+    margin-top: 0px; 
 }
