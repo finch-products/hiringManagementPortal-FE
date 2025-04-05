@@ -1,12 +1,12 @@
 <ng-container *ngIf="pdfUrl">
-
-  <div class="pdf-viewer-container">
-    <button class="close-btn" (click)="PreviewClose()"> X </button>
+  <div class="pdf-viewer-container" [ngClass]="{'fullscreen': isFullscreen}">
+    <button class="close-btn" (click)="PreviewClose()">X</button>
+    <button class="pop-out-btn" (click)="toggleFullscreen()">↔</button>
+    
     <ngx-extended-pdf-viewer 
       [src]="pdfUrl" 
       useBrowserLocale="true" 
       [textLayer]="true">
     </ngx-extended-pdf-viewer>
   </div>
-  
-  </ng-container>
+</ng-container>

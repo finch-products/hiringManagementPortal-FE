@@ -270,6 +270,11 @@ export class HttpService {
     );
   }
 
+  SearchCandidates(candidateData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}candidates/search-candidates/`, candidateData, { headers: { 'Content-Type': 'application/json' } }).pipe(
+      catchError(this.handleError)
+    );
+  }
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
     let errorResponse = error.error;

@@ -125,12 +125,22 @@ export class DemandComponent implements OnInit {
       return;
     }
 
-    const payload = {
+    const payload: { 
+      dem_id: any; 
+      dem_dsm_id: any; 
+      dem_updateby_id: string; 
+      dem_comment?: string 
+    } = {
       dem_id: this.demands.cdl_dem_id,
       dem_dsm_id: dsm_id,
-      dem_comment: this.dem_comment,
       dem_updateby_id: this.dem_updateby_id
     };
+
+    if (this.dem_comment) {
+      payload.dem_comment = this.dem_comment;
+    }
+    
+
     this.onCancel();
     this.httpService.updateDemand(payload).subscribe({
       next: (response) => {

@@ -120,9 +120,13 @@ span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
 .page-content {
   width: 100%;
   // max-width: 75%;
-  height: auto;
+  height: 100% !important;
   gap: 5%;
   flex: 0 0 auto;
+  padding:0px !important;
+  .app-main{
+    padding: 15px !important;
+  }
 }
 
 

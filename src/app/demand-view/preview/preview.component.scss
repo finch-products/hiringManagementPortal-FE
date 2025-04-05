@@ -1,19 +1,45 @@
 .pdf-viewer-container {
-    width:20vw;
+    width:24vw;
     height:80vh;
-    margin:0;
+    margin:auto;
     right: 0%;
     position: absolute;
     z-index:1000;
+    transition: all 0.3s ease-in-out;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   }
+  
+.close-btn, .pop-out-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1001;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.close-btn {
-    transform: scale(0.8);
-    position: fixed;
-    margin-left: 18%;
-    margin-top: 2%;
-    z-index: 1001;
-    padding: 1%;
-    top: 7.5%;
-    border-radius:50%;
+.fullscreen ngx-extended-pdf-viewer {
+  width: 90vw !important;
+  height: 90vh !important;
+}
+
+.pop-out-btn {
+  right: 50px;
 }

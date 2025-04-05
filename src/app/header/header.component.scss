@@ -10,6 +10,7 @@
   position: fixed;
   left: 10px; /* Consistent 10px on both sides */
   right: 10px; /* Consistent 10px on both sides */
+  top:0px;
   height: var(--header-height);
   z-index: 1000;
   overflow: hidden;

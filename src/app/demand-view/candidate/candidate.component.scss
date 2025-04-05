@@ -11,7 +11,7 @@ body, html {
     border-radius: 10px;
     /*width: calc(100% - 250px);  Adjust width dynamically based on sidebar */
     min-width: 20vw;
-    width: 49vw!important; 
+    width: 50vw!important; 
     height: 80vh;
     transition: width 0.8s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
     border: 2px solid #ddd; 
@@ -19,7 +19,7 @@ body, html {
     position: relative;
     cursor: ew-resize;
     user-select: none;
-    overflow: hidden;
+    overflow-y: auto;
 }
 .no-arrow {
     appearance: none;  /* Hides default dropdown arrow */
@@ -451,11 +451,11 @@ button[type="submit"]:hover {
 /* Filtered Candidates List */
 .filtered-candidates-list {
     position: absolute;
-    top: 44px; 
-    left: 41%;
+    top: 120x; 
+    left: 45.5%;
     transform: translateX(-50%);
-    width: 79%;
-    max-width: 600px;
+    width: 86%;
+    max-width: 100%;
     background: white;
     border: 2px solid #242323;
     border-top: none;
@@ -508,10 +508,12 @@ button[type="submit"]:hover {
 .candidates-container.preview-open {
     margin-left:1px;
     width: 28vw!important; 
+    resize: none;
+    cursor: none;
 
     .filtered-candidates-list {
-        left: 35%;
-        width: 70%;
+        left: 42%;
+        width: 80%;
         display: flex;
         flex-direction: column;
         gap: 8px;
