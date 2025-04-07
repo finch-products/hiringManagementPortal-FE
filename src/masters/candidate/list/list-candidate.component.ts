@@ -14,7 +14,17 @@ import { CandidateService } from '../../../app/services/candidate.service';
 export class ListCandidateComponent {
 
   candidates: any[] = [];
+  dataSource2: any[] = [];
   displayedColumns: string[] = ['cdm_emp_id', 'cdm_name', 'cdm_email', 'cdm_phone', 'cdm_location', 'cdm_profile', 'cdm_keywords'];
+  searchData = {
+    emp_id: '',
+    name: '',
+    email: '',
+    phone: '',
+    location: '',
+    keyword: ''
+  };
+  filterserach=false;
   
   dataSource = new MatTableDataSource<Candidate>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -45,4 +55,47 @@ export class ListCandidateComponent {
     this.dataSource.filter = filterValue;
   }
 
+  search(): void {
+    this.filterserach = true;
+    // Remove empty values before sending to API
+    const filteredData = Object.fromEntries(
+      Object.entries(this.searchData).filter(([_, value]) => value.trim() !== '')
+    );
+
+    if (Object.keys(filteredData).length === 0) {
+      console.log('No valid search parameters provided.');
+      return;
+    }
+
+    console.log('Searching with:', filteredData);
+    
+    this.httpService.SearchCandidates(filteredData).subscribe({
+      next: (response: { candidates: any[] }) => {
+        this.dataSource2 = response.candidates.map((candidate: any) => ({
+          cdm_emp_id: candidate.cdm_id,  
+          cdm_name: candidate.name,
+          cdm_email: candidate.email,
+          cdm_phone: candidate.phone,
+          cdm_location: candidate.location,
+          cdm_profile: candidate.profile || 'N/A', 
+          cdm_keywords: candidate.keywords
+        }));
+      },
+      error: (error: any) => {
+        console.error('API Error:', error);
+      }
+    });
+  }
+
+  resetserachfilter(){
+    this.filterserach=false;
+    this.searchData = {
+      emp_id: '',
+      name: '',
+      email: '',
+      phone: '',
+      location: '',
+      keyword: ''
+    };
+  }
 }

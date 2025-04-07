@@ -314,6 +314,7 @@ export class CandidateComponent {
           panelClass: ['success-snackbar']
         });
         this.candidatesLinked.emit();
+        this.loadData(this.dem_id);
 
       },
       error: (error) => {
