@@ -25,8 +25,8 @@ interface Interviewer {
 })
 export class InterviewScheduleComponent implements OnInit {
   @Input() candidateId: string = '';
-  @Input() candidateName: string = ''; 
   @Input() demandId: string = '';
+  @Input() candidateName: string = ''; 
   @Output() closeForm = new EventEmitter<void>();
   @Output() interviewScheduled = new EventEmitter<string>();
   interviewForm: FormGroup;
@@ -134,7 +134,7 @@ export class InterviewScheduleComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching CDL ID:', error);
-        this.snackBar.open('Error getting CDL ID', '❌', {
+        this.snackBar.open('Error getting CDL ID', 'Close', {
           duration: 5000
         });
       }

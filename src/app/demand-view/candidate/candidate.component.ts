@@ -60,6 +60,8 @@ export class CandidateComponent {
   cdm_comment: string = '';
   csm_code: string = '';
   dem_id: string = '';
+  interviewTypes: any[] = [];
+  interviewDetailsMap: Map<string, any[]> = new Map();
 
   readonly cdm_updateby_id = 'emp_22032025_1';
 
@@ -74,7 +76,7 @@ export class CandidateComponent {
         this.loadData(demandId);
       }
     });
-
+    this.loadInterviewTypes();
     this.httpService.getCandidateStatuses().subscribe(
       (response) => {
         this.statusList = response;
@@ -189,6 +191,7 @@ export class CandidateComponent {
         this.candidates = data.candidates ? [...data.candidates].reverse() : [];
         this.originalCandidates = [...this.candidates]; 
         this.candidates.forEach(candidate => {
+          this.loadInterviewDetailsForCandidate(candidate);
           this.loadCandidateStatusesById(candidate.cdl_cdm_id).subscribe(
             (statuses) => {
               candidate.statusList = statuses && statuses.length > 0 ? statuses : this.statusList;
@@ -603,4 +606,121 @@ getActiveFilters(): any[] {
       this.cdr.detectChanges(); // Trigger change detection if needed
     }
   }
+
+loadInterviewTypes() {
+  this.httpService.getInterviewTypes().subscribe(
+    (response) => {
+      this.interviewTypes = response;
+    },
+    (error) => {
+      console.error('Error fetching interview types:', error);
+    }
+  );
+}
+
+loadInterviewDetailsForCandidate(candidate: any) {
+  if (!candidate.cdl_cdm_id || !this.dem_id) {
+    console.log('Missing candidate ID or demand ID');
+    return;
+  }
+  this.httpService.getInterviewDetails(
+    candidate.cdl_cdm_id,
+    this.dem_id,
+    'next_one'
+  ).subscribe({
+    next: (response) => {
+      console.log('Interview details response:', response);
+      if (response && response.length > 0) {
+        this.interviewDetailsMap.set(candidate.cdl_cdm_id, response);
+      }
+      this.cdr.detectChanges();
+    },
+    error: (error) => {
+      console.error('Error fetching interview details:', error);
+    }
+  });
+}
+
+getInterviewTypeLabel(typeId: number): string {
+  const type = this.interviewTypes.find(t => t.value === typeId);
+  return type ? type.label : 'Unknown';
+}
+
+formatInterviewDate(dateStr: string, timeStr: string): string {
+  if (!dateStr) return '';
+  
+  const date = new Date(dateStr);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  
+  let dateText = '';
+  
+  if (date.toDateString() === today.toDateString()) {
+    dateText = 'Today';
+  } else if (date.toDateString() === tomorrow.toDateString()) {
+    dateText = 'Tomorrow';
+  } else if (date.toDateString() === yesterday.toDateString()) {
+    dateText = 'Yesterday';
+  } else {
+    dateText = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  
+  if (timeStr) {
+    const timeParts = timeStr.split(':');
+    const hours = parseInt(timeParts[0]);
+    const minutes = timeParts[1];
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    dateText += `, ${displayHours}:${minutes} ${ampm}`;
+  }
+  
+  return dateText;
+}
+
+toggleInterviewDetails(candidateId: string) {
+  const candidate = this.candidates.find(c => c.cdl_cdm_id === candidateId);
+  if (candidate) {
+    candidate.showInterviewDetails = !candidate.showInterviewDetails;
+    if (candidate.showInterviewDetails && !this.interviewDetailsMap.has(candidateId)) {
+      this.loadInterviewDetailsForCandidate(candidate);
+    }
+  }
+}
+
+hasInterviewDetails(candidateId: string): boolean {
+  return this.interviewDetailsMap.has(candidateId);
+}
+
+isToday(dateStr: string): boolean {
+  if (!dateStr) return false;
+  const date = new Date(dateStr);
+  const today = new Date();
+  return date.toDateString() === today.toDateString();
+}
+
+
+getInterviewerNames(interviewers: any[]): string {
+  if (!interviewers || !interviewers.length) return '';
+  return interviewers.map(i => i.name).join(', ');
+}
+
+getInterviewDetailsForDisplay(candidateId: string): any[] {
+  const interviews = this.interviewDetailsMap.get(candidateId);
+  if (!interviews) return [];
+  
+  return interviews.map(interview => ({
+    ...interview,
+    formattedDate: this.formatInterviewDate(interview.ist_interviewdate, interview.ist_interview_start_time),
+    interviewerNames: this.getInterviewerNames(interview.ist_interviewers),
+    typeLabel: this.getInterviewTypeLabel(interview.ist_interviewtype),
+    isToday: this.isToday(interview.ist_interviewdate)
+  }));
+}
+
 }
