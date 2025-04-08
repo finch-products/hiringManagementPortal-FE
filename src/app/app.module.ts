@@ -73,6 +73,8 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
 import { CandidateTrackingComponent } from './candidates/tracking/candidate-tracking.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { InterviewScheduleComponent } from './demand-view/interview-schedule/interview-schedule.component';
+import { DemandHistoryComponent2 } from './demand-view/demand-history/demand-history.component';
+import { AdvanceSearchCandidatesComponent } from './demand-view/advance-search-candidates/advance-search-candidates.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,7 +108,9 @@ import { InterviewScheduleComponent } from './demand-view/interview-schedule/int
     Otherview5Component,
     LoaderComponent,
     CandidateTrackingComponent,
-    InterviewScheduleComponent
+    InterviewScheduleComponent,
+    DemandHistoryComponent2,
+    AdvanceSearchCandidatesComponent,
   ],
   imports: [
     MatRadioModule,

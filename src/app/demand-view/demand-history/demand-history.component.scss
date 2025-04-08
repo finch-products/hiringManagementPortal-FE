@@ -1,0 +1,100 @@
+.history-wrapper {
+    position: absolute;
+    right: -20px;
+    top: 0;
+    bottom: 0;
+    width: 30%;
+    height:100vh;
+    padding: 6px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    z-index: 100;
+    background: #F8F9FA;
+    border: 2px solid #ddd; 
+    border-radius: 10px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #444;
+    }
+    
+    span{
+        font-weight:bold !important;
+        color:rgb(198, 242, 234) !important;
+    }
+    button {
+      background-color: #e0e0e0;
+      color: #000;
+    }
+  }
+  
+  .date-section {
+    font-weight: 600;
+    font-size: 15px;
+    margin: 15px 0 5px;
+    color: #666;
+  }
+  
+  .history-entry {
+    margin-bottom: 10px;
+  }
+  
+  .entry-content {
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 12px 16px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .entry-icon {
+    margin-right: 4px !important;
+    color: #4caf50; // green icon like Google Sheets
+  }
+  
+  .text-block {
+    p {
+      margin: 2px 0;
+      font-size: 14px;
+    }
+  
+    .message {
+      font-weight: 500;
+      color: #222;
+    }
+  
+    .time {
+      color: #777;
+      font-size: 12px;
+    }
+  
+    .updated-by {
+      font-size: 12px;
+      color: #555;
+      font-style: italic;
+    }
+  }
+  
+  .break {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin-top: 10px;
+  }
+  
+  .no-data {
+    text-align: center;
+    margin-top: 30px;
+    color: #999;
+    font-style: italic;
+  }

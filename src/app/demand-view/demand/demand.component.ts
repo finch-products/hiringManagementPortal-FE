@@ -29,6 +29,7 @@ export class DemandComponent implements OnInit {
   selectedStatus: string = '';
   originalStatus: string | null = null;
   dem_comment: string = '';
+  @Output() showHistoryRequested  = new EventEmitter<string>();
   readonly dem_updateby_id = 'emp_22032025_1';
   constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar, private router: Router) {
 
@@ -169,7 +170,8 @@ export class DemandComponent implements OnInit {
     this.showPopup = true;
   }
 
-  redirectTodemand_history() {
-    this.router.navigate(['history', this.demandId]);
+  show_demand_history(){
+    this.showHistoryRequested.emit(this.demandId);
+    console.log("passed demand id from parent")
   }
 }

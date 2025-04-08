@@ -38,15 +38,23 @@
     </mat-card>
   
     <!-- Selection Percentage Chart -->
-    <mat-card class="chart-card">
-      <h4 class="chart-title"> what is the Selection Percentage by client </h4>
-      <ngx-charts-pie-chart
-        [view]="view"
-        [results]="clientselection"
-        [customColors]="customColors"
-        [labels]="true"
-        [doughnut]="true">
-      </ngx-charts-pie-chart>
-    </mat-card>
+<mat-card class="chart-card">
+  <h4 class="chart-title">What is the Selection Percentage by Client</h4>
+
+  <div *ngIf="clientselection && clientselection.length > 0; else noData">
+    <ngx-charts-pie-chart
+      [view]="view"
+      [results]="clientselection"
+      [customColors]="customColors"
+      [labels]="true"
+      [doughnut]="true">
+    </ngx-charts-pie-chart>
+  </div>
+
+  <ng-template #noData>
+    <h2 style="text-align: center; padding: 20px;">No data for selection percentage by client</h2>
+  </ng-template>
+</mat-card>
+
   </div>
   
