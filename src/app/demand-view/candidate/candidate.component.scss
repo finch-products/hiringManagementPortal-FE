@@ -73,11 +73,11 @@ body, html {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: flex-start; /* Change from 'stretch' (default) to 'flex-start' */
     gap: 10px;
     max-width: 100% !important;
     height: 70%;
     overflow-y: auto !important;
-    overflow-x: hidden;
     cursor: pointer;
 }
 
@@ -92,11 +92,17 @@ body, html {
     border: 1px solid #ddd;
     position: relative;
     width: 23vw !important;
-    height:210px;
+    height: 100%;
+    min-height: 230px; 
     box-sizing: border-box;
     margin: 0% !important;
     cursor: pointer;
 }
+
+.candidate-card.expanded {
+    height: auto;
+    min-height: 230px;
+  }
 
 .candidate-header {
     display: flex;
@@ -133,6 +139,7 @@ body, html {
 }
 
 .candidate-info {
+    margin-top: 5%;
     flex-grow: 1;
     margin-left: 5px;
     min-width: 0; 
@@ -147,6 +154,7 @@ body, html {
 .candidate-id {
     font-size: 16px;
 }
+
 
 /* Modernized Status Badge */
 .status {
@@ -499,7 +507,6 @@ button[type="submit"]:hover {
     top: 35px;  
     right: 2px; 
 }
-
 .menu-container button {
     background: none;
     border: none;
@@ -509,7 +516,7 @@ button[type="submit"]:hover {
 /* Add this class for when preview is open */
 .candidates-container.preview-open {
     margin-left:1px;
-    width: 48% !important; 
+    width: 50% !important; 
     resize: none;
     cursor: none;
 
@@ -734,7 +741,7 @@ button[type="submit"]:hover {
 /* When any filter is expanded, push content down */
 .filter-control.expanded + .active-filters-row,
 .filter-control.expanded ~ .candidates-list {
-    margin-top: 60px; /* Adjust this value based on your expanded filter height */
+    margin-top: 5px;
 }
 
 .candidates-list-container {
@@ -809,3 +816,65 @@ button[type="submit"]:hover {
 .filter-control.expanded[_ngcontent-ng-c1537318716] + .active-filters-row[_ngcontent-ng-c1537318716], .filter-control.expanded[_ngcontent-ng-c1537318716] ~ .candidates-list[_ngcontent-ng-c1537318716] {
     margin-top: 0px; 
 }
+
+.interview-section {
+    border-top: 1px solid #eee;
+    
+    .interview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 5px 0;
+      
+      h3 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+        color: #555;
+      }
+      
+      mat-icon {
+        color: #777;
+      }
+    }
+    
+    .interview-details {
+      margin-top: 8px;
+      padding: 10px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      
+      .interview-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        
+        > div {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 13px;
+          
+          mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            color: #666;
+          }
+        }
+      }
+      
+      .no-interviews {
+        font-style: italic;
+        color: #666;
+        text-align: center;
+        padding: 10px;
+      }
+    }
+    
+    .today {
+      font-weight: bold;
+      color: #1976d2;
+    }
+  }

@@ -154,71 +154,97 @@
             </div>
         </div>
     </div>
+</div>
     
     
-    
-    <div class="candidates-list"  >
-        <div class="candidate-item"
-            *ngFor="let candidate of  candidates">
-            <div class="candidate-card">
-                <div class="candidate-header">
-                    <div class="avatar-container">
-                        <mat-icon>person_outline</mat-icon>
-                    </div>
-                    <div class="candidate-info" (click)="redirectTocandidateHistory( candidate?.cdl_cdm_id )">
-                        <h3 class="candidate-name">{{ candidate.name ||
-                            candidate.cdm_name }}</h3>
-                        <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id ||
-                            candidate.cdm_id}}</p>
-                        <p class="candidate-email">{{ candidate.email ||
-                            candidate.cdm_email}}</p>
-                    </div>
-                    <div>
-                        <select class="status"
-                                [ngClass]="getStatusClasses(candidate, !!searchTerm.trim())" 
-                                *ngIf="statusedit"
-                                (change)="onStatusChange(candidate, $event)">
-                          <option *ngFor="let status of candidate.statusList"
-                                  [value]="status.csm_code">
-                            {{ status.csm_code }}
-                          </option>
-                        </select>
-                      </div>
-                      <div  class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')"  *ngIf="!statusedit"> Status : {{ candidate.candidate_status.csm_code || 'N/A' }}</div>
-                        <!-- Three dots menu -->
-                        <div class="menu-container">
-                            <button mat-icon-button [matMenuTriggerFor]="menu">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                            
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="toggleStatusEdit()">Status Edit</button>
-                                <button mat-menu-item (click)="openInterviewForm(candidate)">Schedule Interview</button>
-                            </mat-menu>
-                        </div>
-
-                    </div>
-
-                <div class="skills">
-                    Skills:
-                    <ng-container *ngIf="candidate.keywords; else noKeywords">
-                        <span
-                            *ngFor="let keyword of candidate.keywords.split(',')"
-                            class="skill-chip">
-                            <mat-icon aria-hidden="false" class="icon1"
-                                style="font-size: 13px;">check_circle_outline</mat-icon>
-                            {{ keyword.trim() }}
-                        </span>
-                    </ng-container>
-                    <ng-template #noKeywords>
-                        <span class="skill-chip">N/A</span>
-                    </ng-template>
+<div class="candidates-list">
+    <div class="candidate-item" *ngFor="let candidate of candidates">
+        <div class="candidate-card" [class.expanded]="candidate.showInterviewDetails">
+            <div class="candidate-header">
+                <div class="avatar-container">
+                    <mat-icon>person_outline</mat-icon>
                 </div>
-
-                <span class="Description">
-                    Description: {{ candidate.description ||
-                    candidate.cdm_description ||'N/A' }}
-                </span>
+                <div class="candidate-info" (click)="redirectTocandidateHistory(candidate?.cdl_cdm_id)">
+                    <h3 class="candidate-name">{{ candidate.name || candidate.cdm_name }}</h3>
+                    <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id || candidate.cdm_id}}</p>
+                    <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
+                </div>
+                
+                <div class="status-and-menu">
+                    <div class="status-container">
+                        <select class="status" [ngClass]="getStatusClasses(candidate, !!searchTerm.trim())" 
+                                *ngIf="statusedit" (change)="onStatusChange(candidate, $event)">
+                            <option *ngFor="let status of candidate.statusList" [value]="status.csm_code">
+                                {{ status.csm_code }}
+                            </option>
+                        </select>
+                        <div class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')" *ngIf="!statusedit">
+                            Status: {{ candidate.candidate_status.csm_code || 'N/A' }}
+                        </div>
+                    </div>
+                    
+                    <div class="menu-container">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="toggleStatusEdit()">Status Edit</button>
+                            <button mat-menu-item (click)="openInterviewForm(candidate)">Schedule Interview</button>
+                        </mat-menu>
+                    </div>
+                </div>
             </div>
+
+            <div class="skills">
+                Skills:
+                <ng-container *ngIf="candidate.keywords; else noKeywords">
+                    <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
+                        <mat-icon aria-hidden="false" class="icon1" style="font-size: 13px;">check_circle_outline</mat-icon>
+                        {{ keyword.trim() }}
+                    </span>
+                </ng-container>
+                <ng-template #noKeywords>
+                    <span class="skill-chip">N/A</span>
+                </ng-template>
+            </div>
+
+            <span class="Description">
+                Description: {{ candidate.description || candidate.cdm_description || 'N/A' }}
+            </span>
+
+            <!-- Interview Section -->
+            <div *ngIf="hasInterviewDetails(candidate?.cdl_cdm_id || candidate?.cdm_id)" class="interview-section">
+                <div class="interview-header" (click)="toggleInterviewDetails(candidate?.cdl_cdm_id || candidate?.cdm_id)">
+                    <h3>Interview Information</h3>
+                    <mat-icon>{{candidate.showInterviewDetails ? 'expand_less' : 'expand_more'}}</mat-icon>
+                </div>
+                <div *ngIf="candidate.showInterviewDetails" class="interview-details">
+                    <div *ngFor="let interview of getInterviewDetailsForDisplay(candidate?.cdl_cdm_id || candidate?.cdm_id)" 
+                         class="interview-item">
+                        <div class="interview-time">
+                            <mat-icon>schedule</mat-icon>
+                            <span [class.today]="interview.isToday">{{interview.formattedDate}}</span>
+                        </div>
+                        <div class="interview-interviewers" *ngIf="interview.ist_interviewers?.length">
+                            <mat-icon>people</mat-icon>
+                            <span>{{interview.interviewerNames}}</span>
+                        </div>
+                        <div class="interview-type">
+                            <mat-icon>location_on</mat-icon>
+                            <span>{{interview.typeLabel}}</span>
+                        </div>
+                        <div class="interview-remarks" *ngIf="interview.ist_remarks">
+                            <mat-icon>notes</mat-icon>
+                            <span>{{interview.ist_remarks}}</span>
+                        </div>
+                        <div class="interview-meeting" *ngIf="interview.ist_meeting_details">
+                            <mat-icon>link</mat-icon>
+                            <span>{{interview.ist_meeting_details}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>

@@ -109,7 +109,7 @@ export class HttpService {
 
 
   getInternalDepartmentDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}departments/department-details/`, this.getHeaders()).pipe(
+    return this.http.get<any>(`${this.baseUrl}departments/details/`, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
   }
@@ -322,6 +322,16 @@ export class HttpService {
 
   getTimezones(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}interview-scheduling/timezone-dropdown/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getInterviewDetails(candidate_id: string, demand_id: string, filter_type: string): Observable<any> {
+    return this.http.post<any>(`http://127.0.0.1:8000/api/interview-scheduling/api/interview-details/`, {
+      candidate_id,
+      demand_id,
+      filter_type
+    }).pipe(
       catchError(this.handleError)
     );
   }
