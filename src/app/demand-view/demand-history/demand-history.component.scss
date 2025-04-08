@@ -3,7 +3,7 @@
     right: -20px;
     top: 0;
     bottom: 0;
-    width: 30%;
+    width: 35%;
     height:100vh;
     padding: 6px;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
     
     span{
         font-weight:bold !important;
-        color:rgb(198, 242, 234) !important;
+        color:#77c8f1 !important;
     }
     button {
       background-color: #e0e0e0;
@@ -60,6 +60,9 @@
   
   .entry-icon {
     margin-right: 4px !important;
+    width:5%;
+    margin-left:2px;
+    height:2%;
     color: #4caf50; // green icon like Google Sheets
   }
   
