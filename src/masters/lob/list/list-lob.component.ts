@@ -29,6 +29,7 @@ export class ListLOBComponent {
       this.dataSource.data = lob;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = this.createFilter();
     });
   }
 
@@ -41,6 +42,20 @@ export class ListLOBComponent {
     });
   }
 
+  createFilter(): (data: LOB, filter: string) => boolean {
+    return (data: LOB, filter: string): boolean => {
+      const searchTerms = filter.toLowerCase();
+      
+      return (
+        data.lob_name.toLowerCase().includes(searchTerms) ||
+        (data.lob_description?.toLowerCase().includes(searchTerms) ?? false) ||
+        (data.lob_clientpartner?.emp_name.toLowerCase().includes(searchTerms) ?? false) ||
+        (data.lob_deliverymanager?.emp_name.toLowerCase().includes(searchTerms) ?? false) ||
+        (data.lob_insertby_id?.emp_name.toLowerCase().includes(searchTerms) ?? false) ||  // Changed to lob_insertby_id
+      (data.lob_updateby_id?.emp_name.toLowerCase().includes(searchTerms) ?? false) 
+      );
+    };
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
