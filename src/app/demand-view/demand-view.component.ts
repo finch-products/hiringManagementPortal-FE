@@ -1,8 +1,24 @@
-import { Component, ViewChild, OnInit, OnDestroy   } from '@angular/core';
+import { Component, ViewChild,Output,EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DemandComponent } from './demand/demand.component';
 import { CandidateComponent } from './candidate/candidate.component';
 import { HttpService } from '../services/http.service';
+
+interface Candidate {
+  cdm_name: string;
+  cdm_id: string;
+  cdm_email:string;
+  cdl_cdm_id: string;
+  cdm_keywords: string[];
+  cdm_description:string;
+  location_name:number|null;
+  cdm_profile: string;
+  avatar?: string;
+  candidate_status: {
+    csm_id: number | null;
+    csm_code: string;
+  }
+}
 @Component({
   selector: 'app-demand-view',
   templateUrl: './demand-view.component.html',
@@ -14,6 +30,10 @@ export class DemandViewComponent implements OnInit, OnDestroy{
   selectedPdfUrl!: string ;
   demandId: string = '';
   isPreviewOpen: boolean = false;
+  showHistory = false;
+  showAdvanceSearch=false;
+  selectedCandidates!:Candidate;
+  dem_id:string='';
   showTimerHeader = true;
   days = 0;
   hours = 0;
@@ -100,5 +120,30 @@ onInterviewScheduled(candidateId: string) {
   if (this.candidateComponent) {
     this.candidateComponent.updateCandidateStatusToInterviewScheduled(candidateId);
   }
+}
+
+onShowHistory(demandid: string) {
+  this.demandId = demandid;
+  this.showHistory = true;
+  console.log("Demand ID passed to history:", demandid);
+}
+
+onHistoryClose() {
+  this.showHistory = false;
+  this.demandId ='';
+}
+
+onshowAdvanceSearch(dem_id:string){
+  this.showAdvanceSearch=true;
+  this.dem_id=dem_id;
+  console.log("demand id in parent component:",this.dem_id)
+}
+onAdvanceSearchClose(){
+  this.showAdvanceSearch=false;
+  this.dem_id='';
+}
+candidatesSelected(candidates:Candidate){
+  console.log("Candidates received in parent component",candidates)
+  this.selectedCandidates=candidates;
 }
 }

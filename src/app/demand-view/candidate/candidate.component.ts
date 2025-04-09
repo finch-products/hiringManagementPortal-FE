@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef,Input, HostListener, ElementRef, Renderer2  } from '@angular/core';
+import { Component, EventEmitter,OnChanges,SimpleChanges, Output, ChangeDetectorRef,Input, HostListener, ElementRef, Renderer2  } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,11 +22,15 @@ interface Candidate {
   templateUrl: './candidate.component.html',
   styleUrl: './candidate.component.scss'
 })
-export class CandidateComponent {
+export class CandidateComponent implements OnChanges{
 
   @Output() candidatesLinked = new EventEmitter<void>();
   @Output() pdfSelected = new EventEmitter<string>();
+  @Output() ShowAdvancSearch= new EventEmitter<string>();
   @Input() isPreviewOpen = false;
+  @Input() showhistory = false;
+  @Input() showsearch =false;
+  @Input() candidatesSelected!:Candidate;
 
   candidates: any[] = [];
   filteredCandidates: Candidate[] = [];
@@ -64,6 +68,13 @@ export class CandidateComponent {
   interviewDetailsMap: Map<string, any[]> = new Map();
 
   readonly cdm_updateby_id = 'emp_22032025_1';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['candidatesSelected'] && changes['candidatesSelected'].currentValue) {
+      console.log('Candidates selected changed:', changes['candidatesSelected'].currentValue);
+      this.selectedCandidates.push(this.candidatesSelected);
+    }
+  }
 
   constructor(private httpService: HttpService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private snackBar: MatSnackBar, private router: Router,private el: ElementRef, private renderer: Renderer2) { }
 
@@ -287,6 +298,12 @@ export class CandidateComponent {
   }
 
   submitSelectedCandidates() {
+    // Add candidatesSelected from @Input() if not already in selectedCandidates
+  if (this.candidatesSelected && !this.selectedCandidates.includes(this.candidatesSelected)) {
+    this.selectedCandidates.push(this.candidatesSelected);
+    console.log("✅ Input candidate added to selectedCandidates:", this.candidatesSelected);
+  }
+
     if (this.selectedCandidates.length === 0) {
       this.snackBar.open("No candidates selected..!", "❌", {
         duration: 3000,
@@ -724,4 +741,9 @@ getInterviewDetailsForDisplay(candidateId: string): any[] {
   }));
 }
 
+
+  OpenAdvanceSearch(){
+    this.ShowAdvancSearch.emit(this.dem_id);
+    console.log("request for advance search from candidate component for demand-id:",this.dem_id);
+  }
 }

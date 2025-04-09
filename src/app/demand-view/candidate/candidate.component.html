@@ -26,7 +26,9 @@
     </div>
 </div>
 
-<div class="candidates-container"  [ngClass]="{'preview-open': isPreviewOpen}" [ngClass]="{'form-open': showInterviewForm}"  (mousedown)="startDrag($event)">
+<div class="candidates-container"  [ngClass]="{
+    'preview-open': isPreviewOpen || showhistory ||showsearch ||showInterviewForm,
+  }"  (mousedown)="startDrag($event)">
 
     <div class="candidateheading">
         <h1>Candidate Details </h1>
@@ -45,6 +47,9 @@
         <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search Candidates to Link" />
             <button mat-icon-button (click)="redirectToAddCandidates()">
                 <mat-icon>group_add</mat-icon>
+            </button>
+            <button mat-icon-button (click)="OpenAdvanceSearch()">
+                <mat-icon>search</mat-icon>
             </button>
         </div>
     </div>

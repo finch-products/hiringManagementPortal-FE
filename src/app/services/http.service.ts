@@ -275,6 +275,13 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
+
+  demandHistory(dem_id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}demand-history/demand-history/${dem_id}/`, { headers: { 'Content-Type': 'application/json' } }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   /** Handle API Errors */
   private handleError(error: HttpErrorResponse) {
     let errorResponse = error.error;

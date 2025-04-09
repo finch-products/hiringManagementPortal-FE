@@ -22,7 +22,7 @@ export class ListCandidateComponent {
     email: '',
     phone: '',
     location: '',
-    keyword: ''
+    keywords: ''
   };
   filterserach=false;
   
@@ -95,7 +95,7 @@ export class ListCandidateComponent {
       email: '',
       phone: '',
       location: '',
-      keyword: ''
+      keywords: ''
     };
   }
 }

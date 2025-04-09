@@ -13,12 +13,17 @@
     </div>
     <div class="apps">
     <app-demand fxFlex="40" (pdfSelected)="handlePdfSelection($event)"></app-demand>
+
     
     <app-candidate fxFlex="40" 
-     [fxFlex]="isPreviewOpen ? '30vw' : '49vw'" 
+     [fxFlex]="isPreviewOpen? '30vw' : '49vw'"
      [isPreviewOpen]="isPreviewOpen"
+     [showhistory]="showHistory"
+     [showsearch]="showAdvanceSearch"
      (candidatesLinked)="onCandidatesLinked()" 
-     (pdfSelected)="handlePdfSelection($event)">
+     (pdfSelected)="handlePdfSelection($event)"
+     (ShowAdvancSearch)="onshowAdvanceSearch($event)"
+     [candidatesSelected]="selectedCandidates">
     </app-candidate>
 
     <app-preview fxFlex="30" [pdfUrl]="selectedPdfUrl" (close)="onPreviewClose()"></app-preview>
@@ -29,5 +34,22 @@
     (closeForm)="candidateComponent.closeInterviewForm()"
     (interviewScheduled)="onInterviewScheduled($event)">
 </app-interview-schedule>
-</div>
+
+<ng-container *ngIf="showHistory">
+    <app-demand-history2
+      fxFlex="30"
+      [demandid]="demandId"
+      (close)="onHistoryClose()">
+    </app-demand-history2>
+  </ng-container>
+  
+  <ng-container *ngIf="showAdvanceSearch">
+    <app-advance-search-candidates
+      fxFlex="30"
+      [dem_id]="dem_id"  
+      (pdfSelected)="handlePdfSelection($event)"
+      (candidates)="candidatesSelected($event)"  
+      (close)="onAdvanceSearchClose()">    
+    </app-advance-search-candidates>
+  </ng-container>
 </div>

@@ -11,8 +11,8 @@ body, html {
     border-radius: 10px;
     /*width: calc(100% - 250px);  Adjust width dynamically based on sidebar */
     min-width: 20vw;
-    width: 52.8vw!important; 
-    height: 80vh;
+    width: 49vw!important; 
+    height: 100vh;
     transition: width 0.8s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
     border: 2px solid #ddd; 
     resize: horizontal;
@@ -76,7 +76,7 @@ body, html {
     align-items: flex-start; /* Change from 'stretch' (default) to 'flex-start' */
     gap: 10px;
     max-width: 100% !important;
-    height: 55vh;
+    height: 70%;
     overflow-y: auto !important;
     cursor: pointer;
 }
@@ -324,7 +324,7 @@ body, html {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-bottom: 15px;
+    padding-bottom: 4px;
     cursor: pointer;
     margin-top: 4px;
 }
@@ -452,6 +452,7 @@ button[type="submit"]:hover {
     top: 0;
     left: 0;
     width: 100%;
+    height:6%;
     background: white;
     border-radius: 5px;
     margin:0;
@@ -506,7 +507,6 @@ button[type="submit"]:hover {
     top: 35px;  
     right: 2px; 
 }
-
 .menu-container button {
     background: none;
     border: none;
@@ -516,7 +516,7 @@ button[type="submit"]:hover {
 /* Add this class for when preview is open */
 .candidates-container.preview-open {
     margin-left:1px;
-    width: 28vw!important; 
+    width: 50% !important; 
     resize: none;
     cursor: none;
 
@@ -589,88 +589,6 @@ button[type="submit"]:hover {
     }    
 }
 
-
-/* Add this class for when preview is open */
-.candidates-container.form-open {
-    margin-left:1px;
-    width: 23vw!important; 
-
-    .search-bar{
-        width:23vw !important;
-        gap:4px;
-        margin: 0% !important;
-    }
-    .search-container{
-        width:21.5vw !important;
-    }
-    .filtered-candidates-list {
-        left: 35%;
-        width: 70%;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .filtered-candidate-item {
-        max-width: 18vw !important;
-        height: auto;
-        font-size: 0.8rem;
-        padding: 4px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-    }
-    
-    .filtered-candidate-card {
-        max-width: 100% !important;
-        height: auto;
-        display: flex;
-        align-items: center;
-        padding: 6px;
-    }
-    
-    .filtered-candidate-header {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        width: 100%;
-    }
-    
-    .candidate-info {
-        flex-grow: 1;
-        overflow:hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-    
-    .candidate-name {
-        font-size: 0.9rem;
-        margin: 0;
-        font-weight: bold;
-    }
-    
-    .candidate-id, .status {
-        font-size: 0.75rem; 
-        margin: 2px 0;
-    }
-    
-    .detail-box {
-        font-size: 0.7rem;
-        margin-right: 2px;
-    }
-    
-    .detail-box a {
-        font-size: 0.7rem;
-        text-decoration: none;
-        color: #007bff;
-    }
-    
-    input[type="checkbox"] {
-        margin-right: 6px;
-    }    
-}
 .popup-overlay {
     position: fixed;
     top: 0;
