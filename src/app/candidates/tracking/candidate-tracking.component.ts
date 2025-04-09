@@ -63,7 +63,7 @@ export class CandidateTrackingComponent {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
   
     this.filteredCandidates.filterPredicate = (data: any, filter: string) => {
-      const columnsToSearch = ['cdm_name', 'cdm_location', 'candidate_status.csm_code']; // Add more columns if needed
+      const columnsToSearch = ['cdm_name', 'lcm_name', 'candidate_status.csm_code']; // Add more columns if needed
       return columnsToSearch.some(column => {
         const columnValue = this.getNestedValue(data, column)?.toString().toLowerCase();
         return columnValue?.includes(filter);

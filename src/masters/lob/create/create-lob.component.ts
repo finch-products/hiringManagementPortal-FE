@@ -126,7 +126,27 @@ export class CreateLOBComponent implements OnInit {
       });
       this.httpService.postaddLOB(formData).subscribe({
         next: (response) => {
-          this.lobService.addLob(response);
+          const enrichedLob = {
+            ...response,
+            lob_clientpartner: {
+                emp_id: this.lobForm.value.lob_clientpartner,
+                emp_name: this.clientPartnerFilterControl.value
+            },
+            lob_deliverymanager: {
+                emp_id: this.lobForm.value.lob_deliverymanager,
+                emp_name: this.deliveryManagerFilterControl.value
+            },
+            lob_insertby_id: {
+                emp_id: 'emp_22032025_1',
+                emp_name: 'System User' // Or whatever name you want to display
+            },
+            lob_updateby_id: {
+                emp_id: 'emp_22032025_1',
+                emp_name: 'System User'
+            }
+        };
+        
+        this.lobService.addLob(enrichedLob);
           this.snackBar.open('✅ LOB added successfully!', '', {
             duration: 4000,
             panelClass: ['success-snackbar'],
