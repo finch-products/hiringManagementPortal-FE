@@ -1,5 +1,19 @@
-<div class="demand-candidate-wrapper" fxLayout="row" fxLayoutGap="10px" style="width: 100%; height: 100vh;">
-    <app-demand fxFlex="40" (pdfSelected)="handlePdfSelection($event)" (showHistoryRequested)="onShowHistory(demandId)"></app-demand>
+<div class="demand-candidate-wrapper" [class.no-header]="!showTimerHeader" fxLayout="row" fxLayoutGap="10px" style="width: 100%; height: 100vh;">
+
+    <div class="timer-header" *ngIf="showTimerHeader">
+        <div class="timer-text">
+            Demand opened before <span class="timer-value">{{days}}</span><span class="timer-unit">day</span> 
+            <span class="timer-value">{{hours}}</span><span class="timer-unit">H</span> 
+            <span class="timer-value">{{minutes}}</span><span class="timer-unit">M</span> 
+            <span class="timer-value">{{seconds}}</span><span class="timer-unit">S</span>
+        </div>
+        <button mat-icon-button class="close-timer" (click)="hideTimerHeader()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="apps">
+    <app-demand fxFlex="40" (pdfSelected)="handlePdfSelection($event)"></app-demand>
+
     
     <app-candidate fxFlex="40" 
      [fxFlex]="isPreviewOpen? '30vw' : '49vw'"
