@@ -64,9 +64,9 @@
     <!-- Client Info Section -->
     <div class="client-info">
       <div class="client">
-        <div class="profile-icon">
-          <mat-icon>account_circle</mat-icon>
-        </div>
+        <div class="avatar-container">
+          <img src="../../../assets/img/profile_img.png" alt="Candidate" class="avatar">
+      </div>
         <div class="client-details">
           <p> <span>Client:</span> {{demands?.demand_details?.client_details.clm_name || 'N/A'}}
             <br /><span>Client Manager:</span>
@@ -138,6 +138,23 @@
   <div class="skills">
     <span>Skills</span>
     <b class="skill">{{ demands?.demand_details?.dem_skillset || 'N/A' }}</b>
+  </div>
+
+  <div class="skills">
+    <span>Mandatory Skills</span>
+    <b class="skill">{{ demands?.demand_details?.dem_mandatoryskill || 'N/A' }}</b>
+  </div>
+  
+  <!-- Position Locations Section -->
+  <div class="skills">
+    <span>Position Locations</span>
+    <b class="skill">{{ getFormattedLocations() }}</b>
+  </div>
+  
+  <!-- Comment Section -->
+  <div class="comment-section" *ngIf="demands?.demand_details?.dem_comment">
+    <span>Comment</span>
+    <p>{{ demands.demand_details.dem_comment }}</p>
   </div>
 
 </div>

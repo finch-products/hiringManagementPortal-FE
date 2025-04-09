@@ -172,4 +172,14 @@ export class DemandComponent implements OnInit {
   redirectTodemand_history() {
     this.router.navigate(['history', this.demandId]);
   }
+
+  getFormattedLocations(): string {
+    if (!this.demands?.demand_details?.position_locations || 
+        this.demands.demand_details.position_locations.length === 0) {
+      return 'N/A';
+    }
+    return this.demands.demand_details.position_locations
+      .map((loc: any) => loc.lcm_name)
+      .join(', ');
+  }
 }

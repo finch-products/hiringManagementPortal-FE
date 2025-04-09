@@ -1,5 +1,6 @@
 .demand-candidate-wrapper{
-    margin-top: 20px;
+    margin-top: 14px;
+    margin-left: 10px;
     width: 100vw;
     height: 100vh;
     position: relative; 
@@ -12,4 +13,60 @@
     position: fixed;
     margin:2%;
     right: 0;
+}
+
+.timer-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #e8eeff; // light blue background
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    
+    .timer-text {
+        color: #666; ;
+        font-size: 15px;
+        
+        .timer-value {
+            color: #ff6b6b; // light red for numbers
+            font-weight: 400;
+            font-size: 30px;
+            margin: 0 2px;
+        }
+        
+        .timer-unit {
+            color: #666; // grey for units
+            font-size: 12px;
+            margin-right: 8px;
+        }
+    }
+    
+    .close-timer {
+        position: absolute;
+        right: 10px;
+        font-size: 5px;
+        color: #666;
+    }
+}
+
+.demand-candidate-wrapper {
+    padding-top: 50px; // make space for the header
+    height: calc(100vh - 50px);
+    
+    // When header is hidden
+    &.no-header {
+        padding-top: 0;
+        height: 100vh;
+    }
+}
+
+.apps{
+    padding-top:6px;
+    gap: 5px;
 }

@@ -58,7 +58,7 @@
             <div class="filtered-candidate-card">
                 <div class="filtered-candidate-header">
                     <div class="avatar-container">
-                        <mat-icon>person_outline</mat-icon>
+                        <img src="../../../assets/img/profile_img.png" alt="Candidate" class="avatar">
                     </div>
                     <div class="candidate-info">
                         <h3 class="candidate-name">{{ candidate.cdm_name || 'Unknown' }}</h3>
@@ -157,7 +157,7 @@
         <div class="candidate-card" [class.expanded]="candidate.showInterviewDetails">
             <div class="candidate-header">
                 <div class="avatar-container">
-                    <mat-icon>person_outline</mat-icon>
+                    <img src="../../../assets/img/profile_img2.jpeg" alt="Candidate" class="avatar">
                 </div>
                 <div class="candidate-info" (click)="redirectTocandidateHistory(candidate?.cdl_cdm_id)">
                     <h3 class="candidate-name">{{ candidate.name || candidate.cdm_name }}</h3>
