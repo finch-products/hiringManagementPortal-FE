@@ -4,7 +4,7 @@
     width: 100vw;
     height: 100vh;
     position: relative; 
-    overflow-x: hidden;
+    overflow-x: auto;
     width: 100%;
     transition: all 0.3s ease;
 }
@@ -69,4 +69,5 @@
 .apps{
     padding-top:6px;
     gap: 5px;
+    min-width:75vw;
 }
