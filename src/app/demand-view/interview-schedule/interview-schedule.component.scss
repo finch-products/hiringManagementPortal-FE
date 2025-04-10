@@ -1,16 +1,14 @@
 .interview-form-container {
-    position: absolute;
-    right: -10px;
-    top: 0;
-    bottom: 0;
-    width: 30%; 
-    height: 100vh;
-    min-width: 400px; 
-    background: white;
-    padding: 10px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    z-index: 100;
+  position: absolute;
+  right: 280px;
+  bottom: 0;
+  width: 26%; 
+  height: 100vh;
+  min-width: 400px; 
+  background: white;
+  padding: 10px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
     
     h2 {
       color: rgba(0, 0, 0, 0.87);
@@ -19,7 +17,6 @@
       margin: 0 0 16px 0;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      position: sticky;
       top: 0;
       background: white;
       z-index: 1;
@@ -161,7 +158,6 @@
     }
 
     .close-btn {
-      position: sticky;
       top: 0;
       right: 0;
       background: none;

@@ -12,10 +12,10 @@
         </button>
     </div>
     <div class="apps">
-    <app-demand fxFlex="40" (pdfSelected)="handlePdfSelection($event)"></app-demand>
+    <app-demand fxFlex="35" (pdfSelected)="handlePdfSelection($event)"  (showHistoryRequested)="onShowHistory(demandId)"></app-demand>
 
     
-    <app-candidate fxFlex="40" 
+    <app-candidate fxFlex="35" 
      [fxFlex]="isPreviewOpen? '30vw' : '49vw'"
      [isPreviewOpen]="isPreviewOpen"
      [showhistory]="showHistory"
@@ -26,7 +26,7 @@
      [candidatesSelected]="selectedCandidates">
     </app-candidate>
 
-    <app-preview fxFlex="30" [pdfUrl]="selectedPdfUrl" (close)="onPreviewClose()"></app-preview>
+    <app-preview  [pdfUrl]="selectedPdfUrl" (close)="onPreviewClose()"></app-preview>
     <app-interview-schedule fxFlex="30" *ngIf="candidateComponent?.showInterviewForm"
     [candidateId]="candidateComponent.selectedCandidateForInterview?.cdl_cdm_id"
     [demandId]="demandId"

@@ -104,7 +104,7 @@ export class AdvanceSearchCandidatesComponent implements OnChanges {
         }
   
         this.filteredcandidates = response.candidates.map((candidate: any) => ({
-          cdl_cdm_id: candidate.cdm_id,
+          cdl_emp_id: candidate.emp_id,
           cdm_name: candidate.name,
           cdm_email: candidate.email,
           cdm_keywords: candidate.keywords ? candidate.keywords.split(',') : [],
