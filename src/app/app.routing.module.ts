@@ -3,9 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateOpenDemandComponent } from './open-demands/create/create-open-demands.component';
 import { ListOpenDemandsComponent } from './open-demands/list/list-open-demands.component';
 import { CreateClientComponent } from '../masters/client/create/create-client.component';
-//added client manager
-import { CreateClientManagerComponent } from '../masters/client-manager/components/create/create-client-manager/create-client-manager.component';
-import { ListClientManagerComponent } from '../masters/client-manager/components/list/list-client-manager/list-client-manager.component';
 import { CreateLOBComponent } from '../masters/lob/create/create-lob.component';
 import { CreateLocationComponent } from '../masters/location/create/create-location.component';
 import { CreateInternalDepartmentComponent } from '../masters/internal-department/create/create-internal-department.component';
@@ -24,7 +21,7 @@ import { CandidadteReportComponent } from './candidates/report/report.component'
 import { CandidateTrackingComponent } from './candidates/tracking/candidate-tracking.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'entry', component: CreateOpenDemandComponent },
   { path: 'entry/:id', component: CreateOpenDemandComponent },
   { path: 'list', component: ListOpenDemandsComponent },
@@ -43,14 +40,12 @@ const routes: Routes = [
   { path: 'other-view2', component: Otherview2Component },
   { path: 'other-view4', component: Otherview4Component },
   { path: 'other-view5', component: Otherview5Component },
-  // { path: 'demand-history', component: DemandHistoryComponent ,data: { type: 'demand' } },
-  {path: 'candidate-history',component:DemandHistoryComponent,data: { type: 'candidate' }},
+  { path: 'candidate-history', component: DemandHistoryComponent, data: { type: 'candidate' } },
   { path: 'demand-view/:id', component: DemandViewComponent },
-  { path: 'history', component: DemandHistoryComponent ,data: { type: 'demand'}},
-  { path: 'candidate-tracking', component: CandidateTrackingComponent ,data: { type: 'candidate'}},
-  { path: 'history/:demandId', component: DemandHistoryComponent,data: { type: 'demand'} },
-  { path: 'candidate-history/:candidateId', component: DemandHistoryComponent,data: { type: 'candidate'} },
-  { path: '', component: DashboardComponent },
+  { path: 'history', component: DemandHistoryComponent, data: { type: 'demand' } },
+  { path: 'candidate-tracking', component: CandidateTrackingComponent, data: { type: 'candidate' } },
+  { path: 'history/:demandId', component: DemandHistoryComponent, data: { type: 'demand' } },
+  { path: 'candidate-history/:candidateId', component: DemandHistoryComponent, data: { type: 'candidate' } },
 ];
 
 @NgModule({

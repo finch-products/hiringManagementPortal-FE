@@ -2,6 +2,7 @@ html,
 body {
   margin: 0;
   overflow-x: hidden;
+  background-color: #f3f3f3;
 }
 
 * {
@@ -12,8 +13,8 @@ body {
 
 .grid-container {
   display: flex;
-  padding: 20px;
-  background-color: #fff;
+  // padding: 20px;
+  // background-color: #fff;
 
   .left-sidebar {
     //background-color: #e0b60c;
@@ -104,7 +105,7 @@ mat-sidenav {
 span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
   font-size: 16px !important;
   line-height: 1em !important;
-  color: #4C4C4B !important;
+  color: #64656d !important;
 }
 
 .container-fluid {
@@ -569,7 +570,7 @@ mat-radio-button.mat-accent {
 .mat-content {
   font-size: 16px !important;
   line-height: 1em !important;
-  color: #4C4C4B !important;
+  color: #64656d !important;
   font-weight: 400 !important;
   display: block !important;
 }
