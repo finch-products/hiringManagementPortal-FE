@@ -27,16 +27,13 @@ export class Otherview5Component {
   }
 
   fetchCandidateSelectionReport(): void {
-    // Dynamic date assignment (optional, uncomment if needed)
-    // const today = new Date();
-    // const lastYear = new Date();
-    // lastYear.setFullYear(today.getFullYear() - 1);
-    // this.start_date = lastYear.toISOString().split('T')[0]; // format YYYY-MM-DD
-    // this.end_date = today.toISOString().split('T')[0]; // format YYYY-MM-DD
+    // Dynamic date assignment 
+     const today = new Date();
+     const lastYear = new Date();
+     lastYear.setFullYear(today.getFullYear() - 1);
+     this.start_date = lastYear.toISOString().split('T')[0]; // format YYYY-MM-DD
+     this.end_date = today.toISOString().split('T')[0]; // format YYYY-MM-DD
   
-    // Static date assignment (if fixed date range is preferred)
-    this.start_date = '2024-01-10'; // format YYYY-MM-DD
-    this.end_date = '2024-12-13'; // format YYYY-MM-DD
   
     // Now call the API with start_date and end_date properly passed
     this.httpService.getcandidateselectioncustomreport(this.start_date, this.end_date).subscribe({

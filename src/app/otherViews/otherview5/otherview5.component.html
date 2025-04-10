@@ -54,7 +54,7 @@
         <tbody>
           <!-- Check if data exists -->
           <tr *ngIf="candidateSelectionTable.length === 0">
-            <td colspan="6" class="text-center">No data available for the selected period.</td>
+            <td colspan="6" class="text-center">No data available for the selected period : {{start_date }} - {{end_date}} .</td>
           </tr>
           <!-- Loop through data if available -->
           <tr *ngFor="let row of candidateSelectionTable">

@@ -72,7 +72,7 @@ export class ListCandidateComponent {
     this.httpService.SearchCandidates(filteredData).subscribe({
       next: (response: { candidates: any[] }) => {
         this.dataSource2 = response.candidates.map((candidate: any) => ({
-          cdm_emp_id: candidate.cdm_id,  
+          cdm_emp_id: candidate.emp_id,  
           cdm_name: candidate.name,
           cdm_email: candidate.email,
           cdm_phone: candidate.phone,

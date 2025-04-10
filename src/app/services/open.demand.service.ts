@@ -6,13 +6,14 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class OpenDemandService {
   private demands = new BehaviorSubject<any[]>([]);
+  private _demands = new BehaviorSubject<any[]>([]);
   demands$ = this.demands.asObservable();
-
   constructor() {}
 
   // Store initial API data
   setInitialData(demand: any[]) {
     this.demands.next(demand);
+    this._demands.next(demand);
   }
 
   // Add new record at the TOP of the list
