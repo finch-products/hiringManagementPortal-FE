@@ -1,30 +1,41 @@
 <div class="container">
-  <header class="header app-header">
-
-    <div class="logo-container">
-      <a href="/dashboard">
-        <img src="../../../assets/img/logo.png" alt="Hirex Logo">
-      </a>
-    </div>
-
-    <div class="search-container">
-      <input type="text" placeholder="Search ..." [(ngModel)]="searchQuery" />
-      <button class="search-btn">
-        <mat-icon>search</mat-icon>
-      </button>
-    </div>
-
-    <div class="icons">
-      <a class='icon' mat-list-item routerLink="/entry">
-        <!-- <mat-icon>assignment</mat-icon> -->
-        Demand Entry
-      </a>
-      <a class='icon' mat-list-item routerLink="/list">
-        <mat-icon>assignment</mat-icon>
-      </a>
-      <mat-icon class="icon">notifications</mat-icon>
-      <mat-icon class="icon">settings</mat-icon>
-      <mat-icon class="icon">account_circle</mat-icon>
+  <header class="header" [class.collapsed]="isCollapsed">
+    <h1 class="page-title1">{{pageTitle}}</h1>
+    <div class="header-content">
+      <div class="icons">
+        <div class="search-container">
+          <input type="text" placeholder="Search ..." [(ngModel)]="searchQuery" />
+          <button class="search-btn">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+        <a class='icon' mat-list-item routerLink="/entry">
+          Demand Entry
+        </a>
+        <a class='icon' mat-list-item routerLink="/list">
+          <mat-icon>assignment</mat-icon>
+        </a>
+        <div class="profile-dropdown">
+          <div class="profile-info" (click)="toggleDropdown()">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Profile" class="profile-image">
+            <div class="profile-text">
+              <span class="profile-name">John</span>
+              <span class="profile-position">Admin</span>
+            </div>
+            <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+          </div>
+          <div class="dropdown-menu" *ngIf="isDropdownOpen">
+            <button mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Edit Profile</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>logout</mat-icon>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 </div>

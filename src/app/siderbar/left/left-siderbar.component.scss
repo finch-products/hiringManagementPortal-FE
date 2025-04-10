@@ -430,3 +430,15 @@ mat-expansion-panel-header {
   margin-right: 8px;
   font-size: 20px;
 }
+
+.logo-container {
+  width: 200px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}

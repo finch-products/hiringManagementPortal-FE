@@ -37,7 +37,7 @@ body {
     height: 100vh;
 
     .page-title {
-      margin: 20px;
+      padding:10px;
       font-size: 14px;
       // line-height: 0.75em;
       color: #3F3F3F;
@@ -127,6 +127,7 @@ span.mat-mdc-list-item-unscoped-content.mdc-list-item__primary-text {
   padding:0px !important;
   .app-main{
     padding: 20px !important;
+    margin-top: 5%;
   }
 }
 
