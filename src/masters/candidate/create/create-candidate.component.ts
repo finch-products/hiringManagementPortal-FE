@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import { ValidatorsService } from '../../../app/services/validators.service';
 import { HttpService } from '../../../app/services/http.service';
@@ -23,7 +23,7 @@ export class CreateCandidateComponent implements OnInit {
   selectedFile: File | null = null;
   filteredLocations!: Observable<any[]>;
 
-
+  @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService, private CandidateService: CandidateService, private snackBar: MatSnackBar) {
 
     this.candidateForm = this.fb.group({
@@ -143,7 +143,10 @@ export class CreateCandidateComponent implements OnInit {
           cdm_updateby: 'emp_22032025_1'
         });
         this.locationFilterControl.reset();
-        this.selectedFile = null;
+        if (this.fileInput) {
+          this.fileInput.nativeElement.value = '';
+        }
+        this.selectedFile = null;        
       },
       error: (error) => {
         console.error('Error adding Candidate:', error);
@@ -183,7 +186,11 @@ export class CreateCandidateComponent implements OnInit {
       cdm_updateby: 'emp_22032025_1'
     });
     this.locationFilterControl.reset();
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
     this.selectedFile = null;
+    
   }
 }
 

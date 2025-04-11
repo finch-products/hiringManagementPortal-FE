@@ -52,7 +52,7 @@
 
       <div class="file-input-container">
         <label for="cdm_profile">Upload Profile</label>
-        <input type="file" id="cdm_profile" (change)="onFileSelected($event)">
+        <input type="file" (change)="onFileSelected($event)" #fileInput >
       </div>
 
       <mat-form-field appearance="fill" class="form-field">

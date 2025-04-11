@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { OpenDemandService } from '../../services/open.demand.service';
@@ -40,6 +40,7 @@ export class CreateOpenDemandComponent implements OnInit {
   customEntryEnabled: boolean = false;
   isCustomManager: boolean = false;
  
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService,
     private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
@@ -483,7 +484,12 @@ export class CreateOpenDemandComponent implements OnInit {
     this.demandForm.controls['dem_isactive'].setValue(true);
     this.demandForm.controls['dem_insertby'].setValue('emp_22032025_1');
     this.demandForm.controls['dem_updateby'].setValue('emp_22032025_1');
-    
+    this.selectedFile = null;
+if (this.fileInput) {
+  this.fileInput.nativeElement.value = '';
+}
+
+
     this.router.navigate(['entry']); // Navigates to 'entry' page
   }
 
