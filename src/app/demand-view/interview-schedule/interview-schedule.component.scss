@@ -6,15 +6,17 @@
   height: 100vh;
   background: white;
   padding: 10px;
+  padding-top: 0px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
     
     h2 {
+      position: sticky;
       color: rgba(0, 0, 0, 0.87);
       font-size: 20px;
       font-weight: 500;
       margin: 0 0 16px 0;
-      padding-bottom: 12px;
+      padding-bottom:12px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       top: 0;
       background: white;
@@ -157,6 +159,7 @@
     }
 
     .close-btn {
+      position: sticky;
       top: 0;
       right: 0;
       background: none;

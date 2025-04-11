@@ -104,15 +104,19 @@ export class CreateClientComponent implements OnInit {
 
   onSubmit(form: FormGroupDirective): void {
     if (this.clientForm.valid) {
-      const formData = { ...this.clientForm.value };
-
-      // Remove empty/null fields
-      Object.keys(formData).forEach(key => {
-        if (formData[key] === '' || formData[key] === null) {
-          delete formData[key];
-        }
-      });
-
+      const formData = new FormData();
+  
+      // Append all form fields manually
+      Object.entries(this.clientForm.value).forEach(([key, value]) => {
+     if (value !== '' && value !== null && value !== undefined) {
+    // If it's a file or Blob (e.g., for clm_logo), append it with filename
+     if (key === 'clm_logo' && value instanceof File) {
+      formData.append(key, value, value.name);
+    } else {
+      formData.append(key, value.toString());
+    }
+  }
+});
       this.httpService.postaddClient(formData).subscribe({
         next: (response) => {
           this.clientService.addClient(response);
@@ -122,7 +126,7 @@ export class CreateClientComponent implements OnInit {
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
           });
-
+  
           form.resetForm();
           this.clientForm.patchValue({
             clm_isactive: true,
@@ -130,17 +134,15 @@ export class CreateClientComponent implements OnInit {
           });
           this.locationFilterControl.setValue('');
         },
-        
         error: (error) => {
           console.error('Error adding client:', error);
-          this.handleFieldErrors(error);
+          this.handleFieldErrors(error.error);
         }
       });
     } else {
-      console.warn('Form is invalid.');
       this.showError('⚠️ Please fill all required fields correctly.');
     }
-  }
+  }  
 
   private showError(message: string): void {
     this.snackBar.open(message, '', {
