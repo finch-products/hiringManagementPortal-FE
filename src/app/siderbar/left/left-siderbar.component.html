@@ -6,16 +6,13 @@
         {{ isCollapsed ? 'chevron_right' : 'chevron_left' }}
       </mat-icon>
     </div> -->
-    <!-- <div class="sidebar-header">
-      <mat-icon class="toggle-icon" (click)="togglesidenav()">
-        menu
-      </mat-icon>
-    </div> -->
-    <button mat-icon-button matTooltip="Toggle Sidebar" (click)="togglesidenav()">
-      <mat-icon>
-        {{ isCollapsed ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}
-      </mat-icon>
-    </button>
+    <div class="sidebar-header">
+      <div class="logo-container">
+        <div class="toggle-icon" (click)="togglesidenav()">
+          <img src="../../../assets/img/logo.png" alt="Hirex Logo">
+        </div>
+      </div>
+    </div>
     <div class="sidenav-content">
       <mat-nav-list>
         <a mat-list-item routerLink="/dashboard" class="menu-item"
@@ -28,14 +25,14 @@
           </div>
         </a>
 
-        <div class="expansion-panel-container"
+        <div class="expansion-panel-container" 
           (mouseenter)="showTooltip('candidates')"
           (mouseenter)="positionTooltip($event)">
           <mat-expansion-panel class="expansion-panel"
             [expanded]="expandedPanels.candidates"
             (opened)="expandedPanels.candidates = true"
             (closed)="expandedPanels.candidates = false">
-            <mat-expansion-panel-header (click)="togglePanel('candidates');"
+            <mat-expansion-panel-header (click)="togglePanel('candidates');" 
               (mouseenter)="positionTooltip($event)">
               <mat-icon>library_books</mat-icon>
               <span *ngIf="!isCollapsed">Candidates</span>
