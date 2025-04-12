@@ -7,6 +7,8 @@ import { HttpService } from '../../../app/services/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+
 @Component({
   selector: 'app-create-client',
   templateUrl: './create-client.component.html',
@@ -64,41 +66,56 @@ export class CreateClientComponent implements OnInit {
     });
   }
 
-  private _filterLocations(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.locations.filter(location => location.lcm_name.toLowerCase().includes(filterValue));
-  }
+  // Add this to your component if not already present
+  initLocationFilter(): void {
+  this.filteredLocations = this.locationFilterControl.valueChanges.pipe(
+    startWith(''),
+    map(value => this._filterLocations(value || ''))
+  );
+}
 
-  onLocationSelected(event: any): void {
-    const selectedLocation = this.locations.find(loc => loc.lcm_name === event.option.value);
-    if (selectedLocation) {
-      this.clientForm.patchValue({ clm_lcm_id: selectedLocation.lcm_id });
-      this.locationFilterControl.setValue(selectedLocation.lcm_name, { emitEvent: false });
+private _filterLocations(value: string): any[] {
+  const filterValue = value.toLowerCase();
+  return this.locations.filter(location => 
+    location.lcm_name.toLowerCase().includes(filterValue)
+  );
+}
+
+  clearLocationSelection(): void {
+    // Clear the location input and related form control
+    this.locationFilterControl.reset();
+    this.clientForm.patchValue({ clm_lcm_id: '' });
+  }
   
-      // Prevent typing extra characters after selection
-      this.locationFilterControl.disable();
-      
-      // Re-enable when dropdown is opened again
-      setTimeout(() => this.locationFilterControl.enable(), 0);
+  onLocationSelected(event: MatAutocompleteSelectedEvent): void {
+    const selectedValue = event.option.value;
+    const selectedLocation = this.locations.find(loc => loc.lcm_name === selectedValue);
+    
+    if (selectedLocation) {
+      // Update the form with the selected location's ID
+      this.clientForm.patchValue({ clm_lcm_id: selectedLocation.lcm_id });
     }
   }
   
   onLocationInput(event: any): void {
-    const selectedValue = this.locationFilterControl.value;
-    const isValidSelection = this.locations.some(loc => loc.lcm_name === selectedValue);
-  
-    if (!isValidSelection) {
-      this.locationFilterControl.setValue('');
+    const inputValue = event.target.value;
+    
+    // If the input is empty, clear the location ID
+    if (!inputValue) {
+      this.clientForm.patchValue({ clm_lcm_id: '' });
     }
   }
-
+  
   onLocationBlur(): void {
     // If the input value doesn't match any location, reset the field
     const inputValue = this.locationFilterControl.value;
-    const selectedLocation = this.locations.find(loc => loc.lcm_name === inputValue);
-    if (!selectedLocation) {
-      this.locationFilterControl.setValue('');
-      this.clientForm.patchValue({ clm_lcm_id: '' });
+    
+    if (inputValue) {
+      const selectedLocation = this.locations.find(loc => loc.lcm_name === inputValue);
+      if (!selectedLocation) {
+        this.locationFilterControl.setValue('');
+        this.clientForm.patchValue({ clm_lcm_id: '' });
+      }
     }
   }
 

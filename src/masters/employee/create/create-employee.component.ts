@@ -133,7 +133,19 @@ export class CreateEmployeeComponent implements OnInit {
     }
   }
 
+  // Add these new methods to your component class
 
+clearLocation(event: Event): void {
+  event.stopPropagation(); // Prevent the input field from getting focus
+  this.locationFilterControl.reset();
+  this.employeeForm.patchValue({ emp_lcm_id: '' });
+}
+
+clearRole(event: Event): void {
+  event.stopPropagation(); // Prevent the input field from getting focus
+  this.roleFilterControl.reset();
+  this.employeeForm.patchValue({ emp_rlm_id: '' });
+}
   onSubmit(form: FormGroupDirective): void {
     if (this.employeeForm.valid) {
       const formData = new FormData();

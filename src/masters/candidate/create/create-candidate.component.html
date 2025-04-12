@@ -39,7 +39,18 @@
         <mat-label>Location <span class="required"></span></mat-label>
         <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="auto"
           (blur)="onLocationBlur()" required>
+          <button 
+        *ngIf="locationFilterControl.value" 
+        matSuffix 
+        mat-icon-button 
+        aria-label="Clear" 
+        (click)="clearLocations($event)">
+        <mat-icon>close</mat-icon>
+        </button>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLocationSelected($event)">
+          <mat-option *ngIf="(filteredLocations | async)?.length === 0" disabled>
+            No options available
+          </mat-option>
           <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
             {{ location.lcm_name }}
           </mat-option>
