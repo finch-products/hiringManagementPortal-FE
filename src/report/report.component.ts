@@ -49,7 +49,7 @@ export class ReportComponent implements OnInit {
     'delivery_manager', 'client_partner', 'profiles', 'ctool', 'position'
   ];
 
-  dataSource = new MatTableDataSource<OpenDemand>([]);
+  dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator !: MatPaginator
   @ViewChild(MatSort) sort !: MatSort
@@ -86,10 +86,17 @@ export class ReportComponent implements OnInit {
     this.allClientPartners = [...new Set(this.clientPartners.map(partner => partner.emp_name))];
     this.allDeliveryManagers = [...new Set(this.deliveryManagers.map(manager => manager.emp_name))];
     this.demandService.demands$.subscribe(demand => {
-      this.dataSource.data = demand;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      console.log('[Demand Subscription Triggered]');
+      console.log('Demand Data:', demand);
+      if (demand && demand.length) {
+        this.dataSource = new MatTableDataSource(demand);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else {
+        console.warn('Demand data is empty or null');
+      }
     });
+    
 
     // this.dataSource = new MatTableDataSource(this.employeeData);
 
@@ -135,14 +142,16 @@ export class ReportComponent implements OnInit {
     //   map(value => this.filterOptions(value || '', this.allClientPartners))
     // );
 
-    // *Custom Filtering Logic for Multiple Fields*
+    // Custom Filtering Logic for Multiple Fields
     this.dataSource.filterPredicate = (data, filter) => {
       const searchTerms = JSON.parse(filter); // Convert filter string back to object
 
       return (
         (!searchTerms.hiringManager || data.client_details.clm_managername.toLowerCase().includes(searchTerms.hiringManager)) &&
         (!searchTerms.skills || data.dem_skillset.toLowerCase().includes(searchTerms.skills)) &&
-        (!searchTerms.location || data.location_details.lcm_name.toLowerCase().includes(searchTerms.location)) &&
+        (data.location_details || []).some((loc: { lcm_name: string }) =>
+          loc.lcm_name.toLowerCase().includes(searchTerms.location.toLowerCase())
+        )&&        
         (!searchTerms.deliveryManager || data.lob_details.delivery_manager.emp_name.toLowerCase().includes(searchTerms.deliveryManager)) &&
         (!searchTerms.clientPartner || data.lob_details.client_partner.emp_name.toLowerCase().includes(searchTerms.clientPartner))
       );
@@ -195,30 +204,49 @@ export class ReportComponent implements OnInit {
   fetchOpenDemands() {
     this.httpService.getDemands().subscribe({
       next: (data) => {
-        const mappedData = data.map((demand: any) => ({
-          client_details:{
-            clm_managername: demand.client_details.clm_managername},
-          dem_skillset: demand.dem_skillset,
-          location_details: demand.dem_position_location?.map((loc: any) => ({
-            lcm_id: loc.lcm_id,
-            lcm_name: loc.lcm_name
-          })) || [], 
-          lob_details: {
-            delivery_manager: {
-              emp_name: demand.lob_details.delivery_manager.emp_name
+        console.log('Raw demand data:', data);
+  
+        let mappedData = [];
+        try {
+          mappedData = data.map((demand: any) => ({
+            client_details: {
+              clm_managername: demand.client_details?.clm_managername || ''
             },
-            client_partner: {
-              emp_name: demand.lob_details.client_partner.emp_name
-            }},
-          dem_ctoolnumber: demand.dem_ctoolnumber,
-          dem_positions: demand.dem_positions
-        }));
-        this.demandService.setInitialData(mappedData);
-        console.log(JSON.stringify(mappedData));
+            dem_skillset: demand.dem_skillset,
+            location_details: demand.dem_position_location?.map((loc: any) => ({
+              lcm_id: loc.lcm_id,
+              lcm_name: loc.lcm_name
+            })) || [],
+            lob_details: {
+              delivery_manager: {
+                emp_name: demand.lob_details?.delivery_manager?.emp_name || ''
+              },
+              client_partner: {
+                emp_name: demand.lob_details?.client_partner?.emp_name || ''
+              }
+            },
+            dem_ctoolnumber: demand.dem_ctoolnumber,
+            dem_positions: demand.dem_positions
+          }));
+          console.log("Mapped data:", mappedData);
+        } catch (e) {
+          console.error("Error in mapping data:", e);
+        }
+  
+        try {
+          this.demandService.setInitialData(data);
+          console.log("setInitialData called successfully");
+        } catch (e) {
+          console.error("Error in setInitialData:", e);
+        }
+
       },
-      error: (err) => console.error('Error fetching demands', err)
+      error: (err) => {
+        console.error('Error fetching demands', err);
+      }
     });
   }
+  
 
   // loadLocations(): void {
   //   this.httpService.getLocationDetails().subscribe({
