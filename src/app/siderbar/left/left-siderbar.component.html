@@ -7,9 +7,11 @@
       </mat-icon>
     </div> -->
     <div class="sidebar-header">
-      <mat-icon class="toggle-icon" (click)="togglesidenav()">
-        menu
-      </mat-icon>
+      <div class="logo-container">
+        <div class="toggle-icon" (click)="togglesidenav()">
+          <img src="../../../assets/img/logo.png" alt="Hirex Logo">
+        </div>
+      </div>
     </div>
     <div class="sidenav-content">
       <mat-nav-list>
@@ -23,14 +25,14 @@
           </div>
         </a>
 
-        <div class="expansion-panel-container"
+        <div class="expansion-panel-container" 
           (mouseenter)="showTooltip('candidates')"
           (mouseenter)="positionTooltip($event)">
           <mat-expansion-panel class="expansion-panel"
             [expanded]="expandedPanels.candidates"
             (opened)="expandedPanels.candidates = true"
             (closed)="expandedPanels.candidates = false">
-            <mat-expansion-panel-header (click)="togglePanel('candidates');"
+            <mat-expansion-panel-header (click)="togglePanel('candidates');" 
               (mouseenter)="positionTooltip($event)">
               <mat-icon>library_books</mat-icon>
               <span *ngIf="!isCollapsed">Candidates</span>
