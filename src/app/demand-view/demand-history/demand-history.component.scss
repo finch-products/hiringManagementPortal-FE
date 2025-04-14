@@ -14,6 +14,7 @@
     border-radius: 10px;
   font-family: 'Segoe UI', sans-serif;
   color: #333;
+  gap: 20px;
   }
 
 .header {
@@ -27,7 +28,7 @@
       font-size: 18px;
       color: #444;
       font-weight: bolder;
-      color:#cbd7f7 !important;
+      color:black !important;
     }
     
     span{
@@ -35,7 +36,7 @@
         color:#77c8f1 !important;
     }
     button {
-      background-color: #e0e0e0;
+      background-color: #DFF28D;
       color: #000;
     }
   }

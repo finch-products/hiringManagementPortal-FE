@@ -1,5 +1,6 @@
 .demand-container{
-    background-color:#F8F9FA;
+    //background-color:#f8f9fa;
+    background-color: #ffffff;
     padding:10px;
     width:27vw;
     height: 100vh;
@@ -8,7 +9,7 @@
     // margin-top: 20px;
     display: flex;
     gap: 10px;
-    border: 2px solid #ddd; 
+    //border: 2px solid #ddd; 
     overflow-y: auto !important;
     position:relative;
 }
@@ -17,7 +18,7 @@
     display:flex;
     justify-content: space-between;
     align-items: center;
-    background-color:#FEFEFE;
+    background-color:#f8f9fa;
     padding: 8px;
 }
 mat-select {
@@ -42,7 +43,7 @@ mat-select {
 
   .client-info {
     margin-top: 10px;
-    background: #ECECEC;
+    background: #f8f9fa;
     border-radius: 8px;
     display:flex;
     justify-content: space-between;
@@ -80,18 +81,20 @@ mat-select {
   }
   
   .date-item b {
-    color: black; /* Bold date in black */
     font-size: smaller;
     font-weight: 200;
-    background-color:#cbcaca;
+    background-color:#eceefd !important;
     border-radius: 3px;
     padding:2px;
     margin-left: 4px;
+    font-weight: normal !important;
+   color: #666 !important;
+    background-color: #eceefd !important; /* Keep date background */
   }
   
   .details-section {
     flex-direction: column;
-    background: #ffffff;
+    background: #f8f9fa;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -481,10 +484,10 @@ button[type="submit"]:hover {
 
 .current-status {
   font-size: 14px;
-  font-weight: 500;
-  color: #333;
+  font-weight: 300;
+  color: grey !important;
   padding: 4px 8px;
-  background-color: #E0FBFC;
+  background-color: #DFF28D;;
   border-radius: 4px;
 }
 
@@ -527,6 +530,7 @@ button[type="submit"]:hover {
   border-radius: 50%;
   background: #ddd;
   margin-top: 5px;
+  border: 3px solid #DFF28D;
   margin-left: 8px;
   overflow: hidden; /* Ensures the image stays within the circular container */
 }
@@ -539,7 +543,6 @@ button[type="submit"]:hover {
 /* Make all values normal weight and grey */
 .detail-box b,
 .skills b,
-.date-item b,
 .client-details b,
 .detail-box > b {
   font-weight: normal !important;
@@ -573,13 +576,6 @@ button[type="submit"]:hover {
 .current-status {
   font-weight: 500 !important; /* Slightly bold for status */
   color: #333 !important; /* Dark color for status */
-}
-
-/* Date values */
-.date-item b {
-  font-weight: normal !important;
-  color: #666 !important;
-  background-color: #cbcaca !important; /* Keep date background */
 }
 
 .comment-section {

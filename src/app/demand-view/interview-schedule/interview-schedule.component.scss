@@ -141,16 +141,16 @@
         }
 
         &.submit {
-          background-color: #3f51b5;
+          background-color: #DFF28D !important;
           color: white;
           border: none;
 
           &:hover {
-            background-color: #303f9f;
+            background-color: #DFF28D !important;
           }
 
           &:disabled {
-            background-color: rgba(63, 81, 181, 0.5);
+            background-color: #bdcd75;
             cursor: not-allowed;
           }
         }
@@ -164,7 +164,7 @@
       border: none;
       font-size: 20px;
       cursor: pointer;
-      color: rgba(0, 0, 0, 0.54);
+      color: #DFF28D !important;
       padding: 4px;
       width: 32px;
       height: 32px;
@@ -208,4 +208,8 @@
 .form-group label + select {
     background-color: white;
     border: 1px solid #ccc;
+}
+
+.interview-form-container .close-btn {
+  color: #DFF28D !important;  /* or use #28a745 */
 }

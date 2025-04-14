@@ -32,12 +32,12 @@
 
     <div class="candidateheading">
         <h1>Candidate Details </h1>
-        <button mat-raised-button color="primary"
+        <button mat-raised-button 
             type="button" class="linking" 
-            style="background-color: #f8a1a1;"
+            style="background-color:  #DFF28D;"
             [disabled]="selectedCandidates.length === 0"
-            onmouseover="this.style.backgroundColor='#d9534f'"
-            onmouseout="this.style.backgroundColor='#f8a1a1'"
+            onmouseover="this.style.backgroundColor='#cbde75'"
+            onmouseout="this.style.backgroundColor='#DFF28D'"
             (click)="submitSelectedCandidates()" >Link</button>
     </div> 
 
@@ -45,10 +45,10 @@
     <div class="search-container">
         <div class="search-bar">
         <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search Candidates to Link" />
-            <button mat-icon-button (click)="redirectToAddCandidates()">
+            <button mat-icon-button (click)="redirectToAddCandidates()" style="background-color: #DFF28D;">
                 <mat-icon>group_add</mat-icon>
             </button>
-            <button mat-icon-button (click)="OpenAdvanceSearch()">
+            <button mat-icon-button (click)="OpenAdvanceSearch()" style="background-color: #eceefd;">
                 <mat-icon>search</mat-icon>
             </button>
         </div>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="detail-box">
                         <span>Profile : </span>
-                        <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
+                        <a href="javascript:void(0);" style="color:#c5d96d;" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
                       </div>
                 </div>
             </div>

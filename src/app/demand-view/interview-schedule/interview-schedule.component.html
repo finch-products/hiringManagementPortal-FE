@@ -113,8 +113,8 @@
     </div>
 
     <div class="form-actions" class="submit-container">
-      <button mat-raised-button color="primary" type="button" class="cancel" (click)="onreset()">Reset</button>
-      <button mat-raised-button color="primary" type="submit" class="submit" [disabled]="interviewForm.invalid || isLoading">
+      <button mat-raised-button  type="button" class="cancel" (click)="onreset()">Reset</button>
+      <button mat-raised-button  type="submit" class="submit" [disabled]="interviewForm.invalid || isLoading">
         {{ isLoading ? 'Scheduling...' : 'Schedule' }}
       </button>
     </div>
