@@ -6,7 +6,8 @@ body, html {
 }
 
 .candidates-container {
-    background: #F8F9FA;
+    //background: #F8F9FA;
+    background-color: #ffffff;
     padding: 10px;
     border-radius: 10px;
     /*width: calc(100% - 250px);  Adjust width dynamically based on sidebar */
@@ -14,7 +15,7 @@ body, html {
     width:45vw !important; 
     height: 100vh;
     transition: width 0.8s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
-    border: 2px solid #ddd; 
+    //border: 2px solid #ddd; 
     resize: horizontal;
     position: relative;
     cursor: ew-resize;
@@ -42,8 +43,10 @@ body, html {
     align-items: center;
     gap: 10px;
     width: 100%;
+    height: 100%;
     max-width: 700px; /* Adjust based on design */
     min-width: 19vw;
+    border-radius: 50%;
     margin: 0 auto;
 }
 
@@ -51,6 +54,7 @@ body, html {
     margin-left: 8px;
     background: none;
     border: none;
+    border-radius: 45%;
     cursor: pointer;
 }
 
@@ -82,7 +86,7 @@ body, html {
 }
 
 .candidate-card {
-    background: #ffffff;
+    background: #eceefd;
     padding: 7px;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -113,7 +117,7 @@ body, html {
     box-sizing: border-box; /* Prevent size issues */
     justify-content: space-between;
     border-radius: 10px;
-    background: #ECECEC;
+    background: white;
 }
 .avatar-container {
     width: 60px;
@@ -124,6 +128,7 @@ body, html {
     border-radius: 50%;
     background: #ddd;
     margin-left: 8px;
+    border: 3px solid #DFF28D;
     overflow: hidden; /* Ensures the image stays within the circular container */
 }
 
@@ -177,6 +182,7 @@ body, html {
     width: 100%; /* So it adjusts inside its space */
     box-sizing: border-box; 
     margin-bottom: 10px;
+    border: 2px solid #eceefd;
 }
 
 /* Specific status colors - Light background with darker text */
@@ -326,16 +332,15 @@ body, html {
     width: 100%;
     padding-bottom: 4px;
     cursor: pointer;
-    margin-top: 4px;
+    margin-top: 1px;
 }
 
 .linking {
     padding: 8px ;
     border: none;
     border-radius: 5px;
-    background-color: #f8a1a1;
-    color: #f8a1a1;
-    color: white;
+    background-color: #DFF28D;
+    color: black;
     font-size: 14px;
     cursor: pointer;
     text-decoration: none;
@@ -343,7 +348,7 @@ body, html {
 }
 
 .linking:hover {
-    background-color: #d9534f; 
+    background-color:#cbde75;
 }
 
 .status-container {
@@ -452,8 +457,8 @@ button[type="submit"]:hover {
     top: 0;
     left: 0;
     width: 100%;
-    height:6%;
-    background: white;
+    height:7%;
+    background: #f8f9fa;
     border-radius: 5px;
     margin:0;
 }

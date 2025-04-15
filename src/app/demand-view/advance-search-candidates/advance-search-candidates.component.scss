@@ -55,15 +55,15 @@
 
 .search-button {
     padding: 8px 20px;
-    background-color: #1976d2;
-    color: #fff;
+    background-color: #DFF28D;
+    color: grey;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .search-button:hover {
-    background-color: #145ea8;
+    background-color: #d0e181;
 }
 
 /* Filtered Candidates List */
@@ -92,7 +92,7 @@
 
 /* Candidate Card */
 .filtered-candidate-card {
-    background: #ffffff;
+    background: #eceefd;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
@@ -107,8 +107,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #ECECEC;
-    padding: 10px;
+    background: white;
+    padding: 8px;
     border-radius: 6px;
     gap: 10px;
     flex-wrap: wrap;
@@ -118,6 +118,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 3px solid #DFF28D;
+    border-radius:50% ;
+    width: 40px;
+    height: 40px;
 }
 
 .candidate-info {
@@ -156,22 +160,11 @@
     }
 }
 .closebutton{
-    position:absolute;
+    position: absolute;
     top: 5px;
+    height: 5%;
+    width:7%;
     right:20px;
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: rgba(0, 0, 0, 0.54);
-      padding: 4px;
-      width:5%;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      margin-left: auto;
-      margin-bottom: -32px;
-      z-index: 2;
+    background-color: #DFF28D;
+    border-radius: 50%;
 }
