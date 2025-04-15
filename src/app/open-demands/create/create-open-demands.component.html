@@ -7,8 +7,15 @@
         <mat-label>Hiring Manager</mat-label>
         <input type="text" matInput formControlName="dem_clm_id" [matAutocomplete]="auto"
           (input)="onInputChange($event)" required>
+        <button *ngIf="demandForm.get('dem_clm_id')?.value" mat-icon-button matSuffix
+          (click)="clearClientSelection(); $event.stopPropagation()">
+          <mat-icon>close</mat-icon>
+        </button>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onHiringManagerChange($event)"
-          [displayWith]="displayClient">
+          [displayWith]="displayClient">  
+          <mat-option *ngIf="filteredClients.length === 0" disabled>
+            No options available
+          </mat-option>
           <mat-option *ngFor="let client of filteredClients | async" [value]="client">
             {{ client.clm_clientid ? client.clm_clientid + ' - ' : '' }}
             {{ client.clm_name ? client.clm_name : '' }}
@@ -37,9 +44,17 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>LOB</mat-label>
-        <input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" required
-          (blur)="onBlur('dem_lob_id')">
-        <mat-autocomplete #lobAuto="matAutocomplete" (optionSelected)="onLOBChange($event)" [displayWith]="displayLOB">
+        <input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" 
+          required (blur)="onBlur('dem_lob_id')">
+        <button *ngIf="demandForm.get('dem_lob_id')?.value" mat-icon-button matSuffix
+          (click)="clearLOBSelection(); $event.stopPropagation()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete #lobAuto="matAutocomplete" (optionSelected)="onLOBChange($event)" 
+          [displayWith]="displayLOB">
+          <mat-option *ngIf="(filteredLOBs | async)?.length === 0" disabled>
+            No options available
+          </mat-option>
           <mat-option *ngFor="let lob of filteredLOBs | async" [value]="lob">
             {{ lob.lob_name }}
           </mat-option>
@@ -132,8 +147,17 @@
 
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>Internal Department</mat-label>
-        <input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto"  (blur)="onBlur('dem_idm_id')">
-        <mat-autocomplete #deptAuto="matAutocomplete" (optionSelected)="onDeptChange($event)" [displayWith]="displayDept">
+        <input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto" 
+          (blur)="onBlur('dem_idm_id')">
+        <button *ngIf="demandForm.get('dem_idm_id')?.value" mat-icon-button matSuffix
+          (click)="clearDeptSelection(); $event.stopPropagation()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete #deptAuto="matAutocomplete" (optionSelected)="onDeptChange($event)" 
+          [displayWith]="displayDept">
+          <mat-option *ngIf="(filteredDepts | async)?.length === 0" disabled>
+            No options available
+          </mat-option>
           <mat-option *ngFor="let dept of filteredDepts | async" [value]="dept">
             {{ dept.idm_unitname }}
           </mat-option>
@@ -204,7 +228,7 @@
 
       <div class="file-input-container">
         <label for="job_description">JD attachment</label>
-        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
+        <input type="file" id="dem_jd" (change)="onFileSelected($event)" #fileInput >
       </div>
 
       <mat-error *ngIf="demandForm.controls['dem_jd'].hasError('serverError')">

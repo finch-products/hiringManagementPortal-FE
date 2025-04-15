@@ -219,9 +219,9 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
-  postaddClient(clientData: any): Observable<any> {
+  postaddClient(clientData: FormData | any): Observable<any> {
     console.log("client data", clientData)
-    return this.http.post<any>(`${this.baseUrl}clients/`, clientData, { headers: { 'Content-Type': 'application/json' } }).pipe(
+    return this.http.post<any>(`${this.baseUrl}clients/`, clientData,).pipe(
       catchError(this.handleError)
     );
   }

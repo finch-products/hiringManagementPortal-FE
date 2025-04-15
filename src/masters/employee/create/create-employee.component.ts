@@ -133,10 +133,35 @@ export class CreateEmployeeComponent implements OnInit {
     }
   }
 
+  // Add these new methods to your component class
 
+clearLocation(event: Event): void {
+  event.stopPropagation(); // Prevent the input field from getting focus
+  this.locationFilterControl.reset();
+  this.employeeForm.patchValue({ emp_lcm_id: '' });
+}
+
+clearRole(event: Event): void {
+  event.stopPropagation(); // Prevent the input field from getting focus
+  this.roleFilterControl.reset();
+  this.employeeForm.patchValue({ emp_rlm_id: '' });
+}
   onSubmit(form: FormGroupDirective): void {
     if (this.employeeForm.valid) {
-      this.httpService.addEmployee(this.employeeForm.value).subscribe({
+      const formData = new FormData();
+  
+      Object.entries(this.employeeForm.value).forEach(([key, value]) => {
+        if (value !== '' && value !== null && value !== undefined) {
+          // If it's a file (like emp_photo), handle file upload
+          if (key === 'emp_photo' && value instanceof File) {
+            formData.append(key, value, value.name);
+          } else {
+            formData.append(key, value.toString());
+          }
+        }
+      });
+  
+      this.httpService.addEmployee(formData).subscribe({
         next: (response) => {
           this.employeeService.addEmployee(response);
           this.snackBar.open('✅ Employee added successfully!', '', {
@@ -145,8 +170,13 @@ export class CreateEmployeeComponent implements OnInit {
             horizontalPosition: 'center',
             verticalPosition: 'bottom'
           });
+  
           this.employeeForm.reset();
           form.resetForm();
+          
+          this.locationFilterControl.reset('');
+          this.roleFilterControl.reset('');
+
           this.employeeForm.patchValue({
             emp_isactive: true,
             emp_insertby: 'emp_22032025_1',
@@ -171,6 +201,7 @@ export class CreateEmployeeComponent implements OnInit {
       this.showError('⚠️ Please fill all required fields correctly.');
     }
   }
+  
 
   private showError(message: string): void {
     this.snackBar.open(message, '', {
