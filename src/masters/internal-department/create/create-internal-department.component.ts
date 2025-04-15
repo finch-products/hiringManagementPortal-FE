@@ -117,6 +117,17 @@ export class CreateInternalDepartmentComponent implements OnInit {
     }
   }
 
+  clearspoc(event: Event): void {
+    event.stopPropagation(); 
+    this.spocFilterControl.reset();
+    this.deptForm.patchValue({ idm_spoc_id: '' });
+  }
+  
+  cleardeliverymanager(event: Event): void {
+    event.stopPropagation();
+    this.deliveryManagerFilterControl.reset();
+    this.deptForm.patchValue({ idm_deliverymanager_id: '' });
+  }
   onSubmit(form: FormGroupDirective): void {
     if (this.deptForm.valid) {
       this.httpService.postDepartment(this.deptForm.value).subscribe({
