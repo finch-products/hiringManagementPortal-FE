@@ -144,16 +144,39 @@ export class ReportComponent implements OnInit {
 
     // Custom Filtering Logic for Multiple Fields
     this.dataSource.filterPredicate = (data, filter) => {
-      const searchTerms = JSON.parse(filter); // Convert filter string back to object
-
+      const searchTerms = JSON.parse(filter);
+      
+      // Handle location filtering with both potential sources
+      let locationMatch = true;
+      if (searchTerms.location) {
+        const locationTerm = searchTerms.location.toLowerCase();
+        
+        // Case 1: Check in location_details object
+        const hasLocationDetails = data.location_details && 
+                                  data.location_details.lcm_name && 
+                                  data.location_details.lcm_name.toLowerCase().includes(locationTerm);
+        
+        // Case 2: Check in dem_location_position array
+        const hasLocationPosition = data.dem_location_position && 
+                                   data.dem_location_position.length > 0 && 
+                                   data.dem_location_position.some((loc: any) => 
+                                     loc.lcm_name && loc.lcm_name.toLowerCase().includes(locationTerm)
+                                   );
+        
+        locationMatch = hasLocationDetails || hasLocationPosition;
+      }
+      
+      // Rest of your filtering logic
       return (
-        (!searchTerms.hiringManager || data.client_details.clm_managername.toLowerCase().includes(searchTerms.hiringManager)) &&
-        (!searchTerms.skills || data.dem_skillset.toLowerCase().includes(searchTerms.skills)) &&
-        (data.location_details || []).some((loc: { lcm_name: string }) =>
-          loc.lcm_name.toLowerCase().includes(searchTerms.location.toLowerCase())
-        )&&        
-        (!searchTerms.deliveryManager || data.lob_details.delivery_manager.emp_name.toLowerCase().includes(searchTerms.deliveryManager)) &&
-        (!searchTerms.clientPartner || data.lob_details.client_partner.emp_name.toLowerCase().includes(searchTerms.clientPartner))
+        (!searchTerms.hiringManager || 
+          (data.client_details?.clm_managername?.toLowerCase() || '').includes(searchTerms.hiringManager)) &&
+        (!searchTerms.skills || 
+          (data.dem_skillset?.toLowerCase() || '').includes(searchTerms.skills)) &&
+        locationMatch &&
+        (!searchTerms.deliveryManager || 
+          (data.lob_details?.delivery_manager?.emp_name?.toLowerCase() || '').includes(searchTerms.deliveryManager)) &&
+        (!searchTerms.clientPartner || 
+          (data.lob_details?.client_partner?.emp_name?.toLowerCase() || '').includes(searchTerms.clientPartner))
       );
     };
 
@@ -198,7 +221,12 @@ export class ReportComponent implements OnInit {
       deliveryManager: this.deliveryManagerControl.value?.trim().toLowerCase() || '',
       clientPartner: this.clientPartnerControl.value?.trim().toLowerCase() || ''
     }
+    
+    console.log('Applying filters:', searchTerms);
     this.dataSource.filter = JSON.stringify(searchTerms);
+    
+    // After filtering, check how many items remain
+    console.log(`Filter applied, remaining items: ${this.dataSource.filteredData.length}`);
   };
 
   fetchOpenDemands() {
@@ -263,11 +291,19 @@ export class ReportComponent implements OnInit {
   //   this.dataSource.filter = filterValue;
   // }
 
-  getLocationNames(locations: { lcm_id: number, lcm_name: string }[] | undefined): string {
-    if (!locations || locations.length === 0) {
-      return ''; 
+  getLocationNames(element: any): string {
+    // Case 1: Check if location_details is an object with lcm_name
+    if (element.location_details && element.location_details.lcm_name) {
+      return element.location_details.lcm_name;
     }
-    return locations.map(loc => loc.lcm_name).join(', ');
-  }  
+    
+    // Case 2: Check if dem_location_position is an array with items
+    if (element.dem_location_position && element.dem_location_position.length > 0) {
+      return element.dem_location_position.map((loc: any) => loc.lcm_name).join(', ');
+    }
+    
+    // Default case: No location data found
+    return '';
+  }
 
 }

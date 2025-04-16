@@ -1,9 +1,8 @@
 .history-wrapper {
     position: absolute;
     right: -1px;
-    top: 0;
-    bottom: 0;
-    width: 30%;
+    //top: 55px;
+  width: 23vw;
     height:100vh;
     padding: 6px;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
@@ -14,6 +13,7 @@
     border-radius: 10px;
   font-family: 'Segoe UI', sans-serif;
   color: #333;
+  gap: 20px;
   }
 
 .header {
@@ -27,7 +27,7 @@
       font-size: 18px;
       color: #444;
       font-weight: bolder;
-      color:#cbd7f7 !important;
+      color:black !important;
     }
     
     span{
@@ -35,7 +35,7 @@
         color:#77c8f1 !important;
     }
     button {
-      background-color: #e0e0e0;
+      background-color: #DFF28D;
       color: #000;
     }
   }

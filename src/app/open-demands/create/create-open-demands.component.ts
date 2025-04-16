@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { OpenDemandService } from '../../services/open.demand.service';
@@ -42,6 +42,7 @@ export class CreateOpenDemandComponent implements OnInit {
   customEntryEnabled: boolean = false;
   isCustomManager: boolean = false;
  
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private openDemandService: OpenDemandService,
     private httpService: HttpService, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
@@ -119,29 +120,35 @@ export class CreateOpenDemandComponent implements OnInit {
 
   }
 
+ 
   private _filter(name: string): any[] {
     if (!name) return this.clients;
-
     const filterValue = name.toLowerCase();
-
     return this.clients.filter(client => {
       const clientId = client.clm_id?.toString().toLowerCase() || '';
       const clientName = client.clm_name?.toLowerCase() || '';
       const managerName = client.clm_managername?.toLowerCase() || '';
-
       return clientId.includes(filterValue) || clientName.includes(filterValue) || managerName.includes(filterValue);
     });
   }
 
   private _filterLOBs(name: string): any[] {
-    if (!name) return this.lobs; 
+    // Always show all LOBs if input is empty
+    if (!name) return this.lobs;
+    
     const filterValue = name.toLowerCase();
+    
+    // Show all LOBs that match the filter
     return this.lobs.filter(lob => lob.lob_name.toLowerCase().includes(filterValue));
   }
 
   private _filterDepts(name: string): any[] {
+    // Always show all departments if input is empty
     if (!name) return this.depts;
+    
     const filterValue = name.toLowerCase();
+    
+    // Show all departments that match the filter
     return this.depts.filter(dept => dept.idm_unitname.toLowerCase().includes(filterValue));
   }
 
@@ -166,24 +173,31 @@ export class CreateOpenDemandComponent implements OnInit {
     return typeof dept === 'object' ? dept.idm_unitname : dept; 
   }
 
-  onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
-    const selectedClient = event.option.value;
-    if (selectedClient === 'custom') {
-      this.customEntryEnabled = true;
-      this.demandForm.controls['dem_clm_id'].setValue(this.typedValue);
-      this.demandForm.get('clm_clientemail')?.enable();
-      this.demandForm.get('clm_clientemail')?.setValue(null); 
-    } else {
-      this.isCustomManager = false;
-      this.demandForm.controls['dem_clm_id'].setValue(selectedClient);
-      this.demandForm.get('clm_clientemail')?.setValue(selectedClient.clm_clientemail || '');
-    }
+  // For hiring manager selection
+onHiringManagerChange(event: MatAutocompleteSelectedEvent) {
+  const selectedClient = event.option.value;
+  
+  // Handle "Add New" option
+  if (selectedClient === 'custom') {
+    this.customEntryEnabled = true;
+    this.demandForm.controls['dem_clm_id'].setValue(this.typedValue);
+    this.demandForm.get('clm_clientemail')?.enable();
+    this.demandForm.get('clm_clientemail')?.setValue(null);
+    return;
   }
-  onLOBChange(event: any): void {
-    const selectedLOB = event.option.value;
-    this.demandForm.controls['dem_lob_id'].setValue(selectedLOB);
-  }
+  
+  // Handle normal selection
+  this.isCustomManager = false;
+  this.demandForm.controls['dem_clm_id'].setValue(selectedClient);
+  this.demandForm.get('clm_clientemail')?.setValue(selectedClient.clm_clientemail || '');
+}
 
+onLOBChange(event: any): void {
+  const selectedLOB = event.option.value;
+  this.demandForm.controls['dem_lob_id'].setValue(selectedLOB);
+}
+
+  // For Department selection
   onDeptChange(event: any): void {
     const selectedDept = event.option.value;
     this.demandForm.controls['dem_idm_id'].setValue(selectedDept);
@@ -331,24 +345,30 @@ export class CreateOpenDemandComponent implements OnInit {
 
   onBlur(controlName: string) {
     const control = this.demandForm.get(controlName);
-    if (control) {
+    if (control && control.value) {
       const currentValue = control.value;
       let isValid = false;
   
-      switch (controlName) {
-        case 'dem_clm_id':
-          isValid = this.clients.some(client => this.displayClient(client) === this.displayClient(currentValue));
-          break;
-        case 'dem_lob_id':
-          isValid = this.lobs.some(lob => this.displayLOB(lob) === this.displayLOB(currentValue));
-          break;
-        case 'dem_idm_id':
-          isValid = this.depts.some(dept => this.displayDept(dept) === this.displayDept(currentValue));
-          break;
-      }
+      // Only validate if there's a value to validate
+      if (currentValue) {
+        switch (controlName) {
+          case 'dem_clm_id':
+            isValid = typeof currentValue === 'object' || this.clients.some(client => 
+              this.displayClient(client) === this.displayClient(currentValue));
+            break;
+          case 'dem_lob_id':
+            isValid = typeof currentValue === 'object' || this.lobs.some(lob => 
+              this.displayLOB(lob) === this.displayLOB(currentValue));
+            break;
+          case 'dem_idm_id':
+            isValid = typeof currentValue === 'object' || this.depts.some(dept => 
+              this.displayDept(dept) === this.displayDept(currentValue));
+            break;
+        }
   
-      if (!isValid) {
-        control.setValue(null);
+        if (!isValid) {
+          control.setValue(null);
+        }
       }
     }
   }
@@ -536,7 +556,12 @@ export class CreateOpenDemandComponent implements OnInit {
     this.demandForm.controls['dem_isactive'].setValue(true);
     this.demandForm.controls['dem_insertby'].setValue('emp_22032025_1');
     this.demandForm.controls['dem_updateby'].setValue('emp_22032025_1');
-    
+    this.selectedFile = null;
+if (this.fileInput) {
+  this.fileInput.nativeElement.value = '';
+}
+
+
     this.router.navigate(['entry']); // Navigates to 'entry' page
   }
 
@@ -548,4 +573,21 @@ export class CreateOpenDemandComponent implements OnInit {
       verticalPosition: 'bottom'
     });
   }
+
+  // Add these methods to your component
+
+clearClientSelection() {
+  this.demandForm.get('dem_clm_id')?.setValue(null);
+  this.demandForm.get('clm_clientemail')?.setValue(null);
+  this.demandForm.get('clm_clientemail')?.disable();
+  this.customEntryEnabled = false;
+}
+
+clearLOBSelection() {
+  this.demandForm.get('dem_lob_id')?.setValue(null);
+}
+
+clearDeptSelection() {
+  this.demandForm.get('dem_idm_id')?.setValue(null);
+}
 }

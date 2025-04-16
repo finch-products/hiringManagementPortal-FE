@@ -219,6 +219,7 @@ export class HttpService {
     );
   }
   postaddClient(clientData: FormData | any): Observable<any> {
+    console.log("client data", clientData)
     return this.http.post<any>(`${this.baseUrl}clients/`, clientData,).pipe(
       catchError(this.handleError)
     );

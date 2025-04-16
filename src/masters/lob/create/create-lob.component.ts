@@ -6,7 +6,7 @@ import { HttpService } from '../../../app/services/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 @Component({
   selector: 'app-create-lob',
   templateUrl: './create-lob.component.html',
@@ -38,13 +38,14 @@ export class CreateLOBComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadEmpByRoles();
-    this.filteredClientPartners = this.clientPartnerFilterControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterClientPartners(value || ''))
-    );
     this.filteredDeliveryManagers = this.deliveryManagerFilterControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterDeliveryManagers(value || ''))
+    );
+  
+    this.filteredClientPartners = this.clientPartnerFilterControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterClientPartners(value || ''))
     );
   }
 
@@ -81,21 +82,36 @@ export class CreateLOBComponent implements OnInit {
     return this.deliveryManagers.filter(dm => dm.emp_name.toLowerCase().includes(filterValue));
   }
 
-  onClientPartnerSelected(event: any): void {
-    const selectedClientPartner = this.clientPartners.find(cp => cp.emp_name === event.option.value);
-    if (selectedClientPartner) {
-      this.lobForm.patchValue({ lob_clientpartner: selectedClientPartner.emp_id });
-      this.clientPartnerFilterControl.setValue(selectedClientPartner.emp_name, { emitEvent: false });
-    }
-  }
+  // Add these methods to your component class
 
-  onDeliveryManagerSelected(event: any): void {
-    const selectedDeliveryManager = this.deliveryManagers.find(dm => dm.emp_name === event.option.value);
-    if (selectedDeliveryManager) {
-      this.lobForm.patchValue({ lob_deliverymanager: selectedDeliveryManager.emp_id });
-      this.deliveryManagerFilterControl.setValue(selectedDeliveryManager.emp_name, { emitEvent: false });
-    }
+clearDeliveryManagerSelection(): void {
+  // Clear the delivery manager input and related form control
+  this.deliveryManagerFilterControl.reset();
+  this.lobForm.patchValue({ lob_deliverymanager: '' });
+}
+
+clearClientPartnerSelection(): void {
+  // Clear the client partner input and related form control
+  this.clientPartnerFilterControl.reset();
+  this.lobForm.patchValue({ lob_clientpartner: '' });
+}
+
+// Update the selection methods to use MatAutocompleteSelectedEvent
+onClientPartnerSelected(event: MatAutocompleteSelectedEvent): void {
+  const selectedClientPartner = this.clientPartners.find(cp => cp.emp_name === event.option.value);
+  if (selectedClientPartner) {
+    this.lobForm.patchValue({ lob_clientpartner: selectedClientPartner.emp_id });
+    this.clientPartnerFilterControl.setValue(selectedClientPartner.emp_name, { emitEvent: false });
   }
+}
+
+onDeliveryManagerSelected(event: MatAutocompleteSelectedEvent): void {
+  const selectedDeliveryManager = this.deliveryManagers.find(dm => dm.emp_name === event.option.value);
+  if (selectedDeliveryManager) {
+    this.lobForm.patchValue({ lob_deliverymanager: selectedDeliveryManager.emp_id });
+    this.deliveryManagerFilterControl.setValue(selectedDeliveryManager.emp_name, { emitEvent: false });
+  }
+}
 
   onClientPartnerBlur(): void {
     const inputValue = this.clientPartnerFilterControl.value;

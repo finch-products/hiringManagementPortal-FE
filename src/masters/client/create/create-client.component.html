@@ -77,12 +77,24 @@
                     (blur)="onLocationBlur()"
                     (input)="onLocationInput($event)"
                 >
+                <!-- clear button -->
+                <button 
+                  *ngIf="locationFilterControl.value" 
+                  mat-icon-button 
+                  matSuffix
+                  (click)="clearLocationSelection(); $event.stopPropagation()"
+                  type="button">
+                  <mat-icon>close</mat-icon>
+                </button>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLocationSelected($event)">
-                    <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
-                        {{ location.lcm_name }}
-                    </mat-option>
+                    <mat-option *ngIf="(filteredLocations | async)?.length === 0" disabled>
+                        No options available
+                      </mat-option>
+                  <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
+                    {{ location.lcm_name }}
+                  </mat-option>
                 </mat-autocomplete>
-            </mat-form-field>
+              </mat-form-field>
 
             <mat-radio-group formControlName="clm_isactive" appearance="fill" class="form-field">
                 <mat-label>Active?</mat-label>

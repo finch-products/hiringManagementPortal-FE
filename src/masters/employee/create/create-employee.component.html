@@ -39,7 +39,17 @@
                 <mat-label>Location</mat-label>
                 <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="autoLocation"
                     (blur)="onLocationBlur()">
+                    <button 
+                    *ngIf="locationFilterControl.value" 
+                    matSuffix 
+                    mat-icon-button 
+                    (click)="clearLocation($event)">
+                    <mat-icon>close</mat-icon>
+                    </button>
                 <mat-autocomplete #autoLocation="matAutocomplete" (optionSelected)="onLocationSelected($event)">
+                    <mat-option *ngIf="(filteredLocations | async)?.length === 0" disabled>
+                        No options available
+                      </mat-option>
                     <mat-option *ngFor="let location of filteredLocations | async" [value]="location.lcm_name">
                         {{ location.lcm_name }}
                     </mat-option>
@@ -50,7 +60,17 @@
                 <mat-label>Role</mat-label>
                 <input type="text" matInput [formControl]="roleFilterControl" [matAutocomplete]="autoRole"
                     (blur)="onRoleBlur()">
+                    <button 
+                    *ngIf="roleFilterControl.value" 
+                    matSuffix 
+                    mat-icon-button 
+                    (click)="clearRole($event)">
+                    <mat-icon>close</mat-icon>
+                  </button>
                 <mat-autocomplete #autoRole="matAutocomplete" (optionSelected)="onRoleSelected($event)">
+                    <mat-option *ngIf="(filteredRoles | async)?.length === 0" disabled>
+                        No options available
+                      </mat-option>
                     <mat-option *ngFor="let role of filteredRoles | async" [value]="role.rlm_name">
                         {{ role.rlm_name }}
                     </mat-option>

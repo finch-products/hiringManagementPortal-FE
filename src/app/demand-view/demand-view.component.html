@@ -31,7 +31,9 @@
     </app-candidate>
 
     <app-preview  [pdfUrl]="selectedPdfUrl" (close)="onPreviewClose()"></app-preview>
-    <app-interview-schedule fxFlex="30" *ngIf="candidateComponent?.showInterviewForm"
+
+    <app-interview-schedule *ngIf="candidateComponent?.showInterviewForm"
+    fxFlex="30"
     [candidateId]="candidateComponent.selectedCandidateForInterview?.cdl_cdm_id"
     [demandId]="demandId"
     [candidateName]="candidateComponent.selectedCandidateForInterview?.name"
@@ -56,4 +58,5 @@
       (close)="onAdvanceSearchClose()">    
     </app-advance-search-candidates>
   </ng-container>
+</div>
 </div>

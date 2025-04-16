@@ -1,21 +1,22 @@
 .interview-form-container {
   position: absolute;
-  right: 0px;
-  bottom: 0;
-  width: 26%; 
+  right: -1px;
+  //top: 55px;
+  width: 23vw;
   height: 100vh;
-  min-width: 400px; 
   background: white;
   padding: 10px;
+  padding-top: 0px;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
     
     h2 {
+      position: sticky;
       color: rgba(0, 0, 0, 0.87);
       font-size: 20px;
       font-weight: 500;
       margin: 0 0 16px 0;
-      padding-bottom: 12px;
+      padding-bottom:12px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       top: 0;
       background: white;
@@ -141,16 +142,16 @@
         }
 
         &.submit {
-          background-color: #3f51b5;
+          background-color: #DFF28D !important;
           color: white;
           border: none;
 
           &:hover {
-            background-color: #303f9f;
+            background-color: #DFF28D !important;
           }
 
           &:disabled {
-            background-color: rgba(63, 81, 181, 0.5);
+            background-color: #bdcd75;
             cursor: not-allowed;
           }
         }
@@ -158,13 +159,14 @@
     }
 
     .close-btn {
+      position: sticky;
       top: 0;
       right: 0;
       background: none;
       border: none;
       font-size: 20px;
       cursor: pointer;
-      color: rgba(0, 0, 0, 0.54);
+      color: #DFF28D !important;
       padding: 4px;
       width: 32px;
       height: 32px;
@@ -208,4 +210,8 @@
 .form-group label + select {
     background-color: white;
     border: 1px solid #ccc;
+}
+
+.interview-form-container .close-btn {
+  color: #DFF28D !important;  /* or use #28a745 */
 }
