@@ -1,7 +1,8 @@
 .sidenav-container {
-  height: 100%;
   position: fixed;
-  width: auto;
+  display: flex;
+  height: 100vh;
+  width: 238px;
   background-color: #fff;
   overflow-y: auto;
   z-index: 100;
@@ -448,7 +449,7 @@ mat-expansion-panel-header {
 .sidenav-container {
   display: flex;
   height: 100vh;
-  width: 100%;
+  width: 238px;
 }
 
 .sidenav {

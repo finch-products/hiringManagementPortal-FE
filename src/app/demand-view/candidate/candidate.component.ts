@@ -313,7 +313,7 @@ export class CandidateComponent implements OnChanges{
     }
 
     const payload = this.selectedCandidates.map(candidate => ({
-      cdl_cdm_id: candidate.cdl_cdm_id,
+      cdl_cdm_id: candidate?.cdl_cdm_id,
       cdl_dem_id: this.dem_id
     }));
 
@@ -333,6 +333,7 @@ export class CandidateComponent implements OnChanges{
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.selectedCandidates = [];
         this.candidatesLinked.emit();
         this.loadData(this.dem_id);
 
