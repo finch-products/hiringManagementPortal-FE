@@ -76,15 +76,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_updateby: ['emp_22032025_1'],
       dem_mandatoryskill: [''],
       dem_position_location: [[]],
-    },{
-      validator: this.jdValidator.bind(this)
     });
-  }
-  private jdValidator(group: FormGroup) {
-    if (!this.isEditMode && !group.get('dem_jd')?.value && !this.selectedFile) {
-      return { required: true };
-    }
-    return null;
   }
 
   ngOnInit(): void {
