@@ -90,11 +90,6 @@ export class CreateCandidateComponent implements OnInit {
     }
   }
 
-  clearLocations(event: Event): void {
-    event.stopPropagation(); 
-    this.locationFilterControl.reset();
-    this.candidateForm.patchValue({ cdm_location: '' });
-  }
   loadCandidateStatus(): void {
     this.httpService.getRoles().subscribe({
       next: (data) => {
@@ -198,7 +193,3 @@ export class CreateCandidateComponent implements OnInit {
     
   }
 }
-
-
-
-

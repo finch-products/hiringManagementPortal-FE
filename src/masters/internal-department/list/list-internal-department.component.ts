@@ -34,7 +34,8 @@ export class ListInternalDepartmentComponent {
   loadDepts() {
     this.httpService.getInternalDepartmentDetails().subscribe({
       next: (data) => {
-        this.internalDeptService.setInitialData(data);
+        const sortedData = (data as any[]).sort((a, b) => b.idm_id - a.idm_id);
+        this.internalDeptService.setInitialData(sortedData);
       },
       error: (err) => console.error('Error fetching departments', err)
     });

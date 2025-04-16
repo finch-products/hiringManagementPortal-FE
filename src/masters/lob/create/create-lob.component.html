@@ -22,15 +22,6 @@
                     (blur)="onDeliveryManagerBlur()" 
                     required
                 >
-                <!-- Add clear button -->
-                <button 
-                    *ngIf="deliveryManagerFilterControl.value" 
-                    mat-icon-button 
-                    matSuffix
-                    (click)="clearDeliveryManagerSelection(); $event.stopPropagation()"
-                    type="button">
-                    <mat-icon>close</mat-icon>
-                </button>
                 <mat-autocomplete #dmAuto="matAutocomplete" (optionSelected)="onDeliveryManagerSelected($event)">
                     <mat-option *ngIf="(filteredDeliveryManagers | async)?.length === 0" disabled>
                         No options available
@@ -51,15 +42,6 @@
                     (blur)="onClientPartnerBlur()" 
                     required
                 >
-                <!-- Add clear button -->
-                <button 
-                    *ngIf="clientPartnerFilterControl.value" 
-                    mat-icon-button 
-                    matSuffix
-                    (click)="clearClientPartnerSelection(); $event.stopPropagation()"
-                    type="button">
-                    <mat-icon>close</mat-icon>
-                </button>
                 <mat-autocomplete #cpAuto="matAutocomplete" (optionSelected)="onClientPartnerSelected($event)">
                     <mat-option *ngIf="(filteredClientPartners | async)?.length === 0" disabled>
                         No options available

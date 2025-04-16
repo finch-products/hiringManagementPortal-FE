@@ -31,14 +31,6 @@
           [matAutocomplete]="autoSpoc"
           (blur)="onSpocBlur()"
         >
-        <button 
-        *ngIf="spocFilterControl.value" 
-        matSuffix 
-         mat-icon-button 
-        aria-label="Clear" 
-        (click)="clearspoc($event)">
-        <mat-icon>close</mat-icon>
-  </button>
         <mat-autocomplete #autoSpoc="matAutocomplete" (optionSelected)="onSpocSelected($event)">
           <mat-option *ngIf="(filteredSpocs | async)?.length === 0" disabled>
             No options available
@@ -58,14 +50,6 @@
           [matAutocomplete]="autoDeliveryManager"
           (blur)="onDeliveryManagerBlur()"
         >
-        <button 
-        *ngIf="deliveryManagerFilterControl.value" 
-        matSuffix 
-         mat-icon-button 
-        aria-label="Clear" 
-        (click)="cleardeliverymanager($event)">
-        <mat-icon>close</mat-icon>
-        </button>
         <mat-autocomplete #autoDeliveryManager="matAutocomplete" (optionSelected)="onDeliveryManagerSelected($event)">
           <mat-option *ngIf="(filteredDeliveryManagers | async)?.length === 0" disabled>
             No options available

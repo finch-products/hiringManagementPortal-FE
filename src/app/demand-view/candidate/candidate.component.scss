@@ -12,7 +12,7 @@ body, html {
     border-radius: 10px;
     /*width: calc(100% - 250px);  Adjust width dynamically based on sidebar */
     min-width: 20vw;
-    width:45vw !important; 
+    width:50vw !important; 
     height: 100vh;
     transition: width 0.8s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
     //border: 2px solid #ddd; 
@@ -521,7 +521,7 @@ button[type="submit"]:hover {
 /* Add this class for when preview is open */
 .candidates-container.preview-open {
     margin-left:1px;
-    width: 24vw !important;
+    width: 30vw !important;
     resize: none;
     cursor: none;
 
@@ -832,7 +832,7 @@ button[type="submit"]:hover {
       padding: 5px 10px;      
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: center;   
       cursor: pointer;
       
       h3 {

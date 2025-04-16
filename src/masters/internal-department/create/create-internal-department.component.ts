@@ -115,24 +115,28 @@ export class CreateInternalDepartmentComponent implements OnInit {
       this.deliveryManagerFilterControl.setValue('');
       this.deptForm.patchValue({ idm_deliverymanager_id: '' });
     }
-  }
-
-  clearspoc(event: Event): void {
-    event.stopPropagation(); 
-    this.spocFilterControl.reset();
-    this.deptForm.patchValue({ idm_spoc_id: '' });
-  }
-  
-  cleardeliverymanager(event: Event): void {
-    event.stopPropagation();
-    this.deliveryManagerFilterControl.reset();
-    this.deptForm.patchValue({ idm_deliverymanager_id: '' });
-  }
+  } 
   onSubmit(form: FormGroupDirective): void {
     if (this.deptForm.valid) {
-      this.httpService.postDepartment(this.deptForm.value).subscribe({
+      console.log("payload :",this.deptForm.value)
+          const spocName = this.spocFilterControl.value;
+          const deliveryManagerName = this.deliveryManagerFilterControl.value;
+          this.httpService.postDepartment(this.deptForm.value).subscribe({
         next: (response) => {
-          this.internalDeptService.addInternalDept(response);
+            // Enrich the response to pass emp_name for listing/display purposes
+            const enrichedDepartment = {
+              ...response,
+              idm_spoc_id: {
+                emp_id: this.deptForm.value.idm_spoc_id,
+                emp_name: spocName
+              },
+              idm_deliverymanager_id: {
+                emp_id: this.deptForm.value.idm_deliverymanager_id,
+                emp_name: deliveryManagerName
+              }
+            };
+            console.log(enrichedDepartment);
+          this.internalDeptService.addInternalDept(enrichedDepartment);
           this.snackBar.open('✅ Department added successfully!', '', {
             duration: 4000,
             panelClass: ['success-snackbar'],
@@ -141,6 +145,8 @@ export class CreateInternalDepartmentComponent implements OnInit {
           });
           this.deptForm.reset();
           form.resetForm();
+          this.spocFilterControl.setValue('');
+          this.deliveryManagerFilterControl.setValue('');
           this.deptForm.patchValue({ idm_isactive: true, idm_insertby: 'emp_22032025_1', idm_updateby: 'emp_22032025_1' });
         },
         error: (error) => {
@@ -154,7 +160,7 @@ export class CreateInternalDepartmentComponent implements OnInit {
         }
       });
     } else {
-      this.snackBar.open('⚠️ Please fill all required fields correctly.', '', {
+      this.snackBar.open('⚠ Please fill all required fields correctly.', '', {
         duration: 4000,
         panelClass: ['error-snackbar'],
         horizontalPosition: 'center',

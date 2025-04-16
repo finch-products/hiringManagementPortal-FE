@@ -80,13 +80,6 @@ private _filterLocations(value: string): any[] {
     location.lcm_name.toLowerCase().includes(filterValue)
   );
 }
-
-  clearLocationSelection(): void {
-    // Clear the location input and related form control
-    this.locationFilterControl.reset();
-    this.clientForm.patchValue({ clm_lcm_id: '' });
-  }
-  
   onLocationSelected(event: MatAutocompleteSelectedEvent): void {
     const selectedValue = event.option.value;
     const selectedLocation = this.locations.find(loc => loc.lcm_name === selectedValue);
@@ -157,7 +150,7 @@ private _filterLocations(value: string): any[] {
         }
       });
     } else {
-      this.showError('⚠️ Please fill all required fields correctly.');
+      this.showError('⚠ Please fill all required fields correctly.');
     }
   }  
 
@@ -195,7 +188,7 @@ private _filterLocations(value: string): any[] {
                 this.clientForm.controls[field].setErrors({ serverError: errorMessage });
 
                 console.log(`Set error for ${field}:`, errorMessage);
-                console.log(`Final error for ${field}:`, typeof errorMessage, errorMessage);
+                console.log(`Final error for ${field}:, typeof errorMessage`, errorMessage);
 
             } else {
                 console.warn(`Field not found in form or no valid errors: ${field}`);

@@ -82,20 +82,6 @@ export class CreateLOBComponent implements OnInit {
     return this.deliveryManagers.filter(dm => dm.emp_name.toLowerCase().includes(filterValue));
   }
 
-  // Add these methods to your component class
-
-clearDeliveryManagerSelection(): void {
-  // Clear the delivery manager input and related form control
-  this.deliveryManagerFilterControl.reset();
-  this.lobForm.patchValue({ lob_deliverymanager: '' });
-}
-
-clearClientPartnerSelection(): void {
-  // Clear the client partner input and related form control
-  this.clientPartnerFilterControl.reset();
-  this.lobForm.patchValue({ lob_clientpartner: '' });
-}
-
 // Update the selection methods to use MatAutocompleteSelectedEvent
 onClientPartnerSelected(event: MatAutocompleteSelectedEvent): void {
   const selectedClientPartner = this.clientPartners.find(cp => cp.emp_name === event.option.value);
@@ -154,11 +140,11 @@ onDeliveryManagerSelected(event: MatAutocompleteSelectedEvent): void {
             },
             lob_insertby_id: {
                 emp_id: 'emp_22032025_1',
-                emp_name: 'System User' // Or whatever name you want to display
+                emp_name: 'Swathi' // Or whatever name you want to display
             },
             lob_updateby_id: {
                 emp_id: 'emp_22032025_1',
-                emp_name: 'System User'
+                emp_name: 'Swathi'
             }
         };
         
@@ -184,7 +170,7 @@ onDeliveryManagerSelected(event: MatAutocompleteSelectedEvent): void {
         }
       });
     } else {
-      this.showError('⚠️ Please fill all required fields correctly.');
+      this.showError('⚠ Please fill all required fields correctly.');
     }
   }
 
