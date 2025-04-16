@@ -17,7 +17,7 @@ export class CreateEmployeeComponent implements OnInit {
   employeeForm: FormGroup;
   locationFilterControl = new FormControl('');
   roleFilterControl = new FormControl('');
-
+  selectedFile: File | null = null;
   locations: any[] = [];
   roles: any[] = [];
   filteredLocations!: Observable<any[]>;
@@ -133,10 +133,33 @@ export class CreateEmployeeComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+        // Validate file type if needed
+        if (!file.type.match(/image\/*/)) {
+            this.showError('Only images are allowed');
+            return;
+        }
+        this.selectedFile = file;
+    }
+}
 
   onSubmit(form: FormGroupDirective): void {
     if (this.employeeForm.valid) {
-      this.httpService.addEmployee(this.employeeForm.value).subscribe({
+      const formData = new FormData();
+  
+      if (this.selectedFile) {
+        formData.append('emp_image', this.selectedFile, this.selectedFile.name);
+    }
+
+    Object.entries(this.employeeForm.value).forEach(([key, value]) => {
+        if (value !== '' && value !== null && value !== undefined) {
+            formData.append(key, value.toString());
+        }
+    });
+  
+      this.httpService.addEmployee(formData).subscribe({
         next: (response) => {
           this.employeeService.addEmployee(response);
           this.snackBar.open('✅ Employee added successfully!', '', {
@@ -145,8 +168,13 @@ export class CreateEmployeeComponent implements OnInit {
             horizontalPosition: 'center',
             verticalPosition: 'bottom'
           });
+  
           this.employeeForm.reset();
           form.resetForm();
+          
+          this.locationFilterControl.reset('');
+          this.roleFilterControl.reset('');
+          this.selectedFile = null;
           this.employeeForm.patchValue({
             emp_isactive: true,
             emp_insertby: 'emp_22032025_1',
@@ -182,8 +210,9 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   onCancel(formDirective: FormGroupDirective): void {
-    formDirective.resetForm();  // Resets the form completely
+    formDirective.resetForm(); 
     this.employeeForm.reset();
+    this.selectedFile = null;
     this.employeeForm.patchValue({
       emp_isactive: true,
       emp_insertby: 'emp_22032025_1',

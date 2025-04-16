@@ -65,8 +65,8 @@
     <div class="client-info">
       <div class="client">
         <div class="avatar-container">
-          <img src="../../../assets/img/profile_img.png" alt="Candidate" class="avatar">
-      </div>
+          <img [src]="getClientLogoUrl()" alt="client" class="avatar" (error)="handleImageError($event)">
+        </div>        
         <div class="client-details">
           <p> <span>Client:</span> {{demands?.demand_details?.client_details.clm_name || 'N/A'}}
             <br /><span>Client Manager:</span>
@@ -129,7 +129,12 @@
     </div>
     <div class="detail-box">
       <span>Job Description</span>
-      <a href="javascript:void(0);" (click)="openPdf('assets/chatboat.pdf')">chatboat.pdf</a>
+      <a href="javascript:void(0);" 
+         *ngIf="getJobDescriptionUrl() as jdUrl"
+         (click)="openPdf(jdUrl, $event)">
+        {{ getJDFilename() }}
+      </a>
+      <span *ngIf="!getJobDescriptionUrl()">N/A</span>
     </div>
   </div>
 

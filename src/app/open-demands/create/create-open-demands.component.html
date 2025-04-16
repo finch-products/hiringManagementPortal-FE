@@ -204,7 +204,13 @@
 
       <div class="file-input-container">
         <label for="job_description">JD attachment</label>
-        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
+        <div *ngIf="isEditMode && existingJdFilename && !selectedFile" class="existing-file">
+          {{ existingJdFilename }}
+          <button  (click)="removeExistingJd()" class="remove-file-btn">
+            <mat-icon >close</mat-icon>
+          </button>
+        </div>
+        <input type="file" id="dem_jd" (change)="onFileSelected($event)" *ngIf="!isEditMode || !existingJdFilename || selectedFile">
       </div>
 
       <mat-error *ngIf="demandForm.controls['dem_jd'].hasError('serverError')">

@@ -19,7 +19,9 @@ export class CreateClientComponent implements OnInit {
 
   locations: any[] = [];
   filteredLocations!: Observable<any[]>;
- 
+  selectedLogo: File | null = null;
+  logoPreview: string | ArrayBuffer | null = null;
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -102,14 +104,54 @@ export class CreateClientComponent implements OnInit {
     }
   }
 
+  onLogoSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.match(/image\/*/)) {
+        this.showError('Only image files are allowed');
+        return;
+      }
+      
+      // Validate file size (optional, e.g., 2MB limit)
+      if (file.size > 2 * 1024 * 1024) {
+        this.showError('File size should be less than 2MB');
+        return;
+      }
+  
+      this.selectedLogo = file;
+  
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.logoPreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
+  removeLogo(): void {
+    this.selectedLogo = null;
+    this.logoPreview = null;
+    // Clear the file input value to allow re-selecting the same file
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+
   onSubmit(form: FormGroupDirective): void {
     if (this.clientForm.valid) {
-      const formData = { ...this.clientForm.value };
-
-      // Remove empty/null fields
-      Object.keys(formData).forEach(key => {
-        if (formData[key] === '' || formData[key] === null) {
-          delete formData[key];
+      const formData = new FormData();
+  
+      if (this.selectedLogo) {
+        formData.append('clm_logo', this.selectedLogo, this.selectedLogo.name);
+      }
+  
+      // Append all form fields
+      Object.entries(this.clientForm.value).forEach(([key, value]) => {
+        if (value !== '' && value !== null && value !== undefined) {
+          formData.append(key, value.toString());
         }
       });
 
@@ -122,25 +164,24 @@ export class CreateClientComponent implements OnInit {
             panelClass: ['success-snackbar'],
             horizontalPosition: 'center',
           });
-
+  
           form.resetForm();
+          this.removeLogo(); 
           this.clientForm.patchValue({
             clm_isactive: true,
             clm_insertby: 'emp_22032025_1'
           });
           this.locationFilterControl.setValue('');
         },
-        
         error: (error) => {
           console.error('Error adding client:', error);
-          this.handleFieldErrors(error);
+          this.handleFieldErrors(error.error);
         }
       });
     } else {
-      console.warn('Form is invalid.');
       this.showError('⚠️ Please fill all required fields correctly.');
     }
-  }
+  }  
 
   private showError(message: string): void {
     this.snackBar.open(message, '', {
@@ -161,7 +202,9 @@ export class CreateClientComponent implements OnInit {
     this.clientForm.markAsPristine(); // Mark the form as pristine
     this.clientForm.markAsUntouched();
     this.locationFilterControl.setValue('');
+    this.removeLogo(); 
   }
+  
   private handleFieldErrors(error: any): void {
     console.log("Full error object:", error);
 

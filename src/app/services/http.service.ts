@@ -7,8 +7,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl = 'http://64.227.145.117/api/';
-  // private baseUrl = 'http://localhost:8000/api/';
+  // public baseUrl = 'http://64.227.145.117/api/';
+  public baseUrl = 'http://localhost:8000/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -196,7 +196,6 @@ export class HttpService {
   }
 
   postCandidateByDemandId(payload: any): Observable<any> {
-    console.log("payload", payload)
     return this.http.post<any>(`${this.baseUrl}candidate-demand/candidateby_opendemand/`, payload, this.getHeaders()).pipe(
       catchError(this.handleError)
     );
@@ -219,9 +218,8 @@ export class HttpService {
       catchError(this.handleError)
     );
   }
-  postaddClient(clientData: any): Observable<any> {
-    console.log("client data", clientData)
-    return this.http.post<any>(`${this.baseUrl}clients/`, clientData, { headers: { 'Content-Type': 'application/json' } }).pipe(
+  postaddClient(clientData: FormData | any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}clients/`, clientData,).pipe(
       catchError(this.handleError)
     );
   }
