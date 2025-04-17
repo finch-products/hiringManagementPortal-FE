@@ -1,0 +1,15 @@
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    
+    .file-name {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    
+    button {
+        margin: 0;
+    }
+}

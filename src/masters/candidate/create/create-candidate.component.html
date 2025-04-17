@@ -94,6 +94,23 @@
         <mat-radio-button [value]="false">No</mat-radio-button>
       </mat-radio-group>
 
+      <div class="photo-upload-container">
+        <div class="photo-preview" *ngIf="photoPreview">
+          <img [src]="photoPreview" alt="Profile Photo Preview" class="preview-image">
+          <button mat-icon-button class="remove-photo" (click)="removePhoto()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div class="upload-controls">
+          <button mat-raised-button type="button" (click)="photoInput.click()" color="primary">
+            <mat-icon>add_a_photo</mat-icon>
+            {{ selectedPhoto ? 'Change Photo' : 'Upload Profile Photo' }}
+          </button>
+          <input #photoInput type="file" (change)="onPhotoSelected($event)" accept="image/*" style="display: none">
+          <span class="file-name">{{ selectedPhoto?.name }}</span>
+        </div>
+      </div>
+      
     </div>
 
     <div class="submit-container">

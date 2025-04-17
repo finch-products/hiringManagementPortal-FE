@@ -81,15 +81,21 @@
                 <mat-label>Keywords</mat-label>
                 <input matInput formControlName="emp_keyword">
             </mat-form-field>
-
-
             <mat-radio-group formControlName="emp_isactive" appearance="fill" class="form-field">
                 <mat-label>Active?</mat-label>
                 <mat-radio-button [value]="true">Yes</mat-radio-button>
                 <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
         </div>
-
+        <div class="file-upload-container">
+            <button mat-raised-button type="button" (click)="fileUpload.click()">
+                <mat-icon>attach_file</mat-icon>
+                Upload Profile Photo
+            </button>
+            <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
+            <input #fileUpload type="file" (change)="onFileSelected($event)" style="display: none" accept="image/*">
+        </div>
+        
         <div class="submit-container">
             <button mat-raised-button color="primary" type="button" class="cancel"
                 (click)="onCancel(form)">Cancel</button>

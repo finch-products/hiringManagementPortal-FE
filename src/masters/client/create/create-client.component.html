@@ -103,6 +103,23 @@
             </mat-radio-group>
         </div>
 
+        <div class="logo-upload-container">
+            <div class="logo-preview" *ngIf="logoPreview">
+              <img [src]="logoPreview" alt="Logo Preview" class="preview-image">
+              <button mat-icon-button class="remove-logo" (click)="removeLogo()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+            <div class="upload-controls">
+              <button mat-raised-button type="button" (click)="fileInput.click()" >
+                <mat-icon>add_photo_alternate</mat-icon>
+                {{ selectedLogo ? 'Change Logo' : 'Upload Logo' }}
+              </button>
+              <input #fileInput type="file" (change)="onLogoSelected($event)" accept="image/*" style="display: none">
+              <span class="file-name">{{ selectedLogo?.name }}</span>
+            </div>
+          </div>
+
         <div class="submit-container">
             <button mat-raised-button color="primary" type="button" class="cancel" (click)="onCancel()">Cancel</button>
 

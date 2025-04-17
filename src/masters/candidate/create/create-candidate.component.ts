@@ -22,6 +22,9 @@ export class CreateCandidateComponent implements OnInit {
 
   selectedFile: File | null = null;
   filteredLocations!: Observable<any[]>;
+  selectedPhoto: File | null = null;
+  photoPreview: string | ArrayBuffer | null = null;
+
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService, private CandidateService: CandidateService, private snackBar: MatSnackBar) {
@@ -113,21 +116,66 @@ export class CreateCandidateComponent implements OnInit {
     }
   }
 
+  onPhotoSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.match(/image\/*/)) {
+        this.snackBar.open('Only image files are allowed for profile photo', '', {
+          duration: 4000,
+          panelClass: ['error-snackbar']
+        });
+        return;
+      }
+      
+      // Validate file size (optional, e.g., 2MB limit)
+      if (file.size > 2 * 1024 * 1024) {
+        this.snackBar.open('Profile photo should be less than 2MB', '', {
+          duration: 4000,
+          panelClass: ['error-snackbar']
+        });
+        return;
+      }
+  
+      this.selectedPhoto = file;
+  
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.photoPreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
+  removePhoto(): void {
+    this.selectedPhoto = null;
+    this.photoPreview = null;
+    // Clear the file input value to allow re-selecting the same file
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+
   onSubmit(form: FormGroupDirective) {
     const formData = new FormData();
+
+    if (this.selectedPhoto) {
+      formData.append("cdm_image", this.selectedPhoto, this.selectedPhoto.name);
+    }
+  
+    // Add the profile document if selected
+    if (this.selectedFile) {
+      formData.append("cdm_profile", this.selectedFile, this.selectedFile.name);
+    }
 
     Object.keys(this.candidateForm.value).forEach(key => {
       const value = this.candidateForm.value[key];
       if (value !== null && value !== undefined && value !== '') {
         formData.append(key, value);
-      } else {
-        console.warn(`Skipping empty field: ${key}`);
       }
     });
-
-    if (this.selectedFile) {
-      formData.append("profile", this.selectedFile);
-    }
 
     this.httpService.addCandidate(formData).subscribe({
       next: (response) => {
@@ -148,6 +196,8 @@ export class CreateCandidateComponent implements OnInit {
           cdm_updateby: 'emp_22032025_1'
         });
         this.locationFilterControl.reset();
+        this.selectedFile = null;
+        this.removePhoto();
         if (this.fileInput) {
           this.fileInput.nativeElement.value = '';
         }
@@ -195,6 +245,7 @@ export class CreateCandidateComponent implements OnInit {
       this.fileInput.nativeElement.value = '';
     }
     this.selectedFile = null;
+    this.removePhoto();
     
   }
 }
