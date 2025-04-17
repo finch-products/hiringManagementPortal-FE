@@ -26,6 +26,8 @@ export class CreateOpenDemandComponent implements OnInit {
   form!: FormGroup;
 
   selectedFile: File | null = null;
+  existingJdFilename: string = '';
+  removeExistingJdFlag: boolean = false;
   newClient = { clm_name: '', clm_clientemail: '' };
   demands: any;
   matchFound: any;
@@ -73,7 +75,7 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_insertby: ['emp_22032025_1'],
       dem_updateby: ['emp_22032025_1'],
       dem_mandatoryskill: [''],
-      dem_position_location: [[]]
+      dem_position_location: [[]],
     });
   }
 
@@ -243,7 +245,7 @@ onLOBChange(event: any): void {
       next: (data) => {
 
         this.demands = data;
-
+        this.existingJdFilename = data.dem_jd;
         this.demandForm.patchValue({
           isInternal: this.demands.isInternal,
           dem_id: this.demands.dem_id,
@@ -268,7 +270,8 @@ onLOBChange(event: any): void {
           dem_comment: this.demands?.dem_comment,
           dem_position_location: this.demands?.dem_position_location
             ? this.demands.dem_position_location
-            : []
+            : [],
+            dem_jd: this.demands?.dem_jd || ''
         });
       },
       error: (err) => console.error('Error fetching a sinlge demand', err)
@@ -362,16 +365,50 @@ onLOBChange(event: any): void {
     }
   }
   onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      
+      // Validate file type
+      const validTypes = ['application/pdf', 'application/msword', 
+                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!validTypes.includes(file.type)) {
+        this.snackBar.open('Please upload a PDF or Word document', 'Close', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
+        fileInput.value = '';
+        return;
+      }
+  
       this.selectedFile = file;
+      this.existingJdFilename = ''; // Clear existing filename when new file is selected
+      this.demandForm.get('dem_jd')?.setValue(file.name);
+      this.demandForm.markAsDirty();
     }
   }
+
+  removeExistingJd() {
+    this.existingJdFilename = '';
+    this.selectedFile = null;
+    this.demandForm.get('dem_jd')?.setValue(null);
+    this.demandForm.markAsDirty();
+  }
+
 
   onSubmit() {
     const updatedFields: any = {};
     const formData = new FormData();
     
+    if (this.selectedFile) {
+      formData.append('dem_jd', this.selectedFile);
+      // Clear the old file path if a new file is selected
+      updatedFields['dem_jd'] = null;
+    } else if (this.isEditMode && !this.existingJdFilename && this.demandForm.get('dem_jd')?.value === null) {
+      // This indicates the existing file was removed
+      formData.append('remove_jd', 'true');
+      updatedFields['dem_jd'] = null;
+    }
 
     if (this.isEditMode) {
       updatedFields["dem_id"] = this.demandForm.value.dem_id;
@@ -396,15 +433,20 @@ onLOBChange(event: any): void {
             value = value.clm_id; 
           }
           updatedFields[field] = value;
+          formData.append(field, value);
         }
+      });
+
+      Object.keys(updatedFields).forEach(key => {
+        formData.append(key, updatedFields[key]);
       });
 
       if (this.selectedFile) {
         formData.append("job_description", this.selectedFile);
       }
-
       this.httpService.updateDemand(updatedFields).subscribe({
         next: (response) => {
+          console.log(response)
           this.snackBar.open("✅ Demand Updated Successfully!", "", {
             duration: 3000,
             panelClass: ['success-snackbar']
@@ -445,6 +487,8 @@ onLOBChange(event: any): void {
         if (value !== null && value !== undefined) {
           formData.append(key, value);
         }
+
+        formData.append(key, value);
       });
       if (this.selectedFile) {
         formData.append("job_description", this.selectedFile);
@@ -453,6 +497,7 @@ onLOBChange(event: any): void {
 
       this.httpService.addDemand(formData).subscribe({
         next: (response) => {
+          console.log(response)
           const demId = response.dem_id;
           this.snackBar.open(`✅ Demand ${demId} Added Successfully!`, "", {
             duration: 4000,

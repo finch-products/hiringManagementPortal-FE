@@ -348,11 +348,30 @@ export class CandidateComponent implements OnChanges{
     });
   }
 
-  openPdf(pdfUrl: string) {
-
-    this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
-    console.log("PDF selected in CandidateComponent:", pdfUrl);
+  openPdf(pdfUrl: string | null, event: Event) {
+    event.preventDefault(); // Always prevent default anchor behavior
+    
+    if (!pdfUrl) {
+      this.snackBar.open("No profile available", "❌", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+  
+    try {
+      // Emit the event to open in preview panel
+      this.pdfSelected.emit(pdfUrl);
+      console.log("PDF selected in CandidateComponent:", pdfUrl);
+    } catch (e) {
+      console.error("Error opening profile:", e);
+      this.snackBar.open("Unable to open profile file", "❌", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+    }
   }
+  
 
   trackByFn(index: number, candidate: any) {
     return candidate.id; // Uses a unique ID to avoid re-rendering
@@ -747,4 +766,60 @@ getInterviewDetailsForDisplay(candidateId: string): any[] {
     this.ShowAdvancSearch.emit(this.dem_id);
     console.log("request for advance search from candidate component for demand-id:",this.dem_id);
   }
+
+  // Add these methods to your component class
+  getCandidateImageUrl(candidate: any): string {
+    if (!candidate?.cdm_image) {
+      return '../../../assets/img/profile_img.png'; // Default avatar
+    }
+    
+    try {
+      // Remove /api/ from the base URL temporarily for images
+      const baseUrl = this.httpService.baseUrl.replace('/api', '');
+      
+      // Handle path construction
+      const imagePath = candidate.cdm_image.startsWith('/uploads/') 
+        ? candidate.cdm_image.substring('/uploads/'.length)
+        : candidate.cdm_image;
+      
+      return `${baseUrl}/uploads/${imagePath}`;
+    } catch (e) {
+      console.error('Error constructing image URL:', e);
+      return '../../../assets/img/profile_img.png';
+    }
+  }
+
+  getCandidateProfileUrl(candidate: any): string | null {
+    if (!candidate?.cdm_profile) {
+      return null;
+    }
+  
+    try {
+      // Get base URL and remove /api/ part
+      const baseUrl = this.httpService.baseUrl.replace('/api', '');
+      
+      // Remove any leading slashes from the profile path
+      let profilePath = candidate.cdm_profile.replace(/^\//, '');
+      
+      // Construct the final URL
+      return `${baseUrl}/${profilePath}`;
+    } catch (e) {
+      console.error('Error constructing profile URL:', e);
+      return null;
+    }
+  }
+
+handleImageError(event: Event) {
+  const imgElement = event.target as HTMLImageElement;
+  imgElement.src = '../../../assets/img/profile_img.png';
+}
+
+getProfileFilename(candidate: any): string {
+  if (!candidate?.cdm_profile) return 'Download';
+  try {
+    return candidate.cdm_profile.split('/').pop() || 'Download';
+  } catch (e) {
+    return 'Download';
+  }
+}
 }

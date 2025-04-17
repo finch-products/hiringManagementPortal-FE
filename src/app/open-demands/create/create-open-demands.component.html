@@ -216,7 +216,7 @@
 
       <div class="file-input-container">
         <label for="job_description">JD attachment</label>
-        <input type="file" id="dem_jd" (change)="onFileSelected($event)" #fileInput >
+        <input type="file" id="dem_jd" (change)="onFileSelected($event)">
       </div>
 
       <mat-error *ngIf="demandForm.controls['dem_jd'].hasError('serverError')">

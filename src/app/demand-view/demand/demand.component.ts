@@ -88,10 +88,60 @@ export class DemandComponent implements OnInit {
       error: (err) => console.error('Error fetching demand status', err)
     });
   }
-  openPdf(pdfUrl: string) {
-    this.pdfSelected.emit(pdfUrl); // Emit the clicked PDF file name
-    console.log("PDF selected in DemandComponent:", pdfUrl);
+  // Add this method to your component
+getJobDescriptionUrl(): string | null {
+  if (!this.demands?.demand_details?.dem_jd) {
+    return null;
   }
+  
+  try {
+    // Remove /api/ from the base URL for file downloads
+    const baseUrl = this.httpService.baseUrl.replace('/api', '');
+    
+    // Handle path construction
+    const jdPath = this.demands.demand_details.dem_jd.startsWith('/') 
+      ? this.demands.demand_details.dem_jd.substring(1)
+      : this.demands.demand_details.dem_jd;
+    
+    return `${baseUrl}/${jdPath}`;
+  } catch (e) {
+    console.error('Error constructing JD URL:', e);
+    return null;
+  }
+}
+
+// Update your openPdf method
+openPdf(pdfUrl: string, event: Event) {
+  event.preventDefault(); // Prevent default anchor behavior
+  
+  if (!pdfUrl) {
+    this.snackBar.open("No job description available", "❌", {
+      duration: 3000,
+      panelClass: ['error-snackbar']
+    });
+    return;
+  }
+
+  try {
+    this.pdfSelected.emit(pdfUrl);
+    console.log("Job Description selected:", pdfUrl);
+  } catch (e) {
+    console.error("Error opening job description:", e);
+    this.snackBar.open("Unable to open job description", "❌", {
+      duration: 3000,
+      panelClass: ['error-snackbar']
+    });
+  }
+}
+
+getJDFilename(): string {
+  if (!this.demands?.demand_details?.dem_jd) return 'Download';
+  try {
+    return this.demands.demand_details.dem_jd.split('/').pop() || 'job_description.pdf';
+  } catch (e) {
+    return 'job_description.pdf';
+  }
+}
 
   onStatusChange(newStatus: string) {
     if (newStatus !== this.demands?.demand_details?.status_details?.dsm_code) {
@@ -183,5 +233,29 @@ export class DemandComponent implements OnInit {
     return this.demands.demand_details.position_locations
       .map((loc: any) => loc.lcm_name)
       .join(', ');
+  }
+
+  getClientLogoUrl(): string {
+    if (!this.demands?.demand_details?.client_details?.clm_logo) {
+      return '../../../assets/img/profile_img.png'; // Fallback if no logo
+    }
+  
+    try {
+      // Construct URL safely (handles double slashes automatically)
+      const base = this.httpService.baseUrl.endsWith('/') 
+        ? this.httpService.baseUrl 
+        : this.httpService.baseUrl + '/';
+      
+      const fullUrl = new URL(this.demands.demand_details.client_details.clm_logo, base).href;
+      return fullUrl;
+    } catch (e) {
+      console.error('Error constructing logo URL:', e);
+      return '../../../assets/img/profile_img.png'; // Fallback on error
+    }
+  }
+
+  handleImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = '../../../assets/img/profile_img.png';
   }
 }

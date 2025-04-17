@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DemandComponent } from './demand/demand.component';
 import { CandidateComponent } from './candidate/candidate.component';
 import { HttpService } from '../services/http.service';
+import { forkJoin } from 'rxjs'; 
 
 interface Candidate {
   cdm_name: string;
@@ -35,12 +36,16 @@ export class DemandViewComponent implements OnInit, OnDestroy{
   selectedCandidates!:Candidate;
   dem_id:string='';
   showTimerHeader = true;
-  days = 0;
-  hours = 0;
-  minutes = 0;
-  seconds = 0;
+  days: number | null = null;
+  hours: number | null = null;
+  minutes: number | null = null;
+  seconds: number | null = null;
   private timerInterval: any;
-  private demandOpenDate: Date | null = null;
+  demandOpenDate: Date | null = null;
+  demandStatus: string = '';
+  isDemandClosed: boolean = false;
+  demandClosedText: string = '';
+  isLoading: boolean = true;
 
   constructor(private route: ActivatedRoute, private httpService: HttpService) {
     // Get the demand ID in the constructor and store it as a public property
@@ -51,20 +56,78 @@ export class DemandViewComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.demandId = params.get('id') ?? '';
+      // Show loading immediately
+      this.isLoading = true;
       this.loadDemandDetails();
     });
   }
 
   loadDemandDetails() {
+    this.isLoading = true;
     const payload = { dem_id: this.demandId };
-    this.httpService.postCandidateByDemandId(payload).subscribe({
-      next: (data) => {
-        if (data?.demand_details?.dem_insertdate) {
-          this.demandOpenDate = new Date(data.demand_details.dem_insertdate);
-          this.startTimer();
+    
+    forkJoin([
+      this.httpService.postCandidateByDemandId(payload),
+      this.httpService.demandHistory(this.demandId)
+    ]).subscribe({
+      next: ([demandData, historyData]: [any, any[]]) => {
+        if (demandData?.demand_details) {
+          this.demandStatus = demandData.demand_details.status_details?.dsm_code || '';
+          this.isDemandClosed = this.demandStatus.includes('Closed');
+          
+          if (this.isDemandClosed) {
+            this.demandClosedText = 'Demand closed!';
+            this.showTimerHeader = true;
+            this.clearTimer();
+          } else {
+            const openingEntry = this.findMostRecentOpening(historyData);
+            this.demandOpenDate = openingEntry ? new Date(openingEntry.date) : 
+                              new Date(demandData.demand_details.dem_insertdate);
+            this.startTimer();
+            this.showTimerHeader = true;
+          }
         }
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.error('Error loading demand details:', err);
+        this.isLoading = false;
       }
     });
+  }
+
+  private clearTimer() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+    // Reset to null instead of 0
+    this.days = null;
+    this.hours = null;
+    this.minutes = null;
+    this.seconds = null;
+  }
+  
+
+  // Helper method to find the most recent "Open" status change
+  private findMostRecentOpening(historyData: any[]): any | null {
+    if (!historyData) return null;
+    
+    // Filter entries that contain status changes to "Open"
+    const openingEntries = historyData.filter(entry => 
+      entry.message && entry.message.includes('Status') && 
+      entry.message.includes('Open') && 
+      entry.date
+    );
+    
+    if (openingEntries.length === 0) return null;
+    
+    // Sort by date descending and return the most recent one
+    openingEntries.sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+    
+    return openingEntries[0];
   }
 
   startTimer() {
@@ -83,6 +146,7 @@ export class DemandViewComponent implements OnInit, OnDestroy{
     const now = new Date();
     const diff = now.getTime() - this.demandOpenDate.getTime();
     
+    // Only update values when we have actual numbers
     this.days = Math.floor(diff / (1000 * 60 * 60 * 24));
     this.hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     this.minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -91,10 +155,13 @@ export class DemandViewComponent implements OnInit, OnDestroy{
 
   hideTimerHeader() {
     this.showTimerHeader = false;
-    clearInterval(this.timerInterval);
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
   ngOnDestroy() {
+    this.clearTimer()
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
