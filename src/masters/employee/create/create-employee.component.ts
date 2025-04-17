@@ -145,17 +145,6 @@ export class CreateEmployeeComponent implements OnInit {
     }
 }
 
-clearLocation(event: Event): void {
-  event.stopPropagation(); // Prevent the input field from getting focus
-  this.locationFilterControl.reset();
-  this.employeeForm.patchValue({ emp_lcm_id: '' });
-}
-
-clearRole(event: Event): void {
-  event.stopPropagation(); // Prevent the input field from getting focus
-  this.roleFilterControl.reset();
-  this.employeeForm.patchValue({ emp_rlm_id: '' });
-}
   onSubmit(form: FormGroupDirective): void {
     if (this.employeeForm.valid) {
       const formData = new FormData();
@@ -205,14 +194,14 @@ clearRole(event: Event): void {
                 this.employeeForm.controls[field].setErrors({ serverError: error.error[field][0] });
               }
             }
-            this.showError('⚠️ Please correct the highlighted fields.');
+            this.showError('⚠ Please correct the highlighted fields.');
           } else {
             this.showError('❌ Failed to add employee. Please try again.');
           }
         }
       });
     } else {
-      this.showError('⚠️ Please fill all required fields correctly.');
+      this.showError('⚠ Please fill all required fields correctly.');
     }
   }
   

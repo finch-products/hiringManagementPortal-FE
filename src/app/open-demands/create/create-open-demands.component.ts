@@ -151,7 +151,7 @@ export class CreateOpenDemandComponent implements OnInit {
     let clientName = client.clm_name ? client.clm_name : '';
     let managerName = client.clm_managername ? ' (' + client.clm_managername + ')' : '';
 
-    return `${clientId}${clientName}${managerName}`.trim();
+    return `${clientId}${clientName}${managerName}.trim()`;
 
   }
 
@@ -565,21 +565,4 @@ if (this.fileInput) {
       verticalPosition: 'bottom'
     });
   }
-
-  // Add these methods to your component
-
-clearClientSelection() {
-  this.demandForm.get('dem_clm_id')?.setValue(null);
-  this.demandForm.get('clm_clientemail')?.setValue(null);
-  this.demandForm.get('clm_clientemail')?.disable();
-  this.customEntryEnabled = false;
-}
-
-clearLOBSelection() {
-  this.demandForm.get('dem_lob_id')?.setValue(null);
-}
-
-clearDeptSelection() {
-  this.demandForm.get('dem_idm_id')?.setValue(null);
-}
 }

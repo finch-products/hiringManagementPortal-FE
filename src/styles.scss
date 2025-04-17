@@ -676,3 +676,10 @@ mat-radio-button.mat-accent {
   border-bottom-color: #3498db !important;
   color: #1d4e89 !important; /* Darker blue text */
 }
+/* For the submit button in interview schedule form*/
+.interview-form-container .form-actions .submit,
+button.submit.mat-mdc-raised-button,
+.mat-mdc-raised-button.submit {
+  background-color: #DFF28D !important;
+  color: #333 !important;
+}

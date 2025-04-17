@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, HostListener  } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, HostListener,ChangeDetectorRef  } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
@@ -19,7 +19,7 @@ export class LeftSiderbarComponent {
     masters: false
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     if (!this.sidenav) {
@@ -36,6 +36,7 @@ export class LeftSiderbarComponent {
 
   togglesidenav() {
     this.isCollapsed = !this.isCollapsed;
+    this.cd.detectChanges(); // Force UI refresh
     this.collapseChange.emit(this.isCollapsed);
     this.activeTooltip = null;
     this.activeTooltip = null; // Close all tooltips when collapsing/expanding
@@ -98,7 +99,7 @@ export class LeftSiderbarComponent {
       
       // Apply the position
       tooltip.style.top = `${topPosition}px`;
-      tooltip.style.left = `${targetRect.left + targetRect.width + 10}px`;
+      tooltip.style.left =`${targetRect.left + targetRect.width + 10}px`;
     }
   }
 

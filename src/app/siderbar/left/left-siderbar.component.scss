@@ -1,7 +1,8 @@
 .sidenav-container {
-  height: 100%;
   position: fixed;
-  width: auto;
+  display: flex;
+  height: 100vh;
+  width: 238px;
   background-color: #fff;
   overflow-y: auto;
   z-index: 100;
@@ -236,6 +237,9 @@
 .mat-expansion-panel-header:hover {
   background-color: #cbd2fb !important;
   border-radius: 5px !important;
+  .mat-icon{
+    color:#000;
+  }
 }
 
 .sidenav-content {
@@ -441,4 +445,26 @@ mat-expansion-panel-header {
     height: auto;
     display: block;
   }
+}
+.sidenav-container {
+  display: flex;
+  height: 100vh;
+  width: 238px;
+}
+
+.sidenav {
+  width: 200px;
+  transition: width 0.5s ease;
+  overflow: hidden;
+}
+
+.sidenav.isCollapsed {
+  width: 60px;
+}
+
+mat-sidenav-content,
+.main-content {
+  flex: 1;
+  transition: margin 0.5s ease;
+  overflow: hidden;
 }

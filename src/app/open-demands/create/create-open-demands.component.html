@@ -7,10 +7,6 @@
         <mat-label>Hiring Manager</mat-label>
         <input type="text" matInput formControlName="dem_clm_id" [matAutocomplete]="auto"
           (input)="onInputChange($event)" required>
-        <button *ngIf="demandForm.get('dem_clm_id')?.value" mat-icon-button matSuffix
-          (click)="clearClientSelection(); $event.stopPropagation()">
-          <mat-icon>close</mat-icon>
-        </button>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onHiringManagerChange($event)"
           [displayWith]="displayClient">  
           <mat-option *ngIf="filteredClients.length === 0" disabled>
@@ -46,10 +42,6 @@
         <mat-label>LOB</mat-label>
         <input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" 
           required (blur)="onBlur('dem_lob_id')">
-        <button *ngIf="demandForm.get('dem_lob_id')?.value" mat-icon-button matSuffix
-          (click)="clearLOBSelection(); $event.stopPropagation()">
-          <mat-icon>close</mat-icon>
-        </button>
         <mat-autocomplete #lobAuto="matAutocomplete" (optionSelected)="onLOBChange($event)" 
           [displayWith]="displayLOB">
           <mat-option *ngIf="(filteredLOBs | async)?.length === 0" disabled>
@@ -149,10 +141,6 @@
         <mat-label>Internal Department</mat-label>
         <input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto" 
           (blur)="onBlur('dem_idm_id')">
-        <button *ngIf="demandForm.get('dem_idm_id')?.value" mat-icon-button matSuffix
-          (click)="clearDeptSelection(); $event.stopPropagation()">
-          <mat-icon>close</mat-icon>
-        </button>
         <mat-autocomplete #deptAuto="matAutocomplete" (optionSelected)="onDeptChange($event)" 
           [displayWith]="displayDept">
           <mat-option *ngIf="(filteredDepts | async)?.length === 0" disabled>
