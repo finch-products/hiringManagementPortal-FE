@@ -98,4 +98,8 @@ export class ListCandidateComponent {
       keywords: ''
     };
   }
+  extractFilename(url: string): string {
+    if (!url) return 'N/A';
+    return url.substring(url.lastIndexOf('/') + 1);
+  }
 }
