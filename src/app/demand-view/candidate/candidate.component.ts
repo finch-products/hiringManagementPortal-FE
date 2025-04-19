@@ -54,7 +54,7 @@ export class CandidateComponent implements OnChanges{
   emailFilterExpanded = false;
   statusFilterExpanded = false;
   skillsFilterExpanded = false;
-
+  loading: boolean = false;
 
   showPopup: boolean = false;
   statusedit: boolean = false; 
@@ -249,6 +249,7 @@ export class CandidateComponent implements OnChanges{
       return;
     }
 
+    this.loading = true; // Start loading
     const requestBody = { dem_id: this.dem_id };
 
     this.httpService.getNotAddedCandidatesBySearch(requestBody).subscribe({
@@ -264,10 +265,12 @@ export class CandidateComponent implements OnChanges{
             )
           : allCandidates;
         console.log("Filtered Candidates:", this.filteredCandidates);
+        this.loading = false; // Stop loading
       },
       error: (err) => {
         console.error("Error fetching candidates:", err);
         this.filteredCandidates = [];
+        this.loading = false; // Stop loading
       }
     });
   }

@@ -73,14 +73,23 @@
                 <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
         </div>
-        <div class="file-upload-container">
-            <button mat-raised-button type="button" (click)="fileUpload.click()">
-                <mat-icon>attach_file</mat-icon>
+        <div class="photo-upload-container">
+            <div class="upload-controls">
+              <!-- Show 'Upload Profile Photo' button if no photo is selected -->
+              <button *ngIf="!selectedFile" mat-raised-button type="button" (click)="fileUpload.click()" color="primary">
+                <mat-icon>add_a_photo</mat-icon>
                 Upload Profile Photo
-            </button>
-            <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
-            <input #fileUpload type="file" (change)="onFileSelected($event)" style="display: none" accept="image/*">
-        </div>
+              </button>
+          
+              <!-- Show 'Remove Photo' (cross icon) button if a photo is selected -->
+              <button *ngIf="selectedFile" mat-icon-button class="remove-photo" (click)="removePhoto()">
+                <mat-icon>close</mat-icon>
+              </button>
+          
+              <input #fileUpload type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none">
+              <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
+            </div>
+          </div>
         
         <div class="submit-container">
             <button mat-raised-button color="primary" type="button" class="cancel"

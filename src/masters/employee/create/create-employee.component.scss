@@ -1,15 +1,6 @@
-.file-upload-container {
+.photo-upload-container {
+    margin-left: auto;
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    
-    .file-name {
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.6);
-    }
-    
-    button {
-        margin: 0;
-    }
-}
+    justify-content: flex-end;
+  }
+  

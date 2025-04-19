@@ -12,7 +12,8 @@ export class LeftSiderbarComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isCollapsed = false;
   activeTooltip: string | null = null;
-  
+  isMobile = false;
+
   expandedPanels = {
     candidates: false,
     views: false,
@@ -34,12 +35,47 @@ export class LeftSiderbarComponent {
     }
   }
 
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth < 768;
+    
+    // Auto-collapse sidebar on mobile
+    if (this.isMobile && !this.isCollapsed) {
+      this.isCollapsed = true;
+      this.cd.detectChanges();
+    }
+    
+    // Update content class
+    this.updateContentClass();
+  }
   togglesidenav() {
     this.isCollapsed = !this.isCollapsed;
+    this.updateContentClass();
     this.cd.detectChanges(); // Force UI refresh
     this.collapseChange.emit(this.isCollapsed);
     this.activeTooltip = null;
     this.activeTooltip = null; // Close all tooltips when collapsing/expanding
+  }
+
+  updateContentClass() {
+    // Get the sidenav content element
+    const content = document.querySelector('.mat-sidenav-content');
+    if (!content) return;
+    
+    // Remove all state classes
+    content.classList.remove('collapsed-content', 'mobile-sidebar-open');
+    
+    // Add appropriate classes based on state
+    if (this.isCollapsed) {
+      content.classList.add('collapsed-content');
+    }
+    
+    if (this.isMobile && !this.isCollapsed) {
+      content.classList.add('mobile-sidebar-open');
+    }
   }
 
   setActive(event: Event) {
@@ -55,6 +91,11 @@ export class LeftSiderbarComponent {
   navigateTo(route: string) {
     this.router.navigate([route]);
     this.activeTooltip = null; // Close tooltip after navigation
+    // Auto-collapse sidenav on mobile after navigation
+    if (this.isMobile) {
+      this.isCollapsed = true;
+      this.updateContentClass();
+    }
   }
 
   showTooltip(panelName: string) {
@@ -82,6 +123,12 @@ export class LeftSiderbarComponent {
           this.expandedPanels[key as keyof typeof this.expandedPanels] = false;
         }
       }
+    }
+
+    // Auto-expand sidenav if it was collapsed and we're expanding a panel
+    if (this.isCollapsed && this.expandedPanels[panel] && !this.isMobile) {
+      this.isCollapsed = false;
+      this.updateContentClass();
     }
   }
   

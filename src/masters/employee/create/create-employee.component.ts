@@ -33,8 +33,8 @@ export class CreateEmployeeComponent implements OnInit {
       emp_rlm_id: [''],
       emp_isactive: [true],
       emp_keyword: [''],
-      emp_insertby: ['emp_22032025_1'],
-      emp_updateby: ['emp_22032025_1'],
+      emp_insertby: ['emp_3'],
+      emp_updateby: ['emp_3'],
     });
   }
 
@@ -182,8 +182,8 @@ export class CreateEmployeeComponent implements OnInit {
 
           this.employeeForm.patchValue({
             emp_isactive: true,
-            emp_insertby: 'emp_22032025_1',
-            emp_updateby: 'emp_22032025_1'
+            emp_insertby: 'emp_3',
+            emp_updateby: 'emp_3'
           });
         },
         error: (error) => {
@@ -221,12 +221,21 @@ export class CreateEmployeeComponent implements OnInit {
     this.selectedFile = null;
     this.employeeForm.patchValue({
       emp_isactive: true,
-      emp_insertby: 'emp_22032025_1',
-      emp_updateby: 'emp_22032025_1'
+      emp_insertby: 'emp_3',
+      emp_updateby: 'emp_3'
     });
   
     // Clear autocomplete fields explicitly
     this.locationFilterControl.setValue('');
     this.roleFilterControl.setValue('');
+  }
+
+  removePhoto(): void {
+    this.selectedFile = null;
+    // Clear the file input value to allow re-selecting the same file
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; 
+    }
   }
 }
