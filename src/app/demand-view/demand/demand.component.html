@@ -100,7 +100,7 @@
       <b>{{demands?.demand_details?.dem_position_name || 'N/A'}}</b>
     </div>
     <div class="detail-box">
-      <span>Number of Positions</span>
+      <span>No. of Positions</span>
       <b class="position-count">{{demands?.demand_details?.dem_positions || 'N/A'}}</b>
     </div>
   </div>
@@ -128,7 +128,7 @@
       <b>{{demands?.demand_details?.lob_details.delivery_manager.emp_name || 'N/A'}}</b>
     </div>
     <div class="detail-box">
-      <span>Job Description</span>
+      <span>JD</span>
       <a href="javascript:void(0);" 
          *ngIf="getJobDescriptionUrl() as jdUrl"
          (click)="openPdf(jdUrl, $event)">

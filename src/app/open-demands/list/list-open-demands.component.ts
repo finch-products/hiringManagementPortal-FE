@@ -115,7 +115,7 @@ export class ListOpenDemandsComponent {
        let requestBody: { [key: string]: any } = {
         dem_id: this.selectedRows[0].dem_id,
         dem_dsm_id: this.listForm.get('dem_dsm_id')?.value,
-        dem_updateby_id: 'emp_22032025_1'
+        dem_updateby_id: 'emp_3'
     };
 
     // Only include dem_comment if it's not empty or null

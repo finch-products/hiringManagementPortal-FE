@@ -190,7 +190,7 @@ private _filterLocations(value: string): any[] {
           this.removeLogo(); 
           this.clientForm.patchValue({
             clm_isactive: true,
-            clm_insertby: 'emp_22032025_1'
+            clm_insertby: 'emp_3'
           });
           this.locationFilterControl.setValue('');
         },
@@ -218,7 +218,7 @@ private _filterLocations(value: string): any[] {
     this.clientForm.reset();
     this.clientForm.patchValue({
       clm_isactive: true,
-      clm_insertby: 'emp_22032025_1'
+      clm_insertby: 'emp_3'
     });
     this.clientForm.markAsPristine(); // Mark the form as pristine
     this.clientForm.markAsUntouched();

@@ -12,8 +12,8 @@ body, html {
     border-radius: 10px;
     /*width: calc(100% - 250px);  Adjust width dynamically based on sidebar */
     min-width: 20vw;
-    width:50vw !important; 
-    height: 100vh;
+    width:52vw !important; 
+    height: 100%;
     transition: width 0.8s ease-in-out; /* Smooth transition when sidebar opens/closes */ 
     //border: 2px solid #ddd; 
     resize: horizontal;
@@ -80,7 +80,7 @@ body, html {
     align-items: flex-start; /* Change from 'stretch' (default) to 'flex-start' */
     gap: 10px;
     max-width: 100% !important;
-    height: 70%;
+    height: 78%;
     overflow-y: auto !important;
     cursor: pointer;
 }
@@ -518,7 +518,7 @@ button[type="submit"]:hover {
     cursor: pointer;
 }
 
-/* Add this class for when preview is open */
+/* Add this class for when preview or form or search or history is open  */
 .candidates-container.preview-open {
     margin-left:1px;
     width: 30vw !important;
