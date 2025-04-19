@@ -45,10 +45,13 @@
         </ng-container>
 
         <ng-container matColumnDef="cdm_profile">
-            <th mat-header-cell *matHeaderCellDef
-                mat-sort-header>Profile</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_profile
-                }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Profile</th>
+            <td mat-cell *matCellDef="let candidate">
+                <a *ngIf="candidate.cdm_profile" [href]="candidate.cdm_profile" target="_blank" class="profile-link">
+                    {{ extractFilename(candidate.cdm_profile) }}
+                </a>
+                <span *ngIf="!candidate.cdm_profile">N/A</span>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="cdm_keywords">
@@ -93,8 +96,13 @@
 
         <ng-container matColumnDef="cdm_profile">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Profile</th>
-            <td mat-cell *matCellDef="let candidate">{{ candidate.cdm_profile }}</td>
-        </ng-container>
+            <td mat-cell *matCellDef="let candidate">
+                <a *ngIf="candidate.cdm_profile" [href]="candidate.cdm_profile" target="_blank" class="profile-link">
+                    {{ extractFilename(candidate.cdm_profile) }}
+                </a>
+                <span *ngIf="!candidate.cdm_profile">N/A</span>
+            </td>
+        </ng-container>        
 
         <ng-container matColumnDef="cdm_keywords">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Keyword</th>
