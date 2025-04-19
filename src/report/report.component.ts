@@ -78,109 +78,149 @@ export class ReportComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.fetchOpenDemands();
-    await this.loadLocations();
-    await this.loadClientPartners();
-    await this.loadDeliveryManagers();
-    this.allLocations = [...new Set(this.locations.map(location => location.lcm_name))];
-    this.allClientPartners = [...new Set(this.clientPartners.map(partner => partner.emp_name))];
-    this.allDeliveryManagers = [...new Set(this.deliveryManagers.map(manager => manager.emp_name))];
+    await this.fetchOpenDemands();
+    
     this.demandService.demands$.subscribe(demand => {
-      console.log('[Demand Subscription Triggered]');
-      console.log('Demand Data:', demand);
       if (demand && demand.length) {
         this.dataSource = new MatTableDataSource(demand);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      } else {
-        console.warn('Demand data is empty or null');
+        this.initializeFilterOptions(demand);
+        
+        // Trigger initial filter update
+        this.applyFilters();
       }
     });
+  
+    this.setupFilterPredicate();
+    this.setupFilterListeners();
+  }
+
+  private initializeFilterOptions(data: any[]) {
+    // Extract unique values for filtering from the actual data
+    this.allManagers = [...new Set(
+      data.map(item => (item.client_details && item.client_details.clm_managername) ? item.client_details.clm_managername : '')
+      .filter(Boolean)
+    )];
     
-
-    // this.dataSource = new MatTableDataSource(this.employeeData);
-
-    // Set displayed columns dynamically
-    // this.displayedColumns = ['lob', ...this.locations];
-
-    // Extract unique values for filtering
-    // this.allManagers = [...new Set(this.employeeData.map(emp => emp.name))];
-    // this.allSkills = [...new Set(this.employeeData.flatMap(emp => emp.skills.split(', ')))];
-    // this.allLocations = [...new Set(this.locations.map(location => location.lcm_name))];
-    // this.allDeliveryManagers = [...new Set(this.employeeData.map(emp => emp.manager))];
-    // this.allClientPartners = [...new Set(this.employeeData.map(emp => emp.partner))];
-
+    this.allSkills = [...new Set(
+      data.map(item => item.dem_skillset ? item.dem_skillset : '')
+      .filter(Boolean)
+    )];
+    
+    // Extract locations - handle both possible location structures
+    const allLocations = data.flatMap(item => {
+      if (item.location_details && item.location_details.length) {
+        return item.location_details.map((loc: any) => loc.lcm_name);
+      }
+      if (item.dem_location_position && item.dem_location_position.length) {
+        return item.dem_location_position.map((loc: any) => loc.lcm_name);
+      }
+      return [];
+    });
+    this.allLocations = [...new Set(allLocations)].filter(Boolean);
+    
+    this.allDeliveryManagers = [...new Set(data.map(item => 
+      item.lob_details && item.lob_details.delivery_manager ? 
+      item.lob_details.delivery_manager.emp_name : '').filter(Boolean))];
+    
+    this.allClientPartners = [...new Set(data.map(item => 
+      item.lob_details && item.lob_details.client_partner ? 
+      item.lob_details.client_partner.emp_name : '').filter(Boolean))];
+  
+    // Set up filtered observables
     this.filteredManagers = this.hiringManagerControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value || '', this.allManagers))
     );
+    
     this.filteredSkills = this.skillsControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value || '', this.allSkills))
     );
+    
     this.filteredLocations = this.locationControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value || '', this.allLocations))
     );
-    this.filteredClientPartners = this.clientPartnerControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filterOptions(value || '', this.allClientPartners))
-    );
-
+    
     this.filteredDeliveryManagers = this.deliveryManagerControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value || '', this.allDeliveryManagers))
     );
     
-    // alert(JSON.stringify(this.filteredLocations))
-    // this.filteredDeliveryManagers = this.deliveryManagerControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => this.filterOptions(value || '', this.allDeliveryManagers))
-    // );
-    // this.filteredClientPartners = this.clientPartnerControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => this.filterOptions(value || '', this.allClientPartners))
-    // );
+    this.filteredClientPartners = this.clientPartnerControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterOptions(value || '', this.allClientPartners))
+    );
+  }
 
-    // Custom Filtering Logic for Multiple Fields
-    this.dataSource.filterPredicate = (data, filter) => {
-      const searchTerms = JSON.parse(filter);
+  private setupFilterPredicate() {
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      // If filter is empty, show all records
+      if (!filter) return true;
       
-      // Handle location filtering with both potential sources
-      let locationMatch = true;
-      if (searchTerms.location) {
-        const locationTerm = searchTerms.location.toLowerCase();
+      try {
+        const searchTerms = JSON.parse(filter);
         
-        // Case 1: Check in location_details object
-        const hasLocationDetails = data.location_details && 
-                                  data.location_details.lcm_name && 
-                                  data.location_details.lcm_name.toLowerCase().includes(locationTerm);
-        
-        // Case 2: Check in dem_location_position array
-        const hasLocationPosition = data.dem_location_position && 
-                                   data.dem_location_position.length > 0 && 
-                                   data.dem_location_position.some((loc: any) => 
-                                     loc.lcm_name && loc.lcm_name.toLowerCase().includes(locationTerm)
-                                   );
-        
-        locationMatch = hasLocationDetails || hasLocationPosition;
+        // Convert all search terms to lowercase for case-insensitive comparison
+        const searchHiringManager = searchTerms.hiringManager?.toLowerCase() || '';
+        const searchSkills = searchTerms.skills?.toLowerCase() || '';
+        const searchLocation = searchTerms.location?.toLowerCase() || '';
+        const searchDeliveryManager = searchTerms.deliveryManager?.toLowerCase() || '';
+        const searchClientPartner = searchTerms.clientPartner?.toLowerCase() || '';
+  
+        // Get data values (with null checks)
+        const managerName = (data.client_details?.clm_managername || '').toString().toLowerCase();
+        const skills = (data.dem_skillset || '').toString().toLowerCase();
+        const locations = this.getLocationNames(data).toLowerCase();
+        const deliveryManager = (data.lob_details?.delivery_manager?.emp_name || '').toString().toLowerCase();
+        const clientPartner = (data.lob_details?.client_partner?.emp_name || '').toString().toLowerCase();
+  
+        // Check each filter field only if it has a value
+        const managerMatch = !searchHiringManager || managerName.includes(searchHiringManager);
+        const skillsMatch = !searchSkills || skills.includes(searchSkills);
+        const locationMatch = !searchLocation || locations.includes(searchLocation);
+        const deliveryManagerMatch = !searchDeliveryManager || deliveryManager.includes(searchDeliveryManager);
+        const clientPartnerMatch = !searchClientPartner || clientPartner.includes(searchClientPartner);
+  
+        return managerMatch && skillsMatch && locationMatch && 
+               deliveryManagerMatch && clientPartnerMatch;
+      } catch (e) {
+        console.error('Error parsing filter:', e);
+        return true; // Show all records if filter parsing fails
       }
-      
-      // Rest of your filtering logic
-      return (
-        (!searchTerms.hiringManager || 
-          (data.client_details?.clm_managername?.toLowerCase() || '').includes(searchTerms.hiringManager)) &&
-        (!searchTerms.skills || 
-          (data.dem_skillset?.toLowerCase() || '').includes(searchTerms.skills)) &&
-        locationMatch &&
-        (!searchTerms.deliveryManager || 
-          (data.lob_details?.delivery_manager?.emp_name?.toLowerCase() || '').includes(searchTerms.deliveryManager)) &&
-        (!searchTerms.clientPartner || 
-          (data.lob_details?.client_partner?.emp_name?.toLowerCase() || '').includes(searchTerms.clientPartner))
-      );
     };
-
-    this.setupFilterListeners();
+  }
+  
+  private applyFilters() {
+    // Create filter object only with non-empty values
+    const searchTerms: any = {};
+    
+    if (this.hiringManagerControl.value?.toString().trim()) {
+      searchTerms.hiringManager = this.hiringManagerControl.value.toString().trim();
+    }
+    if (this.skillsControl.value?.toString().trim()) {
+      searchTerms.skills = this.skillsControl.value.toString().trim();
+    }
+    if (this.locationControl.value?.toString().trim()) {
+      searchTerms.location = this.locationControl.value.toString().trim();
+    }
+    if (this.deliveryManagerControl.value?.toString().trim()) {
+      searchTerms.deliveryManager = this.deliveryManagerControl.value.toString().trim();
+    }
+    if (this.clientPartnerControl.value?.toString().trim()) {
+      searchTerms.clientPartner = this.clientPartnerControl.value.toString().trim();
+    }
+  
+    // If no filters are active, pass empty string to show all records
+    this.dataSource.filter = Object.keys(searchTerms).length > 0 
+      ? JSON.stringify(searchTerms) 
+      : '';
+  
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   async loadLocations() {
@@ -213,97 +253,51 @@ export class ReportComponent implements OnInit {
     this.clientPartnerControl.valueChanges.subscribe(() => this.applyFilters());
   }
 
-  private applyFilters() {
-    const searchTerms = {
-      hiringManager: this.hiringManagerControl.value?.trim().toLowerCase() || '',
-      skills: this.skillsControl.value?.trim().toLowerCase() || '',
-      location: this.locationControl.value?.trim().toLowerCase() || '',
-      deliveryManager: this.deliveryManagerControl.value?.trim().toLowerCase() || '',
-      clientPartner: this.clientPartnerControl.value?.trim().toLowerCase() || ''
-    }
-    
-    console.log('Applying filters:', searchTerms);
-    this.dataSource.filter = JSON.stringify(searchTerms);
-    
-    // After filtering, check how many items remain
-    console.log(`Filter applied, remaining items: ${this.dataSource.filteredData.length}`);
-  };
-
-  fetchOpenDemands() {
-    this.httpService.getDemands().subscribe({
-      next: (data) => {
-        console.log('Raw demand data:', data);
-  
-        let mappedData = [];
-        try {
-          mappedData = data.map((demand: any) => ({
-            client_details: {
-              clm_managername: demand.client_details?.clm_managername || ''
-            },
-            dem_skillset: demand.dem_skillset,
-            location_details: demand.dem_position_location?.map((loc: any) => ({
-              lcm_id: loc.lcm_id,
-              lcm_name: loc.lcm_name
-            })) || [],
-            lob_details: {
-              delivery_manager: {
-                emp_name: demand.lob_details?.delivery_manager?.emp_name || ''
-              },
-              client_partner: {
-                emp_name: demand.lob_details?.client_partner?.emp_name || ''
-              }
-            },
-            dem_ctoolnumber: demand.dem_ctoolnumber,
-            dem_positions: demand.dem_positions
-          }));
-          console.log("Mapped data:", mappedData);
-        } catch (e) {
-          console.error("Error in mapping data:", e);
+  fetchOpenDemands(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.httpService.getDemands().subscribe({
+        next: (data) => {
+          try {
+            this.demandService.setInitialData(data);
+            console.log("Data loaded successfully");
+            resolve();
+          } catch (e) {
+            console.error("Error setting initial data:", e);
+            reject(e);
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching demands', err);
+          reject(err);
         }
-  
-        try {
-          this.demandService.setInitialData(data);
-          console.log("setInitialData called successfully");
-        } catch (e) {
-          console.error("Error in setInitialData:", e);
-        }
-
-      },
-      error: (err) => {
-        console.error('Error fetching demands', err);
-      }
+      });
     });
   }
   
 
-  // loadLocations(): void {
-  //   this.httpService.getLocationDetails().subscribe({
-  //     next: (data) => {
-  //       this.locations = data;
-  //       console.log('Locations:', this.locations);
-  //     },
-  //     error: (err) => console.error('Error fetching locations', err)
-  //   });
-  // }
-
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-  //   this.dataSource.filter = filterValue;
-  // }
-
   getLocationNames(element: any): string {
-    // Case 1: Check if location_details is an object with lcm_name
-    if (element.location_details && element.location_details.lcm_name) {
+    // Handle array of locations
+    if (Array.isArray(element.location_details)) {
+      return element.location_details
+        .map((loc: any) => loc.lcm_name)
+        .filter((name: string) => name)
+        .join(', ');
+    }
+    
+    // Handle single location object
+    if (element.location_details?.lcm_name) {
       return element.location_details.lcm_name;
     }
     
-    // Case 2: Check if dem_location_position is an array with items
-    if (element.dem_location_position && element.dem_location_position.length > 0) {
-      return element.dem_location_position.map((loc: any) => loc.lcm_name).join(', ');
+    // Handle dem_location_position array
+    if (Array.isArray(element.dem_location_position)) {
+      return element.dem_location_position
+        .map((loc: any) => loc.lcm_name)
+        .filter((name: string) => name)
+        .join(', ');
     }
     
-    // Default case: No location data found
     return '';
-  }
+  }  
 
 }

@@ -56,14 +56,8 @@
 
     <mat-form-field class="filter-chip">
       <mat-label>Skills</mat-label>
-      <input type="text" matInput [formControl]="skillsControl"
-        [matAutocomplete]="autoSkills">
-      <mat-autocomplete #autoSkills="matAutocomplete">
-        <mat-option *ngFor="let skill of filteredSkills | async"
-          [value]="skill">
-          {{ skill }}
-        </mat-option>
-      </mat-autocomplete>
+      <input type="text" matInput [formControl]="skillsControl">
+        
     </mat-form-field>
 
     <mat-form-field class="filter-chip">
@@ -105,8 +99,10 @@
 
 </div>
 <mat-card class="table-container">
-  <table mat-sort mat-table [dataSource]="dataSource" class="mat-elevation-z8"
-    matSort>
+  <div *ngIf="dataSource.data.length === 0" class="no-data-message">
+    No positions found matching your criteria.
+  </div>
+  <table *ngIf="dataSource.data.length > 0" mat-sort mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
     <ng-container matColumnDef="manager">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Hiring Manager</th>
       <td mat-cell *matCellDef="let demand"> {{demand.client_details?.clm_managername }}</td>
@@ -117,7 +113,7 @@
       <td mat-cell *matCellDef="let demand"> {{ demand.dem_skillset  }} </td>
     </ng-container>
 
-    <<ng-container matColumnDef="location">
+    <ng-container matColumnDef="location">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
       <td mat-cell *matCellDef="let element">
         {{ getLocationNames(element) }}
