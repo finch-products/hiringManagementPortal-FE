@@ -80,7 +80,7 @@ body, html {
     align-items: flex-start; /* Change from 'stretch' (default) to 'flex-start' */
     gap: 10px;
     max-width: 100% !important;
-    height: 78%;
+    height: 75%;
     overflow-y: auto !important;
     cursor: pointer;
 }
@@ -521,7 +521,7 @@ button[type="submit"]:hover {
 /* Add this class for when preview or form or search or history is open  */
 .candidates-container.preview-open {
     margin-left:1px;
-    width: 30vw !important;
+    width: 29vw !important;
     resize: none;
     cursor: none;
 
@@ -886,3 +886,20 @@ button[type="submit"]:hover {
       color: #1976d2;
     }
   }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    width: 100%;
+  }
+  
+  .loading-message {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+  }
+  
+  

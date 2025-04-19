@@ -465,10 +465,9 @@ mat-sidenav-content,
 /* Main container adjustments */
 .sidenav-container {
   position: fixed; /* Change from fixed to relative */
-  width: 15%; /* Remove fixed width */
+  width: 17%;
   height: 100%;
   display: flex;
-  overflow: hidden;
 }
 
 /* Main content area adjustment */
