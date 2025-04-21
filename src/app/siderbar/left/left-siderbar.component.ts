@@ -40,17 +40,27 @@ export class LeftSiderbarComponent {
   }
 
   checkScreenSize() {
+    const previousIsMobile = this.isMobile;
     this.isMobile = window.innerWidth < 768;
     
     // Auto-collapse sidebar on mobile
     if (this.isMobile && !this.isCollapsed) {
       this.isCollapsed = true;
+    }
+    
+    // When transitioning between mobile and desktop
+    if (previousIsMobile !== this.isMobile) {
+      if (!this.isMobile) {
+        // Going from mobile to desktop
+        this.isCollapsed = false;
+      }
       this.cd.detectChanges();
     }
     
     // Update content class
     this.updateContentClass();
   }
+  
   togglesidenav() {
     this.isCollapsed = !this.isCollapsed;
     this.updateContentClass();

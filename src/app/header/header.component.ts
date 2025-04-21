@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, HostListener  } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -12,6 +12,7 @@ export class HeaderComponent {
   @Input() isCollapsed: boolean = false;
   pageTitle: string = '';
   isDropdownOpen: boolean = false;
+  isMobile: boolean = false;
 
   constructor(private router: Router) {
     this.router.events
@@ -20,10 +21,23 @@ export class HeaderComponent {
         this.updatePageTitle();
       });
   }
-
+  ngOnInit() {
+    this.checkScreenSize();
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+  
+  checkScreenSize() {
+    this.isMobile = window.innerWidth < 768;
+  }
+  
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+  
 
   private updatePageTitle() {
     const url = this.router.url;
@@ -46,5 +60,15 @@ export class HeaderComponent {
     
     // Join all parts with ":" for nested paths
     this.pageTitle = formattedParts.join(':');
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    
+    // Close dropdown when clicking outside
+    if (profileDropdown && !profileDropdown.contains(event.target as Node) && this.isDropdownOpen) {
+      this.isDropdownOpen = false;
+    }
   }
 }
