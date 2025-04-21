@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-tracking',
@@ -20,7 +21,7 @@ export class CandidateTrackingComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private router: Router, private httpService: HttpService) {}
+  constructor(private router: Router, private httpService: HttpService,private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadCandidateStatuses();
@@ -125,12 +126,54 @@ export class CandidateTrackingComponent {
     this.filteredCandidates.data = this.candidates;
     this.loadCandidates();
   }
-
-  toggleCandidateSelection(cdm_id: string) {
-    if (this.selectedCandidates.has(cdm_id)) {
-      this.selectedCandidates.delete(cdm_id);
-    } else {
-      this.selectedCandidates.add(cdm_id);
-    }
+// Toggle individual selection
+toggleCandidateSelection(event: MatCheckboxChange, cdm_id: string): void {
+  if (event.checked) {
+    this.selectedCandidates.add(cdm_id);
+  } else {
+    this.selectedCandidates.delete(cdm_id);
   }
+  
+  // Mark for check
+  this.cdr.markForCheck();
+}
+
+isSelected(cdm_id: string): boolean {
+  return this.selectedCandidates.has(cdm_id);
+}
+
+// Check if all candidates are selected
+isAllSelected(): boolean {
+  const numSelected = this.selectedCandidates.size;
+  const numRows = this.filteredCandidates.data.length;
+  return numRows > 0 && numSelected === numRows;
+}
+
+// Toggle all selections from header checkbox
+toggleAllSelections(event: MatCheckboxChange): void {
+  if (event.checked) {
+    this.filteredCandidates.data.forEach(row => {
+      if (row.cdm_id) {
+        this.selectedCandidates.add(row.cdm_id);
+      }
+    });
+  } else {
+    this.selectedCandidates.clear();
+  }
+  
+  // Mark for check
+  this.cdr.markForCheck();
+}
+
+// For handling row clicks
+onRowClick(row: any, event: Event): void {
+  // Check if click was on a checkbox or its container
+  const target = event.target as HTMLElement;
+  if (target.closest('mat-checkbox') || target.classList.contains('mat-checkbox')) {
+    // Don't navigate if clicked on checkbox
+    return;
+  }
+  
+  this.viewCandidateHistory(row);
+}
 }

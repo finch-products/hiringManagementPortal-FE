@@ -1,7 +1,6 @@
 .sidenav-container {
   position: fixed;
   height: 100vh;
-  width: 238px;
   background-color: #fff;
   overflow-y: auto;
   z-index: 100;
@@ -72,7 +71,7 @@
 }
 
 .expansion-panel-container .custom-tooltip {
-  position: fixed;
+  position: absolute;
   left: 70px;
   background: #F6F5F1;
   color: rgb(3, 3, 3);
@@ -453,7 +452,7 @@ mat-expansion-panel-header {
 }
 
 .sidenav.isCollapsed {
-  width: 60px;
+  width: 70px;
 }
 
 mat-sidenav-content,
@@ -461,4 +460,39 @@ mat-sidenav-content,
   flex: 1;
   transition: margin 0.5s ease;
   overflow: hidden;
+}
+
+/* Main container adjustments */
+.sidenav-container {
+  position: fixed; /* Change from fixed to relative */
+  width: 17%;
+  height: 100%;
+  display: flex;
+}
+
+/* Main content area adjustment */
+::ng-deep .mat-drawer-content {
+  margin-left: 0 !important; /* Override Angular Material's default margin */
+  padding-left: 16px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* When sidenav is open */
+::ng-deep .mat-drawer-content.mat-sidenav-content {
+  margin-left: 238px !important; /* Match your expanded sidenav width */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* When sidenav is collapsed */
+::ng-deep .mat-drawer-content.mat-sidenav-content.collapsed-content {
+  margin-left: 70px !important; /* Match your collapsed sidenav width */
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 768px) {
+  .main-content {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }

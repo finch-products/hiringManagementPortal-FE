@@ -53,10 +53,16 @@
             </button>
         </div>
     </div>
-
+    
      <!-- Filtered Candidates (Appears Above Full List When Searching) -->
      <div class="filtered-candidates-list" *ngIf="searchTerm?.trim()">
-        <div class="filtered-candidate-item" *ngFor="let candidate of filteredCandidates; trackBy: trackByFn">
+        
+        <div *ngIf="loading" class="loading-container">
+            <mat-spinner diameter="30"></mat-spinner>
+            <div class="loading-message">Loading candidates...</div>
+          </div>
+
+        <div class="filtered-candidate-item"  *ngFor="let candidate of filteredCandidates; trackBy: trackByFn">
             <input type="checkbox"
                 (change)="toggleSelection(candidate)"
                 [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />

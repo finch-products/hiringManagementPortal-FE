@@ -72,8 +72,8 @@ export class CreateOpenDemandComponent implements OnInit {
       dem_jd: [''],
       dem_comment: [''],
       dem_isactive: [true],
-      dem_insertby: ['emp_22032025_1'],
-      dem_updateby: ['emp_22032025_1'],
+      dem_insertby: ['emp_3'],
+      dem_updateby: ['emp_3'],
       dem_mandatoryskill: [''],
       dem_position_location: [[]],
     });
@@ -151,7 +151,7 @@ export class CreateOpenDemandComponent implements OnInit {
     let clientName = client.clm_name ? client.clm_name : '';
     let managerName = client.clm_managername ? ' (' + client.clm_managername + ')' : '';
 
-    return `${clientId}${clientName}${managerName}.trim()`;
+    return `${clientId}${clientName}${managerName}`.trim();
 
   }
 
@@ -412,7 +412,7 @@ onLOBChange(event: any): void {
 
     if (this.isEditMode) {
       updatedFields["dem_id"] = this.demandForm.value.dem_id;
-      updatedFields["dem_updateby_id"] = 'emp_22032025_1';
+      updatedFields["dem_updateby_id"] = 'emp_3';
 
       Object.keys(this.demandForm.controls).forEach((field) => {
         if (this.demandForm.controls[field].dirty) {
@@ -546,8 +546,8 @@ onLOBChange(event: any): void {
     this.demandForm.controls['isInternal'].setValue('yes');
     this.demandForm.controls['clm_clientemail'].disable(); 
     this.demandForm.controls['dem_isactive'].setValue(true);
-    this.demandForm.controls['dem_insertby'].setValue('emp_22032025_1');
-    this.demandForm.controls['dem_updateby'].setValue('emp_22032025_1');
+    this.demandForm.controls['dem_insertby'].setValue('emp_3');
+    this.demandForm.controls['dem_updateby'].setValue('emp_3');
     this.selectedFile = null;
 if (this.fileInput) {
   this.fileInput.nativeElement.value = '';

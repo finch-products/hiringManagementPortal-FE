@@ -32,52 +32,59 @@
 <button mat-button (click)="resetFilters()" color="warn">Reset
     Filters</button>
 
-<mat-card class="table-container">
-    <!-- Candidate Table -->
-    <table mat-table [dataSource]="filteredCandidates" class="mat-elevation-z8">
-        <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox
-                    (change)="$event ? selectedCandidates.clear() : null"></mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let candidate">
-                <mat-checkbox
-                    (change)="toggleCandidateSelection(candidate.cdm_id)"></mat-checkbox>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let candidate"> {{ candidate.cdm_name }}
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="location">
-            <th mat-header-cell *matHeaderCellDef> Location </th>
-            <td mat-cell *matCellDef="let candidate"> {{ candidate.lcm_name }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
-            <td mat-cell *matCellDef="let candidate"
-                [ngClass]="getStatusClass(candidate.candidate_status?.csm_code)">
-                {{ candidate.candidate_status?.csm_code }}
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="schedule">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let candidate">
-                <button mat-button
-                    (click)="scheduleInterview(candidate)">Schedule</button>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            (click)="viewCandidateHistory(row)">
-        </tr>
-    </table>
-</mat-card>
-
-<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-card class="table-container">
+        <!-- Candidate Table -->
+        <table mat-table [dataSource]="filteredCandidates" class="mat-elevation-z8">
+            <!-- Select Column -->
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox
+                    [checked]="isAllSelected()"
+                    [indeterminate]="selectedCandidates.size > 0 && !isAllSelected()"
+                    (change)="toggleAllSelections($event)">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let candidate" (click)="$event.stopPropagation()">
+                  <mat-checkbox
+                    [checked]="isSelected(candidate.cdm_id)"
+                    (change)="toggleCandidateSelection($event, candidate.cdm_id)">
+                  </mat-checkbox>
+                </td>
+            </ng-container>
+    
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let candidate"> {{ candidate.cdm_name }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef> Location </th>
+                <td mat-cell *matCellDef="let candidate"> {{ candidate.lcm_name }} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let candidate"
+                    [ngClass]="getStatusClass(candidate.candidate_status?.csm_code)">
+                    {{ candidate.candidate_status?.csm_code }}
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="schedule">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let candidate" (click)="$event.stopPropagation()">
+                    <button mat-button (click)="scheduleInterview(candidate)">
+                        Schedule
+                    </button>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                (click)="onRowClick(row, $event)">
+            </tr>
+        </table>
+    </mat-card>
+    
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

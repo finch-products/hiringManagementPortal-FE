@@ -41,8 +41,8 @@ export class CreateCandidateComponent implements OnInit {
       cdm_keywords: [],
       cdm_isinternal: [true],
       cdm_isactive: [true],
-      cdm_insertby: ['emp_22032025_1'],
-      cdm_updateby: ['emp_22032025_1']
+      cdm_insertby: ['emp_3'],
+      cdm_updateby: ['emp_3']
     });
   }
 
@@ -145,7 +145,6 @@ export class CreateCandidateComponent implements OnInit {
   
   removePhoto(): void {
     this.selectedPhoto = null;
-    this.photoPreview = null;
     // Clear the file input value to allow re-selecting the same file
     const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
     if (fileInput) {
@@ -187,8 +186,8 @@ export class CreateCandidateComponent implements OnInit {
         this.candidateForm.patchValue({
           cdm_isinternal: true,
           cdm_isactive: true,
-          cdm_insertby: 'emp_22032025_1',
-          cdm_updateby: 'emp_22032025_1'
+          cdm_insertby: 'emp_3',
+          cdm_updateby: 'emp_3'
         });
         this.locationFilterControl.reset();
         this.selectedFile = null;
@@ -232,8 +231,8 @@ export class CreateCandidateComponent implements OnInit {
     this.candidateForm.patchValue({
       cdm_isinternal: true,
       cdm_isactive: true,
-      cdm_insertby: 'emp_22032025_1',
-      cdm_updateby: 'emp_22032025_1'
+      cdm_insertby: 'emp_3',
+      cdm_updateby: 'emp_3'
     });
     this.locationFilterControl.reset();
     if (this.fileInput) {
