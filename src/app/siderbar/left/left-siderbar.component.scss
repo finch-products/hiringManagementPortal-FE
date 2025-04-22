@@ -1,3 +1,4 @@
+
 .sidenav-container {
   position: fixed;
   height: 100vh;
@@ -5,6 +6,7 @@
   overflow-y: auto;
   z-index: 100;
   margin: 0;
+  width:17vw;
   padding: 0;
 }
 
@@ -17,6 +19,7 @@
   flex-direction: column;
   height: 100%;
   transition: width 0.3s ease-in-out;
+  width: 238px !important;
 }
 
 .toggle-icon {
@@ -338,11 +341,6 @@ mat-expansion-panel-header {
   background-color: #cbd2fb;
 }
 
-.sidenav {
-  transition: width 0.3s ease-in-out;
-  overflow: hidden;
-}
-
 // .sidenav .menu-item {
 //   display: flex;
 //   align-items: center;
@@ -445,54 +443,139 @@ mat-expansion-panel-header {
   }
 }
 
-.sidenav {
-  width: 200px;
-  transition: width 0.5s ease;
-  overflow: hidden;
-}
-
 .sidenav.isCollapsed {
-  width: 70px;
+  width: 70px !important;
 }
 
 mat-sidenav-content,
 .main-content {
   flex: 1;
   transition: margin 0.5s ease;
-  overflow: hidden;
+  transition: width 0.3s ease-in-out;
+  overflow-y: auto;
+  padding-bottom: 90px;
 }
 
-/* Main container adjustments */
-.sidenav-container {
-  position: fixed; /* Change from fixed to relative */
-  width: 17%;
-  height: 100%;
-  display: flex;
+.sidenav.collapsed {
+  width: 70px !important;
 }
 
 /* Main content area adjustment */
 ::ng-deep .mat-drawer-content {
-  margin-left: 0 !important; /* Override Angular Material's default margin */
-  padding-left: 16px;
   transition: margin-left 0.3s ease-in-out;
-}
-
-/* When sidenav is open */
-::ng-deep .mat-drawer-content.mat-sidenav-content {
-  margin-left: 238px !important; /* Match your expanded sidenav width */
-  transition: margin-left 0.3s ease-in-out;
+  width: calc(100% - 238px);
+  margin-left: 238px !important;
 }
 
 /* When sidenav is collapsed */
-::ng-deep .mat-drawer-content.mat-sidenav-content.collapsed-content {
-  margin-left: 70px !important; /* Match your collapsed sidenav width */
+::ng-deep .mat-drawer-content.collapsed-content {
+  width: calc(100% - 70px);
+  margin-left: 70px !important;
 }
 
-/* Responsive adjustments for small screens */
-@media (max-width: 768px) {
-  .main-content {
+/* Responsive adjustments */
+@media screen and (max-width: 1200px) {
+  .sidenav {
+    width: 200px !important;
+  }
+  
+  .sidenav.collapsed {
+    width: 70px !important;
+  }
+  
+  ::ng-deep .mat-drawer-content {
+    width: calc(100% - 200px);
+    margin-left: 200px !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .sidenav {
+    width: 180px !important;
+  }
+  
+  ::ng-deep .mat-drawer-content {
+    width: calc(100% - 180px);
+    margin-left: 180px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidenav-container {
+    width: auto;
+  }
+
+  .sidenav {
+    width: 250px !important;
+  }
+  
+  .sidenav.collapsed {
+    width: 0 !important;
+  }
+  
+  ::ng-deep .mat-drawer-content {
     width: 100%;
-    padding-left: 12px;
-    padding-right: 12px;
+    margin-left: 0 !important;
+  }
+  
+  ::ng-deep .mat-drawer-content.mobile-sidebar-open {
+    margin-left: 250px !important;
+    width: calc(100% - 250px);
+  }
+}
+
+/* Other styles you already have */
+.toggle-icon {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+/* Override Angular Material's sidenav styles */
+::ng-deep .mat-drawer-inner-container {
+  overflow: hidden !important;
+}
+/* Mobile-specific styles */
+.mobile-menu-fab {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 99;
+}
+
+@media screen and (max-width: 768px) {
+  .sidenav-container {
+    width: auto;
+  }
+  
+  /* Make sidebar take full width on small screens when open */
+  ::ng-deep .mat-drawer.mat-sidenav {
+    width: 80% !important;
+    max-width: 300px;
+  }
+  
+  /* Mobile sidebar should slide in/out */
+  ::ng-deep .mat-drawer-transition .mat-drawer-content {
+    transition: margin 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  /* Add overlay when sidebar is open on mobile */
+  .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Ensure content is not squeezed on mobile */
+  ::ng-deep .mat-drawer-content {
+    padding-left: 0 !important;
+  }
+}
+
+/* Handle very small screens */
+@media screen and (max-width: 480px) {
+  ::ng-deep .mat-drawer.mat-sidenav {
+    width: 85% !important;
+  }
+  
+  .sidenav.collapsed {
+    width: 0 !important;
   }
 }
