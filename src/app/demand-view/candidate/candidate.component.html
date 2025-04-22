@@ -62,6 +62,11 @@
             <div class="loading-message">Loading candidates...</div>
           </div>
 
+          <!-- Show message when no filtered results -->
+        <div *ngIf="!loading && filteredCandidates.length === 0" class="no-results-message">
+         No matched candidates Found.
+        </div>
+
         <div class="filtered-candidate-item"  *ngFor="let candidate of filteredCandidates; trackBy: trackByFn">
             <input type="checkbox"
                 (change)="toggleSelection(candidate)"

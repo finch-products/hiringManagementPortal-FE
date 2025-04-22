@@ -95,16 +95,13 @@
         </div>
 
         <div class="logo-upload-container">
-            <div class="logo-preview" *ngIf="logoPreview">
-              <img [src]="logoPreview" alt="Logo Preview" class="preview-image">
-              <button mat-icon-button class="remove-logo" (click)="removeLogo()">
+            <div class="upload-controls">
+              <button mat-icon-button class="remove-logo" *ngIf="selectedLogo" (click)="removeLogo()">
                 <mat-icon>close</mat-icon>
               </button>
-            </div>
-            <div class="upload-controls">
-              <button mat-raised-button type="button" (click)="fileInput.click()" >
+              <button mat-raised-button type="button" *ngIf="!selectedLogo" (click)="fileInput.click()" color="primary">
                 <mat-icon>add_photo_alternate</mat-icon>
-                {{ selectedLogo ? 'Change Logo' : 'Upload Logo' }}
+                Upload Logo
               </button>
               <input #fileInput type="file" (change)="onLogoSelected($event)" accept="image/*" style="display: none">
               <span class="file-name">{{ selectedLogo?.name }}</span>

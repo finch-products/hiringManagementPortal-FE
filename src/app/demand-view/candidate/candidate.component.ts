@@ -67,7 +67,7 @@ export class CandidateComponent implements OnChanges{
   interviewTypes: any[] = [];
   interviewDetailsMap: Map<string, any[]> = new Map();
 
-  readonly cdm_updateby_id = 'emp_22032025_1';
+  readonly cdm_updateby_id = 'emp_1';
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['candidatesSelected'] && changes['candidatesSelected'].currentValue) {

@@ -41,8 +41,8 @@ export class CreateCandidateComponent implements OnInit {
       cdm_keywords: [],
       cdm_isinternal: [true],
       cdm_isactive: [true],
-      cdm_insertby: ['emp_3'],
-      cdm_updateby: ['emp_3']
+      cdm_insertby: ['emp_1'],
+      cdm_updateby: ['emp_1']
     });
   }
 
@@ -186,8 +186,8 @@ export class CreateCandidateComponent implements OnInit {
         this.candidateForm.patchValue({
           cdm_isinternal: true,
           cdm_isactive: true,
-          cdm_insertby: 'emp_3',
-          cdm_updateby: 'emp_3'
+          cdm_insertby: 'emp_1',
+          cdm_updateby: 'emp_1'
         });
         this.locationFilterControl.reset();
         this.selectedFile = null;
@@ -231,8 +231,8 @@ export class CreateCandidateComponent implements OnInit {
     this.candidateForm.patchValue({
       cdm_isinternal: true,
       cdm_isactive: true,
-      cdm_insertby: 'emp_3',
-      cdm_updateby: 'emp_3'
+      cdm_insertby: 'emp_1',
+      cdm_updateby: 'emp_1'
     });
     this.locationFilterControl.reset();
     if (this.fileInput) {

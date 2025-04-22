@@ -30,7 +30,7 @@ export class DemandComponent implements OnInit {
   originalStatus: string | null = null;
   dem_comment: string = '';
   @Output() showHistoryRequested  = new EventEmitter<string>();
-  readonly dem_updateby_id = 'emp_22032025_1';
+  readonly dem_updateby_id = 'emp_1';
   constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar, private router: Router) {
 
   }
