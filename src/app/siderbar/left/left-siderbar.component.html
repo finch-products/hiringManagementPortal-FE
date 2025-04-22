@@ -1,6 +1,7 @@
+
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" [style.width.px]="isCollapsed ? 70 : 238"
-    [class.collapsed]="isCollapsed"  opened="!isMobile"  [mode]="isMobile ? 'over' : 'side'" position="start" class="sidenav">
+    [class.collapsed]="isCollapsed"  opened="!isMobile || !isCollapsed"  [mode]="isMobile ? 'over' : 'side'" position="start" class="sidenav">
     <!-- <div class="sidebar-header">
       <mat-icon class="toggle-icon" (click)="togglesidenav()">
         {{ isCollapsed ? 'chevron_right' : 'chevron_left' }}
