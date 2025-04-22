@@ -13,7 +13,8 @@ export class DashboardComponent implements OnInit {
   total_non_open_demands: any[] = [];
   total_india_open_demands: any[] = [];;
   total_non_india_open_demands: any[] = [];
-
+  isRightColumnTaller = false;
+  isRightColumnMuchTaller = false;
 
   
   ngOnInit() {
@@ -21,7 +22,8 @@ export class DashboardComponent implements OnInit {
     this.loadDemandfullfilment();
     this.loadReportLOBTargetProgress();
     this.loadOpenposition();
-    this.loadReportagedemand()
+    this.loadReportagedemand();
+    this.calculateColumnHeights();
   }
 
   constructor(private httpService: HttpService) {
@@ -113,11 +115,18 @@ loadReportagedemand() {
     { name: 'Interview Scheduled', value: '#15CAF7' },
     { name: 'Profiles Not Submitted', value: '#6E3A95' }
   ];
-  /*barChartData = [
-    { name: 'LOB 1', value: 40 },
-    { name: 'LOB 2', value: 20 },
-    { name: 'LOB 3', value: 60 },
-    { name: 'LOB 4', value: 35 }
-  ];*/
+ 
+  calculateColumnHeights() {
+    const leftColumn = document.querySelector('.charts-column');
+    const rightColumn = document.querySelector('.right-column');
+    
+    if (leftColumn && rightColumn) {
+      const leftHeight = leftColumn.clientHeight;
+      const rightHeight = rightColumn.clientHeight;
+      
+      this.isRightColumnTaller = rightHeight > leftHeight;
+      this.isRightColumnMuchTaller = rightHeight > (leftHeight + 100); // 100px threshold
+    }
+  }
 
 }
