@@ -31,8 +31,8 @@ export class CreateLOBComponent implements OnInit {
       lob_description: [''],
       lob_clientpartner: ['', Validators.required],
       lob_deliverymanager: ['', Validators.required],
-      lob_insertby: ['emp_3'],
-      lob_updateby: ['emp_3']
+      lob_insertby: ['emp_1'],
+      lob_updateby: ['emp_1']
     });
   }
 
@@ -139,11 +139,11 @@ onDeliveryManagerSelected(event: MatAutocompleteSelectedEvent): void {
                 emp_name: this.deliveryManagerFilterControl.value
             },
             lob_insertby_id: {
-                emp_id: 'emp_3',
+                emp_id: 'emp_1',
                 emp_name: 'Swathi' // Or whatever name you want to display
             },
             lob_updateby_id: {
-                emp_id: 'emp_3',
+                emp_id: 'emp_1',
                 emp_name: 'Swathi'
             }
         };
@@ -160,8 +160,8 @@ onDeliveryManagerSelected(event: MatAutocompleteSelectedEvent): void {
           this.clientPartnerFilterControl.reset();
           this.deliveryManagerFilterControl.reset();
           this.lobForm.patchValue({
-            lob_insertby: 'emp_3',
-            lob_updateby: 'emp_3'
+            lob_insertby: 'emp_1',
+            lob_updateby: 'emp_1'
           });
         },
         error: (error) => {

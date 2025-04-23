@@ -54,6 +54,7 @@
   .entry-content {
     display: flex;
     align-items: flex-start;
+    gap: 10px;
     background-color: #fff;
     padding: 12px 16px;
     border-radius: 6px;
@@ -61,12 +62,12 @@
   }
   
   .entry-icon {
-    margin-right: 4px !important;
-    width:8%;
-    margin-left:2px;
-    height:2%;
-    color: #4caf50; // green icon like Google Sheets
+    font-size: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #4caf50;
   }
+  
   
   .text-block {
     p {

@@ -42,7 +42,7 @@ export class CreateClientComponent implements OnInit {
       clm_address: ['', [Validators.pattern(this.validatorsService.detailPattern())]],
       clm_lcm_id: [''],
       clm_isactive: [true],
-      clm_insertby: ['emp_22032025_1']
+      clm_insertby: ['emp_1']
     });
 
   }
@@ -190,7 +190,7 @@ private _filterLocations(value: string): any[] {
           this.removeLogo(); 
           this.clientForm.patchValue({
             clm_isactive: true,
-            clm_insertby: 'emp_3'
+            clm_insertby: 'emp_1'
           });
           this.locationFilterControl.setValue('');
         },
@@ -218,7 +218,7 @@ private _filterLocations(value: string): any[] {
     this.clientForm.reset();
     this.clientForm.patchValue({
       clm_isactive: true,
-      clm_insertby: 'emp_3'
+      clm_insertby: 'emp_1'
     });
     this.clientForm.markAsPristine(); // Mark the form as pristine
     this.clientForm.markAsUntouched();
