@@ -1,107 +1,140 @@
-<div class="dashboard-cards">
-  <div class="card yellow">
-    <h5 class="head">Total Open T&M Demands</h5>
-    <span class="number-bubble">{{total_open_demands}}</span>
+<div class="dashboard-container" >
+  <!-- Top Cards Section -->
+  <div class="dashboard-cards">
+    <div class="card yellow">
+      <h5 class="head">Total Open T&M Demands</h5>
+      <span class="number-bubble">{{total_open_demands}}</span>
+    </div>
+
+    <div class="card pink">
+      <h5 class="head">Total Non T&M Demands</h5>
+      <span class="number-bubble">{{total_non_open_demands}}</span>
+    </div>
+
+    <div class="card purple">
+      <h5 class="head">Tota India T&M Demands</h5>
+      <span class="number-bubble">{{total_india_open_demands}}</span>
+    </div>
+
+    <div class="card blue">
+      <h5 class="head">Total Non India Open Demands</h5>
+      <span class="number-bubble">{{total_non_india_open_demands}}</span>
+    </div>
   </div>
 
-  <div class="card pink">
-    <h5 class="head">Total Non T&M Demands</h5>
-    <span class="number-bubble">{{total_non_open_demands}}</span>
-  </div>
-
-  <div class="card purple">
-    <h5 class="head">Tota India T&M Demands</h5>
-    <span class="number-bubble">{{total_india_open_demands}}</span>
-  </div>
-
-  <div class="card blue">
-    <h5 class="head">Total Non India Open Demands</h5>
-    <span class="number-bubble">{{total_non_india_open_demands}}</span>
-  </div>
-</div>
-
-<!-- Graphs and Charts -->
-<div class="charts">
-  <div class="left-section">
-    <mat-card class="graph chart-box pie-chart">
-      <div class="chart-container">
-        <ngx-charts-pie-chart 
-          [results]="pieChartData"
-          [view]="[300, 250]"
-          [customColors]="customColors">
-        </ngx-charts-pie-chart>
-        
-        <div class="legend-container">
-          <div *ngFor="let item of customColors" class="legend-item">
-            <span class="legend-color-box" [ngStyle]="{'background-color': item.value}"></span>
-            <span class="legend-text">{{ item.name }}</span>
+  <!-- Main Charts Section -->
+  <div class="dashboard-main"  [class.right-column-taller]="isRightColumnTaller" 
+     [class.charts-column-extended]="isRightColumnMuchTaller">
+    <!-- Left Column - Charts -->
+    <div class="charts-column"  [class.charts-column-extended]="isRightColumnMuchTaller">
+      <!-- Pie Chart -->
+      <mat-card class="chart-card">
+        <h5 class="chart-title">Demand Fulfillment</h5>
+        <div class="chart-container">
+          <ngx-charts-pie-chart 
+            [results]="pieChartData"
+            [view]="[300, 250]"
+            [customColors]="customColors">
+          </ngx-charts-pie-chart>
+          
+          <div class="legend-container">
+            <div *ngFor="let item of customColors" class="legend-item">
+              <span class="legend-color-box" [ngStyle]="{'background-color': item.value}"></span>
+              <span class="legend-text">{{ item.name }}</span>
+            </div>
           </div>
         </div>
-      </div>
-    </mat-card>
-    
+      </mat-card>
 
-  <div class="chart-box bar-chart">
-  <mat-card class="chart-card">
-    <h5 class="chart-title">Age of Applicants</h5>
-    <mat-card-content>
-      <ngx-charts-bar-vertical
-        [view]="[500, 250]"
-        [results]="agedata"
-        [customColors]="colorScheme"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="false"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Age in days'"
-        [yAxisLabel]="'Count of open Application'"
-        [maxXAxisTickLength]="10"
-        [roundEdges]="true"
-        [animations]="true"
-        [barPadding]="5"
-        [tooltipDisabled]="false">
-      </ngx-charts-bar-vertical>
-    </mat-card-content>
-  </mat-card>
-</div>
-</div>
-<div class="chart-box progress-chart">
-  <!-- Target Progress Card -->
-  <mat-card class="target-card">
-    <h5 class="head">Target Progress</h5>
-    <mat-card-content>
-      <div *ngFor="let progress of progressData" class="progress-item">
-        <span class="progress-label">{{ progress.name }}</span>
-        <div class="progress-container">
-          <mat-progress-bar [value]="progress.value" mode="determinate"
-            style="--mdc-linear-progress-active-indicator-color: #A07CBC"></mat-progress-bar>
-          <span class="progress-value">{{ progress.value }}%</span>
-        </div>
+      <!-- Bar Chart -->
+      <mat-card class="chart-card">
+        <h5 class="chart-title">Age of Applicants</h5>
+        <ngx-charts-bar-vertical
+          [view]="[500, 250]"
+          [results]="agedata"
+          [customColors]="colorScheme"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Age in days'"
+          [yAxisLabel]="'Count of open Application'"
+          [maxXAxisTickLength]="10"
+          [roundEdges]="true"
+          [animations]="true"
+          [barPadding]="5"
+          [tooltipDisabled]="false">
+        </ngx-charts-bar-vertical>
+      </mat-card>
+
+      <!-- Position Cards -->
+      <div class="position-cards" *ngIf="isRightColumnMuchTaller">
+        <mat-card class="position-card">
+          <div class="card-content">
+            <div class="icon">
+              <mat-icon>show_chart</mat-icon>
+            </div>
+            <div class="text-content">
+              <p class="title">New positions opened last week</p>
+              <a href="#" class="show-more">Show more</a>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="position-card" class="position-cards-container">
+          <div class="card-content">
+            <div class="icon number">{{total_positions_opened_last_week}}</div>
+            <div class="text-content">
+              <p class="title">New positions opened last week</p>
+              <a href="#" class="show-more">Show them</a>
+            </div>
+          </div>
+        </mat-card>
       </div>
-    </mat-card-content>
-  </mat-card>
-</div>
-</div>
-<!-- Position Cards -->
-<div class="position-cards">
-  <div class="card">
-    <div class="icon">
-      <mat-icon>show_chart</mat-icon>
     </div>
-    <div class="content">
-      <p class="title">New positions opened last week</p>
-      <a href="#" class="show-more">Show more</a>
+
+    <!-- Right Column - Progress and Position Cards -->
+    <div class="right-column" [class.right-column-shortened]="isRightColumnMuchTaller">
+      <!-- Progress Chart -->
+      <mat-card class="progress-card">
+        <h5 class="chart-title">Target Progress</h5>
+        <mat-card-content>
+          <div *ngFor="let progress of progressData" class="progress-item">
+            <span class="progress-label">{{ progress.name }}</span>
+            <div class="progress-container">
+              <mat-progress-bar [value]="progress.value" mode="determinate"
+                style="--mdc-linear-progress-active-indicator-color: #A07CBC"></mat-progress-bar>
+              <span class="progress-value">{{ progress.value }}%</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Position Cards -->
+      <div class="position-cards" class="position-cards-container" *ngIf="!isRightColumnMuchTaller">
+        <mat-card class="position-card">
+          <div class="card-content">
+            <div class="icon">
+              <mat-icon>show_chart</mat-icon>
+            </div>
+            <div class="text-content">
+              <p class="title">New positions opened last week</p>
+              <a href="#" class="show-more">Show more</a>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="position-card" >
+          <div class="card-content">
+            <div class="icon number">{{total_positions_opened_last_week}}</div>
+            <div class="text-content">
+              <p class="title">New positions opened last week</p>
+              <a href="#" class="show-more">Show them</a>
+            </div>
+          </div>
+        </mat-card>
+      </div>
     </div>
   </div>
-
-  <div class="card">
-    <div class="icon number">{{total_positions_opened_last_week}}</div>
-    <div class="content">
-      <p class="title">New positions opened last week</p>
-      <a href="#" class="show-more">Show them</a>
-    </div>
-  </div>
-  
-  
-</div> 
+</div>
