@@ -61,6 +61,22 @@ export class DemandViewComponent implements OnInit, OnDestroy{
       this.loadDemandDetails();
     });
   }
+  onDemandStatusChanged(newStatus: string) {
+    // Clear existing timer
+    this.clearTimer();
+    
+    // Update status-related variables
+    this.demandStatus = newStatus;
+    this.isDemandClosed = newStatus.includes('Closed');
+    
+    if (this.isDemandClosed) {
+      this.demandClosedText = 'Demand closed!';
+      this.showTimerHeader = true;
+    } else {
+      // Reload demand details to get the latest opening date
+      this.loadDemandDetails();
+    }
+  }
 
   loadDemandDetails() {
     this.isLoading = true;
@@ -74,6 +90,10 @@ export class DemandViewComponent implements OnInit, OnDestroy{
         if (demandData?.demand_details) {
           this.demandStatus = demandData.demand_details.status_details?.dsm_code || '';
           this.isDemandClosed = this.demandStatus.includes('Closed');
+          if (!this.demandStatus) {
+            this.demandStatus = demandData.demand_details.status_details?.dsm_code || '';
+            this.isDemandClosed = this.demandStatus.includes('Closed');
+          }
           
           if (this.isDemandClosed) {
             this.demandClosedText = 'Demand closed!';

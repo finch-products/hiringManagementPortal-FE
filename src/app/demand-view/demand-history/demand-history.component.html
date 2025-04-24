@@ -1,44 +1,37 @@
 <div class="history-wrapper">
-    <div class="header">
-      <h3>Demand History </h3>
-      <button mat-button (click)="closeHistory()">Close</button>
-    </div>
-  
-    <!-- Loop through demandHistoryData -->
-    <div *ngIf="demandHistoryData.length > 0; else noData">
-        <ng-container *ngFor="let item of demandHistoryData; let i = index">
-          
-          <!-- Check if date is different from previous -->
-          <ng-container *ngIf="i === 0 || (item.date | date: 'fullDate') !== (demandHistoryData[i - 1]?.date | date: 'fullDate')">
-            <div class="date-break">
-              <hr />
-              <div class="date-section">
-                {{ item.date | date: 'fullDate' }}
-              </div>
-            </div>
-          </ng-container>
-      
-          <div class="entry-content">
-            <mat-icon class="entry-icon">history</mat-icon>
-            <div class="text-block">
-              <p class="message">{{ item.message }}</p>
-              <p class="time">{{ item.date | date: 'shortTime' }}</p>
-              <p class="updated-by" *ngIf="item.history?.updateby_emp_id; else noid">
-                Updated by: {{ item.history.updateby_emp_id }}
-              </p>
-              <ng-template #noid>
-                <p class="updated-by">Updated by: Not available</p>
-              </ng-template>
-            </div>
-          </div>
-      
-          <div class="break"></div>
-      
-        </ng-container>
-    </div>      
-  
-    <ng-template #noData>
-      <div class="no-data">No history available.</div>
-    </ng-template>
+  <div class="header">
+    <h3>Demand History</h3>
+    <button mat-button (click)="closeHistory()">Close</button>
   </div>
+
+  <div *ngIf="demandHistoryData.length > 0; else noData">
+    <ng-container *ngFor="let item of demandHistoryData; let i = index">
+      <!-- Check if date is different from previous -->
+      <ng-container *ngIf="i === 0 || (item.date | date: 'mediumDate') !== (demandHistoryData[i - 1]?.date | date: 'mediumDate')">
+        <div class="date-break">
+          <hr />
+          <div class="date-section">
+            {{ item.date | date: 'fullDate' }}
+          </div>
+        </div>
+      </ng-container>
   
+      <div class="entry-content">
+        <mat-icon class="entry-icon">history</mat-icon>
+        <div class="text-block">
+          <p class="message">{{ item.message }}</p>
+          <p class="time">{{ item.date | date: 'mediumTime' }}</p>
+          <p class="updated-by">
+            Updated by: {{ item.history.updateby_emp_id }}
+          </p>
+        </div>
+      </div>
+  
+      <div class="break"></div>
+    </ng-container>
+  </div>      
+
+  <ng-template #noData>
+    <div class="no-data">No history available.</div>
+  </ng-template>
+</div>
