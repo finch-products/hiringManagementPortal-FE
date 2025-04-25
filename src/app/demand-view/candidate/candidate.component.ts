@@ -198,9 +198,11 @@ export class CandidateComponent implements OnChanges{
 
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data) => {
-        this.demands = data;
+        this.demands = data.demand_details;
         this.candidates = data.candidates ? [...data.candidates].reverse() : [];
-        this.originalCandidates = [...this.candidates]; 
+        this.originalCandidates = [...this.candidates];
+        
+      console.log("Demands", this.demands);
         this.candidates.forEach(candidate => {
           this.loadInterviewDetailsForCandidate(candidate);
           this.loadCandidateStatusesById(candidate.cdl_cdm_id).subscribe(
@@ -342,10 +344,16 @@ export class CandidateComponent implements OnChanges{
 
       },
       error: (error) => {
+        if(this.demands.status_details.dsm_id=== 4 || this.demands.status_details.dsm_inactive===true){
+          this.snackBar.open("❌ Failed to link candidates. demand is closed or status inactive .", "❌", {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+          });
+        }else{
         this.snackBar.open("❌ Failed to link candidates. Try again.", "❌", {
           duration: 3000,
           panelClass: ['error-snackbar']
-        });
+        });}
         console.error("Error submitting data", error);
       }
     });
@@ -401,8 +409,15 @@ export class CandidateComponent implements OnChanges{
   }
 
   openInterviewForm(candidate: any) {
+    if(this.demands.status_details.dsm_id=== 4){
+      this.snackBar.open("❌ Failed to open interview form. demand is closed .", "❌", {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+    }else{
     this.selectedCandidateForInterview = candidate;
     this.showInterviewForm = true;
+    }
   }
   
   closeInterviewForm() {

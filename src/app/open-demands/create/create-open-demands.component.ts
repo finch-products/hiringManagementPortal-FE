@@ -432,15 +432,19 @@ onLOBChange(event: any): void {
           if (field === "dem_clm_id" && typeof value === "object" && value !== null) {
             value = value.clm_id; 
           }
-          updatedFields[field] = value;
-          formData.append(field, value);
-        }
-      });
-
-      Object.keys(updatedFields).forEach(key => {
-        formData.append(key, updatedFields[key]);
-      });
-
+           // Skip null, undefined, empty strings, and '[]' (empty array)
+    if (
+      value !== null &&
+      value !== undefined &&
+      value !== "" &&
+      value !== "[]" &&
+      (typeof value !== "string" || value.trim() !== "")
+    ) {
+      updatedFields[field] = value;
+      formData.append(field, value);
+    }
+  }
+});
       if (this.selectedFile) {
         formData.append("job_description", this.selectedFile);
       }
@@ -484,16 +488,24 @@ onLOBChange(event: any): void {
         if (key === "dem_position_location" && Array.isArray(value)) {
           value = JSON.stringify(value);
         }
-      // Skip null, undefined or empty strings
-      if (value !== null && value !== undefined && value !== "" && value!=='[]') {
-        updatedFields[key] = value;
-        formData.append(key, value);
-      }
-        formData.append(key, value);
-      });
-      if (this.selectedFile) {
-        formData.append("job_description", this.selectedFile);
-      }
+      // Clean and append only meaningful values
+  if (
+    value !== null &&
+    value !== undefined &&
+    value !== "" &&
+    value !== "[]" &&
+    (typeof value !== 'string' || value.trim() !== "")
+  ) {
+    formData.append(key, value);
+  }
+});
+      // Handle dem_jd field (file upload)
+if (this.selectedFile) {
+  formData.append('dem_jd', this.selectedFile); // file will be sent
+} else {
+  formData.append('dem_jd', ''); // this tells backend: no file
+}
+
 
 
       this.httpService.addDemand(formData).subscribe({
