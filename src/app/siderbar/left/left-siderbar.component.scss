@@ -2,6 +2,7 @@
 .sidenav-container {
   position: fixed;
   height: 100vh;
+  overflow: hidden;
   background-color: #fff;
   overflow-y: auto;
   z-index: 100;
@@ -246,6 +247,9 @@
 .sidenav-content {
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd2fb #F6F5F1;
+  height: calc(100vh - 60px); 
   padding-bottom: 90px;
 }
 
@@ -541,6 +545,8 @@ mat-sidenav-content,
   left: 20px;
   z-index: 99;
 }
+
+
 
 @media screen and (max-width: 768px) {
   .sidenav-container {

@@ -683,3 +683,20 @@ button.submit.mat-mdc-raised-button,
   background-color: #DFF28D !important;
   color: #333 !important;
 }
+
+
+.upload-controls button[mat-raised-button] {
+  background-color: #cbd2fb;
+  color: black;
+}
+
+.remove-photo {
+  background-color: #cbd2fb;
+  border-radius: 10px;
+}
+
+.file-name {
+  margin-right: 10px;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+}
