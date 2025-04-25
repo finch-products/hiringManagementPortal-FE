@@ -7,7 +7,7 @@
     </div>
 
     <div class="card pink">
-      <h5 class="head">Total Non T&M Demands</h5>
+      <h5 class="head">Total Non Open T&M Demands</h5>
       <span class="number-bubble">{{total_non_open_demands}}</span>
     </div>
 
@@ -48,7 +48,7 @@
 
       <!-- Bar Chart -->
       <mat-card class="chart-card">
-        <h5 class="chart-title">Age of Applicants</h5>
+        <h5 class="chart-title">Time to Closure: Applicants Count by Age</h5>
         <ngx-charts-bar-vertical
           [view]="[500, 250]"
           [results]="agedata"
@@ -58,13 +58,14 @@
           [legend]="false"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"
-          [xAxisLabel]="'Age in days'"
-          [yAxisLabel]="'Count of open Application'"
-          [maxXAxisTickLength]="10"
+          [xAxisLabel]="'Closure Duration (Days)'"
+          [yAxisLabel]="'Number of Applicants'"
           [roundEdges]="true"
           [animations]="true"
           [barPadding]="5"
-          [tooltipDisabled]="false">
+          [tooltipDisabled]="false"
+          [yAxisTicks]="[2, 4, 6]"
+          [yScaleMax]="6">
         </ngx-charts-bar-vertical>
       </mat-card>
 
