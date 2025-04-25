@@ -16,6 +16,9 @@ interface Status {
 })
 export class DemandComponent implements OnInit {
   @Output() pdfSelected = new EventEmitter<string>();
+  @Output() statusChanged = new EventEmitter<string>();
+  @Output() showHistoryRequested  = new EventEmitter<string>();
+
   demandForm = new FormGroup({
     status: new FormControl<string | null>(null)
   });
@@ -29,7 +32,6 @@ export class DemandComponent implements OnInit {
   selectedStatus: string = '';
   originalStatus: string | null = null;
   dem_comment: string = '';
-  @Output() showHistoryRequested  = new EventEmitter<string>();
   readonly dem_updateby_id = 'emp_1';
   constructor(private route: ActivatedRoute, private httpService: HttpService, private snackBar: MatSnackBar, private router: Router) {
 
@@ -202,6 +204,7 @@ getJDFilename(): string {
         this.onCancel();
         this.loadData(this.demands.cdl_dem_id); // Reload data to reflect changes
         this.loadStatus(this.demands.cdl_dem_id);
+        this.statusChanged.emit(this.selectedStatus);
       },
       error: (error) => {
         this.snackBar.open(`${error.message}`, "❌", {

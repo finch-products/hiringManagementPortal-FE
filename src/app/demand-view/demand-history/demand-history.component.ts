@@ -1,33 +1,50 @@
-import { Component,Input,Output,EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-demand-history2',
   templateUrl: './demand-history.component.html',
-  styleUrl: './demand-history.component.scss'
+  styleUrls: ['./demand-history.component.scss']
 })
 export class DemandHistoryComponent2 {
   @Input() demandid!: string;
   @Output() close = new EventEmitter<boolean>();
-  demandHistoryData:any=[];
-  constructor(private httpService: HttpService, private snackBar: MatSnackBar) {
+  demandHistoryData: any[] = [];
   
-  }
+  constructor(private httpService: HttpService, private snackBar: MatSnackBar) {}
+
   ngOnInit() {
-    console.log('DemandHistory loaded with ID:', this.demandid);
     this.demandhistory();
   }
+
   closeHistory() {
-    this.close.emit(); 
-    console.log("notified parent")// Notify parent to close the history panel
+    this.close.emit();
   }
 
-  demandhistory(){
+  demandhistory() {
     this.httpService.demandHistory(this.demandid).subscribe({
       next: (response: any[]) => {
-        this.demandHistoryData = response;
-        console.log('History fetched successfully:', response);
+        this.demandHistoryData = response
+          .filter(item => {
+            const message = item.Message || item.message;
+            return ![
+              'Update Date', 
+              'Update By', 
+              'Insert Date', 
+              'Inserted By'
+            ].some(term => message.includes(term));
+          })
+          .map(item => ({
+            message: item.Message || item.message,
+            date: new Date(item.Date || item.date),
+            history: {
+              updateby_emp_id: item['Updated by'] || item['updated by'] || 'Not available'
+            }
+          }))
+          .sort((a, b) => b.date.getTime() - a.date.getTime()); // Sort by date descending
+
+        console.log('Processed history data:', this.demandHistoryData);
       },
       error: (error) => {
         this.snackBar.open('Failed to fetch demand history', 'Close', {
