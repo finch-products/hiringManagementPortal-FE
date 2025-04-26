@@ -80,29 +80,33 @@
         <mat-radio-button [value]="false">No</mat-radio-button>
       </mat-radio-group>
 
-      <mat-radio-group formControlName="cdm_isactive" class="form-field">
-        <mat-label>Active?</mat-label>
-        <mat-radio-button [value]="true">Yes</mat-radio-button>
-        <mat-radio-button [value]="false">No</mat-radio-button>
-      </mat-radio-group>
+      <!-- ... other form fields ... -->
 
-      <div class="photo-upload-container">
-        <div class="upload-controls">
-          <!-- Show 'Upload Profile Photo' button if no photo is selected -->
-          <button *ngIf="!selectedPhoto" mat-raised-button type="button" (click)="photoInput.click()" color="primary">
-            <mat-icon>add_a_photo</mat-icon>
-            Upload Profile Photo
-          </button>
-      
-          <!-- Show 'Remove Photo' (cross icon) button if a photo is selected -->
-          <button *ngIf="selectedPhoto" mat-icon-button class="remove-photo" (click)="removePhoto()">
-            <mat-icon>close</mat-icon>
-          </button>
-      
-          <input #photoInput type="file" (change)="onPhotoSelected($event)" accept="image/*" style="display: none">
-          <span class="file-name" *ngIf="selectedPhoto">{{ selectedPhoto.name }}</span>
-        </div>
-      </div>
+<mat-radio-group formControlName="cdm_isactive" class="form-field">
+  <mat-label>Active?</mat-label>
+  <mat-radio-button [value]="true">Yes</mat-radio-button>
+  <mat-radio-button [value]="false">No</mat-radio-button>
+</mat-radio-group>
+
+<!-- Photo upload moved here -->
+<div class="photo-upload-container">
+  <div class="upload-controls">
+    <button *ngIf="!selectedPhoto" mat-raised-button type="button" (click)="photoInput.click()" color="primary">
+      <mat-icon>add_a_photo</mat-icon>
+      Upload Profile Photo
+    </button>
+   <div class="remove-photo" >
+    <button *ngIf="selectedPhoto" mat-icon-button (click)="removePhoto()">
+      <mat-icon>close</mat-icon>
+    </button>
+  
+    <input class="input" #photoInput type="file" (change)="onPhotoSelected($event)" accept="image/*" style="display: none">
+    <span class="file-name" *ngIf="selectedPhoto">{{ selectedPhoto.name }}</span>
+  </div></div>
+</div>
+
+<!-- ... remaining form fields ... -->
+
       
     </div>
 
