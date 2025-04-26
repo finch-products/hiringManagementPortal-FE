@@ -521,6 +521,7 @@ button[type="submit"]:hover {
 /* Add this class for when preview or form or search or history is open  */
 .candidates-container.preview-open {
     margin-left:1px;
+    overflow-y: hidden;
     width: 29vw !important;
     resize: none;
     cursor: none;

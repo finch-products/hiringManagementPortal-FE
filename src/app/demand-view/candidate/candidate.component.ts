@@ -344,7 +344,7 @@ export class CandidateComponent implements OnChanges{
 
       },
       error: (error) => {
-        if(this.demands.status_details.dsm_id=== 4 || this.demands.status_details.dsm_inactive===true){
+        if(this.demands.status_details.dsm_id== 4 || this.demands.status_details.dsm_inactive==true){
           this.snackBar.open("❌ Failed to link candidates. demand is closed or status inactive .", "❌", {
             duration: 3000,
             panelClass: ['error-snackbar']
@@ -409,7 +409,7 @@ export class CandidateComponent implements OnChanges{
   }
 
   openInterviewForm(candidate: any) {
-    if(this.demands.status_details.dsm_id=== 4){
+    if(this.demands.status_details.dsm_id==4){
       this.snackBar.open("❌ Failed to open interview form. demand is closed .", "❌", {
         duration: 3000,
         panelClass: ['error-snackbar']

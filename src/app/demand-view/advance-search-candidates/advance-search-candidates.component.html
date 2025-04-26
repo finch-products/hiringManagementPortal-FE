@@ -14,7 +14,12 @@
         </div>
     </div>    
 
-    <div class="filtered-candidates-list"  >
+    <div class="filtered-candidates-list" >
+
+         <!-- Show message when no filtered results -->
+         <div *ngIf="filteredcandidates.length === 0" class="no-results-message">
+            No matched candidates Found.
+           </div>
         <div class="filtered-candidate-item"
             *ngFor="let candidate of  filteredcandidates">
             <input type="checkbox"
