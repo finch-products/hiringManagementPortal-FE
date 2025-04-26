@@ -3,6 +3,7 @@
     <!-- Profile Submission Chart -->
     <mat-card class="chart-card">
       <h4 class="chart-title">How long it takes to submit profile for each demand </h4>
+      <div *ngIf="demand_timetaken && demand_timetaken.length > 0; else nodatafordemand">
       <ngx-charts-bar-horizontal
         [view]="view"
         [results]="demand_timetaken"
@@ -17,11 +18,16 @@
         [roundEdges]="true">
       </ngx-charts-bar-horizontal>
       <h5 class="chart-title"> Time taken for profile Submission </h5>
+      </div>
+      <ng-template #nodatafordemand>
+        <h2 style="text-align: center; padding: 20px;">No data for Time taken for profile Submission </h2>
+      </ng-template>
     </mat-card>
   
     <!-- Interview Feedback Chart -->
     <mat-card class="chart-card">
       <h4 class="chart-title">How long client taking to do interview and provide feedback</h4>
+      <div *ngIf="interviewFeedbackData && interviewFeedbackData.length > 0; else nodataforfeedback">
       <ngx-charts-bar-horizontal
         [view]="view"
         [results]="interviewFeedbackData"
@@ -35,6 +41,10 @@
         [roundEdges]="true">
       </ngx-charts-bar-horizontal>
       <h5 class="chart-title">Time taken to do interview and provide feedback</h5>
+    </div>
+      <ng-template #nodataforfeedback>
+        <h2 style="text-align: center; padding: 20px;">No data for Time taken to do interview and provide feedback</h2>
+      </ng-template>
     </mat-card>
   
     <!-- Selection Percentage Chart -->

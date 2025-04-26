@@ -1,9 +1,9 @@
 .advnace-search-container {
     position: absolute;
-    right: -22px;
+    right: -1px;
     //top: 55px;
     width: 24vw;
-    height:100vh;
+    height:100%;
     background: white;
     padding: 6px;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
@@ -73,7 +73,7 @@
     border: 2px solid #242323;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    height: 65%;
+    height: 56%;
     overflow-y: auto;
     padding: 7px;
     margin-top:5px;
@@ -168,3 +168,10 @@
     background-color: #DFF28D;
     border-radius: 50%;
 }
+.no-results-message {
+    text-align: center;
+    color: gray;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  

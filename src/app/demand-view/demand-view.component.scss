@@ -5,6 +5,8 @@
     position: relative; 
     overflow-x: auto;
     width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
     transition: all 0.3s ease;
 }
 .app-preview{

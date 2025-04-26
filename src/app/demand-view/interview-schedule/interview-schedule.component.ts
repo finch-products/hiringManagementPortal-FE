@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 interface InterviewType {
   value: number;
@@ -53,7 +54,7 @@ export class InterviewScheduleComponent implements OnInit {
       meetingDetails: ['', Validators.required],
       interviewers: this.fb.array([this.createInterviewer()]),
       remarks: ['']
-    });
+    }, { validators: interviewTimeValidator });
   }
 
   ngOnInit(): void {
@@ -239,5 +240,22 @@ validateDateTime(control: FormControl): { [key: string]: boolean } | null {
   return null;
 }
 
-
 }
+export function interviewTimeValidator(group: AbstractControl): ValidationErrors | null {
+  const start = group.get('interviewStartTime')?.value;
+  const end = group.get('interviewEndTime')?.value;
+
+  if (!start || !end) return null;
+
+  const [startH, startM] = start.split(':').map(Number);
+  const [endH, endM] = end.split(':').map(Number);
+
+  const startTime = new Date();
+  startTime.setHours(startH, startM, 0, 0);
+
+  const endTime = new Date();
+  endTime.setHours(endH, endM, 0, 0);
+
+  return endTime <= startTime ? { endBeforeStart: true } : null;
+}
+
