@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
     this.loadReportLOBTargetProgress();
     this.loadOpenposition();
     this.loadReportagedemand();
-    this.calculateColumnHeights();
   }
 
   constructor(private httpService: HttpService) {
@@ -92,10 +91,22 @@ loadOpenposition() {
   });
 }
 
-agedata: any[] = [];
-colorScheme = {
-  domain: ['#007bff', '#17a2b8', '#28a745', '#ffc107', '#dc3545']
+customBarColors = [
+  { name: 'Bar 1', value: '#d2f55b' },
+  { name: 'Bar 2', value: '#cbd2fb' },
+  { name: 'Bar 3', value: '#ebf9bb' },
+  { name: 'Bar 4', value: '#dee2ff' },
+  { name: 'Bar 5', value: '#f8fce5' },
+  { name: 'Bar 6', value: '#f3f3ff' }
+];
+
+// Or as a function if you need dynamic coloring
+barColorFn = (value: any) => {
+  return value.index % 2 === 0 ? '#d2f55b' : '#cbd2fb';
 };
+
+
+agedata: any[] = [];
 
 loadReportagedemand() {
   this.httpService.getReportagedemand().subscribe({
@@ -109,24 +120,12 @@ loadReportagedemand() {
   });
 }
 
-  customColors = [
-    { name: 'Open Positions', value: '#F7CB15' },
-    { name: 'Profiles Submitted', value: '#EC3737' },
-    { name: 'Interview Scheduled', value: '#15CAF7' },
-    { name: 'Profiles Not Submitted', value: '#6E3A95' }
-  ];
+customColors = [
+  { name: 'Open Positions', value: '#DFF28D' },
+  { name: 'Profiles Submitted', value: '#cbd2fb' },
+  { name: 'Interview Scheduled', value: '#f8fce5' },
+  { name: 'Profiles Not Submitted', value: '#f3f3ff' }
+];
  
-  calculateColumnHeights() {
-    const leftColumn = document.querySelector('.charts-column');
-    const rightColumn = document.querySelector('.right-column');
-    
-    if (leftColumn && rightColumn) {
-      const leftHeight = leftColumn.clientHeight;
-      const rightHeight = rightColumn.clientHeight;
-      
-      this.isRightColumnTaller = rightHeight > leftHeight;
-      this.isRightColumnMuchTaller = rightHeight > (leftHeight + 100); // 100px threshold
-    }
-  }
 
 }
