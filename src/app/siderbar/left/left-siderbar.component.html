@@ -1,17 +1,24 @@
+<div class="sidebar-wrapper">
 
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" [style.width.px]="isCollapsed ? 70 : 238"
     [class.collapsed]="isCollapsed"  opened="!isMobile || !isCollapsed"  [mode]="isMobile ? 'over' : 'side'" position="start" class="sidenav">
 
-    <button mat-icon-button matTooltip="Toggle Sidebar" (click)="togglesidenav()">
+    <!-- <button mat-icon-button matTooltip="Toggle Sidebar" (click)="togglesidenav()">
       <mat-icon>
         {{ isCollapsed ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}
       </mat-icon>
-    </button>
+    </button> -->
     <div class="sidebar-header">
       <div class="logo-container">
         <div class="toggle-icon" (click)="togglesidenav()">
-          <img src="../../../assets/img/logo.png" alt="Hirex Logo">
+          <img [src]="isCollapsed ? '../../../assets/img/logo-collapsed.png' : '../../../assets/img/logo-removebg-preview.png'" 
+               alt="Hirex Logo" 
+               [class.collapsed-logo]="isCollapsed" 
+               [class.expanded-logo]="!isCollapsed"
+               > <!-- Hidden initially -->
+          <img src="../../../assets/img/logo-collapsed.png" style="display: none;"> <!-- Preload collapsed -->
+          <img src="../../../assets/img/logo-removebg-preview.png" style="display: none;"> <!-- Preload expanded -->
         </div>
       </div>
     </div>
@@ -308,3 +315,4 @@
     </div>
   </mat-sidenav>
 </mat-sidenav-container>
+</div>

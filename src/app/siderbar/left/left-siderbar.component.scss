@@ -1,7 +1,15 @@
+.sidebar-wrapper {
+  padding: 10px; // Adjust this value as needed
+  height: 100vh;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
 
 .sidenav-container {
   position: fixed;
-  height: 100vh;
+  height: calc(100vh - 20px);
+  border-radius: 8px; 
   overflow: hidden;
   background-color: #fff;
   overflow-y: auto;
@@ -9,6 +17,21 @@
   margin: 0;
   width:17vw;
   padding: 0;
+
+  ::ng-deep {
+    .mat-drawer {
+      background: transparent;
+      box-shadow: none;
+    }
+    
+    .mat-drawer-inner-container {
+      background: white;
+      border-radius: 8px;
+      height: 100%;
+      overflow: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
 }
 
 .sidenav {
@@ -21,10 +44,21 @@
   height: 100%;
   transition: width 0.3s ease-in-out;
   width: 238px !important;
+  border-radius: 8px;
+  .mat-drawer-inner-container {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  &.collapsed {
+    width: 70px !important;
+    
+    ::ng-deep .mat-drawer-inner-container {
+      border-radius: 8px;
+    }
+  }
 }
 
 .toggle-icon {
-  margin-left: auto;
   cursor: pointer;
 }
 
@@ -206,6 +240,7 @@
 }
 
 .documents-title {
+  padding-left: 8%;
   font-weight: 500;
   color: #000;
 }
@@ -436,19 +471,65 @@ mat-expansion-panel-header {
 }
 
 .logo-container {
-  width: 200px;
-  padding-left: 20px;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  
   img {
-    width: 100%;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+  
+  .expanded-logo {
+    width: 180px; /* Fixed width for expanded */
     height: auto;
-    display: block;
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .collapsed-logo {
+    width: 40px; /* Fixed width for collapsed */
+    height: auto;
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-.sidenav.isCollapsed {
-  width: 70px !important;
+.logo-container {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  
+  img {
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+  
+  .expanded-logo {
+    width: 180px; /* Fixed width for expanded */
+    height: auto;
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .collapsed-logo {
+    width: 40px; /* Fixed width for collapsed */
+    height: auto;
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 mat-sidenav-content,
@@ -530,7 +611,6 @@ mat-sidenav-content,
 
 /* Other styles you already have */
 .toggle-icon {
-  margin-left: auto;
   cursor: pointer;
 }
 
