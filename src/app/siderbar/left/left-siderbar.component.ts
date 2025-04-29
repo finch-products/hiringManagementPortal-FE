@@ -167,4 +167,5 @@ closeAllPanels() {
     this.expandedPanels[panel as keyof typeof this.expandedPanels] = false;
   });
 }
+
 }
