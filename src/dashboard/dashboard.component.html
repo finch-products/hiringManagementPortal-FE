@@ -34,19 +34,27 @@
 
 
       <!-- Progress Chart -->
-      <mat-card class="progress-card">
-        <h5 class="chart-title">Target Progress</h5>
-        <mat-card-content>
-          <div *ngFor="let progress of progressData" class="progress-item">
-            <span class="progress-label">{{ progress.name }}</span>
-            <div class="progress-container">
-              <mat-progress-bar [value]="progress.value" mode="determinate"
-                style="--mdc-linear-progress-active-indicator-color: #d1a7f0"></mat-progress-bar>
-              <span class="progress-value">{{ progress.value }}%</span>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <!-- Progress Chart -->
+<mat-card class="progress-card">
+  <h5 class="chart-title">Target Progress</h5>
+  <mat-card-content>
+    <div *ngIf="progressData && progressData.length > 0; else noTargets">
+      <div *ngFor="let progress of progressData" class="progress-item">
+        <span class="progress-label">{{ progress.name }}</span>
+        <div class="progress-container">
+          <mat-progress-bar [value]="progress.value" mode="determinate"
+            style="--mdc-linear-progress-active-indicator-color: #d1a7f0"></mat-progress-bar>
+          <span class="progress-value">{{ progress.value }}%</span>
+        </div>
+      </div>
+    </div>
+    <ng-template #noTargets>
+      <div class="no-targets-message">
+        No targets yet added
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
 
     </div>
 

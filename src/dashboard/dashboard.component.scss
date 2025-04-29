@@ -141,6 +141,8 @@
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background: white;
+    display: flex;
+    flex-direction: column;
     
     .chart-title {
       margin-bottom: 20px;
@@ -150,13 +152,27 @@
       text-align: center;
     }
   }
+  .progress-card mat-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Consistent gap between items */
+    flex: 1; /* Allow content to grow */
+    min-height: 0; /* Prevent unwanted stretching */
+  }
   
   .progress-item {
-    margin-bottom: 15px;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
+    width: 100%;
+  }
+
+  .charts-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  /* Optional: If you need the progress card to maintain some minimum height */
+  .progress-card {
+    min-height: fit-content; /* Or set a specific min-height if needed */
   }
   
   .progress-container {
@@ -246,6 +262,12 @@
   .progress-card .chart-title {
     text-align: left;
     padding-left: 5px;
+  }
+  .no-targets-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
   }
   
   /* Position card titles */
