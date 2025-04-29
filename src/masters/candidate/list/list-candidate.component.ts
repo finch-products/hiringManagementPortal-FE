@@ -25,7 +25,13 @@ export class ListCandidateComponent {
     keywords: ''
   };
   filterserach=false;
-  
+  pageSizeOptions = [5, 10, 20];
+  pageSize = 5;
+  currentPage = 1;
+  totalItems = 0;
+  pages: number[] = [];
+  totalPages = 0;
+
   dataSource = new MatTableDataSource<Candidate>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -35,16 +41,23 @@ export class ListCandidateComponent {
   ngOnInit() {
     this.fetchCandidates();
     this.CandidateService.candidates$.subscribe(candidates => {
-      this.dataSource.data = candidates;
+      //this.dataSource.data = candidates;
+      this.dataSource.data = this.getPagedData(candidates); 
+      this.totalItems=candidates.length;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+    this.updatePages();
   }
 
   fetchCandidates(): void {
     this.httpService.getCandidate().subscribe({
       next: (data) => {
         this.CandidateService.setInitialData(data);
+        // Calculate total items dynamically from backend data
+        this.totalItems = data.length;
+        this.dataSource.data = this.getPagedData(data);
+        this.updatePages();
       },
       error: (err) => console.error('Error fetching Candidates', err)
     });
@@ -102,4 +115,65 @@ export class ListCandidateComponent {
     if (!url) return 'N/A';
     return url.substring(url.lastIndexOf('/') + 1);
   }
+
+  getPagedData(data: Candidate[]): Candidate[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return data.slice(startIndex, startIndex + this.pageSize);
+  }
+  
+  updatePages() {
+    this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+    this.pages = [];
+
+    // Add first three pages
+    for (let i = 1; i <= Math.min(3, this.totalPages); i++) {
+      this.pages.push(i);
+    }
+
+    // Add ellipsis if necessary
+    if (this.totalPages > 3) {
+      this.pages.push(-1);  // -1 represents the ellipsis
+    }
+
+    // Always add the last page
+    if (this.totalPages > 3) {
+      this.pages.push(this.totalPages);
+    }
+  }
+  onPageSizeChange() {
+    this.currentPage = 1;
+    this.updatePages();
+    this.CandidateService.candidates$.subscribe(candidates => {
+      this.dataSource.data = this.getPagedData(candidates);
+    });
+  }
+  
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.CandidateService.candidates$.subscribe(candidates => {
+        this.dataSource.data = this.getPagedData(candidates);
+      });
+    }
+  }
+  
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.CandidateService.candidates$.subscribe(candidates => {
+        this.dataSource.data = this.getPagedData(candidates);
+      });
+    }
+  }
+  
+  goToPage(page: number) {
+    if (page === -1) {
+      return;
+    }
+    this.currentPage = page;
+    this.CandidateService.candidates$.subscribe(candidates => {
+      this.dataSource.data = this.getPagedData(candidates);
+    });
+  }  
+
 }

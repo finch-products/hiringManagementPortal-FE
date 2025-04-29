@@ -96,18 +96,20 @@
 
         <div class="logo-upload-container">
             <div class="upload-controls">
-              <button mat-icon-button class="remove-logo" *ngIf="selectedLogo" (click)="removeLogo()">
+                <button mat-raised-button type="button" *ngIf="!selectedLogo" (click)="fileInput.click()" color="primary">
+                    <mat-icon>add_photo_alternate</mat-icon>
+                    Upload Logo
+                  </button>
+                <div class="remove-photo" >
+              <button mat-icon-button *ngIf="selectedLogo" (click)="removeLogo()">
                 <mat-icon>close</mat-icon>
               </button>
-              <button mat-raised-button type="button" *ngIf="!selectedLogo" (click)="fileInput.click()" color="primary">
-                <mat-icon>add_photo_alternate</mat-icon>
-                Upload Logo
-              </button>
-              <input #fileInput type="file" (change)="onLogoSelected($event)" accept="image/*" style="display: none">
-              <span class="file-name">{{ selectedLogo?.name }}</span>
+              
+              <input #fileInput class="input" type="file" (change)="onLogoSelected($event)" accept="image/*" style="display: none">
+              <span class="file-name" *ngIf="selectedLogo">{{ selectedLogo.name }}</span>
+            </div>
             </div>
           </div>
-
         <div class="submit-container">
             <button mat-raised-button color="primary" type="button" class="cancel" (click)="onCancel()">Cancel</button>
 
