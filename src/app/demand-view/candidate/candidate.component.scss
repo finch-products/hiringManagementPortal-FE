@@ -217,29 +217,6 @@ body, html {
     min-height: 200px;
   }
 
-.candidate-header {
-    display: flex;
-    height: 100%; 
-    align-items: center;
-    gap: 15px; /* Proper space between items */
-    padding: 5px 5px; /* Space inside */
-    box-sizing: border-box; /* Prevent size issues */
-    justify-content: space-between;
-    border-radius: 10px;
-    background: white;
-}
-.avatar-container {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #ddd;
-    margin-left: 8px;
-    border: 3px solid #d9f473;
-    overflow: hidden; /* Ensures the image stays within the circular container */
-}
 
 .avatar {
     width: 100%;
@@ -303,7 +280,7 @@ body, html {
     padding: 8px ;
     border: none;
     border-radius: 5px;
-    background-color: #d9f473;
+    background-color: #DFF28D;
     color: black;
     font-size: 14px;
     cursor: pointer;
@@ -430,7 +407,7 @@ button[type="submit"]:hover {
 /* Filtered Candidates List */
 .filtered-candidates-list {
     position: absolute;
-    top: 120x; 
+    top: 120px; 
     left: 45.5%;
     transform: translateX(-50%);
     width: 86%;
@@ -445,19 +422,26 @@ button[type="submit"]:hover {
     z-index: 1001; 
     margin:0;
 }
-.filtered-candidate-header{  
+
+
+.filtered-candidate-item {
     display: flex;
-    min-height: 80px; 
-    width:100%;
-    align-items: center;
-    gap: 5px; 
-    padding: 5px 3px;
-    box-sizing: border-box; 
-    justify-content: space-between;
-    border-radius: 10px;
-    background: #ECECEC;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    
+    input[type="checkbox"] {
+        margin-top: 15px;
+    }
 }
-.filtered-candidate-card{
+.filtered-candidate-header {
+    display: flex;
+    flex-direction: column; /* Changed from row to column */
+    align-items: center; /* Center items vertically */
+    gap: 8px;
+    padding: 5px;
+}
+.filtered-candidate-card {
     background: #ffffff;
     padding: 10px;
     border-radius: 12px;
@@ -465,11 +449,9 @@ button[type="submit"]:hover {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    min-height: 70px; 
     border: 1px solid #ddd;
-    position: relative;
-    width: 50vw;
-    margin-right: 0%;
+    flex-grow: 1;
+    width: 100%;
 }
 .menu-container {
     position: absolute;

@@ -76,23 +76,48 @@
                 <div class="filtered-candidate-header">
                     <div class="avatar-container">
                         <img 
-        [src]="getCandidateImageUrl(candidate)" 
-        alt="Candidate" 
-        class="avatar"
-        (error)="handleImageError($event)"
+                            [src]="getCandidateImageUrl(candidate)" 
+                            alt="Candidate" 
+                            class="avatar"
+                            (error)="handleImageError($event)"
       >
                     </div>
                     <div class="candidate-info">
                         <h3 class="candidate-name">{{ candidate.cdm_name || 'Unknown' }}</h3>
-                        <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id }}</p>  
+                        <p class="candidate-id">{{ candidate?.cdl_cdm_id }}</p>  
                     </div>
-                    <div class="detail-box" *ngIf="getCandidateProfileUrl(candidate) as profileUrl">
-                        <span>Profile : </span>
-                        <a [href]="profileUrl" 
-                           (click)="openPdf(profileUrl, $event)">
-                          {{ getProfileFilename(candidate) }}
-                        </a>
-                      </div>
+                    <div class="skills">
+                        <ng-container *ngIf="candidate.cdm_keywords; else noKeywords">
+                            <span *ngFor="let keyword of candidate.cdm_keywords.split(',')" class="skill-chip">
+                                {{ keyword.trim() }}
+                            </span>
+                        </ng-container>
+                        <ng-template #noKeywords>
+                            <span class="skill-chip">N/A</span>
+                        </ng-template>
+                    </div>
+    
+                </div>
+                <div class="candidate-details">
+                    <div class="detail-item">
+                        <span>email</span>
+                        <span>{{ candidate.cdm_email || 'N/A' }}</span>
+                    </div>
+                
+                    <div class="detail-item">
+                        <span>description</span>
+                        <span>{{ candidate.cdm_description || "N/A" }}</span>
+                    </div>
+    
+                    <div class="detail-item" *ngIf="getCandidateProfileUrl(candidate) as profileUrl">
+                        <span>attachment</span>
+                        <span>
+                            <a [href]="profileUrl" 
+                               (click)="openPdf(profileUrl, $event)">
+                                {{ getProfileFilename(candidate) }}
+                            </a>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

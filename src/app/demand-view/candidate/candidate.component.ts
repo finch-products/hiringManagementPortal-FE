@@ -9,9 +9,11 @@ interface Candidate {
   cdm_name: string;
   cdm_id: string;
   cdl_cdm_id: string;
-  cdm_keywords: string[];
+  cdm_keywords: string,
   cdm_profile: string;
   avatar?: string;
+  cdm_email: string;
+  cdm_description: string;
   candidate_status: {
     csm_id: number | null;
     csm_code: string;
@@ -232,8 +234,10 @@ export class CandidateComponent implements OnChanges{
         csm_id: candidate?.candidate_status?.csm_id ?? null,
         csm_code: candidate.candidate_status ? candidate.candidate_status.csm_code : 'Unknown'
       },
-      cdm_keywords: candidate.cdm_keywords ? candidate.cdm_keywords.split(',') : ['Not Provided'],
-      cdm_profile: candidate.cdm_profile || '#'
+      cdm_profile: candidate.cdm_profile || '#',
+      cdm_description: candidate.cdm_description ||"N/A",
+      cdm_email:candidate.cdm_email || "N/A",
+      cdm_keywords:candidate.cdm_keywords || "N/A"
     };
   }
 
