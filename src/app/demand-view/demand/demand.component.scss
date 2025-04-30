@@ -1,15 +1,11 @@
 .demand-container{
-    //background-color:#f8f9fa;
     background-color: #ffffff;
     padding:10px;
     min-width:27vw !important;
     height: 100%;
     border-radius: 8px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    // margin-top: 20px;
-    display: flex;
     gap: 10px;
-    //border: 2px solid #ddd; 
     overflow-y: auto !important;
     position:relative;
 }
@@ -30,12 +26,12 @@ mat-select {
   background-color: #E0FBFC;
   border-radius: 18px;
   height: 47px;
-  min-width: 30%; /* Increase min-width to accommodate content */
-  max-width: 100%; /* Ensure it doesn't exceed the container */
+  min-width: 30%;
+  max-width: 100%;
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 10px; /* Add padding to avoid text touching the edges */
+  padding: 0 10px; 
 }
 ::ng-deep .mat-mdc-form-field-subscript-wrapper{
   height: 0px !important;
@@ -70,14 +66,14 @@ mat-select {
     align-items: center;
     margin-top: 3px;
     flex-direction: column;
-    gap: 2px; /* Space between Open Date and Valid Till */
+    gap: 2px; 
   }
   
   .date-item p {
     margin: 0;
     font-size: small;
     color: gray;
-    white-space: nowrap; /* Prevent breaking into two lines */
+    white-space: nowrap; 
   }
   
   .date-item b {
@@ -89,7 +85,7 @@ mat-select {
     margin-left: 4px;
     font-weight: normal !important;
    color: #666 !important;
-    background-color: #eceefd !important; /* Keep date background */
+    background-color: #eceefd !important;
   }
   
   .details-section {
@@ -115,7 +111,7 @@ mat-select {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Wrap on smaller screens */
+    flex-wrap: wrap;
   }
   .details-header{
     padding-top:15px;
@@ -124,23 +120,22 @@ mat-select {
     display: flex;
     flex-direction: column;
     height:55px;
-    align-items: center; /* Center align text */
+    align-items: center;
     text-align: center;
     padding-top: 2px;
     margin:4%;
-    min-width: 120px; /* Prevent squeezing */
+    min-width: 120px;
   }
   
   .detail-box span {
-    margin-bottom: 5px; /* Space between label and value */
+    margin-bottom: 5px;
   }
   
   .skills {
     display: flex;
     gap: 10px;
     align-items: baseline;
-    flex-wrap: wrap; /* Ensures responsiveness */
-    //justify-content: center;
+    flex-wrap: wrap;
     margin-left: 10px;
     gap:5px;
   }
@@ -228,15 +223,15 @@ mat-select {
   padding-top: -10px;
 }
 .status {
-    display: inline-block; /* Makes the span behave like a badge */
-    padding: 5px 12px; /* Adjust padding as needed */
-    background-color: #eaffea; /* Light green background */
-    color: #228B22; /* Green text */
-    border-radius: 20px; /* Rounded corners */
-    font-weight: bold; /* Bold text */
-    font-size: 8px; /* Adjust font size */
+    display: inline-block; 
+    padding: 5px 12px; 
+    background-color: #eaffea; 
+    color: #228B22;
+    border-radius: 20px; 
+    font-weight: bold; 
+    font-size: 8px; 
     text-align: center;
-    white-space: nowrap; /* Prevent text from wrapping */
+    white-space: nowrap;
 }
 
 .status.Selected {
@@ -339,8 +334,8 @@ mat-select {
 .status-container {
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between "Status:" and the status label */
-    flex-wrap: wrap; /* Prevents overflow issues */
+    gap: 8px;
+    flex-wrap: wrap; 
 }
 
 .status-label {
@@ -352,10 +347,10 @@ mat-select {
     font-weight: bold;
     font-size: 14px;
     text-align: center;
-    white-space: nowrap; /* Prevents text from breaking */
-    max-width: 100%; /* Ensures it fits within the container */
+    white-space: nowrap; 
+    max-width: 100%; 
     overflow: hidden;
-    text-overflow: ellipsis; /* In case the text is too long */
+    text-overflow: ellipsis;
 }
 .header{
   text-align:center;
@@ -365,13 +360,13 @@ mat-select {
 
 .new-candidate {
   animation: highlightFade 2s ease-in-out;
-  background-color: #e6ffe6; /* Light green */
-  border-left: 4px solid #4caf50; /* Green border */
+  background-color: #e6ffe6;
+  border-left: 4px solid #4caf50; 
 }
 
 mmat-form-field {
-  width: 100%; /* Ensure it takes the available space */
-  max-width: 250px; /* Prevent it from being too wide */
+  width: 100%; 
+  max-width: 250px; 
 }
 
 
@@ -438,7 +433,7 @@ label {
 
 /* Input Fields */
 select {
-  width: 200px; /* Adjust this value as needed */
+  width: 200px; 
   min-width: 100%; 
   background-color: white;
   padding: 8px;
@@ -450,7 +445,7 @@ select {
 /* Comment Box with Reduced Height */
 textarea {
   resize: none;
-  height: 60px;  /* Reduced from 80px */
+  height: 60px; 
   padding: 8px;
   width: 200px;
   border: 1px solid #aaa;
