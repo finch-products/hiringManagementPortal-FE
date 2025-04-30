@@ -51,7 +51,7 @@
       }
     
       .search-btn {
-        background-color: #DFF28D;
+        background-color: #d9f473;
         border: none;
         padding: 10px 15px;
         border-radius: 0 10px 10px 0;
@@ -82,8 +82,8 @@
 
     .icons a {
       cursor: pointer;
-      background: linear-gradient(to right, #DFF28D, #DFF28D);
-      color: #333;
+      background: #d9f473;
+      color: #222524;
       border: none;
       padding: 0px 10px;
       font-size: 16px;
@@ -100,7 +100,7 @@
     }
 
     .icon {
-      background: #DFF28D;
+      background: #d9f473;
       border: none;
       border-radius: 40%;
       padding: 24px;
@@ -135,7 +135,7 @@
         border-radius: 40%;
         object-fit: cover;
         margin-right: 10px;
-        border: 2px solid #DFF28D;
+        border: 2px solid #d9f473;
       }
 
       .profile-text {
@@ -202,7 +202,7 @@
 /* Media Queries for Responsive Header */
 @media screen and (max-width: 1400px) {
   .container .header {
-    left: 18%;
+    left: 21%;
     
     &.collapsed {
       left: calc(50px + 20px);
