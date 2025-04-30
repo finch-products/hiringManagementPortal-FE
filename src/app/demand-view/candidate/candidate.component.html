@@ -87,9 +87,10 @@
                         <p class="candidate-id">{{ candidate?.cdl_cdm_id }}</p>  
                     </div>
                     <div class="skills">
-                        <ng-container *ngIf="candidate.cdm_keywords; else noKeywords">
-                            <span *ngFor="let keyword of candidate.cdm_keywords.split(',')" class="skill-chip">
-                                {{ keyword.trim() }}
+                        <ng-container *ngIf="getKeywords(candidate.cdm_keywords).length; else noKeywords">
+                            <span *ngFor="let keyword of getKeywords(candidate.cdm_keywords)" 
+                                  class="skill-chip">
+                                {{ keyword }}
                             </span>
                         </ng-container>
                         <ng-template #noKeywords>

@@ -9,7 +9,7 @@ interface Candidate {
   cdm_name: string;
   cdm_id: string;
   cdl_cdm_id: string;
-  cdm_keywords: string,
+  cdm_keywords: string[],
   cdm_profile: string;
   avatar?: string;
   cdm_email: string;
@@ -843,5 +843,10 @@ getProfileFilename(candidate: any): string {
   }
 }
 
-
+getKeywords(keywords: any): string[] {
+  if (!keywords) return [];
+  if (Array.isArray(keywords)) return keywords;
+  if (typeof keywords === 'string') return keywords.split(',').map(k => k.trim());
+  return [];
+}
 }
