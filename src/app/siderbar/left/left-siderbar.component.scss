@@ -1,29 +1,17 @@
 .sidebar-wrapper {
-  padding: 10px; // Adjust this value as needed
   height: 100vh;
   box-sizing: border-box;
   border-radius: 8px;
 }
-
-
 .sidenav-container {
   position: fixed;
   height: calc(100vh - 20px);
-  border-radius: 8px; 
-  overflow: hidden;
-  background-color: #fff;
-  overflow-y: auto;
-  z-index: 100;
-  margin: 0;
-  width:17vw;
-  padding: 0;
-
+  border-radius: 8px;
   ::ng-deep {
     .mat-drawer {
       background: transparent;
       box-shadow: none;
     }
-    
     .mat-drawer-inner-container {
       background: white;
       border-radius: 8px;
@@ -43,7 +31,7 @@
   flex-direction: column;
   height: 100%;
   transition: width 0.3s ease-in-out;
-  width: 238px !important;
+  // width: 238px !important;
   border-radius: 8px;
   .mat-drawer-inner-container {
     border-radius: 8px;
@@ -51,7 +39,7 @@
   }
   &.collapsed {
     width: 70px !important;
-    
+
     ::ng-deep .mat-drawer-inner-container {
       border-radius: 8px;
     }
@@ -86,14 +74,13 @@
       display: block !important;
       position: absolute;
       left: 70px;
-      background: #F6F5F1;
+      background: #f6f5f1;
       min-width: 200px;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
       z-index: 1000;
       border-radius: 4px;
       overflow: hidden;
     }
-
   }
 }
 
@@ -111,20 +98,19 @@
 .expansion-panel-container .custom-tooltip {
   position: absolute;
   left: 70px;
-  background: #F6F5F1;
+  background: #f6f5f1;
   color: rgb(3, 3, 3);
   padding: 8px 12px;
   border-radius: 4px;
   white-space: nowrap;
   z-index: 1100;
   cursor: pointer;
-  opacity: 0; // Start hidden
+  opacity: 0;
   transform: translateX(-10px);
   transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none; // Initially not clickable
-
+  pointer-events: none;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -4px;
     top: 50%;
@@ -133,7 +119,7 @@
     height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-right: 5px solid #F6F5F1;
+    border-right: 5px solid #f6f5f1;
   }
 
   div {
@@ -141,7 +127,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: #cbd2fb;
+      background-color: #cbd2f7;
     }
   }
 }
@@ -159,20 +145,20 @@
 .custom-tooltip {
   position: fixed;
   left: 70px;
-  background: #F6F5F1;
+  background: #f6f5f1;
   color: rgb(3, 3, 3);
   padding: 8px 12px;
   border-radius: 4px;
   white-space: nowrap;
   z-index: 1100;
   cursor: pointer;
-  opacity: 0; // Start hidden
+  opacity: 0;
   transform: translateX(-10px);
   transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none; // Initially not clickable
+  pointer-events: none;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: -4px;
     top: 50%;
@@ -181,7 +167,7 @@
     height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-right: 5px solid #F6F5F1;
+    border-right: 5px solid #f6f5f1;
   }
 
   div {
@@ -189,7 +175,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: #cbd2fb;
+      background-color: #cbd2f7;
     }
   }
 }
@@ -224,14 +210,13 @@
   width: 100%;
 }
 
-
 .sidebar-header {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0px;
-  mat-icon{
-    color: #6E3A95 ;
+  mat-icon {
+    color: #6e3a95;
     font-weight: bold;
     font-size: 30px;
     line-height: 1em;
@@ -268,14 +253,14 @@
 }
 
 .sidenav.collapsed a.active mat-icon {
-  background-color: #cbd2fb;
+  background-color: #cbd2f7;
 }
 
 .mat-expansion-panel-header:hover {
-  background-color: #cbd2fb !important;
+  background-color: #cbd2f7 !important;
   border-radius: 5px !important;
-  .mat-icon{
-    color:#000;
+  .mat-icon {
+    color: #000;
   }
 }
 
@@ -283,8 +268,8 @@
   flex: 1;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #cbd2fb #F6F5F1;
-  height: calc(100vh - 60px); 
+  scrollbar-color: #cbd2f7 #f6f5f1;
+  height: calc(100vh - 60px);
   padding-bottom: 90px;
 }
 
@@ -300,7 +285,6 @@ mat-nav-list .mat-list-item {
   display: flex;
   align-items: center;
   width: 100%;
-
 }
 
 mat-icon,
@@ -313,7 +297,7 @@ mat-icon,
 }
 
 a:hover {
-  background-color: #cbd2fb;
+  background-color: #cbd2f7;
   border-radius: 5px;
 
   span,
@@ -323,7 +307,7 @@ a:hover {
 }
 
 a.active {
-  background-color: #cbd2fb;
+  background-color: #cbd2f7;
   border-radius: 5px;
 
   span,
@@ -363,7 +347,7 @@ mat-expansion-panel-header {
 }
 
 .master-list a:hover {
-  background-color: #cbd2fb;
+  background-color: #cbd2f7;
 }
 
 .view-action-list {
@@ -371,28 +355,20 @@ mat-expansion-panel-header {
 }
 
 .view-action-list a.active {
-  background-color: #cbd2fb;
+  background-color: #cbd2f7;
   color: black;
   padding-left: 12px;
 }
 
 .view-action-list a:hover {
-  background-color: #cbd2fb;
+  background-color: #cbd2f7;
 }
-
-// .sidenav .menu-item {
-//   display: flex;
-//   align-items: center;
-// }
-
-// added 9/4/25
 
 .menu-item,
 .mat-list-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  /* Space between icon and label */
   height: 48px;
   line-height: 48px;
   padding: 0 16px;
@@ -403,7 +379,7 @@ mat-expansion-panel-header {
   font-size: 20px;
   min-width: 24px;
   text-align: center;
-  color: #cbd2fb;
+  color: #cbd2f7;
 }
 
 .menu-item span,
@@ -446,10 +422,9 @@ mat-expansion-panel-header {
   padding-top: 10px;
 }
 
-
 .mat-list-item:hover,
 .mat-list-item.active {
-  background-color: #cbd2fb;
+  background-color: #cbd2f7;
 }
 
 .mat-expansion-panel {
@@ -478,23 +453,23 @@ mat-expansion-panel-header {
   align-items: center;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
-  
+
   img {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform-style: preserve-3d;
   }
-  
+
   .expanded-logo {
-    width: 180px; /* Fixed width for expanded */
+    width: 65%;
     height: auto;
     opacity: 1;
     transform: scale(1);
   }
-  
+
   .collapsed-logo {
-    width: 40px; /* Fixed width for collapsed */
+    width: 40px;
     height: auto;
     opacity: 1;
     transform: scale(1);
@@ -509,7 +484,7 @@ mat-expansion-panel-header {
   align-items: center;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
-  
+
   img {
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     will-change: transform, opacity;
@@ -517,15 +492,8 @@ mat-expansion-panel-header {
     transform-style: preserve-3d;
   }
   
-  .expanded-logo {
-    width: 180px; /* Fixed width for expanded */
-    height: auto;
-    opacity: 1;
-    transform: scale(1);
-  }
-  
   .collapsed-logo {
-    width: 40px; /* Fixed width for collapsed */
+    width: 40px;
     height: auto;
     opacity: 1;
     transform: scale(1);
@@ -545,29 +513,26 @@ mat-sidenav-content,
   width: 70px !important;
 }
 
-/* Main content area adjustment */
 ::ng-deep .mat-drawer-content {
   transition: margin-left 0.3s ease-in-out;
   width: calc(100% - 238px);
   margin-left: 238px !important;
 }
 
-/* When sidenav is collapsed */
 ::ng-deep .mat-drawer-content.collapsed-content {
   width: calc(100% - 70px);
   margin-left: 70px !important;
 }
 
-/* Responsive adjustments */
 @media screen and (max-width: 1200px) {
   .sidenav {
     width: 200px !important;
   }
-  
+
   .sidenav.collapsed {
     width: 70px !important;
   }
-  
+
   ::ng-deep .mat-drawer-content {
     width: calc(100% - 200px);
     margin-left: 200px !important;
@@ -578,7 +543,7 @@ mat-sidenav-content,
   .sidenav {
     width: 180px !important;
   }
-  
+
   ::ng-deep .mat-drawer-content {
     width: calc(100% - 180px);
     margin-left: 180px !important;
@@ -593,16 +558,16 @@ mat-sidenav-content,
   .sidenav {
     width: 250px !important;
   }
-  
+
   .sidenav.collapsed {
     width: 0 !important;
   }
-  
+
   ::ng-deep .mat-drawer-content {
     width: 100%;
     margin-left: 0 !important;
   }
-  
+
   ::ng-deep .mat-drawer-content.mobile-sidebar-open {
     margin-left: 250px !important;
     width: calc(100% - 250px);
@@ -626,19 +591,17 @@ mat-sidenav-content,
   z-index: 99;
 }
 
-
-
 @media screen and (max-width: 768px) {
   .sidenav-container {
     width: auto;
   }
-  
+
   /* Make sidebar take full width on small screens when open */
   ::ng-deep .mat-drawer.mat-sidenav {
     width: 80% !important;
     max-width: 300px;
   }
-  
+
   /* Mobile sidebar should slide in/out */
   ::ng-deep .mat-drawer-transition .mat-drawer-content {
     transition: margin 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -648,7 +611,7 @@ mat-sidenav-content,
   .mat-drawer-backdrop.mat-drawer-shown {
     background-color: rgba(0, 0, 0, 0.6);
   }
-  
+
   /* Ensure content is not squeezed on mobile */
   ::ng-deep .mat-drawer-content {
     padding-left: 0 !important;
@@ -660,7 +623,7 @@ mat-sidenav-content,
   ::ng-deep .mat-drawer.mat-sidenav {
     width: 85% !important;
   }
-  
+
   .sidenav.collapsed {
     width: 0 !important;
   }

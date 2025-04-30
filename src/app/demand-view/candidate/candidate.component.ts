@@ -286,15 +286,20 @@ export class CandidateComponent implements OnChanges{
   }
 
   toggleSelection(candidate: Candidate) {
-    const index = this.selectedCandidates.indexOf(candidate);
+    const index = this.selectedCandidates.findIndex(c => c.cdl_cdm_id === candidate.cdl_cdm_id);
     if (index > -1) {
       this.selectedCandidates.splice(index, 1);
     } else {
-      console.log('pushing candidate:', candidate)
       this.selectedCandidates.push(candidate);
+      console.log('pushing candidate:', candidate);
     }
   }
+  
 
+  isSelected(candidate: Candidate): boolean {
+    return this.selectedCandidates.some(c => c.cdl_cdm_id === candidate.cdl_cdm_id);
+  }
+  
   submitSelectedCandidates() {
     // Add candidatesSelected from @Input() if not already in selectedCandidates
   if (this.candidatesSelected && !this.selectedCandidates.includes(this.candidatesSelected)) {

@@ -27,6 +27,7 @@ export class CreateCandidateComponent implements OnInit {
 
 
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('photoInput') photoInput!: ElementRef<HTMLInputElement>;
   constructor(private fb: FormBuilder, private http: HttpClient, private validatorsService: ValidatorsService, private httpService: HttpService, private CandidateService: CandidateService, private snackBar: MatSnackBar) {
 
     this.candidateForm = this.fb.group({
@@ -145,11 +146,10 @@ export class CreateCandidateComponent implements OnInit {
   
   removePhoto(): void {
     this.selectedPhoto = null;
-    // Clear the file input value to allow re-selecting the same file
-    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = '';
-    }
+    // Reset file input properly
+  if (this.photoInput && this.photoInput.nativeElement) {
+    this.photoInput.nativeElement.value = '';
+  }
   }
 
   onSubmit(form: FormGroupDirective) {

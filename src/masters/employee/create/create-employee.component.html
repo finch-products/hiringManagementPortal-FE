@@ -82,12 +82,14 @@
               </button>
           
               <!-- Show 'Remove Photo' (cross icon) button if a photo is selected -->
-              <button *ngIf="selectedFile" mat-icon-button class="remove-photo" (click)="removePhoto()">
+               <div class="remove-photo">
+              <button *ngIf="selectedFile" mat-icon-button (click)="removePhoto()">
                 <mat-icon>close</mat-icon>
               </button>
           
               <input #fileUpload type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none">
               <span class="file-name" *ngIf="selectedFile">{{ selectedFile.name }}</span>
+            </div>
             </div>
           </div>
         

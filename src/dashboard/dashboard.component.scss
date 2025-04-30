@@ -1,15 +1,15 @@
 .dashboard-container {
-   max-width: 1400px;
-   margin: 0 auto;
-  }
+  max-width: 1400px;
+  margin: 0 auto;
+}
 
-  .card .head {
-    width: 100%; 
-    padding-left: 5px;
-    margin-bottom: 10px;
-  }
-  
-  /* New styles for the left-column cards */
+.card .head {
+  width: 100%;
+  padding-left: 5px;
+  margin-bottom: 10px;
+}
+
+/* New styles for the left-column cards */
 .dashboard-cards-left {
   display: flex;
   flex-direction: column;
@@ -53,309 +53,306 @@
   gap: 30px;
 }
 
-  
-  /* Main Dashboard Area */
-  .dashboard-main {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 30px;
-  }
-  
-  .charts-column {
-    display: grid;
-    gap: 30px;
-  }
-  
-  /* Chart Cards */
-  .chart-card {
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: white;
-    align-items: center; 
-    
-    .chart-title {
-      margin-bottom: 20px;
-      font-size: 16px;
-      font-weight: 550;
-      color: #333;
-      text-align: left !important;
-    }
-  }
-  
-  .chart-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .legend-container {
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-  }
-  
-  .legend-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .legend-color-box {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 8px;
-  }
-  
-  .legend-text {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  /* Right Column */
-  .right-column {
-    display: grid;
-    gap: 30px;
-    align-content: start;
-  }
-  
-  .right-column .chart-title {
-    text-align: left !important;
-    padding-left: 0;
-    margin-left: 0;
-    width: 100%;
-    display: block;
-  }
-  
-  /* Make sure mat-card titles are left-aligned */
-  .right-column mat-card .chart-title {
-    text-align: left !important;
-    margin: 0 0 20px 0;
-    padding: 0;
-  }
+/* Main Dashboard Area */
+.dashboard-main {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 25px;
+}
 
-  .progress-card {
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: white;
-    display: flex;
-    flex-direction: column;
-    
-    .chart-title {
-      margin-bottom: 20px;
-      font-size: 16px;
-      font-weight: 550;
-      color: #333;
-      text-align: center;
-    }
-  }
-  .progress-card mat-card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Consistent gap between items */
-    flex: 1; /* Allow content to grow */
-    min-height: 0; /* Prevent unwanted stretching */
-  }
-  
-  .progress-item {
-    width: 100%;
-  }
+.charts-column {
+  display: grid;
+  gap: 30px;
+}
 
-  .charts-column {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-  
-  /* Optional: If you need the progress card to maintain some minimum height */
-  .progress-card {
-    min-height: fit-content; /* Or set a specific min-height if needed */
-  }
-  
-  .progress-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .progress-label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .progress-value {
-    font-size: 14px;
-    font-weight: 500;
+/* Chart Cards */
+.chart-card {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  align-items: center;
+
+  .chart-title {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 550;
     color: #333;
-    min-width: 40px;
-    text-align: right;
+    text-align: left !important;
   }
-  
-  /* Position Cards */
-  .position-cards {
-    display: grid;
-    gap: 20px;
+}
+
+.chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.legend-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.legend-color-box {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.legend-text {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Right Column */
+.right-column {
+  display: grid;
+  gap: 30px;
+  align-content: start;
+}
+
+.right-column .chart-title {
+  text-align: left !important;
+  padding-left: 0;
+  margin-left: 0;
+  width: 100%;
+  display: block;
+}
+
+/* Make sure mat-card titles are left-aligned */
+.right-column mat-card .chart-title {
+  text-align: left !important;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+.progress-card {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  display: flex;
+  flex-direction: column;
+
+  .chart-title {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 550;
+    color: #333;
+    text-align: center;
   }
-  
-  .position-card {
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: white;
-    transition: transform 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-3px);
-    }
-    
-    .card-content {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-    
-    .icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #f0f0f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #d1f851;
-      font-size: 20px;
-      
-      &.number {
-        font-size: 18px;
-        font-weight: 500;
-        color: #333;
-      }
-    }
-    
-    .text-content {
-      flex: 1;
-    }
-    
-    .title {
-      margin: 0;
-      font-size: 14px;
-      color: #555;
-    }
-    
-    .show-more {
-      font-size: 13px;
-      color: #bcc5f5;
-      text-decoration: none;
+}
+.progress-card mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Consistent gap between items */
+  flex: 1; /* Allow content to grow */
+  min-height: 0; /* Prevent unwanted stretching */
+}
+
+.progress-item {
+  width: 100%;
+}
+
+.charts-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Optional: If you need the progress card to maintain some minimum height */
+.progress-card {
+  min-height: fit-content; /* Or set a specific min-height if needed */
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.progress-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Position Cards */
+.position-cards {
+  display: grid;
+  gap: 20px;
+}
+
+.position-card {
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  .card-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d1f851;
+    font-size: 20px;
+
+    &.number {
+      font-size: 18px;
       font-weight: 500;
-      
-      &:hover {
-        text-decoration: underline;
-      }
+      color: #333;
     }
   }
 
-  .progress-card .chart-title {
-    text-align: left;
-    padding-left: 5px;
+  .text-content {
+    flex: 1;
   }
-  .no-targets-message {
-    text-align: center;
-    color: #666;
-    padding: 20px;
-    font-style: italic;
+
+  .title {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
   }
-  
-  /* Position card titles */
-  .position-card .title {
-    text-align: left;
-    padding-left: 0;
+
+  .show-more {
+    font-size: 13px;
+    color: #bcc5f5;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
-  
-  /* Update the color classes for the cards */
+}
+
+.progress-card .chart-title {
+  text-align: left;
+  padding-left: 5px;
+}
+.no-targets-message {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Position card titles */
+.position-card .title {
+  text-align: left;
+  padding-left: 0;
+}
+
+/* Update the color classes for the cards */
 .yellow {
-  border-left-color: #DFF28D !important;
+  border-left-color: #d9f473 !important;
 }
 
 .pink {
-  border-left-color: #CBD2FB !important;
+  border-left-color: #cbd2f7 !important;
 }
 
 .purple {
-  border-left-color: #CBD2FB !important;
+  border-left-color: #cbd2f7 !important;
 }
 
 .blue {
-  border-left-color: #DFF28D !important;
+  border-left-color: #d9f473 !important;
 }
 
 /* Update the number bubble colors to match */
 .yellow .number-bubble {
-  background-color: #DFF28D 
+  background-color: #d9f473;
 }
 
 .pink .number-bubble {
-  background-color: #CBD2FB
+  background-color: #cbd2f7;
 }
 
 .purple .number-bubble {
-  background-color: #CBD2FB
+  background-color: #cbd2f7;
 }
 
 .blue .number-bubble {
-  background-color:#DFF28D 
+  background-color: #d9f473;
 }
-  
-  .number-bubble {
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 20px;
-    font-weight: 500;
-    margin-top: 10px;
+
+.number-bubble {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-main {
+    grid-template-columns: 1fr;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 1200px) {
-    .dashboard-main {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .dashboard-cards {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .chart-container {
-      flex-direction: column;
-    }
-    
-    .legend-container {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 15px 0 0;
-      gap: 15px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .dashboard-cards {
-      grid-template-columns: 1fr;
-    }
+}
+
+@media (max-width: 768px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .position-cards-container {
-    display: grid;
-    gap: 20px;
+  .chart-container {
+    flex-direction: column;
   }
 
-  .right-column-taller .position-cards {
-    grid-auto-flow: row; /* Stack vertically */
+  .legend-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 15px 0 0;
+    gap: 15px;
   }
-  
- 
+}
+
+@media (max-width: 480px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.position-cards-container {
+  display: grid;
+  gap: 20px;
+}
+
+.right-column-taller .position-cards {
+  grid-auto-flow: row; /* Stack vertically */
+}

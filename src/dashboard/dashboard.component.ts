@@ -93,7 +93,7 @@ loadOpenposition() {
 
 customBarColors = [
   { name: 'Bar 1', value: '#d2f55b' },
-  { name: 'Bar 2', value: '#cbd2fb' },
+  { name: 'Bar 2', value: '#cbd2f7' },
   { name: 'Bar 3', value: '#ebf9bb' },
   { name: 'Bar 4', value: '#dee2ff' },
   { name: 'Bar 5', value: '#f8fce5' },
@@ -102,7 +102,7 @@ customBarColors = [
 
 // Or as a function if you need dynamic coloring
 barColorFn = (value: any) => {
-  return value.index % 2 === 0 ? '#d2f55b' : '#cbd2fb';
+  return value.index % 2 === 0 ? '#d2f55b' : '#cbd2f7';
 };
 
 
@@ -121,8 +121,8 @@ loadReportagedemand() {
 }
 
 customColors = [
-  { name: 'Open Positions', value: '#DFF28D' },
-  { name: 'Profiles Submitted', value: '#cbd2fb' },
+  { name: 'Open Positions', value: '#d9f473' },
+  { name: 'Profiles Submitted', value: '#cbd2f7' },
   { name: 'Interview Scheduled', value: '#f8fce5' },
   { name: 'Profiles Not Submitted', value: '#f3f3ff' }
 ];

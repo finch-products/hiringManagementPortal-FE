@@ -142,12 +142,12 @@
         }
 
         &.submit {
-          background-color: #DFF28D !important;
+          background-color: #d9f473 !important;
           color: white;
           border: none;
 
           &:hover {
-            background-color: #DFF28D !important;
+            background-color: #d9f473 !important;
           }
 
           &:disabled {
@@ -166,7 +166,7 @@
       border: none;
       font-size: 20px;
       cursor: pointer;
-      color: #DFF28D !important;
+      color: #d9f473 !important;
       padding: 4px;
       width: 32px;
       height: 32px;
@@ -213,5 +213,5 @@
 }
 
 .interview-form-container .close-btn {
-  color: #DFF28D !important;  /* or use #28a745 */
+  color: #d9f473 !important;  /* or use #28a745 */
 }

@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { HttpService } from '../../services/http.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Candidate } from 'interfaces/candidate.interface';
 
 @Component({
   selector: 'app-tracking',
@@ -18,6 +19,14 @@ export class CandidateTrackingComponent {
   selectedStatuses: string[] = [];
   candidateStatuses: any[] = [];
   selectedCandidates: Set<string> = new Set();
+
+  pageSizeOptions = [5, 10, 20];
+    pageSize = 5;
+    currentPage = 1;
+    totalItems = 0;
+    pages: number[] = [];
+    totalPages = 0;
+    allCandidates:Candidate[]=[]
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -49,10 +58,10 @@ export class CandidateTrackingComponent {
       (data) => {
         this.candidates = data;
         this.filteredCandidates.data = data;
-
-        if (this.paginator) {
-          this.filteredCandidates.paginator = this.paginator;
-        }
+        this.allCandidates=[...data];
+        this.totalItems=this.allCandidates.length;
+        this.updateDisplayedCandidates();
+        this.updatePages();
       },
       (error) => {
         console.error('Error fetching candidates:', error);
@@ -175,5 +184,58 @@ onRowClick(row: any, event: Event): void {
   }
   
   this.viewCandidateHistory(row);
+}
+
+updateDisplayedCandidates() {
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  const currentCandidates= this.allCandidates.slice(startIndex, endIndex);
+  this.filteredCandidates.data = currentCandidates;
+}
+
+updatePages() {
+  this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+  this.pages = [];
+
+  for (let i = 1; i <= Math.min(3, this.totalPages); i++) {
+    this.pages.push(i);
+  }
+  if (this.totalPages > 3) {
+    this.pages.push(-1); // ellipsis
+    this.pages.push(this.totalPages);
+  }
+}
+
+onPageSizeChange() {
+  this.currentPage = 1;  // Reset to the first page
+  this.updatePages();    // Update the pages based on new page size
+  this.updateDisplayedCandidates();
+  // Fetch new data based on the updated page size and current page
+}
+
+previousPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updateDisplayedCandidates();
+    // Fetch new data based on the updated page
+  }
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updateDisplayedCandidates();
+    // Fetch new data based on the updated page
+  }
+}
+
+goToPage(page: number) {
+  if (page === -1) {
+    // If page is ellipsis, do nothing
+    return;
+  }
+  this.currentPage = page;
+  this.updateDisplayedCandidates();
+  // Fetch new data based on the current page and page size
 }
 }

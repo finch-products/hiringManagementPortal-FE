@@ -34,10 +34,10 @@
         <h1>Candidate Details </h1>
         <button mat-raised-button 
             type="button" class="linking" 
-            style="background-color:  #DFF28D;"
+            style="background-color:  #d9f473;"
             [disabled]="selectedCandidates.length === 0"
             onmouseover="this.style.backgroundColor='#cbde75'"
-            onmouseout="this.style.backgroundColor='#DFF28D'"
+            onmouseout="this.style.backgroundColor='#d9f473'"
             (click)="submitSelectedCandidates()" >Link</button>
     </div> 
 
@@ -45,7 +45,7 @@
     <div class="search-container">
         <div class="search-bar">
         <input type="text" [(ngModel)]="searchTerm" (input)="filterCandidates()" placeholder="Search Candidates to Link" />
-            <button mat-icon-button (click)="redirectToAddCandidates()" style="background-color: #DFF28D;">
+            <button mat-icon-button (click)="redirectToAddCandidates()" style="background-color: #d9f473;">
                 <mat-icon>group_add</mat-icon>
             </button>
             <button mat-icon-button (click)="OpenAdvanceSearch()" style="background-color: #eceefd;">
@@ -70,6 +70,7 @@
         <div class="filtered-candidate-item"  *ngFor="let candidate of filteredCandidates; trackBy: trackByFn">
             <input type="checkbox"
                 (change)="toggleSelection(candidate)"
+                [checked]="isSelected(candidate)"
                 [style.accentColor]="selectedCandidates.includes(candidate) ? '#d9534f' : 'initial'" />
             <div class="filtered-candidate-card">
                 <div class="filtered-candidate-header">

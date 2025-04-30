@@ -1,9 +1,9 @@
 <div class="search-container">
   <h2 class="page-title">LOB List</h2>
   <div class="custom-search-box">
-    <input type="text" (keyup)="applyFilter($event)"
-        placeholder="Search ..." />
     <mat-icon class="search-icon">search</mat-icon>
+    <input type="text" (keyup)="applyFilter($event)"
+        placeholder="Search LOB name, description, etc" />
 </div>
 </div>
 <mat-card class="table-container">
@@ -42,9 +42,34 @@
     </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
   </table>
 </mat-card>
 
-<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+<div class="custom-pagination">
+  <div class="rows-per-page">
+    Showing 
+    <select [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="custom-select">
+      <option *ngFor="let size of pageSizeOptions" [value]="size">{{size}}</option>
+    </select> 
+    of {{totalItems}}
+  </div>
+
+  <div class="pagination-buttons">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">&#8592;</button>
+
+    <!-- Loop through pages to display first 3 pages, ellipsis, and last page -->
+    <button *ngFor="let page of pages" 
+            (click)="goToPage(page)" 
+            [class.active]="page === currentPage">
+      <!-- Display ellipsis -->
+      <span *ngIf="page === -1">...</span>
+      <!-- Display page number -->
+      <span *ngIf="page !== -1">{{page}}</span>
+    </button>
+
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">&#8594;</button>
+  </div>
+</div>
+
