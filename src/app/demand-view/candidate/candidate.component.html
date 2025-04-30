@@ -76,23 +76,48 @@
                 <div class="filtered-candidate-header">
                     <div class="avatar-container">
                         <img 
-        [src]="getCandidateImageUrl(candidate)" 
-        alt="Candidate" 
-        class="avatar"
-        (error)="handleImageError($event)"
+                            [src]="getCandidateImageUrl(candidate)" 
+                            alt="Candidate" 
+                            class="avatar"
+                            (error)="handleImageError($event)"
       >
                     </div>
                     <div class="candidate-info">
                         <h3 class="candidate-name">{{ candidate.cdm_name || 'Unknown' }}</h3>
-                        <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id }}</p>  
+                        <p class="candidate-id">{{ candidate?.cdl_cdm_id }}</p>  
                     </div>
-                    <div class="detail-box" *ngIf="getCandidateProfileUrl(candidate) as profileUrl">
-                        <span>Profile : </span>
-                        <a [href]="profileUrl" 
-                           (click)="openPdf(profileUrl, $event)">
-                          {{ getProfileFilename(candidate) }}
-                        </a>
-                      </div>
+                    <div class="skills">
+                        <ng-container *ngIf="candidate.cdm_keywords; else noKeywords">
+                            <span *ngFor="let keyword of candidate.cdm_keywords.split(',')" class="skill-chip">
+                                {{ keyword.trim() }}
+                            </span>
+                        </ng-container>
+                        <ng-template #noKeywords>
+                            <span class="skill-chip">N/A</span>
+                        </ng-template>
+                    </div>
+    
+                </div>
+                <div class="candidate-details">
+                    <div class="detail-item">
+                        <span>email</span>
+                        <span>{{ candidate.cdm_email || 'N/A' }}</span>
+                    </div>
+                
+                    <div class="detail-item">
+                        <span>description</span>
+                        <span>{{ candidate.cdm_description || "N/A" }}</span>
+                    </div>
+    
+                    <div class="detail-item" *ngIf="getCandidateProfileUrl(candidate) as profileUrl">
+                        <span>attachment</span>
+                        <span>
+                            <a [href]="profileUrl" 
+                               (click)="openPdf(profileUrl, $event)">
+                                {{ getProfileFilename(candidate) }}
+                            </a>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -183,59 +208,66 @@
             <div class="candidate-header">
                 <div class="avatar-container">
                     <img 
-        [src]="getCandidateImageUrl(candidate)" 
-        alt="Candidate" 
-        class="avatar"
-        (error)="handleImageError($event)"
-      >
+                        [src]="getCandidateImageUrl(candidate)" 
+                        alt="Candidate" 
+                        class="avatar"
+                        (error)="handleImageError($event)" >
                 </div>
                 <div class="candidate-info" (click)="redirectTocandidateHistory(candidate?.cdl_cdm_id)">
                     <h3 class="candidate-name">{{ candidate.name || candidate.cdm_name }}</h3>
-                    <p class="candidate-id">ID: {{ candidate?.cdl_cdm_id || candidate.cdm_id}}</p>
-                    <p class="candidate-email">{{ candidate.email || candidate.cdm_email}}</p>
+                    <p class="candidate-id"> {{ candidate?.cdl_cdm_id || candidate.cdm_id}}</p>
+                </div>
+
+                <div class="skills">
+                    <ng-container *ngIf="candidate.keywords; else noKeywords">
+                        <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
+                            {{ keyword.trim() }}
+                        </span>
+                    </ng-container>
+                    <ng-template #noKeywords>
+                        <span class="skill-chip">N/A</span>
+                    </ng-template>
                 </div>
                 
                 <div class="status-and-menu">
-                    <div class="status-container">
-                        <select class="status" [ngClass]="getStatusClasses(candidate, !!searchTerm.trim())" 
-                                *ngIf="statusedit" (change)="onStatusChange(candidate, $event)">
-                            <option *ngFor="let status of candidate.statusList" [value]="status.csm_code">
-                                {{ status.csm_code }}
-                            </option>
-                        </select>
-                        <div class="status" [ngClass]="getStatusClass(candidate.candidate_status?.csm_code || '')" *ngIf="!statusedit">
-                            Status: {{ candidate.candidate_status.csm_code || 'N/A' }}
-                        </div>
-                    </div>
                     
                     <div class="menu-container">
                         <button mat-icon-button [matMenuTriggerFor]="menu">
-                            <mat-icon>more_vert</mat-icon>
+                            <mat-icon>more_horiz</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="toggleStatusEdit()">Status Edit</button>
+                            <button mat-menu-item (click)="openStatusEditPopup(candidate)">Status Edit</button>
                             <button mat-menu-item (click)="openInterviewForm(candidate)">Schedule Interview</button>
                         </mat-menu>
                     </div>
                 </div>
             </div>
 
-            <div class="skills">
-                Skills:
-                <ng-container *ngIf="candidate.keywords; else noKeywords">
-                    <span *ngFor="let keyword of candidate.keywords.split(',')" class="skill-chip">
-                        <mat-icon aria-hidden="false" class="icon1" style="font-size: 13px;">check_circle_outline</mat-icon>
-                        {{ keyword.trim() }}
-                    </span>
-                </ng-container>
-                <ng-template #noKeywords>
-                    <span class="skill-chip">N/A</span>
-                </ng-template>
-            </div>
+            <div class="candidate-details">
+                <div class="detail-item">
+                  <span>email</span>
+                  <span>{{ candidate.email }}</span>
+                </div>
+                
+                <div class="detail-item">
+                  <span>status</span>
+                  <span>{{ candidate.candidate_status.csm_code || 'N/A' }}</span>
+                </div>
+            
+                <div class="detail-item">
+                  <span>description</span>
+                  <span>{{ candidate.description || "N/A"}}</span>
+                </div>
 
-            <span class="Description">
-                Description: {{ candidate.description || candidate.cdm_description || 'N/A' }}
-            </span>
+                <div class="detail-item" *ngIf="getCandidateProfileUrl(candidate) as profileUrl">
+                    <span>attachment</span>
+                    <span><a [href]="profileUrl" 
+                       (click)="openPdf(profileUrl, $event)">
+                      {{ getProfileFilename(candidate) }}
+                    </a></span>
+                  </div>
+              </div>
+
 
             <!-- Interview Section -->
             <div *ngIf="hasInterviewDetails(candidate?.cdl_cdm_id || candidate?.cdm_id)" class="interview-section">

@@ -9,9 +9,11 @@ interface Candidate {
   cdm_name: string;
   cdm_id: string;
   cdl_cdm_id: string;
-  cdm_keywords: string[];
+  cdm_keywords: string,
   cdm_profile: string;
   avatar?: string;
+  cdm_email: string;
+  cdm_description: string;
   candidate_status: {
     csm_id: number | null;
     csm_code: string;
@@ -108,24 +110,11 @@ export class CandidateComponent implements OnChanges{
     this.onPopupClose();
   }
 
-  onStatusChange(candidate: any, event: any) {
-    const newStatus = event.target.value;
-    candidate.selectedStatus = newStatus;
-    if (!candidate.candidate_status) {
-      console.error('Candidate status is undefined');
-      return;
-    }
-  
-    if (newStatus !== candidate.candidate_status.csm_code) {
-      // Store the original status before showing popup
-      candidate.originalStatus = candidate.candidate_status.csm_code;
-      this.selectedCandidate = candidate;
-      this.selectedStatus = newStatus;
-      this.csm_code = newStatus;
-      this.showPopup = true;
-      console.log('showPopup:', this.showPopup);
-    }
-  }
+  openStatusEditPopup(candidate: any) {
+    this.selectedCandidate = candidate;
+    this.csm_code = candidate.candidate_status?.csm_code || '';
+    this.showPopup = true;
+}
 
   onPopupClose() {
     if (this.selectedCandidate) {
@@ -142,55 +131,61 @@ export class CandidateComponent implements OnChanges{
   }
 
   onStatusFormSubmit() {
-    if (!this.selectedCandidate || !this.selectedStatus) {
-      this.snackBar.open("Invalid data. Please try again.", "❌", {
-        duration: 3000,
-        panelClass: ['error-snackbar']
-      });
-      return;
+    // Change this check from selectedStatus to csm_code
+    if (!this.selectedCandidate || !this.csm_code) {
+        this.snackBar.open("Invalid data. Please try again.", "❌", {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+        });
+        console.error('Validation failed:', {
+            candidate: this.selectedCandidate,
+            status: this.csm_code,
+            comment: this.cdm_comment
+        });
+        return;
     }
 
-    const csm_id = this.statusList.find(status => status.csm_code === this.selectedStatus)?.csm_id;
+    const csm_id = this.statusList.find(status => status.csm_code === this.csm_code)?.csm_id;
 
     if (!csm_id) {
-      this.snackBar.open("Invalid status selected. Please try again.", "❌", {
-        duration: 3000,
-        panelClass: ['error-snackbar']
-      });
-      return;
+        this.snackBar.open("Invalid status selected. Please try again.", "❌", {
+            duration: 3000,
+            panelClass: ['error-snackbar']
+        });
+        console.error('Status not found:', this.csm_code);
+        return;
     }
 
     const payload = {
-      cdm_id: this.selectedCandidate.cdl_cdm_id,
-      csm_id: csm_id,
-      cdm_comment: this.cdm_comment,
-      cdm_updateby_id: this.cdm_updateby_id
+        cdm_id: this.selectedCandidate.cdl_cdm_id,
+        csm_id: csm_id,
+        cdm_comment: this.cdm_comment,
+        cdm_updateby_id: this.cdm_updateby_id
     };
-    this.onCancel();
+    
+    console.log('Submitting payload:', payload); // Log the payload before sending
+    
     this.httpService.updateCandidateStatus(payload).subscribe({
-      next: (response) => {
-        this.snackBar.open("✅ Candidate status updated successfully!", "", {
-          duration: 3000,
-          panelClass: ['success-snackbar']
-        });
-        this.onPopupClose();
-        this.loadData(this.dem_id);
-        this.loadCandidateStatusesById(this.selectedCandidate.cdl_cdm_id)
-      },
-      error: (error) => {
-        if (this.selectedCandidate?.originalStatus) {
-          this.selectedCandidate.selectedStatus = this.selectedCandidate.originalStatus;
-          delete this.selectedCandidate.originalStatus;
+        next: (response) => {
+            this.snackBar.open("✅ Candidate status updated successfully!", "", {
+                duration: 3000,
+                panelClass: ['success-snackbar']
+            });
+            console.log('Update successful:', response);
+            this.onPopupClose();
+            this.loadData(this.dem_id);
+            this.loadCandidateStatusesById(this.selectedCandidate.cdl_cdm_id);
+        },
+        error: (error) => {
+            console.error("Error updating candidate status", error);
+            this.snackBar.open(`Error: ${error.message}`, "❌", {
+                duration: 5000,
+                panelClass: ['error-snackbar']
+            });
+            this.loadData(this.dem_id);
         }
-        this.snackBar.open(` ${error.message}`, "❌", {
-          duration: 5000,
-          panelClass: ['error-snackbar']
-        });
-        console.error("Error updating candidate status", error);
-        this.loadData(this.dem_id);
-      }
     });
-  }
+}
 
 
   public loadData(demandId: any) {
@@ -239,8 +234,10 @@ export class CandidateComponent implements OnChanges{
         csm_id: candidate?.candidate_status?.csm_id ?? null,
         csm_code: candidate.candidate_status ? candidate.candidate_status.csm_code : 'Unknown'
       },
-      cdm_keywords: candidate.cdm_keywords ? candidate.cdm_keywords.split(',') : ['Not Provided'],
-      cdm_profile: candidate.cdm_profile || '#'
+      cdm_profile: candidate.cdm_profile || '#',
+      cdm_description: candidate.cdm_description ||"N/A",
+      cdm_email:candidate.cdm_email || "N/A",
+      cdm_keywords:candidate.cdm_keywords || "N/A"
     };
   }
 
@@ -845,4 +842,6 @@ getProfileFilename(candidate: any): string {
     return 'Download';
   }
 }
+
+
 }

@@ -67,7 +67,6 @@ body, html {
 }
 
 .candidate-item{
-    width: 23vw !important;
     display: flex;
     flex-direction: column;
     margin: 0%;
@@ -86,56 +85,143 @@ body, html {
 }
 
 .candidate-card {
-    background: #eceefd;
+    background: #ffffff;
     padding: 7px;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 5px;
     border: 1px solid #ddd;
     position: relative;
-    width: 23vw !important;
+    width: 300px !important;
     height: 100%;
-    min-height: 200px; 
+    min-height: 300px; 
     box-sizing: border-box;
     margin: 0% !important;
     cursor: pointer;
 }
+
+
+.candidate-header {
+    padding-top: 8%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+  .avatar-container {
+    margin: 0 auto; /* Center avatar */
+  }
+  .avatar-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #DFF28D;
+  }
+  
+  .candidate-info {
+    flex: 1;
+  }
+  
+  .candidate-name {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600; /* Semibold */
+    font-size: 20px;
+    margin: 0 ;
+    color: #2d2d2d;
+  }
+  
+  .candidate-id {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400; /* Regular */
+    font-size: 12px;  /* Adjust as needed */
+    color: #6e6e6e;
+    margin: 0;
+  }
+  
+  /* Skills Chips */
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  .skill-chip {
+    background: #eceefd ;
+    color: #777;
+    padding: 6px 12px;
+    border-radius: 15%;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Candidate Details Section */
+  .candidate-details {
+    border-top: 1px solid #ddd; 
+    padding-top: 12px;
+    margin-top: 12px; 
+    line-height: 1.5;
+}
+  
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0;
+  }
+  
+  .detail-item > span:first-child {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400; 
+    font-size: 14px;  
+    color: #6e6e6e; 
+    min-width: 80px;
+  }
+  
+  .detail-item > span:last-child {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600; 
+    font-size: 14px; 
+    color: #000000; 
+    text-align: right;
+    flex-grow: 1;
+  }
+  
+  .attachments {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  
+  /* Interview Section Styling */
+  .interview-section {
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+  
+  /* Filtered Candidates - Same style as regular */
+  .filtered-candidate-card {
+    @extend .candidate-card;
+    width: 100% !important;
+    margin: 5px 0;
+  }
+  
 
 .candidate-card.expanded {
     height: auto;
     min-height: 200px;
   }
 
-.candidate-header {
-    display: flex;
-    height: 100%; 
-    align-items: center;
-    gap: 15px; /* Proper space between items */
-    padding: 5px 5px; /* Space inside */
-    box-sizing: border-box; /* Prevent size issues */
-    justify-content: space-between;
-    border-radius: 10px;
-    background: white;
-}
-.avatar-container {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #ddd;
-    margin-left: 8px;
-    border: 3px solid #d9f473;
-    overflow: hidden; /* Ensures the image stays within the circular container */
-}
 
 .avatar {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+    object-fit: cover; 
 }
 
 .avatar-icon {
@@ -143,137 +229,6 @@ body, html {
     color: #666;
 }
 
-.candidate-info {
-    margin-top: 10%;
-    flex-grow: 1;
-    margin-left: 5px;
-    min-width: 0; 
-}
-
-.candidate-name {
-    font-size: 15px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.candidate-id {
-    font-size: 16px;
-}
-
-
-/* Modernized Status Badge */
-.status {
-    position: absolute;
-    top:5%;
-    right: 4%;
-    display: inline-block;
-    padding: 2px 5px; /* Slightly increased padding for better spacing */
-    background-color: #D1FADF; /* Softer light green */
-    color: #027A48; /* Darker text for better contrast */
-    border-radius: 999px; /* Fully rounded pill shape */
-    font-weight: 600; /* Medium bold */
-    font-size: 12px;
-    text-align: center;
-    white-space: nowrap;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    margin: 5px 0 0 0; /* Adjust margin to separate from text */
-    min-width: min-content;
-    max-width: 140px;
-    width: 100%; /* So it adjusts inside its space */
-    box-sizing: border-box; 
-    margin-bottom: 10px;
-    border: 2px solid #eceefd;
-}
-
-/* Specific status colors - Light background with darker text */
-.status.Applied {
-    background-color: #f0f0f0 !important; /* Very light gray */
-    color: #606060 !important; /* Darker gray text */
-  }
-  
-  .status.Screening {
-    background-color: #fff4e6 !important; /* Very light orange */
-    color: #cc8400 !important; /* Darker orange text */
-  }
-  
-  .status.Shortlisted {
-    background-color: #fff9e6 !important; /* Very light gold */
-    color: #ccac00 !important; /* Darker gold text */
-  }
-  
-  .status.Interview_Scheduled {
-    background-color: #e6f7ff !important; /* Very light sky blue */
-    color: #5aa5cb !important; /* Darker sky blue text */
-  }
-  
-  .status.L1_Scheduled {
-    background-color: #e6f0f7 !important; /* Very light steel blue */
-    color: #36648b !important; /* Darker steel blue text */
-  }
-  
-  .status.L1_Rejected {
-    background-color: #ffebee !important; /* Very light red */
-    color: #cc4f39 !important; /* Darker tomato red text */
-  }
-  
-  .status.Sent_to_Client {
-    background-color: #f3e6ff !important; /* Very light purple */
-    color: #7a5cb2 !important; /* Darker medium purple text */
-  }
-  
-  .status.Client_Evaluation_Pending {
-    background-color: #fff5e6 !important; /* Very light peach */
-    color: #ccaf94 !important; /* Darker peach text */
-  }
-  
-  .status.Client_Interview_Scheduled {
-    background-color: #e6fffa !important; /* Very light turquoise */
-    color: #33b2a6 !important; /* Darker turquoise text */
-  }
-  
-  .status.Selected_by_Client {
-    background-color: #e6ffe6 !important; /* Very light green */
-    color: #28a428 !important; /* Darker lime green text */
-  }
-  
-  .status.Rejected_by_Client {
-    background-color: #ffebee !important; /* Very light red */
-    color: #cc0000 !important; /* Darker red text */
-  }
-  
-  .status.On_Hold {
-    background-color: #ffffe6 !important; /* Very light yellow */
-    color: #cccc00 !important; /* Darker yellow text */
-  }
-  
-  .status.Client_Feedback_Provided {
-    background-color: #e6f7f7 !important; /* Very light teal */
-    color: #006666 !important; /* Darker teal text */
-  }
-  
- /*Floating Style (Optional if you want to move it to top-right)*/ 
-.floating-status {
-    top: 10px;
-    right: 10px;
-    padding: 2px 5px;
-    margin-right: 5px;
-    margin-top: 10px;
-
-}
-
-.skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    align-items: center;
-}
-
-.skill-chip {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    color: #333;
-}
 
 .resume-link {
     text-decoration: none;
@@ -292,20 +247,6 @@ body, html {
     margin-right: -8px;
 }
 
-.status-label {
-    display: inline-block;
-    padding: 5px 12px;
-    background-color: #eaffea;
-    color: #228B22;
-    border-radius: 15px;
-    //font-weight: bold;
-    //font-size: 14px;
-    text-align: center;
-    white-space: nowrap; /* Prevents text from breaking */
-    max-width: 100%; /* Ensures it fits within the container */
-    overflow: hidden;
-    text-overflow: ellipsis; /* In case the text is too long */
-}
 
 .candidates-list::-webkit-scrollbar {
     width: 6px;
@@ -339,7 +280,7 @@ body, html {
     padding: 8px ;
     border: none;
     border-radius: 5px;
-    background-color: #d9f473;
+    background-color: #DFF28D;
     color: black;
     font-size: 14px;
     cursor: pointer;
@@ -354,8 +295,8 @@ body, html {
 .status-container {
     display: flex;
     align-items: center;
-    gap: 8px; /* Space between "Status:" and the status label */
-    flex-wrap: wrap; /* Prevents overflow issues */
+    gap: 8px; 
+    flex-wrap: wrap; 
 }
   
   /* Close Button */
@@ -378,8 +319,8 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    align-items: center; /* Centers horizontally */
-    justify-content: center; /* Centers vertically */
+    align-items: center;
+    justify-content: center; 
   }
   
   .form-group {
@@ -403,10 +344,10 @@ body, html {
     font-size: 14px;
 }
 
-/* Comment Box with Reduced Height */
+/* Comment Box */
 textarea {
     resize: none;
-    height: 60px;  /* Reduced from 80px */
+    height: 60px;
     padding: 8px;
     width: 200px;
     border: 1px solid #aaa;
@@ -424,7 +365,7 @@ button[type="submit"] {
     cursor: pointer;
     font-size: 16px;
     transition: background 0.3s;
-    display: block; /* Centers the button */
+    display: block; 
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -433,7 +374,7 @@ button[type="submit"]:hover {
 }
 
 .filtered-candidates-list .candidate-item:last-child {
-    margin-bottom: 0; /* Remove margin from last item */
+    margin-bottom: 0;
     border-bottom: none;
 }
 .serachbox_with_candidates{
@@ -466,7 +407,7 @@ button[type="submit"]:hover {
 /* Filtered Candidates List */
 .filtered-candidates-list {
     position: absolute;
-    top: 120x; 
+    top: 120px; 
     left: 45.5%;
     transform: translateX(-50%);
     width: 86%;
@@ -481,19 +422,26 @@ button[type="submit"]:hover {
     z-index: 1001; 
     margin:0;
 }
-.filtered-candidate-header{  
+
+
+.filtered-candidate-item {
     display: flex;
-    min-height: 80px; 
-    width:100%;
-    align-items: center;
-    gap: 5px; 
-    padding: 5px 3px;
-    box-sizing: border-box; 
-    justify-content: space-between;
-    border-radius: 10px;
-    background: #ECECEC;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    
+    input[type="checkbox"] {
+        margin-top: 15px;
+    }
 }
-.filtered-candidate-card{
+.filtered-candidate-header {
+    display: flex;
+    flex-direction: column; /* Changed from row to column */
+    align-items: center; /* Center items vertically */
+    gap: 8px;
+    padding: 5px;
+}
+.filtered-candidate-card {
     background: #ffffff;
     padding: 10px;
     border-radius: 12px;
@@ -501,21 +449,20 @@ button[type="submit"]:hover {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    min-height: 70px; 
     border: 1px solid #ddd;
-    position: relative;
-    width: 50vw;
-    margin-right: 0%;
+    flex-grow: 1;
+    width: 100%;
 }
 .menu-container {
     position: absolute;
-    top: 35px;  
-    right: 2px; 
+    top: 0px; 
+    right: 10px;
 }
 .menu-container button {
     background: none;
     border: none;
     cursor: pointer;
+    color: #9b9b9b; 
 }
 
 /* Add this class for when preview or form or search or history is open  */
@@ -827,9 +774,9 @@ button[type="submit"]:hover {
     border-top: 1px solid #eee;
     
     .interview-header {
-      background-color: #dbeeff;       /* Light blue background */
-      border-left: 6px solid #0078d4;  /* Dark blue left border */
-      border-radius: 6px;              /* Rounded corners */
+      background-color: #dff28d42;
+      border-left: 6px solid #DFF28D;  
+      border-radius: 6px;            
       padding: 5px 10px;      
       display: flex;
       justify-content: space-between;
