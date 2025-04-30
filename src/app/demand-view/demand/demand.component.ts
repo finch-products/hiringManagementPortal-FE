@@ -63,7 +63,7 @@ export class DemandComponent implements OnInit {
     this.httpService.postCandidateByDemandId(payload).subscribe({
       next: (data) => {
         this.demands = data;
-
+        console.log("demaaand:", data)
         this.candidates = data.candidates ? [...data.candidates].reverse() : [];
         console.log("Updated candidates list:", this.candidates);
         const currentStatus = this.demands?.demand_details?.status_details?.dsm_code;
