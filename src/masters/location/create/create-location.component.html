@@ -1,10 +1,10 @@
-<h2 class="page-title">Location Master</h2>
 <mat-card class="form-container">
+  <h2 class="page-title">Location Master</h2>
     <form #form="ngForm" [formGroup]="locationForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Location Name</mat-label>
-                <input matInput formControlName="lcm_name" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed"  required>
+                <div class="Input"><input matInput formControlName="lcm_name" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed"  required></div>
 
                 <mat-error *ngIf="locationForm.controls['lcm_name'].hasError('required')">
                     Location Name is required.
@@ -15,9 +15,9 @@
 
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>State</mat-label>
-                <input matInput formControlName="lcm_state" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed" required>
+                <div class="Input"> <input matInput formControlName="lcm_state" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed" required> </div>
 
                 <mat-error *ngIf="locationForm.controls['lcm_state'].hasError('required')">
                     State is required.
@@ -28,10 +28,10 @@
 
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Country</mat-label>
-                <input matInput formControlName="lcm_country" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed" 
-                    required>
+                <div class="Input"> <input matInput formControlName="lcm_country" type="text" pattern="[A-Za-z\s]*" title="Only letters allowed" 
+                    required> </div>
 
                     <mat-error *ngIf="locationForm.controls['lcm_country'].hasError('required')">
                         Country Name is required.

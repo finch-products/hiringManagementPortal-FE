@@ -28,10 +28,10 @@ body {
 
     .page-title {
       padding: 10px;
-      font-size: 14px;
+      font-size: 20px;
       // line-height: 0.75em;
       color: #3f3f3f;
-      font-weight: bold;
+      //font-weight: bold;
     }
   }
 }
@@ -252,6 +252,7 @@ mat-form-field {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  background-color: #def383 !important;
 }
 
 .submit-container {
@@ -315,6 +316,7 @@ mat-label {
 
 .search-container {
   display: flex;
+  padding-bottom: 6px;
   justify-content: space-between;
   align-items: center;
 }
@@ -440,25 +442,25 @@ table.mat-table {
 }
 
 mat-radio-button.mat-accent {
-  --mdc-radio-selected-icon-color: #facc15 !important;
+  --mdc-radio-selected-icon-color:  #d3f561 !important;
   /* Darker yellow inner circle */
-  --mdc-radio-selected-focus-icon-color: #eab308 !important;
+  --mdc-radio-selected-focus-icon-color: #c2e15a !important;
   /* Even darker yellow outer ring */
-  --mdc-radio-selected-hover-icon-color: #eab308 !important;
+  --mdc-radio-selected-hover-icon-color: #9fb94a !important;
   /* Dark yellow on hover */
-  --mdc-radio-selected-pressed-icon-color: #eab308 !important;
+  --mdc-radio-selected-pressed-icon-color: #bcdb54 !important;
   /* Dark yellow on press */
-  --mat-radio-checked-ripple-color: rgba(234, 179, 8, 0.4) !important;
+  --mat-radio-checked-ripple-color:#d3f561 !important;
   /* Stronger ripple effect */
 }
 
 ::ng-deep .mat-radio .mdc-radio__outer-circle {
-  border-color: #eab308 !important;
+  border-color: #d8f360 !important;
   /* Even darker yellow outer circle */
 }
 
 ::ng-deep .mat-radio .mdc-radio__inner-circle {
-  background-color: #facc15 !important;
+  background-color: #def383 !important;
   /* Darker yellow inner circle */
 }
 
@@ -476,12 +478,12 @@ mat-radio-button.mat-accent {
 .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
 .mdc-checkbox__native-control:enabled:indeterminate
   ~ .mdc-checkbox__background {
-  border-color: #f7cb15 !important;
-  background-color: #f7cb15 !important;
+  border-color: #d8f360 !important;
+  background-color: #def383 !important;
 }
 
 .mdc-checkbox .mdc-checkbox__ripple {
-  background-color: #f7cb15 !important;
+  background-color: #def383 !important;
   opacity: 0.4;
 }
 
@@ -659,17 +661,18 @@ button.submit.mat-mdc-raised-button,
   font-size: 0.875rem;
   color: rgba(0, 0, 0, 0.6);
 }
-.input {
+.Input {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
   border-radius: 15px;
-  max-width: 325px;
+  width: 100%;
   height: 45px !important;
   background-color: #f3f3f3;
   padding: 5px;
   padding-left: 20px;
   &::placeholder {
-    color: #d4d3d5;
+    color: #e5e5e5;
   }
 }
 ::ng-deep .mat-mdc-form-field .mdc-line-ripple,
@@ -735,4 +738,25 @@ th {
 }
 tr {
   border-bottom: 1.5px solid #e4e4e4;
+}
+.list_container{
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+div.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-visible ,.mat-mdc-select-panel {
+  max-width:320px !important;
+  margin-left: 20px !important;
+}
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+.form-field {
+  flex: 0 0 calc(33.333% - 11px); /* Don't grow, don't shrink, fixed width */
+  margin: 0;
 }

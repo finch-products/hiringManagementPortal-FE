@@ -1,44 +1,44 @@
-<h2 class="page-title">Employee Master Entry</h2>
 <mat-card class="form-container">
+    <h2 class="page-title">Employee Master Entry</h2>
     <form #form="ngForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Emp Id</mat-label>
-                <input matInput formControlName="emp_uniqueid" required>
+                <div class="Input"><input matInput formControlName="emp_uniqueid" required></div>
                 <mat-error>
                     <app-form-error [errors]="employeeForm.controls['emp_uniqueid'].errors"></app-form-error>
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Name</mat-label>
-                <input matInput formControlName="emp_name" required>
+                <div class="Input"> <input matInput formControlName="emp_name" required></div>
                 <mat-error>
                     <app-form-error [errors]="employeeForm.controls['emp_name'].errors"></app-form-error>
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="emp_email" type="email" required>
+                <div class="Input"><input matInput formControlName="emp_email" type="email" required></div>
                 <mat-error *ngIf="employeeForm.controls['emp_email'].invalid">
                     <app-form-error [errors]="employeeForm.controls['emp_email'].errors"></app-form-error>
                   </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Phone</mat-label>
-                <input matInput formControlName="emp_phone" type="text">
+                <div class="Input"><input matInput formControlName="emp_phone" type="text"></div>
                 <mat-error>
                     <app-form-error [errors]="employeeForm.controls['emp_phone'].errors"></app-form-error>
                 </mat-error>
             </mat-form-field>
 
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Location</mat-label>
-                <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="autoLocation"
-                    (blur)="onLocationBlur()">
+                <div class="Input"> <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="autoLocation"
+                    (blur)="onLocationBlur()"></div>
                 <mat-autocomplete #autoLocation="matAutocomplete" (optionSelected)="onLocationSelected($event)">
                     <mat-option *ngIf="(filteredLocations | async)?.length === 0" disabled>
                         No options available
@@ -49,10 +49,10 @@
                 </mat-autocomplete>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Role</mat-label>
-                <input type="text" matInput [formControl]="roleFilterControl" [matAutocomplete]="autoRole"
-                    (blur)="onRoleBlur()">
+                <div class="Input"><input type="text" matInput [formControl]="roleFilterControl" [matAutocomplete]="autoRole"
+                    (blur)="onRoleBlur()"></div>
                 <mat-autocomplete #autoRole="matAutocomplete" (optionSelected)="onRoleSelected($event)">
                     <mat-option *ngIf="(filteredRoles | async)?.length === 0" disabled>
                         No options available
@@ -63,9 +63,9 @@
                 </mat-autocomplete>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field floatLabel="always" class="form-field">
                 <mat-label>Keywords</mat-label>
-                <input matInput formControlName="emp_keyword">
+                <div class="Input">    <input matInput formControlName="emp_keyword"></div>
             </mat-form-field>
             <mat-radio-group formControlName="emp_isactive" appearance="fill" class="form-field">
                 <mat-label>Active?</mat-label>

@@ -1,15 +1,15 @@
-<h2 class="page-title">Demand Entry</h2>
 <mat-card class="form-container">
+  <h2 class="page-title">Demand Entry</h2>
   <form [formGroup]="demandForm" (ngSubmit)="onSubmit()">
 
     <div class="form-row">
       <mat-form-field class="form-field" floatLabel="always">
         <mat-label>Hiring Manager</mat-label>
         
-        <div class='input'><input type="text" matInput formControlName="dem_clm_id" [matAutocomplete]="auto"
+        <div class='Input'><input type="text" matInput formControlName="dem_clm_id" [matAutocomplete]="auto"
           (input)="onInputChange($event)" required placeholder="Select Hiring Manager">
 
-          <button mat-icon-button matSuffix disableRipple tabIndex="-1">
+          <button mat-icon-button matSuffix disableRipple tabIndex="-1" type="button">
             <mat-icon>arrow_drop_down</mat-icon>
           </button>
         </div>
@@ -35,7 +35,7 @@
 
       <mat-form-field class="form-field" floatLabel="always">
         <mat-label>Manager Email</mat-label>
-        <div class='input'> <input matInput formControlName="clm_clientemail">
+        <div class='Input'> <input matInput formControlName="clm_clientemail" >
         <button mat-button color="primary" (click)="addClient()" matSuffix *ngIf="customEntryEnabled" type="button">
           Save
         </button>
@@ -47,9 +47,9 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>LOB</mat-label>
-        <div class='input'><input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" 
-          required (blur)="onBlur('dem_lob_id')">
-          <button mat-icon-button matSuffix disableRipple tabIndex="-1">
+        <div class='Input'><input type="text" matInput formControlName="dem_lob_id" [matAutocomplete]="lobAuto" 
+          required (blur)="onBlur('dem_lob_id')" placeholder="Select LOB ">
+          <button mat-icon-button matSuffix disableRipple tabIndex="-1" type="button">
             <mat-icon>arrow_drop_down</mat-icon>
           </button>
         </div>
@@ -74,7 +74,7 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>Position Name</mat-label>
-        <div class='input'><input matInput formControlName="dem_position_name">
+        <div class='Input'><input matInput formControlName="dem_position_name">
         </div>
         <mat-error *ngIf="demandForm.controls['dem_position_name'].hasError('serverError')">
           {{ demandForm.controls['dem_position_name'].errors?.['serverError'] }}
@@ -84,7 +84,7 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>No Of Positions</mat-label>
-        <div class='input'> <input matInput formControlName="dem_positions" required> </div>
+        <div class='Input'> <input matInput formControlName="dem_positions" required> </div>
 
         <mat-error *ngIf="demandForm.controls['dem_positions'].hasError('required')">
           Number of positions is required
@@ -98,16 +98,17 @@
 
       <mat-form-field class="form-field" floatLabel="always">
         <mat-label>Position Location</mat-label>
-        <div class='input'> <mat-select formControlName="dem_position_location" multiple>
+        <div class='Input'> <mat-select formControlName="dem_position_location" multiple placeholder="Select Locations">
           <mat-option *ngFor="let location of locations" [value]="location.lcm_id">
             {{ location.lcm_name }}
           </mat-option>
-        </mat-select> </div>
+        </mat-select> 
+      </div>
       </mat-form-field>
 
       <mat-form-field class="form-field" floatLabel="always">
         <mat-label>GCB Level</mat-label>
-        <div class='input'><input matInput formControlName="dem_gcblevel">
+        <div class='Input'><input matInput formControlName="dem_gcblevel">
           </div>
         <mat-error *ngIf="demandForm.controls['dem_gcblevel'].hasError('serverError')">
           {{ demandForm.controls['dem_gcblevel'].errors?.['serverError'] }}
@@ -117,7 +118,7 @@
 
       <mat-form-field class="form-field" floatLabel="always" (click)="datePicker.open()">
         <mat-label>Required By</mat-label>
-        <div class='input'><input matInput [matDatepicker]="datePicker" formControlName="dem_validtill" [min]="minDate"
+        <div class='Input'><input matInput [matDatepicker]="datePicker" formControlName="dem_validtill" [min]="minDate"
           (keydown)="$event.preventDefault()">
         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
@@ -130,7 +131,7 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>MUST HAVE Skills</mat-label>
-        <div class='input'><textarea matInput formControlName="dem_skillset"></textarea>
+        <div class='Input'><textarea matInput formControlName="dem_skillset"></textarea>
           </div>
         <mat-error *ngIf="demandForm.controls['dem_skillset'].hasError('serverError')">
           {{ demandForm.controls['dem_skillset'].errors?.['serverError'] }}
@@ -140,7 +141,7 @@
 
       <mat-form-field class="form-field" floatLabel="always">
         <mat-label>Nice to have Skills</mat-label>
-        <div class='input'><textarea matInput formControlName="dem_mandatoryskill"></textarea>
+        <div class='Input'><textarea matInput formControlName="dem_mandatoryskill"></textarea>
           </div>
         <mat-error *ngIf="demandForm.controls['dem_mandatoryskill'].hasError('serverError')">
           {{ demandForm.controls['dem_mandatoryskill'].errors?.['serverError'] }}
@@ -150,7 +151,7 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>Internal Department</mat-label>
-        <div class='input'><input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto" 
+        <div class='Input'><input type="text" matInput formControlName="dem_idm_id" [matAutocomplete]="deptAuto" 
           (blur)="onBlur('dem_idm_id')"> </div>
         <mat-autocomplete #deptAuto="matAutocomplete" (optionSelected)="onDeptChange($event)" 
           [displayWith]="displayDept">
@@ -170,7 +171,7 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>RR Number</mat-label>
-        <div class='input'><input matInput formControlName="dem_rrnumber"></div>
+        <div class='Input'><input matInput formControlName="dem_rrnumber"></div>
 
         <mat-error *ngIf="demandForm.controls['dem_rrnumber'].hasError('serverError')">
           {{ demandForm.controls['dem_rrnumber'].errors?.['serverError'] }}
@@ -180,7 +181,7 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>Maximum grade/level of the profile</mat-label>
-        <div class='input'><input matInput formControlName="dem_rrgade"></div>
+        <div class='Input'><input matInput formControlName="dem_rrgade"></div>
 
         <mat-error *ngIf="demandForm.controls['dem_rrgade'].hasError('serverError')">
           {{ demandForm.controls['dem_rrgade'].errors?.['serverError'] }}
@@ -190,7 +191,7 @@
 
       <mat-form-field class="form-field" floatLabel="always">
         <mat-label>JR Number</mat-label>
-        <div class='input'><input matInput formControlName="dem_jrnumber"></div>
+        <div class='Input'><input matInput formControlName="dem_jrnumber"></div>
 
         <mat-error *ngIf="demandForm.controls['dem_jrnumber'].hasError('serverError')">
           {{ demandForm.controls['dem_jrnumber'].errors?.['serverError'] }}
@@ -200,7 +201,7 @@
 
       <mat-form-field class="form-field" floatLabel="always">
         <mat-label>CTool Number</mat-label>
-        <div class='input'>  <input matInput formControlName="dem_ctoolnumber"> </div>
+        <div class='Input'>  <input matInput formControlName="dem_ctoolnumber"> </div>
 
         <mat-error *ngIf="demandForm.controls['dem_ctoolnumber'].hasError('serverError')">
           {{ demandForm.controls['dem_ctoolnumber'].errors?.['serverError'] }}
@@ -210,7 +211,7 @@
 
       <mat-form-field class="form-field" floatLabel="always" (click)="picker.open()">
         <mat-label>CTool Date</mat-label>
-        <div class='input'><input matInput [matDatepicker]="picker" formControlName="dem_ctooldate" (keydown)="$event.preventDefault()">
+        <div class='Input'><input matInput [matDatepicker]="picker" formControlName="dem_ctooldate" (keydown)="$event.preventDefault()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
           </div>
@@ -222,12 +223,12 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>Comments</mat-label>
-        <div class='input'><textarea matInput formControlName="dem_comment"></textarea></div>
+        <div class='Input'><textarea matInput formControlName="dem_comment"></textarea></div>
       </mat-form-field>
 
       <div class="file-input-container">
-        <label for="job_description">JD attachment</label>
-        <div class='input'><input type="file" id="dem_jd" (change)="onFileSelected($event)"></div>
+        <mat-label for="job_description">JD attachment</mat-label>
+        <div class='Input'><input type="file" id="dem_jd" (change)="onFileSelected($event)"></div>
       </div>
 
       <mat-error *ngIf="demandForm.controls['dem_jd'].hasError('serverError')">

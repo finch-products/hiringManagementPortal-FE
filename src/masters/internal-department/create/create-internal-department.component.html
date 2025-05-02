@@ -1,36 +1,36 @@
-<h2 class="page-title">Internal Department Master Entry</h2>
 <mat-card class="form-container">
+  <h2 class="page-title">Internal Department Master Entry</h2>
   <form #form="ngForm" [formGroup]="deptForm" (ngSubmit)="onSubmit(form)">
     <div class="form-row">
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Unit Name</mat-label>
-        <input matInput formControlName="idm_unitname" required>
+        <div class="Input"> <input matInput formControlName="idm_unitname" required></div>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Unit Sales</mat-label>
-        <input matInput formControlName="idm_unitsales" required>
+        <div class="Input">  <input matInput formControlName="idm_unitsales" required></div>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Unit Delivery</mat-label>
-        <input matInput formControlName="idm_unitdelivery" required>
+        <div class="Input">  <input matInput formControlName="idm_unitdelivery" required></div>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Unit Solution</mat-label>
-        <input matInput formControlName="idm_unitsolution" required>
+        <div class="Input"> <input matInput formControlName="idm_unitsolution" required></div>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>SPOC</mat-label>
-        <input
+        <div class="Input"> <input
           type="text"
           matInput
           [formControl]="spocFilterControl"
           [matAutocomplete]="autoSpoc"
           (blur)="onSpocBlur()"
-        >
+        ></div>
         <mat-autocomplete #autoSpoc="matAutocomplete" (optionSelected)="onSpocSelected($event)">
           <mat-option *ngIf="(filteredSpocs | async)?.length === 0" disabled>
             No options available
@@ -41,15 +41,15 @@
         </mat-autocomplete>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Delivery Manager</mat-label>
-        <input
+        <div class="Input"> <input
           type="text"
           matInput
           [formControl]="deliveryManagerFilterControl"
           [matAutocomplete]="autoDeliveryManager"
           (blur)="onDeliveryManagerBlur()"
-        >
+        ></div>
         <mat-autocomplete #autoDeliveryManager="matAutocomplete" (optionSelected)="onDeliveryManagerSelected($event)">
           <mat-option *ngIf="(filteredDeliveryManagers | async)?.length === 0" disabled>
             No options available

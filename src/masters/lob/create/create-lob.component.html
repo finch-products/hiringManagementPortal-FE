@@ -1,27 +1,27 @@
-<h2 class="page-title">LOB Master</h2>
 <mat-card class="form-container">
+    <h2 class="page-title">LOB Master</h2>
     <form #form="ngForm" [formGroup]="lobForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field" floatLabel="always">
                 <mat-label>Name</mat-label>
-                <input matInput formControlName="lob_name" required>
+                <div class="Input"><input matInput formControlName="lob_name" required></div>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field" floatLabel="always">
                 <mat-label>Description</mat-label>
-                <input matInput formControlName="lob_description">
+                <div class="Input"><input matInput formControlName="lob_description"></div>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field" floatLabel="always">
                 <mat-label>Delivery Manager</mat-label>
-                <input
+                <div class="Input"><input
                     type="text"
                     matInput
                     [formControl]="deliveryManagerFilterControl"
                     [matAutocomplete]="dmAuto"
                     (blur)="onDeliveryManagerBlur()" 
                     required
-                >
+                ></div>
                 <mat-autocomplete #dmAuto="matAutocomplete" (optionSelected)="onDeliveryManagerSelected($event)">
                     <mat-option *ngIf="(filteredDeliveryManagers | async)?.length === 0" disabled>
                         No options available
@@ -32,16 +32,16 @@
                 </mat-autocomplete>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field  class="form-field" floatLabel="always">
                 <mat-label>Client Partner</mat-label>
-                <input
+                <div class="Input"><input
                     type="text"
                     matInput
                     [formControl]="clientPartnerFilterControl"
                     [matAutocomplete]="cpAuto"
                     (blur)="onClientPartnerBlur()" 
                     required
-                >
+                ></div>
                 <mat-autocomplete #cpAuto="matAutocomplete" (optionSelected)="onClientPartnerSelected($event)">
                     <mat-option *ngIf="(filteredClientPartners | async)?.length === 0" disabled>
                         No options available

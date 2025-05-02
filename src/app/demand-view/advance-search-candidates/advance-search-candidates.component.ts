@@ -6,7 +6,7 @@ interface Candidate {
   cdm_id: string;
   cdm_email:string;
   cdl_cdm_id: string;
-  cdm_keywords: string[];
+  cdm_keywords: string;
   cdm_description:string;
   location_name:number|null;
   cdm_profile: string;

@@ -1,11 +1,13 @@
-<div class="search-container">
+<div class="list_container">
+
+  <div class="search-container">
     <h2 class="page-title">Employee List</h2>
    <div class="custom-search-box">
         <mat-icon class="search-icon">search</mat-icon>
         <input type="text" (keyup)="applyFilter($event)"
             placeholder="Search Employee ID, name, email, etc" />
     </div>
-  </div>
+</div>
 <mat-card class="table-container">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -75,4 +77,4 @@
       <button (click)="nextPage()" [disabled]="currentPage === totalPages">&#8594;</button>
     </div>
   </div>
-  
+</div>

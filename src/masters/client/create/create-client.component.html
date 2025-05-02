@@ -1,10 +1,10 @@
-<h2 class="page-title">Client Master Entry</h2>
 <mat-card class="form-container">
+    <h2 class="page-title">Client Master Entry</h2>
     <form #form="ngForm" [formGroup]="clientForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field" floatLabel="always">
                 <mat-label>Client Id</mat-label>
-                <input matInput formControlName="clm_clientid">
+                <div class="Input">  <input matInput formControlName="clm_clientid"></div>
                 <!-- <mat-error>
                     <app-form-error
                         [errors]="clientForm.controls['clm_clientid'].errors"></app-form-error>
@@ -16,9 +16,9 @@
                   
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field" floatLabel="always">
                 <mat-label>Name</mat-label>
-                <input matInput formControlName="clm_name" required>
+                <div class="Input"> <input matInput formControlName="clm_name" required></div>
                 <mat-error *ngIf="clientForm.controls['clm_name'].hasError('required')">
                     Name is required.
                   </mat-error>
@@ -27,9 +27,9 @@
                   </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field  class="form-field" floatLabel="always">
                 <mat-label>Manager Name</mat-label>
-                <input matInput formControlName="clm_managername">
+                <div class="Input"> <input matInput formControlName="clm_managername"></div>
                 
                 <mat-error *ngIf="clientForm.controls['clm_managername'].hasError('serverError')">
                     {{ clientForm.controls['clm_managername'].getError('serverError') }}
@@ -37,9 +37,9 @@
 
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field" floatLabel="always">
                 <mat-label>Email</mat-label>
-                <input matInput formControlName="clm_clientemail" type="email">
+                <div class="Input"> <input matInput formControlName="clm_clientemail" type="email"></div>
 
                 <mat-error *ngIf="clientForm.controls['clm_clientemail'].hasError('serverError')">
                     {{ clientForm.controls['clm_clientemail'].getError('serverError') }}
@@ -47,9 +47,9 @@
 
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field"  floatLabel="always">
                 <mat-label>Phone</mat-label>
-                <input matInput formControlName="clm_clientphone">
+                <div class="Input"> <input matInput formControlName="clm_clientphone"></div>
 
                 <mat-error *ngIf="clientForm.controls['clm_clientphone'].hasError('serverError')">
                     {{ clientForm.controls['clm_clientphone'].getError('serverError') }}
@@ -57,9 +57,9 @@
 
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field class="form-field" floatLabel="always">
                 <mat-label>Address</mat-label>
-                <input matInput formControlName="clm_address">
+                <div class="Input"> <input matInput formControlName="clm_address"></div>
 
                 <mat-error *ngIf="clientForm.controls['clm_address'].hasError('serverError')">
                     {{ clientForm.controls['clm_address'].getError('serverError') }}
@@ -67,9 +67,9 @@
 
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
-                <mat-label>Location</mat-label>
-                <input
+            <mat-form-field class="form-field" floatLabel="always">
+            <mat-label>Location</mat-label>
+            <div class="Input">   <input
                     type="text"
                     matInput
                     [formControl]="locationFilterControl"
@@ -77,6 +77,10 @@
                     (blur)="onLocationBlur()"
                     (input)="onLocationInput($event)"
                 >
+                <button mat-icon-button matSuffix disableRipple tabIndex="-1" type="button">
+                    <mat-icon>arrow_drop_down</mat-icon>
+                  </button>
+            </div>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLocationSelected($event)">
                     <mat-option *ngIf="(filteredLocations | async)?.length === 0" disabled>
                         No options available
@@ -87,7 +91,7 @@
                 </mat-autocomplete>
               </mat-form-field>
 
-            <mat-radio-group formControlName="clm_isactive" appearance="fill" class="form-field">
+            <mat-radio-group formControlName="clm_isactive" class="form-field" floatLabel="always">
                 <mat-label>Active?</mat-label>
                 <mat-radio-button [value]="true">Yes</mat-radio-button>
                 <mat-radio-button [value]="false">No</mat-radio-button>
