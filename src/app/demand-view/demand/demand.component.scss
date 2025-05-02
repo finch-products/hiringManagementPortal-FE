@@ -13,9 +13,38 @@
 .demand-head{
     display:flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; 
     background-color:#f8f9fa;
     padding: 8px;
+}
+
+.demand-id-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.applicant-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+.count-value {
+  color: #000 !important; /* Black color for the count */
+  font-weight: normal;
+}
+
+.count-label {
+  color: #666;
+  font-weight: normal;
+}
+
+.applicant-count mat-icon {
+  color: #666;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
 }
 mat-select {
   white-space: nowrap;

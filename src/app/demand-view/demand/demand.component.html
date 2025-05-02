@@ -49,7 +49,15 @@
       
   </div>
     <div class="demand-head">
-      <div>{{demands?.cdl_dem_id}}<span *ngIf="demands?.demand_details?.dem_ctoolnumber">/{{ demands?.demand_details?.dem_ctoolnumber }}</span></div>
+      <div class="demand-id-container">
+        <div class="demand-id">{{demands?.cdl_dem_id}}<span *ngIf="demands?.demand_details?.dem_ctoolnumber">/{{ demands?.demand_details?.dem_ctoolnumber }}</span></div>
+        <div class="applicant-count">
+          <mat-icon>people_outline</mat-icon>
+          <span class="count-value">{{demands?.application_count|| '0'}}</span>
+          <span class="count-label">Applicants</span>
+        </div>
+      </div>
+      
       <div fxLayout="row" fxLayoutGap="10px">
         <!-- <button mat-button color="primary">Set Status</button> -->
         <div class="status-display">
