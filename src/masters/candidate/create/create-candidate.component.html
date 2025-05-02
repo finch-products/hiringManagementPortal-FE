@@ -1,44 +1,44 @@
-<h2 class="page-title">Candidate Master Entry</h2>
 <mat-card class="form-container">
+  <h2 class="page-title">Candidate Master Entry</h2>
   <form #form="ngForm" [formGroup]="candidateForm" (ngSubmit)="onSubmit(form)">
     <div class="form-row">
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field  floatLabel="always" class="form-field">
         <mat-label>Emp Id</mat-label>
-        <input matInput formControlName="cdm_emp_id" required>
+      <div class="Input">  <input matInput formControlName="cdm_emp_id" required></div>
         <mat-error>
           <app-form-error [errors]="candidateForm.controls['cdm_emp_id'].errors"></app-form-error>
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="cdm_name" required>
+        <div class="Input">  <input matInput formControlName="cdm_name" required></div>
         <mat-error>
           <app-form-error [errors]="candidateForm.controls['cdm_name'].errors"></app-form-error>
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="cdm_email" type="email" required>
+        <div class="Input">   <input matInput formControlName="cdm_email" type="email" required></div>
         <mat-error>
           <app-form-error [errors]="candidateForm.controls['cdm_email'].errors"></app-form-error>
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Phone</mat-label>
-        <input matInput formControlName="cdm_phone" type="text" required>
+        <div class="Input">   <input matInput formControlName="cdm_phone" type="text" required></div>
         <mat-error>
           <app-form-error [errors]="candidateForm.controls['cdm_phone'].errors"></app-form-error>
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Location <span class="required"></span></mat-label>
-        <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="auto"
-          (blur)="onLocationBlur()" required>
+        <div class="Input">   <input type="text" matInput [formControl]="locationFilterControl" [matAutocomplete]="auto"
+          (blur)="onLocationBlur()" required></div>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLocationSelected($event)">
           <mat-option *ngIf="(filteredLocations | async)?.length === 0" disabled>
             No options available
@@ -58,17 +58,17 @@
         <input type="file" (change)="onFileSelected($event)" #fileInput >
       </div>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Description</mat-label>
-        <input matInput formControlName="cdm_description">
+        <div class="Input">   <input matInput formControlName="cdm_description"></div>
         <mat-error>
           <app-form-error [errors]="candidateForm.controls['cdm_description'].errors"></app-form-error>
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field floatLabel="always" class="form-field">
         <mat-label>Keywords</mat-label>
-        <input matInput formControlName="cdm_keywords">
+        <div class="Input">   <input matInput formControlName="cdm_keywords"></div>
         <mat-error>
           <app-form-error [errors]="candidateForm.controls['cdm_keywords'].errors"></app-form-error>
         </mat-error>

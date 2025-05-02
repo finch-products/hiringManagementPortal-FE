@@ -1,11 +1,13 @@
-<div class="search-container">
-  <h2 class="page-title">Client List</h2>
-  <div class="custom-search-box">
-    <mat-icon class="search-icon">search</mat-icon>
-    <input type="text" (keyup)="applyFilter($event)"
-        placeholder="Search client Id, name, etc" />
-</div>
-</div>
+<div class="list_container">
+
+  <span class="search-container">
+    <h2 class="page-title">Client List</h2>
+    <div class="custom-search-box">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" (keyup)="applyFilter($event)"
+          placeholder="Search client Id, name, etc" />
+    </div>
+  </span>
 
 <mat-card class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -81,4 +83,5 @@
 
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">&#8594;</button>
   </div>
+</div>
 </div>
