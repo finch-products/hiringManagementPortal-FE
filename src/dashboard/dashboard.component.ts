@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LegendPosition } from '@swimlane/ngx-charts';
 import { HttpService } from '../app/services/http.service';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +15,7 @@ export class DashboardComponent implements OnInit {
   total_non_open_demands: any[] = [];
   total_india_open_demands: any[] = [];;
   total_non_india_open_demands: any[] = [];
+  skillData: any[] = [];
   isRightColumnTaller = false;
   isRightColumnMuchTaller = false;
 
@@ -23,6 +26,7 @@ export class DashboardComponent implements OnInit {
     this.loadReportLOBTargetProgress();
     this.loadOpenposition();
     this.loadReportagedemand();
+    this.loadSkillDemandReport();
   }
 
   constructor(private httpService: HttpService) {
@@ -127,5 +131,33 @@ customColors = [
   { name: 'Profiles Not Submitted', value: '#f3f3ff' }
 ];
  
+loadSkillDemandReport() {
+  this.httpService.getSkillDemandReport().subscribe({
+    next: (data) => {
+      this.skillData = data.map((item: any) => ({
+        name: item.skill,
+        value: item.gap,
+        demandCount: item.demand_count,
+        totalPositions: item.total_positions,
+        candidatesSubmitted: item.candidate_submitted_count,
+        totalCandidates: item.total_candidates_with_skill
+      }));
+    },
+    error: (err) => console.error('Error fetching skill demand data', err)
+  });
+}
 
+skillColorFn = (skillName: string) => {  // Now expects a string, not an object
+  // Find the skill in skillData
+  const skill = this.skillData.find(item => item.name === skillName);
+  
+  // If skill exists, check if gap is positive/negative
+  if (skill) {
+    const gapValue = skill.originalValue ?? skill.value;
+    return gapValue > 0 ? '#ff6b6b' : '#d1f851';
+  }
+
+  // Fallback color if skill not found
+  return '#cccccc';
+};
 }

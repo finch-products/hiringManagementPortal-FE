@@ -60,9 +60,36 @@
   gap: 25px;
 }
 
+.skill-tooltip {
+  
+  h4 {
+    margin: 0 0 8px 0;
+    color: #fcfafa;
+    font-size: 14px;
+  }
+  
+  p {
+    margin: 4px 0;
+    font-size: 12px;
+    color: #fefefe;
+  }
+}
+
+.no-data-message {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+  font-style: italic;
+}
+
 .charts-column {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
+  
+  .chart-card {
+    min-height: 300px;
+  }
 }
 
 /* Chart Cards */
