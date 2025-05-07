@@ -32,8 +32,46 @@
         </div>
       </div>
 
-
-      <!-- Progress Chart -->
+<!-- Skill Demand Chart -->
+<mat-card class="chart-card">
+  <h5 class="chart-title">Skill Gap Analysis</h5>
+  <mat-card-content>
+    <div *ngIf="skillData && skillData.length > 0; else noSkillData">
+      <ngx-charts-bar-horizontal
+        [view]="[500, 300]"
+        [results]="skillData"
+        [customColors]="skillColorFn"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Gap (Positions - Candidates)'"
+        [yAxisLabel]="'Skills'"
+        [roundEdges]="true"
+        [animations]="true"
+        [barPadding]="8"
+        [tooltipDisabled]="false"
+        [showDataLabel]="true"
+        [trimYAxisTicks]="false">
+        <ng-template #tooltipTemplate let-model="model">
+          <div class="skill-tooltip">
+            <h4>{{ model.name }}</h4>
+            <!-- <p>Total Positions: {{ model.demandCount }}</p>
+            <p>Candidates Submitted: {{ model.candidatesSubmitted }}</p>
+            <p>Total Candidates: {{ model.totalCandidates }}</p> -->
+            <p>Gap: {{ model.value }}</p>
+          </div>
+        </ng-template>
+      </ngx-charts-bar-horizontal>
+    </div>
+    <ng-template #noSkillData>
+      <div class="no-data-message">
+        No skill gap data available
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
       <!-- Progress Chart -->
 <mat-card class="progress-card">
   <h5 class="chart-title">Target Progress</h5>

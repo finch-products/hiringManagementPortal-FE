@@ -335,4 +335,10 @@ export class HttpService {
     );
   }
 
+  getSkillDemandReport(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}reports/skill-demand-report/`, this.getHeaders()).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 }
