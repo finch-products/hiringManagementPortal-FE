@@ -1,6 +1,6 @@
 <div class="search-container">
     <h2 class="page-title">Candidate Tracking</h2>
-    <button mat-raised-button color="primary" (click)="addCandidate()">+ Add
+    <button mat-raised-button class="submit" (click)="addCandidate()">+ Add
         Candidate</button>
     <!-- Search Box -->
     <div class="custom-search-box">
@@ -29,9 +29,7 @@
     </mat-select>
 </mat-form-field>
 
-<button mat-button (click)="resetFilters()" color="warn">Reset
-    Filters</button>
-
+<button mat-raised-button type="button" class="cancel" (click)="resetFilters()" style="background-color: #dacfcf; margin-bottom: 1%;">Reset Filters</button>
     <mat-card class="table-container">
         <!-- Candidate Table -->
         <table mat-table [dataSource]="filteredCandidates" class="mat-elevation-z8">
