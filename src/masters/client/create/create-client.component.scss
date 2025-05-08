@@ -13,3 +13,21 @@
   margin-top: 26px; 
   margin-left:20px;
 }
+/* Custom checkbox styling */
+.custom-checkbox-group .mat-checkbox-frame {
+  border-radius: 4px;
+  border-color: #e0e0e0;
+}
+
+.custom-checkbox-group .mat-checkbox-background {
+  background-color: #c5fb65 !important;
+  border-radius: 4px;
+}
+
+.custom-checkbox-group .mat-checkbox-checkmark-path {
+  stroke: #000 !important; /* Black checkmark */
+}
+
+.custom-checkbox {
+  margin-right: 16px;
+}

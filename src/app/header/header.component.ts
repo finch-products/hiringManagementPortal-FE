@@ -52,11 +52,37 @@ export class HeaderComponent {
     // Split into parts for nested routes
     const parts = path.split('/');
     
-    // Capitalize first letter of each part while preserving underscores
-    const formattedParts = parts.map(part => {
-      if (part.length === 0) return part;
+     const formattedParts = parts.map(part => {
+    const lowerPart = part.toLowerCase();
+
+    // Special override: 'candidate-history'
+    if (lowerPart.includes('candidate-history')) {
+      return 'Candidate History';
+    }
+
+    // Special override: 'other-view' like other-view1, other-viewX
+    if (lowerPart.includes('other-view')) {
+      const afterHyphen = part.split('-')[1];
+      if (afterHyphen) {
+        return afterHyphen.charAt(0).toUpperCase() + afterHyphen.slice(1);
+      }
+      return 'View'; // fallback
+    }
+
+    // General rule: extract keyword before hyphen
+    const keyword = lowerPart.includes('-') ? lowerPart.split('-')[0] : '';
+
+    // Special case: 'internal' becomes 'Departments'
+    if (keyword === 'internal') {
+      return 'Departments';
+    }
+
+    if (keyword.length > 0) {
+      return keyword.charAt(0).toUpperCase() + keyword.slice(1) + 's';
+    } else {
       return part.charAt(0).toUpperCase() + part.slice(1);
-    });
+    }
+  });
     
     // Join all parts with ":" for nested paths
     this.pageTitle = formattedParts.join(':');
