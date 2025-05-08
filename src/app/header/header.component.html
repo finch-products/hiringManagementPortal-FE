@@ -1,6 +1,6 @@
 <div class="container">
   <header class="header" [class.collapsed]="isCollapsed">
-    <h1 class="page-title1">{{pageTitle}}</h1>
+    <h2 class="page-title1">{{pageTitle}}</h2>
     <div class="header-content">
       <div class="icons">
         <div class="search-container">
@@ -9,12 +9,14 @@
             <mat-icon>search</mat-icon>
           </button>
         </div>
+        <div class="demand-icons">
         <a class='icon' mat-list-item routerLink="/entry">
           Demand Entry
         </a>
         <a class='icon' mat-list-item routerLink="/list">
           <mat-icon>assignment</mat-icon>
         </a>
+      </div>
         <div class="profile-dropdown">
           <div class="profile-info" (click)="toggleDropdown()">
             <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Profile" class="profile-image">

@@ -11,6 +11,12 @@ label {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
+  padding: 0;
+
+  mat-label{
+    font-size: 14px !important;
+    padding: 0%;
+  }
 
   .existing-file {
     display: flex;
