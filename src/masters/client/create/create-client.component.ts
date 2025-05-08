@@ -18,6 +18,7 @@ export class CreateClientComponent implements OnInit {
 
   clientForm: FormGroup;
   locationFilterControl = new FormControl('');
+  isActive: boolean = true;
 
   locations: any[] = [];
   filteredLocations!: Observable<any[]>;
@@ -53,6 +54,14 @@ export class CreateClientComponent implements OnInit {
       startWith(''),
       map(value => this._filterLocations(value || ''))
     );
+
+    // Set initial value of isActive based on form value
+    this.isActive = this.clientForm.get('clm_isactive')?.value || true;
+  }
+
+  updateActive(value: boolean): void {
+    this.isActive = value;
+    this.clientForm.get('clm_isactive')?.setValue(value);
   }
 
   loadLocations(): void {
@@ -213,13 +222,14 @@ private _filterLocations(value: string): any[] {
 
     });
   }
-
+  
   onCancel(): void {
     this.clientForm.reset();
     this.clientForm.patchValue({
       clm_isactive: true,
       clm_insertby: 'emp_1'
     });
+    this.isActive = true;
     this.clientForm.markAsPristine(); // Mark the form as pristine
     this.clientForm.markAsUntouched();
     this.locationFilterControl.setValue('');
@@ -250,5 +260,6 @@ private _filterLocations(value: string): any[] {
         this.showError('❌ Failed to add client: An unknown error occurred.');
     }
 }
+
 
 }

@@ -75,6 +75,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { InterviewScheduleComponent } from './demand-view/interview-schedule/interview-schedule.component';
 import { DemandHistoryComponent2 } from './demand-view/demand-history/demand-history.component';
 import { AdvanceSearchCandidatesComponent } from './demand-view/advance-search-candidates/advance-search-candidates.component';
+import { CapitalizeFirstPipe } from './capitalize-first.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,6 +112,7 @@ import { AdvanceSearchCandidatesComponent } from './demand-view/advance-search-c
     InterviewScheduleComponent,
     DemandHistoryComponent2,
     AdvanceSearchCandidatesComponent,
+    CapitalizeFirstPipe,
   ],
   imports: [
     MatRadioModule,

@@ -101,13 +101,13 @@
                 </div>
                 <div class="candidate-details">
                     <div class="detail-item">
-                        <span>email</span>
-                        <span>{{ candidate.cdm_email || 'N/A' }}</span>
+                        <span>Email</span>
+                        <span>{{ (candidate.cdm_email|| 'N/A' )| capitalizeFirst  }}</span>
                     </div>
                 
                     <div class="detail-item">
                         <span>description</span>
-                        <span>{{ candidate.cdm_description || "N/A" }}</span>
+                        <span>{{ (candidate.cdm_description|| "N/A" )| capitalizeFirst  }}</span>
                     </div>
     
                     <div class="detail-item" *ngIf="getCandidateProfileUrl(candidate) as profileUrl">
@@ -246,19 +246,20 @@
 
             <div class="candidate-details">
                 <div class="detail-item">
-                  <span>email</span>
-                  <span>{{ candidate.email }}</span>
+                  <span>Email</span>
+                  <span>{{ (candidate.email ) | capitalizeFirst}}</span>
                 </div>
                 
                 <div class="detail-item">
-                  <span>status</span>
-                  <span>{{ candidate.candidate_status.csm_code || 'N/A' }}</span>
-                </div>
-            
-                <div class="detail-item">
-                  <span>description</span>
-                  <span>{{ candidate.description || "N/A"}}</span>
-                </div>
+                    <span>Status</span>
+                    <span>{{ candidate.candidate_status?.csm_code || 'N/A' }}</span>
+                  </div>
+                  
+                  <div class="detail-item">
+                    <span>Description</span>
+                    <span>{{ (candidate.description || 'N/A') | capitalizeFirst }}</span>
+                  </div>
+                  
 
                 <div class="detail-item" *ngIf="getCandidateProfileUrl(candidate) as profileUrl">
                     <span>attachment</span>

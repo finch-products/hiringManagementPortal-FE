@@ -28,7 +28,7 @@ body {
 
     .page-title {
       padding: 10px;
-      font-size: 20px;
+      font-size: 22px;
       // line-height: 0.75em;
       color: #3f3f3f;
       //font-weight: bold;
@@ -192,6 +192,7 @@ mat-form-field {
   gap: 20px;
   width: 100%;
   border-radius: 20px;
+  padding: 7px;
 }
 
 .mat-mdc-form-field-focus-overlay {
@@ -307,7 +308,7 @@ mat-form-field {
 
 mat-label {
   font-family: Inter, sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   color: #444345;
   // font-weight: 700;
   line-height: 32.52px;
