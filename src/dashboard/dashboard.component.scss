@@ -50,14 +50,14 @@
 .charts-column {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 /* Main Dashboard Area */
 .dashboard-main {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 25px;
+  gap: 20px;
 }
 
 .skill-tooltip {
@@ -85,7 +85,7 @@
 .charts-column {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   
   .chart-card {
     min-height: 300px;
@@ -143,7 +143,7 @@
 /* Right Column */
 .right-column {
   display: grid;
-  gap: 30px;
+  gap: 20px;
   align-content: start;
 }
 
@@ -193,7 +193,7 @@
 .charts-column {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 /* Optional: If you need the progress card to maintain some minimum height */
@@ -277,6 +277,24 @@
     font-size: 13px;
     color: #bcc5f5;
     text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.progress-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    color: #bcc5f5;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     font-weight: 500;
 
     &:hover {
