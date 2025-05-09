@@ -18,6 +18,8 @@ export class DashboardComponent implements OnInit {
   skillData: any[] = [];
   isRightColumnTaller = false;
   isRightColumnMuchTaller = false;
+  showAllProgress = false;
+
 
   
   ngOnInit() {
@@ -72,19 +74,23 @@ export class DashboardComponent implements OnInit {
     }
 
     progressData: any[] = [];
-
-loadReportLOBTargetProgress() {
-  this.httpService.getReportLOBTargetProgress().subscribe({
-    next: (data) => {
-      this.progressData = data.map((item: any) => ({
-        name: String(item.LOB_name), 
-        value: parseFloat(item.percentage) 
-      }));
-    },
-    error: (err) => console.error('Error fetching demand', err)
-  });
-}
-
+    toggleShowAllProgress() {
+      this.showAllProgress = !this.showAllProgress;
+    }
+    loadReportLOBTargetProgress() {
+      this.httpService.getReportLOBTargetProgress().subscribe({
+        next: (data) => {
+          // Sort by percentage in descending order with proper typing
+          this.progressData = data
+            .map((item: any) => ({
+              name: String(item.LOB_name), 
+              value: parseFloat(item.percentage) 
+            }))
+            .sort((a: { value: number }, b: { value: number }) => b.value - a.value); // Sort from highest to lowest
+        },
+        error: (err) => console.error('Error fetching demand', err)
+      });
+    }
 total_positions_opened_last_week: any[] = [];
 loadOpenposition() {
   this.httpService.getopenposition().subscribe({
@@ -160,4 +166,6 @@ skillColorFn = (skillName: string) => {  // Now expects a string, not an object
   // Fallback color if skill not found
   return '#cccccc';
 };
+
+
 }
