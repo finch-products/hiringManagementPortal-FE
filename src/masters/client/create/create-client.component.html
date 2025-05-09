@@ -91,11 +91,12 @@
                 </mat-autocomplete>
               </mat-form-field>
 
-              <div formControlName="clm_isactive" class="form-field custom-checkbox-group" floatLabel="always">
-                <mat-label>Active?</mat-label>
-                <mat-checkbox class="custom-checkbox" color="primary" [checked]="true" (change)="updateActive(true)">Yes</mat-checkbox>
-                <mat-checkbox class="custom-checkbox" color="primary" [checked]="false" (change)="updateActive(false)">No</mat-checkbox>
-              </div>
+            
+              <mat-radio-group formControlName="clm_isactive" class="form-field" floatLabel="always">
+                <mat-label >Active?</mat-label>
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
               
         </div>
 
