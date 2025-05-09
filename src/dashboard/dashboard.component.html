@@ -32,7 +32,63 @@
         </div>
       </div>
 
-<!-- Skill Demand Chart -->
+      <!-- Bar Chart -->
+      <mat-card class="chart-card">
+        <h5 class="chart-title">Time to Closure: Applicants Count by Age</h5>
+        <ngx-charts-bar-vertical
+          [view]="[500, 250]"
+          [results]="agedata"
+          [customColors]="barColorFn"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Closure Duration (Days)'"
+          [yAxisLabel]="'Number of Applicants'"
+          [roundEdges]="true"
+          [animations]="true"
+          [barPadding]="5"
+          [tooltipDisabled]="false"
+          [yAxisTicks]="[2, 4, 6]"
+          [yScaleMax]="6">
+        </ngx-charts-bar-vertical>
+      </mat-card>
+      
+      <!-- Progress Chart -->
+      <mat-card class="progress-card">
+        <div class="progress-card-header">
+          <h5 class="chart-title">Target Progress</h5>
+          <button mat-button (click)="toggleShowAllProgress()" *ngIf="progressData.length > 5">
+            {{ showAllProgress ? 'Show Less' : 'Show All' }}
+          </button>
+        </div>
+        <mat-card-content>
+          <div *ngIf="progressData && progressData.length > 0; else noTargets">
+            <div *ngFor="let progress of (showAllProgress ? progressData : progressData.slice(0, 5))" class="progress-item">
+              <span class="progress-label">{{ progress.name }}</span>
+              <div class="progress-container">
+                <mat-progress-bar [value]="progress.value" mode="determinate"
+                  style="--mdc-linear-progress-active-indicator-color: #d1a7f0"></mat-progress-bar>
+                <span class="progress-value">{{ progress.value }}%</span>
+              </div>
+            </div>
+          </div>
+          <ng-template #noTargets>
+            <div class="no-targets-message">
+              No targets yet added
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+    <!-- Right Column - Progress and Position Cards -->
+    <div class="right-column" [class.right-column-shortened]="isRightColumnMuchTaller">
+
+
+      <!-- Skill Demand Chart -->
 <mat-card class="chart-card">
   <h5 class="chart-title">Skill Gap Analysis</h5>
   <mat-card-content>
@@ -72,55 +128,6 @@
     </ng-template>
   </mat-card-content>
 </mat-card>
-      <!-- Progress Chart -->
-<mat-card class="progress-card">
-  <h5 class="chart-title">Target Progress</h5>
-  <mat-card-content>
-    <div *ngIf="progressData && progressData.length > 0; else noTargets">
-      <div *ngFor="let progress of progressData" class="progress-item">
-        <span class="progress-label">{{ progress.name }}</span>
-        <div class="progress-container">
-          <mat-progress-bar [value]="progress.value" mode="determinate"
-            style="--mdc-linear-progress-active-indicator-color: #d1a7f0"></mat-progress-bar>
-          <span class="progress-value">{{ progress.value }}%</span>
-        </div>
-      </div>
-    </div>
-    <ng-template #noTargets>
-      <div class="no-targets-message">
-        No targets yet added
-      </div>
-    </ng-template>
-  </mat-card-content>
-</mat-card>
-
-    </div>
-
-    <!-- Right Column - Progress and Position Cards -->
-    <div class="right-column" [class.right-column-shortened]="isRightColumnMuchTaller">
-
-      <!-- Bar Chart -->
-      <mat-card class="chart-card">
-        <h5 class="chart-title">Time to Closure: Applicants Count by Age</h5>
-        <ngx-charts-bar-vertical
-          [view]="[500, 250]"
-          [results]="agedata"
-          [customColors]="barColorFn"
-          [xAxis]="true"
-          [yAxis]="true"
-          [legend]="false"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxisLabel]="'Closure Duration (Days)'"
-          [yAxisLabel]="'Number of Applicants'"
-          [roundEdges]="true"
-          [animations]="true"
-          [barPadding]="5"
-          [tooltipDisabled]="false"
-          [yAxisTicks]="[2, 4, 6]"
-          [yScaleMax]="6">
-        </ngx-charts-bar-vertical>
-      </mat-card>
       
       <!-- Pie Chart -->
       <mat-card class="chart-card">

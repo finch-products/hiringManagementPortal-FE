@@ -87,8 +87,8 @@
   <mat-radio-button [value]="true">Yes</mat-radio-button>
   <mat-radio-button [value]="false">No</mat-radio-button>
 </mat-radio-group>
-
-<!-- Photo upload moved here -->
+    </div>
+    <!-- Photo upload moved here -->
 <div class="photo-upload-container">
   <div class="upload-controls">
     <button *ngIf="!selectedPhoto" mat-raised-button type="button" (click)="photoInput.click()" color="primary">
@@ -104,11 +104,6 @@
     <span class="file-name" *ngIf="selectedPhoto">{{ selectedPhoto.name }}</span>
   </div></div>
 </div>
-
-<!-- ... remaining form fields ... -->
-
-      
-    </div>
 
     <div class="submit-container">
       <button mat-raised-button color="primary" type="button" class="cancel" (click)="onCancel()">Cancel</button>

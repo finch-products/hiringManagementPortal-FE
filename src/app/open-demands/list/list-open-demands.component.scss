@@ -15,3 +15,56 @@
     white-space: normal;
     line-height: 1.5 !important;
   }
+/* Status background colors for demand statuses */
+
+.status-css{
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+/* Status background colors for demand statuses - using exact color codes */
+.status-Open {
+  background-color: #d2f55b; /* Bright green */
+  color: #155724;
+}
+
+.status-Req-Not-Clear {
+  background-color: #afb7ff; /* Light purple */
+  color: #4a3f9f;
+}
+
+.status-JD-Not-Received {
+  background-color: #dee2ff; /* Lighter purple */
+  color: #4a3f9f;
+}
+
+.status-Closed {
+  background-color: #e0e0e0; /* Light gray */
+  color: #424242;
+}
+
+.status-External-Hiring {
+  background-color: #c2e94b; /* Slightly darker green */
+  color: #155724;
+}
+
+.status-Candidate-Screening {
+  background-color: #dbf76b; /* Slightly lighter green */
+  color: #155724;
+}
+
+.status-Rejected {
+  background-color: #f04747; /* Red */
+  color: #ffffff;
+}
+
+.status-On-Hold {
+  background-color: #c3c9ff; /* Mid purple between the two purples */
+  color: #4a3f9f;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.status-On-Hold {
+  background-color: #d8d6f7; /* Light purple */
+  color: #4a3f9f;
+}
