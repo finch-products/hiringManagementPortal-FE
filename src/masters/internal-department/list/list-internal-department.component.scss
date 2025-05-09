@@ -1,0 +1,32 @@
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 13px;
+  }
+  
+  .status-badge .dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+  
+  .active {
+    background-color:#ebf9bb; /* Light neon green background */
+  }
+  
+  .active .green {
+    background-color: #96c303; /* Green dot */
+  }
+  
+  .pending {
+    background-color: #fef4f3; /* Light pinkish background */
+  }
+  
+  .pending .red {
+    background-color: #f24849; /* Red dot */
+  }
+  

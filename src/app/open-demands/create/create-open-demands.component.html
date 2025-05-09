@@ -131,8 +131,9 @@
 
       <mat-form-field  class="form-field" floatLabel="always">
         <mat-label>MUST HAVE Skills</mat-label>
-        <div class='Input'><textarea matInput formControlName="dem_skillset"></textarea>
-          </div>
+        <div class="Input">
+          <textarea class="centered-textarea" matInput formControlName="dem_skillset"></textarea>
+        </div>        
         <mat-error *ngIf="demandForm.controls['dem_skillset'].hasError('serverError')">
           {{ demandForm.controls['dem_skillset'].errors?.['serverError'] }}
       </mat-error>
