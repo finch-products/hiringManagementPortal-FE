@@ -293,4 +293,11 @@ goToPage(page: number) {
   this.updateDisplayedDemands();
   // Fetch new data based on the current page and page size
 }
+
+getStatusClass(statusCode: string | undefined): string {
+  if (!statusCode) return '';
+  
+  // Replace spaces with dashes for CSS class name
+  return 'status-' + statusCode.replace(/\s+/g, '-');
+}
 }
