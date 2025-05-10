@@ -1,16 +1,84 @@
-.chart-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  
+  &.single-chart {
     justify-content: center;
   }
+}
+
+.chart-card {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+  flex: 1;
   
+  &.centered-chart {
+    max-width: 500px;// Adjust this as needed
+    width: 100%;
+  }
+}
+
+.chart-title {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 550;
+  color: #333;
+  text-align: left;
+}
+
+.no-data-message {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+  font-style: italic;
+  font-size: 16px;
+  font-weight: normal;
+  margin: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .chart-row {
+    flex-direction: column;
+    
+    &.single-chart .chart-card {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
   .chart-card {
-    width: max-content;
+    min-height: 350px;
+  }
+  
+  .chart-title {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-card {
     padding: 15px;
-    margin-top: 10px;
-    text-align: center;
   }
-  h4{
-    align-items: left;
+  
+  .chart-title {
+    font-size: 14px;
+    margin-bottom: 15px;
   }
+}

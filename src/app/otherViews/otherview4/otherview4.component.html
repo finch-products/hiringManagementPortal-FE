@@ -1,70 +1,75 @@
-
-<div class="chart-container">
+<div class="dashboard-container">
+  <!-- First Row - Two Charts Side by Side -->
+  <div class="chart-row">
     <!-- Profile Submission Chart -->
     <mat-card class="chart-card">
-      <h4 class="chart-title">How long it takes to submit profile for each demand </h4>
+      <h5 class="chart-title">How long it takes to submit profile for each demand</h5>
       <div *ngIf="demand_timetaken && demand_timetaken.length > 0; else nodatafordemand">
-      <ngx-charts-bar-horizontal
-        [view]="view"
-        [results]="demand_timetaken"
-        [customColors]="barGraphColor1"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="false"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Days'"
-        [yAxisLabel]="'Demands'"
-        [roundEdges]="true">
-      </ngx-charts-bar-horizontal>
-      <h5 class="chart-title"> Time taken for profile Submission </h5>
+        <ngx-charts-bar-horizontal
+          [view]="view"
+          [results]="demand_timetaken"
+          [customColors]="customColors"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Days'"
+          [yAxisLabel]="'Demands'"
+          [roundEdges]="true"
+          [animations]="true"
+          [barPadding]="8">
+        </ngx-charts-bar-horizontal>
       </div>
       <ng-template #nodatafordemand>
-        <h2 style="text-align: center; padding: 20px;">No data for Time taken for profile Submission </h2>
+        <div class="no-data-message">No data for Time taken for profile Submission</div>
       </ng-template>
     </mat-card>
-  
+
     <!-- Interview Feedback Chart -->
     <mat-card class="chart-card">
-      <h4 class="chart-title">How long client taking to do interview and provide feedback</h4>
+      <h5 class="chart-title">How long client takes to do interview and provide feedback</h5>
       <div *ngIf="interviewFeedbackData && interviewFeedbackData.length > 0; else nodataforfeedback">
-      <ngx-charts-bar-horizontal
-        [view]="view"
-        [results]="interviewFeedbackData"
-        [customColors]="barGraphColor2"
-        [xAxis]="true"
-        [yAxis]="true"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxisLabel]="'Days'"
-        [yAxisLabel]="'Clients'"
-        [roundEdges]="true">
-      </ngx-charts-bar-horizontal>
-      <h5 class="chart-title">Time taken to do interview and provide feedback</h5>
-    </div>
+        <ngx-charts-bar-horizontal
+          [view]="view"
+          [results]="interviewFeedbackData"
+          [customColors]="customColors"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Days'"
+          [yAxisLabel]="'Clients'"
+          [roundEdges]="true"
+          [animations]="true"
+          [barPadding]="8">
+        </ngx-charts-bar-horizontal>
+      </div>
       <ng-template #nodataforfeedback>
-        <h2 style="text-align: center; padding: 20px;">No data for Time taken to do interview and provide feedback</h2>
+        <div class="no-data-message">No data for Time taken to do interview and provide feedback</div>
       </ng-template>
     </mat-card>
-  
+  </div>
+
+  <!-- Second Row - Single Centered Chart -->
+  <div class="chart-row single-chart">
     <!-- Selection Percentage Chart -->
-<mat-card class="chart-card">
-  <h4 class="chart-title">What is the Selection Percentage by Client</h4>
-
-  <div *ngIf="clientselection && clientselection.length > 0; else noData">
-    <ngx-charts-pie-chart
-      [view]="view"
-      [results]="clientselection"
-      [customColors]="customColors"
-      [labels]="true"
-      [doughnut]="true">
-    </ngx-charts-pie-chart>
+    <mat-card class="chart-card centered-chart">
+      <h5 class="chart-title">Selection Percentage by Client</h5>
+      <div *ngIf="clientselection && clientselection.length > 0; else noData">
+        <div class="chart-container">
+          <ngx-charts-pie-chart
+            [view]="view"
+            [results]="clientselection"
+            [labels]="true"
+            [doughnut]="true"
+            [customColors]="customColors">
+          </ngx-charts-pie-chart>
+        </div>
+      </div>
+      <ng-template #noData>
+        <div class="no-data-message">No data for selection percentage by client</div>
+      </ng-template>
+    </mat-card>
   </div>
-
-  <ng-template #noData>
-    <h2 style="text-align: center; padding: 20px;">No data for selection percentage by client</h2>
-  </ng-template>
-</mat-card>
-
-  </div>
-  
+</div>
