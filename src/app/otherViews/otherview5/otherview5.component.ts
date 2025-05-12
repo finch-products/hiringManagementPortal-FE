@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from '../../services/http.service';
-
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 @Component({
   selector: 'app-otherview5',
   templateUrl: './otherview5.component.html',
@@ -19,13 +19,20 @@ export class Otherview5Component {
     end_date: string = '';
     isFilterApplied:boolean=false;
     reporttype: string= '';
+    
   
     constructor(private httpService: HttpService) {}
 
   ngOnInit(): void {
     this.fetchCandidateSelectionReport();
   }
-
+  getDisplayedColumns(): string[] {
+    if (this.isFilterApplied) {
+      return ['clientPartner', 'lob', 'deliveryManager', ...this.tableHeaders];
+    } else {
+      return ['clientPartner', 'lob', 'deliveryManager', 'count', 'startDate', 'endDate'];
+    }
+  }
   fetchCandidateSelectionReport(): void {
     // Dynamic date assignment 
      const today = new Date();
@@ -193,5 +200,31 @@ export class Otherview5Component {
     this.isFilterApplied = false;
     this.filteredTables = [];
   }
-  
+  // Add these new methods to your component class
+toggleQuarterDropdown() {
+  // This will be handled by mat-autocomplete
+}
+
+onQuarterYearSelected(event: MatAutocompleteSelectedEvent) {
+  this.selectedQuarterYear = event.option.value;
+  this.onQuarterYearChange();
+}
+
+toggleYearDropdown() {
+  // This will be handled by mat-autocomplete
+}
+
+onYearSelected(event: MatAutocompleteSelectedEvent) {
+  this.selectedYear = event.option.value;
+  this.onYearChange();
+}
+
+toggleMonthDropdown() {
+  // This will be handled by mat-autocomplete
+}
+
+onMonthSelected(event: MatAutocompleteSelectedEvent) {
+  this.selectedMonth = event.option.value;
+  this.onMonthChange();
+}
 }

@@ -1,54 +1,76 @@
-
-<h3 class="">Candidate Selection Metrics  </h3>
-   <!-- <span class="'filter-btn ">Filter :</span>-->
-
-
-    <div class="filterclass">
-        <!-- Quarterly Selection -->
-        <div class="qualterly">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Quarterly</mat-label>
-            <mat-select [(ngModel)]="selectedQuarterYear" (selectionChange)="onQuarterYearChange()">
-              <mat-option  *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      
-        <!-- Yearly Selection -->
-        <div class="Yearly">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Yearly</mat-label>
-            <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()">
-              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="monthly-checkbox">
-            <mat-checkbox [(ngModel)]="showMonthly" (change)="onMonthlyCheckboxChange()">Monthly</mat-checkbox>
+<mat-card class="form-container">
+  <h2 class="page-title">Candidate Selection Metrics</h2>
+    
+  <div class="form-row">
+      <!-- Quarterly Selection -->
+      <mat-form-field class="form-field" floatLabel="always">
+          <mat-label>Quarterly</mat-label>
+          <div class="Input">
+              <input matInput [(ngModel)]="selectedQuarterYear" (click)="toggleQuarterDropdown()" 
+                  [matAutocomplete]="quarterAuto" placeholder="Select Year">
+              <button mat-icon-button matSuffix disableRipple tabIndex="-1" type="button">
+                  <mat-icon>arrow_drop_down</mat-icon>
+              </button>
           </div>
+          <mat-autocomplete #quarterAuto="matAutocomplete" (optionSelected)="onQuarterYearSelected($event)">
+              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+          </mat-autocomplete>
+      </mat-form-field>
       
-        <!-- Monthly Selection -->
-        <div class="monthly">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Select Month</mat-label>
-            <mat-select [(ngModel)]="selectedMonth" (selectionChange)="onMonthChange()">
+      <!-- Yearly Selection -->
+      <mat-form-field class="form-field" floatLabel="always">
+          <mat-label>Yearly</mat-label>
+          <div class="Input">
+              <input matInput [(ngModel)]="selectedYear" (click)="toggleYearDropdown()" 
+                  [matAutocomplete]="yearAuto" placeholder="Select Year">
+              <button mat-icon-button matSuffix disableRipple tabIndex="-1" type="button">
+                  <mat-icon>arrow_drop_down</mat-icon>
+              </button>
+          </div>
+          <mat-autocomplete #yearAuto="matAutocomplete" (optionSelected)="onYearSelected($event)">
+              <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+          </mat-autocomplete>
+      </mat-form-field>
+      
+      <!-- Monthly Checkbox -->
+      <div class="form-field custom-checkbox-group">
+          <mat-checkbox [(ngModel)]="showMonthly" (change)="onMonthlyCheckboxChange()">Monthly</mat-checkbox>
+      </div>
+      
+      <!-- Monthly Selection -->
+      <mat-form-field class="form-field" floatLabel="always" *ngIf="showMonthly">
+          <mat-label>Select Month</mat-label>
+          <div class="Input">
+              <input matInput [(ngModel)]="selectedMonth" (click)="toggleMonthDropdown()" 
+                  [matAutocomplete]="monthAuto" placeholder="Select Month">
+              <button mat-icon-button matSuffix disableRipple tabIndex="-1" type="button">
+                  <mat-icon>arrow_drop_down</mat-icon>
+              </button>
+          </div>
+          <mat-autocomplete #monthAuto="matAutocomplete" (optionSelected)="onMonthSelected($event)">
               <mat-option *ngFor="let month of months" [value]="month.value">{{ month.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>      
+          </mat-autocomplete>
+      </mat-form-field>
+      
+  </div>
+  <div class="submit-container">
+    <button mat-raised-button color="primary" type="button" style="justify-content: flex-start;" class="submit"  (click)="resetFilters()">Reset Filters</button>
+</div>
+</mat-card>
+
+<!-- Rest of your template remains the same -->
 
 <ng-container *ngIf="!isFilterApplied">
   <div class="lob-table">
     <table class="styled-table">
         <thead>
-          <tr>
-            <th>Client Partner (CP)</th>
-            <th>LOB</th>
-            <th>Delivery Manager (DM)</th>
-            <th>Count</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+          <tr >
+            <th class="th" >Client Partner (CP)</th>
+            <th class="th" >LOB</th> 
+            <th class="th">Delivery Manager (DM)</th>
+            <th class="th" >Count</th>
+            <th class="th" >Start Date</th>
+            <th class="th" >End Date</th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +110,7 @@
         </tbody>
       </table>
     </div>
-  </ng-container> 
+  </ng-container>
+  
 
-  <button mat-raised-button color="warn" (click)="resetFilters()">Reset Filters</button>
+  
