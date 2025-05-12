@@ -73,6 +73,13 @@ export class ReportComponent implements OnInit {
   allDeliveryManagers: string[] = [];
   allClientPartners: string[] = [];
 
+  pageSize: number = 5; // Default page size
+  pageSizeOptions: number[] = [5, 10, 20, 50]; // Available page size options
+  currentPage: number = 1; // Current page number
+  totalItems: number = 0; // Total number of items
+  totalPages: number = 0; // Total number of pages
+  pages: number[] = [];
+
   constructor(private httpService: HttpService, private demandService: OpenDemandService) {
 
   }
@@ -87,6 +94,10 @@ export class ReportComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.initializeFilterOptions(demand);
         
+        // Initialize pagination
+        this.totalItems = demand.length;
+        this.updatePagination();
+      
         // Trigger initial filter update
         this.applyFilters();
       }
@@ -221,6 +232,11 @@ export class ReportComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+    this.updatePagination();
+  
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   async loadLocations() {
@@ -300,4 +316,71 @@ export class ReportComponent implements OnInit {
     return '';
   }  
 
+  onPageSizeChange(): void {
+    this.currentPage = 1; // Reset to first page when page size changes
+    this.updatePagination();
+  }
+  
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+  
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+  
+  goToPage(page: number): void {
+    if (page !== -1 && page >= 1 && page <= this.totalPages) { // -1 is for ellipsis
+      this.currentPage = page;
+      this.updatePagination();
+    }
+  }
+  
+  updatePagination(): void {
+    // Calculate total items based on filtered data
+    this.totalItems = this.dataSource.filteredData.length;
+    
+    // Calculate total pages
+    this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+    
+    // Generate page numbers array with possible ellipsis
+    this.pages = this.generatePageNumbers();
+    
+    // Update the paginated data
+    this.updatePaginatedData();
+  }
+  
+  generatePageNumbers(): number[] {
+    const pages: number[] = [];
+    const maxVisiblePages = 5; // Maximum number of visible page buttons
+    
+    if (this.totalPages <= maxVisiblePages) {
+      // Show all pages if there are few enough
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Show first 3 pages, ellipsis, and last page
+      pages.push(1, 2, 3);
+      pages.push(-1); // -1 represents ellipsis
+      pages.push(this.totalPages);
+    }
+    
+    return pages;
+  }
+  
+  updatePaginatedData(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    
+    // Slice the data based on current page and page size
+    this.dataSource.data = this.dataSource.filteredData.slice(startIndex, endIndex);
+  }
+  
 }

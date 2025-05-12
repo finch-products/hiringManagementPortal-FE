@@ -119,30 +119,55 @@
       </mat-card>
   
       <!-- Associated Demands for the Selected Candidate -->
-      <mat-card *ngIf="selectedCandidate">
-        <mat-card-title>Demand Details</mat-card-title>
-        <mat-card-content >
-          <div class="demand-container">
-            <mat-card class="demand-card" *ngFor="let demand of selectedCandidate?.demands">
-              <div>
-            <p><strong>Demand id:</strong> {{demand.dem_id }}</p>
-            <!-- <p><strong>CTool Date:</strong> {{ demand.dem_ctooldate }}</p> -->
-            <p><strong>Position Name:</strong> {{ demand.dem_position_name }}</p>
-            <p><strong>Valid Till:</strong> {{ demand.dem_validtill | date:'dd-MM-yyyy'}}</p>
-            <p><strong>Skillset:</strong> {{ demand.dem_skillset }}</p>
-            <p><strong>No Of Positions:</strong> {{ demand.dem_positions }}</p>
-            <p><strong>RR Number:</strong> {{ demand.dem_rrnumber }}</p>
-            <!-- <p><strong>JR Number:</strong> {{ demand.dem_jrnumber }}</p> -->
-            <!-- <p><strong>RR Grade:</strong> {{ demand.dem_rrgade }}</p>
-            <p><strong>GCB Level:</strong> {{ demand.dem_gcblevel }}</p>
-            <p><strong>Comments:</strong> {{ demand.dem_comment }}</p> -->
-            <!-- <p><strong>Is Reopened:</strong> {{ demand.dem_isreopened ? 'Yes' : 'No' }}</p>
-            <p><strong>Active:</strong> {{ demand.dem_isactive ? 'Yes' : 'No' }}</p> -->
+      <mat-card *ngIf="selectedCandidate" class="job-details-card">
+  <mat-card-title>Demand Details</mat-card-title>
+    <div class="demand-container">
+      <mat-card class="demand-card" *ngFor="let demand of selectedCandidate?.demands">
+        <div class="demand-header">
+          <div class="demand-icon">
+            <mat-icon>work_outline</mat-icon>
           </div>
-          </mat-card>
+          <div class="demand-title">
+            <h2>{{ demand.dem_position_name || 'Position name' | capitalizeFirst }}</h2>
+            <p class="department">{{ demand.dem_idm_id || 'Department' }}</p>
           </div>
-        </mat-card-content>
+          <div class="demand-meta">
+            <p class="status-css" [ngClass]="getStatusClass(demand.current_demand_status)">{{ demand.current_demand_status || 'Status' }}</p>
+            <p class="location">
+            <span *ngIf="demand.locations && demand.locations.length > 0">
+              {{ getLocationNames(demand.locations) }}
+            </span>
+            <span *ngIf="!demand.locations || demand.locations.length === 0">
+              Corporate Headquarters, New York, NY
+            </span>
+          </p>
+          </div>
+        </div>
+        
+        <div class="demand-details">
+          <div class="detail-card">
+            <p>No. Of Positions</p>
+            <b>{{ demand.dem_positions }}</b>
+          </div>
+          
+          <div class="detail-card">
+            <p> Skillset </p>
+            <b>{{ demand.dem_skillset }}</b>
+          </div>
+          
+          <div class="detail-card">
+            <p> CTool Date</p>
+            <b>{{ demand.dem_ctooldate | date:'dd-MM-yyyy' }}</b>
+          </div>
+          
+          <div class="detail-card">
+            <p> Valid Till Date</p>
+            <b>{{ demand.dem_validtill | date:'dd-MM-yyyy' }}</b>
+          </div>
+        </div>
       </mat-card>
+    </div>
+</mat-card>
 
    <div class="both-history-wrapper">
   <!-- Demand History (Left Side) -->
