@@ -9,25 +9,31 @@
 
     <mat-card class="form-container">
         <form [formGroup]="listForm" (ngSubmit)="onSubmit()">
-            <div class="form-row field-50 ">
-                <mat-form-field appearance="fill" class="form-field wrap-height">
+            <div class="form-row field-50">
+                <!-- Status Field - Same styling as otherview5 filters -->
+                <mat-form-field class="form-field" floatLabel="always">
                     <mat-label>Status</mat-label>
-                    <mat-select formControlName="dem_dsm_id">
-                        <mat-option *ngIf="!isRowSelected" disabled>
-                            No demand selected
-                        </mat-option>
-                        <mat-option *ngFor="let status of status" [value]="status.dsm_id">
-                            {{ status.dsm_code }}
-                        </mat-option>
-                    </mat-select>
+                    <div class="Input">  <!-- Added Input wrapper -->
+                        <mat-select formControlName="dem_dsm_id">
+                            <mat-option *ngIf="!isRowSelected" disabled>
+                                No demand selected
+                            </mat-option>
+                            <mat-option *ngFor="let status of status" [value]="status.dsm_id">
+                                {{ status.dsm_code }}
+                            </mat-option>
+                        </mat-select>
+                    </div>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill" class="form-field wrap-height">
+    
+                <!-- Comments Field - Same styling as otherview5 filters -->
+                <mat-form-field class="form-field" floatLabel="always">
                     <mat-label>Comments</mat-label>
-                    <textarea matInput formControlName="dem_comment" rows="1"></textarea>
+                    <div class="Input">  <!-- Added Input wrapper -->
+                        <textarea matInput formControlName="dem_comment" rows="1"></textarea>
+                    </div>
                 </mat-form-field>
             </div>
-
+    
             <div class="submit-container">
                 <button mat-raised-button color="primary" type="submit" class="submit"
                     [disabled]="isSaveDisabled()">Save</button>
