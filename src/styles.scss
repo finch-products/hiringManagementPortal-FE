@@ -238,10 +238,15 @@ mat-form-field {
 // }
 
 .file-input-container input[type="file"] {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #def383 !important;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center !important;
+  border-radius: 15px;
+  width:  90%;
+  height: 45px !important;
+  background-color: #f3f3f3;
+  padding: 10px;
+  padding-left: 20px;
 }
 
 .submit-container {
@@ -337,31 +342,24 @@ mat-label {
   --mdc-outlined-text-field-outline-width: 0px !important;
 }
 
-/* Optional: Adjust input field padding for better look */
 
 .mat-form-field {
-  width: 100%; // Ensure consistent width
+  width: 100%; 
   margin-bottom: 8px;
-  // margin-bottom: 0px !important;
-  /* Reduce space below input fields */
 }
 
 .mat-form-field-wrapper {
   padding-bottom: 0px !important;
-  /* Reduce padding inside the form field */
 }
 
 .mat-form-field-flex {
   height: 36px !important;
-  /* Reduce the height of the input field */
   align-items: center !important;
 }
 
 .mat-input-element {
   padding: 5px !important;
-  /* Adjust the padding inside the input box */
   font-size: 14px !important;
-  /* Adjust font size if needed */
 }
 
 .search-container mat-form-field .mat-mdc-text-field-wrapper {
@@ -372,8 +370,8 @@ mat-label {
 }
 
 .outlined-icon {
-  font-variation-settings: "wght" 100; // Makes it thinner
-  color: rgba(0, 0, 0, 0.6); // Lighter black
+  font-variation-settings: "wght" 100; 
+  color: rgba(0, 0, 0, 0.6); 
 }
 
 .table-container table th {
@@ -414,7 +412,6 @@ table.mat-table {
 
 .hover-container {
   position: relative;
-  /* Needed for absolute positioning */
 }
 
 .file-input-container {
@@ -661,7 +658,7 @@ button.submit.mat-mdc-raised-button,
   justify-content: space-evenly;
   align-items: center !important;
   border-radius: 15px;
-  width: 100%;
+  width:  95%;
   height: 45px !important;
   background-color: #f3f3f3;
   padding: 5px;

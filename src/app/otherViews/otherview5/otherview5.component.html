@@ -32,13 +32,13 @@
           </mat-autocomplete>
       </mat-form-field>
       
-      <!-- Monthly Checkbox -->
+      <!-- Monthly Checkbox (for yearly monthly view) -->
       <div class="form-field custom-checkbox-group">
-          <mat-checkbox [(ngModel)]="showMonthly" (change)="onMonthlyCheckboxChange()">Monthly</mat-checkbox>
+          <mat-checkbox [(ngModel)]="showMonthly" (change)="onMonthlyCheckboxChange()">Monthly View for a year</mat-checkbox>
       </div>
       
-      <!-- Monthly Selection -->
-      <mat-form-field class="form-field" floatLabel="always" *ngIf="showMonthly">
+      <!-- Month Selection (always visible) -->
+      <mat-form-field class="form-field" floatLabel="always">
           <mat-label>Select Month</mat-label>
           <div class="Input">
               <input matInput [(ngModel)]="selectedMonth" (click)="toggleMonthDropdown()" 
@@ -55,11 +55,10 @@
   </div>
   <div class="submit-container">
     <button mat-raised-button color="primary" type="button" style="justify-content: flex-start;" class="submit"  (click)="resetFilters()">Reset Filters</button>
-</div>
+  </div>
 </mat-card>
 
 <!-- Rest of your template remains the same -->
-
 <ng-container *ngIf="!isFilterApplied">
   <div class="lob-table">
     <table class="styled-table">
@@ -89,14 +88,12 @@
           </tr>
         </tbody>
       </table>
-      
   </div>
 </ng-container>
 
 <ng-container *ngIf="isFilterApplied">
     <div class="lob-table">
-      
-      <h3 >{{ selectedFilter }}</h3>
+      <h3>{{ selectedFilter }}</h3>
       <!-- Check if data exists -->
       <tr *ngIf="filteredTables.length === 0">
         <td colspan="6" class="text-center">No data available for the selected period.</td>
@@ -110,7 +107,4 @@
         </tbody>
       </table>
     </div>
-  </ng-container>
-  
-
-  
+</ng-container>
