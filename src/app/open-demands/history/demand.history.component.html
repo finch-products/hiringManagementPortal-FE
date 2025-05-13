@@ -118,22 +118,23 @@
         </mat-card-content>
       </mat-card>
   
-      <!-- Associated Demands for the Selected Candidate -->
-      <mat-card *ngIf="selectedCandidate" class="job-details-card">
+    <mat-card *ngIf="selectedCandidate" class="job-details-card">
   <mat-card-title>Demand Details</mat-card-title>
-    <div class="demand-container">
-      <mat-card class="demand-card" *ngFor="let demand of selectedCandidate?.demands">
-        <div class="demand-header">
-          <div class="demand-icon">
-            <mat-icon>work_outline</mat-icon>
-          </div>
-          <div class="demand-title">
-            <h2>{{ demand.dem_position_name || 'Position name' | capitalizeFirst }}</h2>
-            <p class="department">{{ demand.dem_idm_id || 'Department' }}</p>
-          </div>
-          <div class="demand-meta">
-            <p class="status-css" [ngClass]="getStatusClass(demand.current_demand_status)">{{ demand.current_demand_status || 'Status' }}</p>
-            <p class="location">
+  <div class="demand-container">
+    <mat-card class="demand-card" *ngFor="let demand of selectedCandidate?.demands">
+      <div class="demand-header">
+        <div class="demand-icon">
+          <mat-icon>work_outline</mat-icon>
+        </div>
+        <div class="demand-title">
+          <h2>{{ (demand.dem_position_name || 'Position name') | capitalizeFirst }}</h2>
+          <p class="department">{{ (demand?.department?.name || 'Department') | capitalizeFirst }}</p>
+        </div>
+        <div class="demand-meta">
+          <p class="status-css" [ngClass]="getStatusClass(demand.current_demand_status)">
+            {{ demand.current_demand_status || 'Status' }}
+          </p>
+          <p class="location">
             <span *ngIf="demand.locations && demand.locations.length > 0">
               {{ getLocationNames(demand.locations) }}
             </span>
@@ -141,32 +142,32 @@
               Corporate Headquarters, New York, NY
             </span>
           </p>
-          </div>
+        </div>
+      </div>
+      
+      <div class="demand-details">
+        <div class="detail-card">
+          <p>No. Of Positions</p>
+          <b>{{ demand.dem_positions || 'Not specified' }}</b>
         </div>
         
-        <div class="demand-details">
-          <div class="detail-card">
-            <p>No. Of Positions</p>
-            <b>{{ demand.dem_positions }}</b>
-          </div>
-          
-          <div class="detail-card">
-            <p> Skillset </p>
-            <b>{{ demand.dem_skillset }}</b>
-          </div>
-          
-          <div class="detail-card">
-            <p> CTool Date</p>
-            <b>{{ demand.dem_ctooldate | date:'dd-MM-yyyy' }}</b>
-          </div>
-          
-          <div class="detail-card">
-            <p> Valid Till Date</p>
-            <b>{{ demand.dem_validtill | date:'dd-MM-yyyy' }}</b>
-          </div>
+        <div class="detail-card">
+          <p>Skillset</p>
+          <b>{{ demand.dem_skillset || 'Not specified' }}</b>
         </div>
-      </mat-card>
-    </div>
+        
+        <div class="detail-card">
+          <p>Open Date</p>
+          <b>{{ (demand.dem_insertdate | date:'dd-MM-yyyy') || 'Not specified' }}</b>
+        </div>
+        
+        <div class="detail-card">
+          <p>Valid Till Date</p>
+          <b>{{ (demand.dem_validtill | date:'dd-MM-yyyy') || 'Not specified' }}</b>
+        </div>
+      </div>
+    </mat-card>
+  </div>
 </mat-card>
 
    <div class="both-history-wrapper">
@@ -175,46 +176,61 @@
     <div class="header">
       <h3>Demand History</h3>
     </div>
-    <div *ngIf="demandStatus.length > 0; else noData">
-      <ng-container *ngFor="let status of demandStatus; let i = index">
-        <!-- Date grouping -->
-        <ng-container *ngIf="i === 0 || (status.dhs_dsm_insertdate | date: 'mediumDate') !== (demandStatus[i - 1]?.dhs_dsm_insertdate | date: 'mediumDate')">
-          <div class="date-break">
-            <hr />
-            <div class="date-section">
-              {{ status.dhs_dsm_insertdate | date: 'fullDate' }}
+    
+    <ng-container *ngFor="let demand of selectedCandidate?.demands">
+      <!-- Demand ID Header -->
+      <div class="demand-id-header">
+        <h4>Demand ID: {{ demand.dem_id }}</h4>
+      </div>
+      
+      <div *ngIf="demand.demand_status_history?.length > 0; else noData">
+        <ng-container *ngFor="let status of demand.demand_status_history; let i = index">
+          <!-- Date grouping -->
+          <ng-container *ngIf="i === 0 || (status.dhs_dsm_insertdate | date: 'mediumDate') !== (demand.demand_status_history[i - 1]?.dhs_dsm_insertdate | date: 'mediumDate')">
+            <div class="date-break">
+              <hr />
+              <div class="date-section">
+                {{ status.dhs_dsm_insertdate | date: 'fullDate' }}
+              </div>
+            </div>
+          </ng-container>
+      
+          <div class="entry-content">
+            <mat-icon class="entry-icon">history</mat-icon>
+            <div class="text-block">
+              <p class="message">
+                <strong>Status:</strong> {{ status.status }}<br>
+                <strong>Comment:</strong> {{ status.dem_comment || 'No comment' }}
+              </p>
+              <p class="time">{{ status.dhs_dsm_insertdate | date: 'mediumTime' }}</p>
             </div>
           </div>
+      
+          <div class="break"></div>
         </ng-container>
-    
-        <div class="entry-content">
-          <mat-icon class="entry-icon">history</mat-icon>
-          <div class="text-block">
-            <p class="message">
-              <strong>Status:</strong> {{ status.status }}<br>
-              <strong>Comment:</strong> {{ status.dem_comment || 'No comment' }}
-            </p>
-            <p class="time">{{ status.dhs_dsm_insertdate | date: 'mediumTime' }}</p>
-          </div>
-        </div>
-    
-        <div class="break"></div>
-      </ng-container>
-    </div>      
-    <ng-template #noData>
-      <div class="no-data">No demand history available.</div>
-    </ng-template>
+      </div>
+      
+      <ng-template #noData>
+        <div class="no-data">No demand history available for this demand.</div>
+      </ng-template>
+    </ng-container>
   </div>
-
-  <!-- Candidate History (Right Side) -->
-  <div class="history-wrapper right-history" *ngIf="selectedCandidate">
-    <div class="header">
-      <h3>Candidate History</h3>
+<!-- Candidate History (Right Side) -->
+<div class="history-wrapper right-history" *ngIf="selectedCandidate">
+  <div class="header">
+    <h3>Candidate History</h3>
+  </div>
+  
+  <ng-container *ngFor="let demand of selectedCandidate?.demands">
+    <!-- Demand ID Header -->
+    <div class="demand-id-header">
+      <h4>Demand ID: {{ demand.dem_id }}</h4>
     </div>
-    <div *ngIf="candidateStatus.length > 0; else noCandidateData">
-      <ng-container *ngFor="let history of candidateStatus; let i = index">
+    
+    <div *ngIf="demand.candidate_status_history?.length > 0; else noCandidateData">
+      <ng-container *ngFor="let history of demand.candidate_status_history; let i = index">
         <!-- Date grouping -->
-        <ng-container *ngIf="i === 0 || (history.date | date: 'mediumDate') !== (candidateStatus[i - 1]?.date | date: 'mediumDate')">
+        <ng-container *ngIf="i === 0 || (history.cdh_insertdate | date: 'mediumDate') !== (demand.candidate_status_history[i - 1]?.cdh_insertdate | date: 'mediumDate')">
           <div class="date-break">
             <hr />
             <div class="date-section">
@@ -228,20 +244,18 @@
           <div class="text-block">
             <p class="message">
               <strong>Status:</strong> {{ history.status }}<br>
-              <strong>Comment:</strong> {{ history.comment || 'No comment' }}
+              <strong>Comment:</strong> {{ history.cdm_comment || 'No comment' }}
             </p>
-            <p class="time">{{ history.date | date: 'mediumTime' }}</p>
+            <p class="time">{{ history.cdh_insertdate | date: 'mediumTime' }}</p>
           </div>
         </div>
     
         <div class="break"></div>
       </ng-container>
-    </div>      
+    </div>
+    
     <ng-template #noCandidateData>
-      <div class="no-data">No candidate history available.</div>
+      <div class="no-data">No candidate history available for this demand.</div>
     </ng-template>
-  </div>
-</div>
-    </ng-template>
-  </div>
+  </ng-container>
 </div>
