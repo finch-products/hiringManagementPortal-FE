@@ -158,6 +158,7 @@ export class CandidateComponent implements OnChanges{
 
     const payload = {
         cdm_id: this.selectedCandidate.cdl_cdm_id,
+        dem_id: this.dem_id,
         csm_id: csm_id,
         cdm_comment: this.cdm_comment,
         cdm_updateby_id: this.cdm_updateby_id
@@ -340,6 +341,8 @@ export class CandidateComponent implements OnChanges{
           duration: 3000,
           panelClass: ['success-snackbar']
         });
+        this.searchTerm = '';
+        this.filteredCandidates = [];
         this.selectedCandidates = [];
         this.candidatesLinked.emit();
         this.loadData(this.dem_id);
