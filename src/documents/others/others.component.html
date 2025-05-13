@@ -1,5 +1,5 @@
 <mat-card class="form-container">
-    <h2 class="page-title">Entry</h2>
+    <h3 class="page-title">Entry</h3>
     <form [formGroup]="jdForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
             <mat-form-field floatLabel="always" class="form-field">
@@ -26,7 +26,7 @@
 
 <mat-card class="table-container" class="list_container">
     <div class="search-container">
-        <h2 class="page-title"> List</h2>
+        <h3 class="page-title"> List</h3>
        <div class="custom-search-box">
         <mat-icon class="search-icon">search</mat-icon>
             <input matInput (keyup)="applyFilter($event)"

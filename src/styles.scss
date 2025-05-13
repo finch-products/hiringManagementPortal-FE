@@ -183,10 +183,8 @@ mat-form-field {
 .form-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
   box-shadow: none !important;
   justify-content: flex-start;
-  gap: 20px;
   width: 100%;
   border-radius: 20px;
   padding: 7px;
@@ -342,7 +340,7 @@ mat-label {
 
 .mat-form-field {
   width: 100%; 
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .mat-form-field-wrapper {
@@ -457,7 +455,6 @@ mat-radio-button.mat-accent {
 .form-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
 }
 
 .wrap-height {
@@ -750,7 +747,7 @@ div.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-visible ,.mat-mdc-select-pan
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 2px;
   justify-content: flex-start;
 }
 
