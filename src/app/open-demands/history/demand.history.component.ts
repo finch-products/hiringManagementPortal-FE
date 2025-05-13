@@ -227,4 +227,25 @@ fetchCandidateIds() {
       candidate.cdm_id.toLowerCase().includes(this.searchText?.toLowerCase() || '')
     ) || [];
   }
+
+  
+  getStatusClass(statusCode: string | undefined): string {
+    if (!statusCode) return '';
+    
+    // Replace spaces with dashes for CSS class name
+    return 'status-' + statusCode.replace(/\s+/g, '-');
+  }
+
+    getLocationNames(locations: { lcm_id: number, lcm_name: string }[] | undefined): string {
+    if (!locations || locations.length === 0) {
+      return ''; 
+    }
+    return locations.map(loc => {
+      // Capitalize first letter of each word if needed
+      return loc.lcm_name
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+    }).join(', ');
+  }  
 }

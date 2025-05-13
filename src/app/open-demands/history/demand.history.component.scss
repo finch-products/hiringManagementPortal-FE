@@ -4,7 +4,8 @@
   margin-top: 20px;
 
   .sidebar {
-    width: 30%;
+    width: 300px; /* Fixed width for sidebar */
+    min-width: 30%; /* Prevent shrinking */
     background: #f1f0f0;
     padding: 15px;
     border-radius: 4%;
@@ -51,7 +52,7 @@
   }
 
   .content {
-    flex-grow: 1;
+    flex: 1;
     padding: 0 10px 10px;
     overflow-y: auto;
 
@@ -60,7 +61,7 @@
       border-radius: 20px;
       padding: 20px;
       max-height: 50%;
-    overflow-y: auto;
+      overflow-y: auto;
       background-color: white;
       margin-bottom: 20px;
       border: 1px solid #d1d1d1;
@@ -174,9 +175,242 @@ mat-card-content p {
   gap: 16px; /* Spacing between cards */
 }
 
-.demand-card {
-  flex: 1 1 calc(50% - 16px); /* Two cards per row */
+.both-history-wrapper {
+  display: flex;
+  gap: 16px; 
+  padding: 8px;
+}
+
+.history-wrapper {
+  flex: 1;
+  width: 50%; 
+  height: calc(100vh - 20px); 
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: #F8F9FA;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Left panel (Demand History) */
+.left-history {
+  border-left: 4px solid #cad2ff; 
+  overflow-y: auto;
+}
+
+/* Right panel (Candidate History) */
+.right-history {
+  border-left: 4px solid #cad2ff; 
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px; /* Reduced margin */
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+.date-break {
+  margin: 12px 0 8px; /* Tighter spacing */
+  
+  hr {
+    border: none;
+    //border-top: 1px solid #e0e0e0;
+    margin: 8px 0;
+  }
+}
+
+.date-section {
+  font-weight: 600;
+  font-size: 14px;
+  color: #a6b3fb; /* Purple */
+  background: #F8F9FA;
+  padding: 0 8px;
+  display: inline-block;
+}
+
+.entry-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px; /* Reduced gap */
+  background-color: white;
+  padding: 10px 12px; /* Tighter padding */
+  border-radius: 6px;
+  margin-bottom: 8px; /* Reduced margin */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid #a6b3fb; /* Green accent */
+}
+
+.right-history .entry-content {
+  border-left-color: #a6b3fb; /* Purple accent for right panel */
+}
+
+.entry-icon {
+  font-size: 20px;
+  color: #3fd34e; /* Green */
+  margin-top: 2px;
+}
+
+/*.right-history .entry-icon {
+  color: #9C27B0; /* Purple 
+}*/
+
+.text-block {
+  p {
+    margin: 2px 0;
+    line-height: 1.4;
+  }
+
+  .message {
+    font-size: 13px;
+    color: #333;
+    
+    strong {
+      color: #3fd34e; /* Green */
+    }
+  }
+
+  .time {
+    font-size: 11px;
+    color: #757575;
+  }
+
+}
+
+.no-data {
+  text-align: center;
+  margin-top: 20px;
+  color: #a6b3fb; /* Purple */
+  font-size: 13px;
+}
+
+.break {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 6px 0; /* Reduced margin */
+}
+.job-details-card {
+  padding: 10px;
+  margin: 10px 0;
+  }
+  .demand-card {
+  width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 16px;
   border-radius: 8px;
+  margin-bottom: 16px;
+}
+.demand-header {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+.demand-icon {
+  margin-right: 20px;
+}
+.demand-icon mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #3f51b5;
+}
+.demand-title h2 {
+  margin: 0 0 5px 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+.demand-title .department {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+.demand-meta {
+  margin-left: auto;
+  text-align: right !important;
+  align-items: flex-end;
+}
+.demand-meta p{
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+.demand-meta .location {
+  color: #666;
+}
+.demand-details {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px;
+  gap: 15px;
+}
+.detail-card {
+  flex: 1;
+  width: 100% !important;
+  min-height: 80px;
+  padding: 10px;
+  background-color: #dbdff3;
+  border-radius: 10px;
+}
+.status-css{
+  border-radius: 4px;
+  max-width: max-content;
+  padding: 4px 8px;
+}
+/* Status background colors for demand statuses - using exact color codes */
+.status-Open {
+  background-color: #d2f55b; /* Bright green */
+  color: #155724;
+}
+
+.status-Req-Not-Clear {
+  background-color: #afb7ff; /* Light purple */
+  color: #4a3f9f;
+}
+
+.status-JD-Not-Received {
+  background-color: #dee2ff; /* Lighter purple */
+  color: #4a3f9f;
+}
+
+.status-Closed {
+  background-color: #e0e0e0; /* Light gray */
+  color: #424242;
+}
+
+.status-External-Hiring {
+  background-color: #c2e94b; /* Slightly darker green */
+  color: #155724;
+}
+
+.status-Candidate-Screening {
+  background-color: #dbf76b; /* Slightly lighter green */
+  color: #155724;
+}
+
+.status-Rejected {
+  background-color: #f04747; /* Red */
+  color: #ffffff;
+}
+
+.status-On-Hold {
+  background-color: #c3c9ff; /* Mid purple between the two purples */
+  color: #4a3f9f;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.status-On-Hold {
+  background-color: #d8d6f7; /* Light purple */
+  color: #4a3f9f;
 }

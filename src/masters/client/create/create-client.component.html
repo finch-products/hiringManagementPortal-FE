@@ -1,5 +1,5 @@
 <mat-card class="form-container">
-    <h2 class="page-title">Entry</h2>
+    <h3 class="page-title">Entry</h3>
     <form #form="ngForm" [formGroup]="clientForm" (ngSubmit)="onSubmit(form)">
         <div class="form-row">
             <mat-form-field class="form-field" floatLabel="always">
@@ -98,9 +98,7 @@
                 <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
               
-        </div>
-
-        <div class="logo-upload-container">
+            <div class="logo-upload-container">
             <div class="upload-controls">
                 <button mat-raised-button type="button" *ngIf="!selectedLogo" (click)="fileInput.click()" color="primary">
                     <mat-icon>add_photo_alternate</mat-icon>
@@ -116,6 +114,8 @@
             </div>
             </div>
           </div>
+        </div>
+
         <div class="submit-container">
             <button mat-raised-button color="primary" type="button" class="cancel" (click)="onCancel()">Cancel</button>
 

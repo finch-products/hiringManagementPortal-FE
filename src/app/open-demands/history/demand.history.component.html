@@ -119,80 +119,129 @@
       </mat-card>
   
       <!-- Associated Demands for the Selected Candidate -->
-      <mat-card *ngIf="selectedCandidate">
-        <mat-card-title>Demand Details</mat-card-title>
-        <mat-card-content >
-          <div class="demand-container">
-            <mat-card class="demand-card" *ngFor="let demand of selectedCandidate?.demands">
-              <div>
-            <p><strong>Demand id:</strong> {{demand.dem_id }}</p>
-            <!-- <p><strong>CTool Date:</strong> {{ demand.dem_ctooldate }}</p> -->
-            <p><strong>Position Name:</strong> {{ demand.dem_position_name }}</p>
-            <p><strong>Valid Till:</strong> {{ demand.dem_validtill | date:'dd-MM-yyyy'}}</p>
-            <p><strong>Skillset:</strong> {{ demand.dem_skillset }}</p>
-            <p><strong>No Of Positions:</strong> {{ demand.dem_positions }}</p>
-            <p><strong>RR Number:</strong> {{ demand.dem_rrnumber }}</p>
-            <!-- <p><strong>JR Number:</strong> {{ demand.dem_jrnumber }}</p> -->
-            <!-- <p><strong>RR Grade:</strong> {{ demand.dem_rrgade }}</p>
-            <p><strong>GCB Level:</strong> {{ demand.dem_gcblevel }}</p>
-            <p><strong>Comments:</strong> {{ demand.dem_comment }}</p> -->
-            <!-- <p><strong>Is Reopened:</strong> {{ demand.dem_isreopened ? 'Yes' : 'No' }}</p>
-            <p><strong>Active:</strong> {{ demand.dem_isactive ? 'Yes' : 'No' }}</p> -->
+      <mat-card *ngIf="selectedCandidate" class="job-details-card">
+  <mat-card-title>Demand Details</mat-card-title>
+    <div class="demand-container">
+      <mat-card class="demand-card" *ngFor="let demand of selectedCandidate?.demands">
+        <div class="demand-header">
+          <div class="demand-icon">
+            <mat-icon>work_outline</mat-icon>
           </div>
-          </mat-card>
+          <div class="demand-title">
+            <h2>{{ demand.dem_position_name || 'Position name' | capitalizeFirst }}</h2>
+            <p class="department">{{ demand.dem_idm_id || 'Department' }}</p>
           </div>
-        </mat-card-content>
+          <div class="demand-meta">
+            <p class="status-css" [ngClass]="getStatusClass(demand.current_demand_status)">{{ demand.current_demand_status || 'Status' }}</p>
+            <p class="location">
+            <span *ngIf="demand.locations && demand.locations.length > 0">
+              {{ getLocationNames(demand.locations) }}
+            </span>
+            <span *ngIf="!demand.locations || demand.locations.length === 0">
+              Corporate Headquarters, New York, NY
+            </span>
+          </p>
+          </div>
+        </div>
+        
+        <div class="demand-details">
+          <div class="detail-card">
+            <p>No. Of Positions</p>
+            <b>{{ demand.dem_positions }}</b>
+          </div>
+          
+          <div class="detail-card">
+            <p> Skillset </p>
+            <b>{{ demand.dem_skillset }}</b>
+          </div>
+          
+          <div class="detail-card">
+            <p> CTool Date</p>
+            <b>{{ demand.dem_ctooldate | date:'dd-MM-yyyy' }}</b>
+          </div>
+          
+          <div class="detail-card">
+            <p> Valid Till Date</p>
+            <b>{{ demand.dem_validtill | date:'dd-MM-yyyy' }}</b>
+          </div>
+        </div>
       </mat-card>
+    </div>
+</mat-card>
 
-      <mat-card *ngIf="selectedCandidate">
-        <mat-card-title>Demand Status Details</mat-card-title>
-        <mat-card-content>
-          <table mat-table [dataSource]="demandStatus" class="mat-elevation-z8">
-  
-            <ng-container matColumnDef="date">
-              <th mat-header-cell *matHeaderCellDef> Date </th>
-              <td mat-cell *matCellDef="let status"> {{ status.dhs_dsm_insertdate }} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-cell *matCellDef="let status"> {{ status.status }} </td>
-            </ng-container>
-            <ng-container matColumnDef="comment">
-              <th mat-header-cell *matHeaderCellDef> Comment </th>
-              <td mat-cell *matCellDef="let status"> {{ status.dem_comment }} </td>
-            </ng-container>
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-        </mat-card-content>
-      </mat-card>
+   <div class="both-history-wrapper">
+  <!-- Demand History (Left Side) -->
+  <div class="history-wrapper left-history" *ngIf="selectedCandidate">
+    <div class="header">
+      <h3>Demand History</h3>
+    </div>
+    <div *ngIf="demandStatus.length > 0; else noData">
+      <ng-container *ngFor="let status of demandStatus; let i = index">
+        <!-- Date grouping -->
+        <ng-container *ngIf="i === 0 || (status.dhs_dsm_insertdate | date: 'mediumDate') !== (demandStatus[i - 1]?.dhs_dsm_insertdate | date: 'mediumDate')">
+          <div class="date-break">
+            <hr />
+            <div class="date-section">
+              {{ status.dhs_dsm_insertdate | date: 'fullDate' }}
+            </div>
+          </div>
+        </ng-container>
+    
+        <div class="entry-content">
+          <mat-icon class="entry-icon">history</mat-icon>
+          <div class="text-block">
+            <p class="message">
+              <strong>Status:</strong> {{ status.status }}<br>
+              <strong>Comment:</strong> {{ status.dem_comment || 'No comment' }}
+            </p>
+            <p class="time">{{ status.dhs_dsm_insertdate | date: 'mediumTime' }}</p>
+          </div>
+        </div>
+    
+        <div class="break"></div>
+      </ng-container>
+    </div>      
+    <ng-template #noData>
+      <div class="no-data">No demand history available.</div>
+    </ng-template>
+  </div>
 
-      <mat-card *ngIf="selectedCandidate">
-        <mat-card-title>Candidate Status Details</mat-card-title>
-        <mat-card-content>
-          <table mat-table [dataSource]="candidateStatus" class="mat-elevation-z8">
-  
-            <ng-container matColumnDef="date">
-              <th mat-header-cell *matHeaderCellDef> Date </th>
-              <td mat-cell *matCellDef="let status"> {{ status.cdh_insertdate }} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-cell *matCellDef="let status"> {{ status.status }} </td>
-            </ng-container>
-            <ng-container matColumnDef="comment">
-              <th mat-header-cell *matHeaderCellDef> Comment </th>
-              <td mat-cell *matCellDef="let status"> {{ status.dem_comment }} </td>
-            </ng-container>
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-        </mat-card-content>
-      </mat-card>
+  <!-- Candidate History (Right Side) -->
+  <div class="history-wrapper right-history" *ngIf="selectedCandidate">
+    <div class="header">
+      <h3>Candidate History</h3>
+    </div>
+    <div *ngIf="candidateStatus.length > 0; else noCandidateData">
+      <ng-container *ngFor="let history of candidateStatus; let i = index">
+        <!-- Date grouping -->
+        <ng-container *ngIf="i === 0 || (history.date | date: 'mediumDate') !== (candidateStatus[i - 1]?.date | date: 'mediumDate')">
+          <div class="date-break">
+            <hr />
+            <div class="date-section">
+              {{ history.cdh_insertdate | date: 'fullDate' }}
+            </div>
+          </div>
+        </ng-container>
+    
+        <div class="entry-content">
+          <mat-icon class="entry-icon">history</mat-icon>
+          <div class="text-block">
+            <p class="message">
+              <strong>Status:</strong> {{ history.status }}<br>
+              <strong>Comment:</strong> {{ history.comment || 'No comment' }}
+            </p>
+            <p class="time">{{ history.date | date: 'mediumTime' }}</p>
+          </div>
+        </div>
+    
+        <div class="break"></div>
+      </ng-container>
+    </div>      
+    <ng-template #noCandidateData>
+      <div class="no-data">No candidate history available.</div>
+    </ng-template>
+  </div>
+</div>
     </ng-template>
   </div>
 </div>

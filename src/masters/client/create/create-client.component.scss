@@ -1,15 +1,34 @@
-.logo-upload-container {
-  margin-left: auto;
-  display: flex;
-  justify-content: flex-end;
-}
 ::ng-deep .mat-mdc-form-field .mdc-line-ripple,
 ::ng-deep .mat-mdc-form-field .mat-mdc-form-field-ripple {
   display: none !important;
   height: 0 !important;
   opacity: 0 !important;
 }
+/* Adjust the radio group container */
+.mat-radio-group.form-field {
+  display: flex;
+  flex-direction: column;
+  align-self: baseline;
+}
 .mat-mdc-radio-group.form-field {
   margin-top: 26px; 
-  margin-left:20px;
+  margin-left:25px;
+}
+
+/* Adjust the upload controls to match other fields */
+.upload-controls {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Logo upload container adjustments */
+.logo-upload-container {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 25px;
+  //margin-left: 20px;
+  min-width: 150px; /* Give it a reasonable minimum width */
 }
